@@ -137,7 +137,7 @@ font-size: 16px;
 			</div>
 			<br> <br> 
 			<div id="noid">
-			<b>비회원으로 주문하시겠습니까?</b> &nbsp; <a href="#">비회원으로 주문하기</a>
+			<b>비회원으로 주문하시겠습니까?123123123123</b> &nbsp; <a href="#">비회원으로 주문하기</a>
 			</div>
 		</form>
 	</section>
