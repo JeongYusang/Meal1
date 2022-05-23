@@ -13,5 +13,5 @@ public interface AdminController {
 			HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response)
 			throws Exception;
-
+//민수
 }
