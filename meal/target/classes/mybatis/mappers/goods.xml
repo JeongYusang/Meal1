@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.goods">
+
+	<resultMap id="goodsResult" type="goodsVO">
+		<result property="g_id" column="g_id" />
+		<result property="g_cate1" column="g_cate1" />
+		<result property="g_cate2" column="g_cate2" />
+		<result property="g_cate3" column="g_cate3" />
+		<result property="g_origin" column="g_origin" />
+
+		<result property="g_amount" column="g_amount" />
+		<result property="g_price" column="g_price" />
+		<result property="g_sale" column="g_sale" />
+		<result property="g_saleDate1" column="g_saleDate1" />
+		<result property="g_saleDate2" column="g_saleDate2" />
+		<result property="g_eatDate" column="g_eatDate" />
+		<result property="g_detail1" column="g_detail1" />
+
+		<result property="g_allergy" column="g_allergy" />
+		<result property="g_state" column="g_state" />
+		<result property="g_creDate" column="g_creDate" />
+		<result property="s_id" column="s_id" />
+		<result property="g_time" column="g_time" />
+		<result property="g_nan" column="g_nan" />
+		<result property="g_inbun" column="g_inbun" />
+		<result property="g_bang" column="g_bang" />
+	</resultMap>
+
+	<resultMap id="img_GResult" type="Img_gVO">
+		<result property="fileName" column="fileName" />
+		<result property="g_id" column="g_id" />
+		<result property="cate" column="cate" />
+		<result property="ig_id" column="ig_id" />
+	</resultMap>
+
+	<insert id="insertNewGoods" parameterType="Map">
+	    <![CDATA[
+		   insert into goods_tb(
+		   				s_id,
+		                g_name,
+                    	g_cate2,
+                    	g_cate3,
+						g_amount,
+						g_price,
+						g_detail1,
+						g_allergy,
+						g_time,
+						g_nan,
+						g_inbun,
+						g_bang						
+						)
+					values(
+						#{s_id},
+					  	#{g_name},
+					  	#{g_cate2},
+					  	#{g_cate3},
+					  	#{g_amount},
+					  	#{g_price},
+					  	#{g_detail1},
+					  	#{g_allergy},
+						#{g_time},
+					  	#{g_nan},
+					  	#{g_inbun},	
+					  	#{g_bang}
+					 	)
+		]]>
+	</insert>
+
+
+	<insert id="img_gInsert" parameterType="Img_gVO">
+
+	    <![CDATA[
+		   insert into img_g (fileName,cate,g_id)	values( #{fileName}, #{cate},#{g_id})
+		]]>
+	</insert>
+
+	<select id="selectGoods" parameterType="String"
+		resultType="GoodsVO">
+	<![CDATA[
+		   select * from goods_tb where g_cate1=#{cate1} order by g_creDate desc
+		]]>
+	</select>
+
+
+	<select id="findg_id" parameterType="String"
+		resultType="GoodsVO">
+	<![CDATA[
+		   select * from goods_tb
+		   where g_name = #{g_name}
+		]]>
+	</select>
+
+	<select id="selectOverlappedG_NAME" parameterType="String"
+		resultType="String">
+		select if(count(*), 'true', 'false')
+		from goods_tb
+		where
+		g_name = #{g_name}
+	</select>
+
+	<!--상품상세를 위한 출력 -->
+	<select id="selectGoodsImg" parameterType="int"
+		resultMap="img_GResult">
+		select * from img_g where g_id =#{g_id}
+	</select>
+
+	<select id="selectOneImg" parameterType="Map"
+		resultType="img_gVO">
+ <![CDATA[
+ select * from img_g where g_id =#{g_id} and cate = #{cate}
+ ]]>
+	</select>
+	<!-- 스케줄러 -->
+	<select id="selectNew_Goods" resultMap="goodsResult">
+ <![CDATA[
+  select * from goods_tb where g_cate1 = 'New_GOODS' and g_creDate < (date_sub(now(), interval 1 day ))
+]]>
+	</select>
+
+	<select id="selectGoodsDetail" parameterType="int"
+		resultType="GoodsVO">
+
+		select * from goods_tb where g_id =#{g_id}
+	</select>
+
+	<!-- 스케줄러 -->
+	<update id="updateNomalGoods" parameterType="GoodsVO">
+ <![CDATA[
+update goods_tb set g_cate1 ='Nomal' where g_cate1 =#{g_cate1} and g_id =#{g_id} 
+]]>
+	</update>
+
+<!-- 상품수정창 -->
+	<update id="updateGoods" parameterType="GoodsVO">
+  <![CDATA[
+    	update  goods_tb set 
+g_name = #{g_name}, 
+g_cate1 = #{g_cate1}, 
+g_cate2 = #{g_cate2},
+g_cate3 = #{g_cate3}, 
+g_amount = #{g_amount}, 
+g_price = #{g_price}, 
+g_sale = #{g_sale},
+g_detail1 = #{g_detail1},
+g_allergy = #{g_allergy}, 
+g_nan = #{g_nan}
+g_inbun = #{g_inbun}
+g_bang = #{g_bang}
+g_saleDate1 = #{g_saleDate1}
+g_saleDate2 = #{g_saleDate2}
+ where g_id =#{g_id}
+]]>
+
+	</update>
+
+	<!-- 상품관리창 -->
+	<select id="goodsPage" resultMap="goodsResult"
+		parameterType="Map">
+   <![CDATA[
+	   select R1.* from (select * from goods_tb order by g_id) R1 order by g_name asc limit #{start} , #{end} 
+	   ]]>
+	</select>
+
+</mapper>
+ 

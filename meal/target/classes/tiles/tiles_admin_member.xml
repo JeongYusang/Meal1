@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+
+<!-- 회원조회  -->
+	<definition name="/admin/selectAllMembers" extends="baseLayout2">
+		<put-attribute name="title" value="회원 조회" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/admin/viewMembers.jsp" />
+	</definition>
+	<!-- 판매자조회  -->
+		<definition name="/admin/selectAllSellers" extends="baseLayout2">
+		<put-attribute name="title" value="회원 조회" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/admin/viewSellers.jsp" />
+	</definition>
+
+   
+</tiles-definitions>

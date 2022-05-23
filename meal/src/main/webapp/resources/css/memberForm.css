@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+.container{
+	display:flex;
+	justify-content: center;
+	text-align: center;
+	clear: both;
+	width:100%;
+	height:800px;
+}
+
+.box{
+	width:500px;
+	display:inline-flex;
+	flex-direction: row;
+	justify-content: space-between;
+	text-align: left;
+	margin-bottom: 10px;
+}
+
+
+#frmMem{
+	width:500px;
+	height:485px;
+	max-height: 1000000px;
+}
+
+#frmMem input{
+	box-sizing: border-box;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-color: #bdbdbd;
+	font-size: 10px;
+}
+
+
+
+#frmMem input#id{
+	box-sizing: border-box;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	font-size: 10px;
+}
+
+#frmMem input#pwd{
+	box-sizing: border-box;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	font-size: 10px;
+}
+
+#frmMem input#addmember{
+	background-color: rgb(152,251,152);
+	color:black;
+	font-size: large;
+	width:400px;
+	height: 40px;
+}

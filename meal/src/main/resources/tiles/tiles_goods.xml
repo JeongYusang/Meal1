@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+   <definition name="/goods/goodsDetail" extends="baseLayout">
+      <put-attribute name="title" value="상품페이지" />
+      <put-attribute name="body"
+         value="/WEB-INF/views/goods/goodsDetail.jsp" />
+   </definition>
+   <definition name="/user/zzim" extends="baseLayout2">
+      <put-attribute name="title" value="찜목록" />
+      <put-attribute name="body" value="/WEB-INF/views/cart/zzim.jsp" />
+   </definition>
+   <!-- 상품등록 -->
+   <definition name="/goods/goodsForm" extends="baseLayout">
+      <put-attribute name="title" value="상품등록창" />
+      <put-attribute name="body"
+         value="/WEB-INF/views/goods/goodsForm.jsp" />
+   </definition>
+   <!-- 임시 -->
+   <definition name="/goods/addNewGoods" extends="baseLayout">
+      <put-attribute name="title" value="상품등록창" />
+      <put-attribute name="body"
+         value="/WEB-INF/views/main/main.jsp" />
+   </definition>
+</tiles-definitions>

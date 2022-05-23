@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<!--로그인 -->
+	<definition name="/main/loginForm" extends="baseLayout">
+		<put-attribute name="title" value="로그인진입" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/main/loginForm.jsp" />
+	</definition>
+
+
+
+<!-- 에러 -->
+	<definition name="/err/error404" extends="baseLayout">
+		<put-attribute name="title" value="에러 404" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/err/error404.jsp" />
+	</definition>
+	<definition name="/board1/selectList" extends="baseLayout">
+		<put-attribute name="title" value="1대1문의게시판" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/board_1/1on1search.jsp" />
+	</definition>
+<!-- 	<definition name="home" extends="baseLayout2">
+		<put-attribute name="title" value="테스트 홈" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/home.jsp" />
+	</definition> -->
+
+</tiles-definitions>

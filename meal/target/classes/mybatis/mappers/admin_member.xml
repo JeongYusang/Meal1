@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.adminM">
+
+
+
+	<!-- 리절트 맵 정의 -->
+	<resultMap id="uResult" type="MemberVO">
+		<result property="u_id" column="u_id" />
+		<result property="u_pw" column="u_pw" />
+		<result property="u_name" column="u_name" />
+		<result property="u_hp1" column="u_hp1" />
+		<result property="u_hp2" column="u_hp2" />
+		<result property="u_email1" column="u_email1" />
+		<result property="u_email2" column="u_email2" />
+		<result property="u_addr1" column="u_addr1" />
+		<result property="u_addr2" column="u_addr2" />
+		<result property="u_addr3" column="u_addr3" />
+		<result property="u_sex" column="u_sex" />
+		<result property="u_birth" column="u_birth" />
+		<result property="u_creDate" column="u_creDate" />
+		<result property="u_mile" column="u_mile" />
+		<result property="u_del" column="u_del" />
+		<result property="u_rank" column="u_rank" />
+		<result property="u_count" column="u_count" />
+		<result property="u_delDate" column="u_delDate" />
+		<result property="u_lastlog" column="u_lastlog" />
+	</resultMap>
+
+	<resultMap id="sellerResult" type="SellerVO">
+		<result property="s_id" column="s_id" />
+		<result property="s_pw" column="s_pw" />
+		<result property="s_name" column="s_name" />
+		<result property="s_hp1" column="s_hp1" />
+		<result property="s_hp2" column="s_hp2" />
+		<result property="s_email1" column="s_email1" />
+		<result property="s_email2" column="s_email2" />
+		<result property="s_BL_Num" column="s_BL_Num" />
+		<result property="s_GR_Num" column="s_GR_Num" />
+		<result property="s_HACCP_Num" column="s_HACCP_Num" />
+		<result property="s_Waddr1" column="s_Waddr3" />
+		<result property="s_Waddr2" column="s_Waddr2" />
+		<result property="s_Waddr3" column="s_Waddr3" />
+		<result property="s_Wname" column="s_Wname" />
+		<result property="creDate" column="creDate" />
+		<result property="s_del" column="s_del" />
+		<result property="delDate" column="delDate" />
+		<result property="s_cate" column="s_cate" />
+		<result property="s_lastLog" column="s_lastLog" />
+
+	</resultMap>
+	<resultMap id="img_sResult" type="Img_sVO">
+		<result property="is_id" column="is_id" />
+		<result property="fileName" column="fileName" />
+		<result property="creDate" column="creDate" />
+		<result property="s_id" column="s_id" />
+		<result property="cate" column="cate" />
+	</resultMap>
+
+
+
+
+	<select id="userPage" resultMap="uResult" parameterType="Map">
+   <![CDATA[
+	   select R1.* from (select * from user_tb order by u_name) R1 order by u_name asc limit #{start} , #{end} 
+	   ]]>
+	</select>
+	<select id="sellerPage" resultMap="sellerResult"
+		parameterType="Map">
+   <![CDATA[
+	   select R1.* from (select * from seller_tb order by s_id) R1 order by s_id asc limit #{start} , #{end} 
+	   ]]>
+	</select>
+
+
+
+
+</mapper>
+
+   

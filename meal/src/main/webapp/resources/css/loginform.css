@@ -1,0 +1,61 @@
+@charset "UTF-8";
+section{
+		display: flex;
+	justify-content: center;
+	align-items: center;
+}
+	#frmLogin{
+	/* display:block; */
+	width:360px;
+	height:485px;
+	text-align:center;
+	margin: 10% auto;
+	max-height: 1000000px;
+	}
+	#frmLogin button#kakao-login-btn {
+	background: rgb(252,229,30);
+	border: none;
+	border-radius: 2px;
+	height: 20px;
+	width:90px;
+	color: black;
+	font-size: 10px;
+	cursor:pointer;
+	}
+	#frmLogin button#naver-login-btn {
+	background: rgb(40,209,17);
+	border: none;
+	border-radius: 2px;
+	height: 20px;
+	width:90px;
+	color: white;
+	font-size: 10px;
+	line-height: 50%;
+		
+	}
+	#frmLogin input{
+	box-sizing: border-box;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	padding: 10px;
+	}
+	#frmLogin a{
+	font-size: 10px;
+	text-align: center;
+	}
+	#frmLogin p{
+	font-size: 10px;
+	text-align: left;
+	margin-left: 25%;
+	}
+	#frmLogin button#pagee {
+	background-color: rgb(152,251,152);
+	color: white;
+	width: 180px;
+	height: 40px;
+	font-size: 15px;
+	border: none;
+	border-radius: 3px;
+	cursor:pointer;
+	}

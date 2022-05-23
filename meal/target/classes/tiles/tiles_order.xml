@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<definition name="/order/result" extends="baseLayout">
+		<put-attribute name="title" value="결제페이지" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/order/orderresult.jsp" />
+	</definition>
+	
+		<definition name="/order/orderform" extends="baseLayout">
+		<put-attribute name="title" value="주문페이지" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/order/orderform.jsp" />
+	</definition>
+</tiles-definitions>

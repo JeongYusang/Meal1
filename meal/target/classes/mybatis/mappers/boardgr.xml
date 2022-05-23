@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.boardGr">
+
+   <resultMap id="boardGrResult" type="BoardGrVO">
+      <result property="b_gr_id" column="b_gr_id" />
+      <result property="reg_id" column="reg_id" />
+      <result property="title" column="title" />
+      <result property="content" column="content" />
+      <result property="creDate" column="creDate" />
+      <result property="parentNo" column="parentNo" />
+      <result property="u_id" column="u_id" />
+      <result property="s_id" column="s_id" />
+      <result property="g_id" column="g_id" />
+      <result property="secret" column="secret" />
+      <result property="star" column="star" />
+      <result property="g_name" column="g_name" />
+   </resultMap>
+
+   <resultMap id="img_grResult" type="Img_grVO">
+      <result property="ib_gr_id" column="ib_gr_id" />
+      <result property="fileName" column="fileName" />
+      <result property="creDate" column="creDate" />
+      <result property="s_id" column="s_id" />
+      <result property="b_gr_id" column="b_gr_id" />
+   </resultMap>
+
+
+   <insert id="boardGrWrite" parameterType="BoardGrVO">
+  <![CDATA[
+       insert into board_gr(
+       reg_id,
+       title,
+       content,
+       u_id,
+       s_id,
+       g_id,
+       secret,
+       parentNo,
+       star
+      )
+           values(#{reg_id},
+                  #{title},
+                  #{content},
+                  #{u_id},
+                  #{s_id},
+                  #{g_id},
+                  #{secret},
+                  #{parentNo},
+                  #{star}) 
+   ]]>
+   </insert>
+
+   <update id="boardGrUpdate" parameterType="Map">
+<![CDATA[
+update board_gr set content = #{content}, secret = #{secret} where b_gr_id = #{b_gr_id} 
+]]>
+   </update>
+
+   <select id="boardGrPage" resultMap="boardGrResult"
+      parameterType="Map">
+   <![CDATA[
+      select R1.* from (select * from board_gr) R1 where parentNo = 0 order by b_gr_id desc limit #{start} , #{end} 
+      ]]>
+   </select>
+
+   <select id="MyboardGrPage" resultMap="boardGrResult"
+      parameterType="Map">
+   <![CDATA[
+       select R1.* from (select * from board_gr) R1 where parentNo = 0 and u_id = #{u_id} order by b_gr_id desc limit #{start} , #{end} 
+      ]]>
+   </select>
+   <select id="SellerboardGrPage" resultMap="boardGrResult"
+      parameterType="Map">
+   <![CDATA[
+       select R1.* from (select * from board_gr) R1 where parentNo = 0 and s_id = #{s_id} order by b_gr_id desc limit #{start} , #{end} 
+      ]]>
+   </select>
+
+
+   <select id="selectBoardGrallList" resultMap="boardGrResult">
+       <![CDATA[
+            select * from board_gr
+             ]]>
+   </select>
+
+   <select id="selectMyBoardGrallList" resultMap="boardGrResult">
+       <![CDATA[
+            select * from board_gr where u_id = #{u_id}
+             ]]>
+   </select>
+   
+      <select id="selectSellerBoardGrallList" resultMap="boardGrResult" parameterType="String">
+       <![CDATA[
+            select * from board_gr where s_id = #{s_id}
+             ]]>
+   </select>
+
+   <select id="boardGrView" resultType="BoardGrVO"
+      parameterType="Integer">
+       <![CDATA[
+            select * from board_gr where b_gr_id = #{b_gr_id}   
+          
+      ]]>
+   </select>
+
+   <select id="boardGrViewReview" resultMap="boardGrResult"
+      parameterType="Integer">
+       <![CDATA[
+            select * from board_gr where parentNo = #{b_gr_id}   
+          
+      ]]>
+   </select>
+   <delete id="boardGrDelete1" parameterType="Integer">
+   <![CDATA[
+   delete from board_gr where b_gr_id=#{b_gr_id}
+   ]]>
+   </delete>
+   <delete id="boardGrDelete2" parameterType="Integer">
+   <![CDATA[
+   delete from board_gr where parentNo = #{b_gr_id}
+   ]]>
+   </delete>
+
+   <insert id="addImg" parameterType="Map">
+   <![CDATA[
+   insert into img_b_gr(fileName,b_gr_id,reg_id) values (#{fileName}, #{b_gr_id}, #{reg_id})
+   ]]>
+   </insert>
+   <select id="findb_gr_id" resultMap="boardGrResult">
+       <![CDATA[
+            SELECT * FROM board_gr WHERE b_gr_id = (SELECT max(b_gr_id) FROM board_gr);
+      ]]>
+   </select>
+   <select id="selectBoardGrDetail" resultMap="boardGrResult"
+      parameterType="Integer">
+       <![CDATA[
+          SELECT g.g_name, g.s_id, gr.*,d.fileName
+   FROM board_gr gr
+   LEFT OUTER JOIN goods_tb g ON g.g_id = gr.g_id
+   LEFT OUTER JOIN img_b_gr d ON d.b_gr_id = gr.b_gr_id
+    where #{b_gr_id}= gr.b_gr_id
+       ]]>
+   </select>
+   <select id="selectBoardGrDetailImage" resultMap="img_grResult"
+      parameterType="String">
+       <![CDATA[
+             select * from  img_b_gr
+            where b_gr_id=#{b_gr_id}
+       ]]>
+   </select>
+   
+   <select id="boardgr_download" resultMap="boardGrResult"
+      parameterType="Integer">
+       <![CDATA[
+                SELECT i.*, g.g_id FROM img_b_gr i 
+                LEFT OUTER JOIN board_gr g ON g.b_gr_id = i.b_gr_id 
+                where i.b_gr_id=#{b_gr_id}
+       ]]>
+   </select>
+   
+   
+
+
+</mapper>

@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+	#container {
+    text-align: center;
+}
+	
+	#container input#confirm {
+    background-color: rgb(152,251,152);
+    font-size: 25px;
+    border: 1px solid rgb(122 217 122);
+    border-radius: 4px;
+    width: 200px;
+    height: 45px;
+}

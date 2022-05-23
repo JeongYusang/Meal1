@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+
+	#ag{
+	text-align: center;
+	}
+	
+	#ag1{
+	text-align: center;
+	font-size: 15px;
+	}
+	#ag1 input#confirm{
+	width: 200px;
+	height: 50px;
+	background-color: #ffffff;
+	border-radius: 5px;
+	font-size: 20px;
+	font-weight: bold;
+	}

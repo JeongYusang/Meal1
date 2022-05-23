@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+
+<!-- 1대1 보드테이블 -->
+   <definition name="/board1/selectBoard1List" extends="baseLayout2">
+      <put-attribute name="title" value="1대1게시판 메인" />
+      <put-attribute name="body"
+         value="/WEB-INF/views/board_1/1on1search.jsp" />
+   </definition>
+  <definition name="/board1/b1Detail" extends="baseLayout2">
+      <put-attribute name="title" value="보드디테일" />
+      <put-attribute name="body" value="/WEB-INF/views/board_1/b1Detail.jsp" />
+   </definition>
+
+ <definition name="/board1/board1Write" extends="baseLayout2">
+      <put-attribute name="title" value="1대1게시판 작성" />
+      <put-attribute name="body" value="/WEB-INF/views/board_1/1on1write.jsp" />
+   </definition>
+   <definition name="board1/board1Updateform" extends="baseLayout2">
+      <put-attribute name="title" value="1대1게시판 수정" />
+      <put-attribute name="body" value="/WEB-INF/views/board_1/1on1update.jsp" />
+   </definition>
+      <definition name="board1/board1Reviewform" extends="baseLayout2">
+      <put-attribute name="title" value="1대1게시판 답글" />
+      <put-attribute name="body" value="/WEB-INF/views/board_1/1on1Review.jsp" />
+   </definition>
+   
+   <!-- 리뷰 보드테이블 -->
+   
+   <definition name="/boardGr/selectBoardGrList" extends="baseLayout2">
+      <put-attribute name="title" value="리뷰게시판 메인" />
+      <put-attribute name="body" value="/WEB-INF/views/board_gr/gr_search.jsp" />
+   </definition>
+   <definition name="/boardGr/bGrDetail" extends="baseLayout2">
+      <put-attribute name="title" value="리뷰보드디테일" />
+      <put-attribute name="body" value="/WEB-INF/views/board_gr/grDetail.jsp" />
+   </definition>
+   <definition name="/boardGr/boardGrWrite" extends="baseLayout2">
+      <put-attribute name="title" value="리뷰게시판 작성" />
+      <put-attribute name="body" value="/WEB-INF/views/board_gr/gr_Insert.jsp" />
+   </definition>
+   <definition name="boardGr/boardGrUpdateform" extends="baseLayout2">
+      <put-attribute name="title" value="리뷰게시판 수정" />
+      <put-attribute name="body" value="/WEB-INF/views/board_gr/grUpdate.jsp" />
+   </definition>
+   <definition name="boardGr/boardGrReviewform" extends="baseLayout2">
+   <put-attribute name="title" value="리뷰게시판 답글" />
+   <put-attribute name="body" value="/WEB-INF/views/board_gr/GrReview.jsp" />
+   </definition>
+      <definition name="/boardGr/selectMyBoardGrList" extends="baseLayout2">
+   <put-attribute name="title" value="리뷰게시판" />
+   <put-attribute name="body" value="/WEB-INF/views/board_gr/gr_search.jsp" />
+   </definition>
+      <definition name="/boardGr/selectSellerBoardGrList" extends="baseLayout2">
+   <put-attribute name="title" value="리뷰게시판" />
+   <put-attribute name="body" value="/WEB-INF/views/board_gr/gr_search.jsp" />
+   </definition>
+      <definition name="boardGr/boardGrReviewUpdateform" extends="baseLayout2">
+   <put-attribute name="title" value="리뷰게시판" />
+   <put-attribute name="body" value="/WEB-INF/views/board_gr/GrReviewUpdate.jsp" />
+   </definition>
+   
+</tiles-definitions>

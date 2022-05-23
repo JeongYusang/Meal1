@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition name="baseLayout2"
+		template="/WEB-INF/views/common/mylayout.jsp">
+		<put-attribute name="title" value="레이아웃 페이지" />
+		<put-attribute name="header"
+			value="/WEB-INF/views/common/header.jsp" />
+		<put-attribute name="side"
+			value="/WEB-INF/views/common/side.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer"
+			value="/WEB-INF/views/common/footer.jsp" />
+		<put-attribute name="quickMenu"
+			value="/WEB-INF/views/common/quickMenu.jsp" />
+	</definition>
+	<!--일반회원  -->
+	<definition name="/main/cart" extends="baseLayout2">
+		<put-attribute name="title" value="장바구니" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/cart/cart.jsp" />
+	</definition>
+	
+	<definition name="/user/mypagehome" extends="baseLayout2">
+		<put-attribute name="title" value="유저마이페이지" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/user/mypagehome.jsp"/>
+	</definition>
+
+	<definition name="/user/mypagecancel" extends="baseLayout2">
+		<put-attribute name="title" value="유저주문취소창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/user/mypagecancel.jsp"/>
+	</definition>
+		<definition name="/user/mymileage" extends="baseLayout2">
+		<put-attribute name="title" value="회원 마일리지" />
+		<put-attribute name="body" value="/WEB-INF/views/user/mileage.jsp" />
+	</definition>
+	<definition name="/user/myreview" extends="baseLayout2">
+		<put-attribute name="title" value="회원 리뷰" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/user/myreview.jsp" />
+	</definition>
+	
+	<!--판매자  -->
+	
+	
+	<!-- 어드민 -->
+</tiles-definitions>

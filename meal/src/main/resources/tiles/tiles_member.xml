@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<!-- 회원가입 -->
+	<definition name="/main/memberFormS" extends="baseLayout">
+		<put-attribute name="title" value="회원가입선택" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/memberFormSelect.jsp" />
+	</definition>
+
+	<definition name="/main/memberForm" extends="baseLayout">
+		<put-attribute name="title" value="일반회원가입" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/memberForm.jsp" />
+	</definition>
+
+	<definition name="/main/agreement" extends="baseLayout">
+		<put-attribute name="title" value="약관" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/agreement.jsp" />
+	</definition>
+	<definition name="/main/personalAgree" extends="baseLayout">
+		<put-attribute name="title" value="약관" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/personalAgree.jsp" />
+	</definition>
+	<definition name="/member/memberResult" extends="baseLayout">
+		<put-attribute name="title" value="일반회원결과창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/memberFormResult.jsp" />
+	</definition>
+
+	<definition name="/member/memberUpdateForm" extends="baseLayout">
+		<put-attribute name="title" value="회원 수정창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/user/userUpdateForm.jsp" />
+	</definition>
+		<definition name="/member/deleteForm" extends="baseLayout2">
+		<put-attribute name="title" value="회원 삭제창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/user/userDelete.jsp" />
+	</definition>
+
+
+	<!--판매자 회원가입 -->
+	<definition name="/seller/sellerForm" extends="baseLayout">
+		<put-attribute name="title" value="판매자 회원가입" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/seller/sellerForm.jsp" />
+	</definition>
+
+	<definition name="/seller/sellerUpdateForm" extends="baseLayout">
+		<put-attribute name="title" value="판매자 수정창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/seller/sellerUpdateForm.jsp" />
+	</definition>
+
+
+
+
+	<!--아이디/비밀번호찾기 -->
+	<definition name="/main/FindID" extends="baseLayout">
+		<put-attribute name="title" value="아이디찾기" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/Find_ID.jsp" />
+	</definition>
+
+	<definition name="/main/FindIDResult" extends="baseLayout">
+		<put-attribute name="title" value="아이디찾기결과창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/Find_ID_Result.jsp" />
+	</definition>
+
+	<definition name="/main/FindPW" extends="baseLayout">
+		<put-attribute name="title" value="비밀번호찾기" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/Find_PW.jsp" />
+	</definition>
+
+	<definition name="/main/FindPWResult" extends="baseLayout">
+		<put-attribute name="title" value="비밀번호찾기결과창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/Find_PW_Result.jsp" />
+	</definition>
+	
+	
+		<definition name="/user/userUpdate" extends="baseLayout2">
+		<put-attribute name="title" value="약관" />
+		<put-attribute name="body" value="/WEB-INF/views/user/userUpdateForm.jsp" />
+	</definition>
+</tiles-definitions>

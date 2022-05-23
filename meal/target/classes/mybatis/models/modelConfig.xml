@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+
+		<typeAlias type="com.meal.member.vo.MemberVO" alias="memberVO" />
+		<typeAlias type="com.meal.seller.vo.SellerVO" alias="sellerVO" />
+		<typeAlias type="com.meal.seller.vo.Img_sVO" alias="Img_sVO" />
+		<typeAlias type="com.meal.board.one.vo.Board1VO" alias="Board1VO" />
+		<typeAlias type="com.meal.board.gr.vo.BoardGrVO" alias="BoardGrVO" />
+		<typeAlias type="com.meal.board.gr.vo.Img_grVO" alias="Img_grVO" />
+		<typeAlias type="java.util.HashMap" alias="Map" />
+		<typeAlias type="com.meal.admin.vo.AdminVO" alias="adminVO" />
+		<typeAlias type="com.meal.order.vo.OrderVO" alias="orderVO" />
+		<typeAlias type="com.meal.goods.vo.GoodsVO" alias="GoodsVO" />
+		<typeAlias type="com.meal.goods.vo.Img_gVO" alias="Img_gVO" />
+		<typeAlias type="com.meal.admin.vo.ReasonVO" alias="ReasonVO" />
+	</typeAliases>
+</configuration>
+
+
+

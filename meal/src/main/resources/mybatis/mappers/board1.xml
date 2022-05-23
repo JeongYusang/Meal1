@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.board1">
+
+	<resultMap id="board1Result" type="Board1VO">
+		<result property="b_1_id" column="b_1_id" />
+		<result property="reg_id" column="reg_id" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="creDate" column="creDate" />
+		<result property="parentNo" column="parentNo" />
+		<result property="u_id" column="u_id" />
+		<result property="s_id" column="s_id" />
+		<result property="a_id" column="a_id" />
+		<result property="secret" column="secret" />
+		
+	</resultMap>
+
+	<select id="listBoard1" resultType="Board1VO">
+       <![CDATA[
+            select * from board_1 where u_id = #{u_id}   
+             ]]>
+	</select>
+
+	<insert id="board1Write" parameterType="Board1VO">
+  <![CDATA[
+       insert into board_1(
+       reg_id,
+       title,
+       content,
+       u_id,
+       s_id,
+       a_id,
+       secret,
+       parentNo
+      )
+           values(#{reg_id},
+                  #{title},
+                  #{content},
+                  #{u_id},
+                  #{s_id},
+                  #{a_id},
+                  #{secret},
+                  #{parentNo}) 
+   ]]>
+	</insert>
+
+<update id ="board1Update" parameterType="Map">
+<![CDATA[
+update board_1 set content = #{content}, secret = #{secret} where b_1_id = #{b_1_id} 
+]]>
+</update>
+
+	<select id="board1Page" resultMap="board1Result"
+		parameterType="Map">
+   <![CDATA[
+	   select R1.* from (select * from board_1) R1 where parentNo = 0 order by b_1_id desc limit #{start} , #{end} 
+	   ]]>
+	</select>
+
+	<select id="selectBoard1allList" resultMap="board1Result">
+       <![CDATA[
+            select * from board_1
+             ]]>
+	</select>
+
+	<select id="board1View" resultType="Board1VO" parameterType="Integer">
+       <![CDATA[
+            select * from board_1 where b_1_id = #{b_1_id}   
+          
+      ]]>
+	</select>
+	
+	<select id="board1ViewReview" resultMap="board1Result" parameterType="Integer">
+       <![CDATA[
+            select * from board_1 where parentNo = #{b_1_id}   
+          
+      ]]>
+	</select>
+	<delete id = "board1Delete1" parameterType="Integer">
+	<![CDATA[
+	delete from board_1 where b_1_id=#{b_1_id}
+	]]>
+	</delete>
+	<delete id = "board1Delete2" parameterType="Integer">
+	<![CDATA[
+	delete from board_1 where parentNo = #{b_1_id}
+	]]>
+	</delete>
+	
+
+</mapper>
+
+   
