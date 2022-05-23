@@ -278,7 +278,7 @@ tr.border-bottom td {
 										</c:choose></td>
 									<td>비밀글입니다</td>
 									<td>****</td>
-									<td>${item.creDate}</td>
+									<td>${item.creDate}123123123</td>
 									<td>${item.compare}</td>
 								</c:when>
 							</c:choose>
