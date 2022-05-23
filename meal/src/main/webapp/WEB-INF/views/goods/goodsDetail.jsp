@@ -246,7 +246,7 @@ tr.border-bottom td {
                src="${contextPath}/resources/image/mini4.PNG" width="50px"
                height="50px" /> <br>
             <div id="text">
-               <h4>게레게레겟겟</h4>
+               <h4>민슈민슈민슈</h4>
                <h4>
                   <b>유통기한</b> : 수령일 포함 2일 이상 남은 제품을 보내드립니다
                </h4>
