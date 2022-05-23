@@ -246,7 +246,7 @@ tr.border-bottom td {
                src="${contextPath}/resources/image/mini4.PNG" width="50px"
                height="50px" /> <br>
             <div id="text">
-               <h4>간편하게 집에서 찹스테이크를 해먹을 수 있습니다</h4>
+               <h4>게레게레겟겟</h4>
                <h4>
                   <b>유통기한</b> : 수령일 포함 2일 이상 남은 제품을 보내드립니다
                </h4>
