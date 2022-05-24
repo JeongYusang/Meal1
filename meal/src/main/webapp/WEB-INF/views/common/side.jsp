@@ -142,8 +142,7 @@
 						<tr>
 							<th><h1>비밀번호</h1></th>
 							<td><input type="password" name="pw1" class="pw"
-								style="height: 22px; margin-top: 10px; margin-left: 10px;" />
-								</td>
+								style="height: 22px; margin-top: 10px; margin-left: 10px;" /></td>
 						</tr>
 					</table>
 					<center>
@@ -219,7 +218,8 @@
 						<h2>나의활동</h2> <br>
 						<ul class="sidebar-content">
 							<li><a href="${contextPath}/boardGr/selectSellerBoardGrList.do">리뷰답글</a></li>
-							<li><a href="#">문의답변</a></li>
+                     		<li><a href="${contextPath}/boardGq/selectSellerBoardGqList.do">문의답변</a></li>
+
 						</ul>
 					</li>
 					<li class="side-list">
@@ -270,7 +270,8 @@
 					<li class="side-list">
 						<H2>구매정보</H2>
 						<ul class="sidebar-content">
-						<li><a href="${contextPath}/member/memberDetail.do?id=${memberInfo.u_id}">회원정보보기</a></li>
+							<li><a
+								href="${contextPath}/member/memberDetail.do?id=${memberInfo.u_id}">회원정보보기</a></li>
 							<li><a href="${contextPath}/user/mypagehome.do">구매내역</a></li>
 							<li><a href="${contextPath}/user/mypagecancel.do">취소/반품/교환내역</a></li>
 						</ul>
@@ -284,10 +285,11 @@
 							<li><a href="${contextPath}/user/mymileage.do">마일리지</a></li>
 							<li><a href="${contextPath}/board1/selectallBoard1.do">나의
 									1대1 문의</a></li>
-							<li><a href="${contextPath}/user/mypageboard_gq.do">나의
+							<li><a href="${contextPath}/boardGq/selectMyBoardGqList.do">나의
 									상품 문의</a></li>
 							<li><a href="${contextPath}/boardGr/selectMyBoardGrList.do">나의
 									상품 후기</a></li>
+
 						</ul>
 					</li>
 
