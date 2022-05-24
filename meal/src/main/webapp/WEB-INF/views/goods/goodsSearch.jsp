@@ -238,10 +238,11 @@ margin: 30px;
 								<th onclick="sortTable(3)" width="100px">수량</th>
 								<th onclick="sortTable(4)" width="100px">가격</th>
 								<th onclick="sortTable(5)" width="120px">등록상태</th>
-								<th onclick="sortTable(6)" width="70px">등록날짜</th>
-								<th onclick="sortTable(7)" width="70px">할인유무</th>
+								<th onclick="sortTable(6)" width="70px">할인</th>
+								<th onclick="sortTable(7)" width="100px">할인기간</th>
 								<th onclick="sortTable(8)" width="100px">인분수</th>
 								<th onclick="sortTable(9)" width="100px">보관방법</th>
+								<th onclick="sortTable(10)" width="70px">등록날짜</th>
 								<th>수정 및 삭제</th>
 							</tr>
 						</thead>
@@ -262,10 +263,15 @@ margin: 30px;
 										<td>${item.g_amount}</td>
 										<td>${item.g_price}</td>
 										<td>${item.g_state}</td>
-										<td>${item.g_creDate}</td>
-										<td>${item.g_sale}</td>
+										<!-- 추후 표기방식 변경 예정 -->
+										<td>${item.g_saleWon}, ${item.g_salePer}</td>
+										<td>
+											<fmt:formatDate value="${item.g_saleDate1}" type="Date" dateStyle="short"/> ~ 
+											<fmt:formatDate value="${item.g_saleDate2}" type="Date" dateStyle="short"/>
+										</td>
 										<td>${item.g_inbun}</td>
 										<td>${item.g_bang}</td>
+										<td><fmt:formatDate value="${item.g_creDate}" type="Date" dateStyle="short" /></td>
 										<td><input type="button" value="수정하기" class="checkpw"><br><br><input type="button" value="삭제하기" ></td>
 									</tr>
 								</c:forEach>

@@ -28,6 +28,8 @@
 		<result property="g_nan" column="g_nan" />
 		<result property="g_inbun" column="g_inbun" />
 		<result property="g_bang" column="g_bang" />
+		<result property="g_saleWon" column="g_saleWon" />
+		<result property="g_salePer" column="g_salePer" />
 	</resultMap>
 
 	<resultMap id="img_GResult" type="Img_gVO">
@@ -51,7 +53,11 @@
 						g_time,
 						g_nan,
 						g_inbun,
-						g_bang						
+						g_bang,
+						g_salePer,
+						g_saleWon,
+						g_saleDate1,
+						g_saleDate2
 						)
 					values(
 						#{s_id},
@@ -65,7 +71,11 @@
 						#{g_time},
 					  	#{g_nan},
 					  	#{g_inbun},	
-					  	#{g_bang}
+					  	#{g_bang},
+					  	#{g_salePer},
+					  	#{g_saleWon},
+					  	#{g_saleDate1},
+					  	#{g_saleDate2}
 					 	)
 		]]>
 	</insert>
@@ -147,11 +157,13 @@ g_price = #{g_price},
 g_sale = #{g_sale},
 g_detail1 = #{g_detail1},
 g_allergy = #{g_allergy}, 
-g_nan = #{g_nan}
-g_inbun = #{g_inbun}
-g_bang = #{g_bang}
-g_saleDate1 = #{g_saleDate1}
-g_saleDate2 = #{g_saleDate2}
+g_nan = #{g_nan},
+g_inbun = #{g_inbun},
+g_bang = #{g_bang},
+g_saleDate1 = #{g_saleDate1},
+g_saleDate2 = #{g_saleDate2},
+g_saleWon = #{g_saleWon},
+g_salePer = #{g_salePer}
  where g_id =#{g_id}
 ]]>
 

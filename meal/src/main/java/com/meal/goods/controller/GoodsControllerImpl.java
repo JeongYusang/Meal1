@@ -84,7 +84,7 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 		// newGoodsMap내부에 키g_name을 이용하여 A에 바인딩
 		String A = (String) newGoodsMap.get("g_name");
 		// 바인딩된 A에 sellerInfo에 등러있던 s_Wname을 더하여 g_name에 바인딩
-		String g_name = sellerVO.getS_Wname() + " " + A;
+		String g_name = "[" + sellerVO.getS_Wname() + "]" + " " + A;
 		System.out.println("g_name : " + g_name);
 		// 바인딩한 g_name 값을 키g_name에 바인딩하여 newGoodsMap에 저장함
 		newGoodsMap.put("g_name", g_name);
