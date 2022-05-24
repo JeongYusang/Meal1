@@ -7,11 +7,11 @@
 
 
 <!-- 1대1 보드테이블 -->
-   <definition name="/board1/selectBoard1List" extends="baseLayout2">
-      <put-attribute name="title" value="1대1게시판 메인" />
-      <put-attribute name="body"
-         value="/WEB-INF/views/board_1/1on1search.jsp" />
-   </definition>
+	<definition name="/board1/selectBoard1List" extends="baseLayout2">
+		<put-attribute name="title" value="1대1게시판 메인" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/board_1/1on1search.jsp" />
+	</definition>
   <definition name="/board1/b1Detail" extends="baseLayout2">
       <put-attribute name="title" value="보드디테일" />
       <put-attribute name="body" value="/WEB-INF/views/board_1/b1Detail.jsp" />
@@ -32,37 +32,44 @@
    
    <!-- 리뷰 보드테이블 -->
    
-   <definition name="/boardGr/selectBoardGrList" extends="baseLayout2">
-      <put-attribute name="title" value="리뷰게시판 메인" />
-      <put-attribute name="body" value="/WEB-INF/views/board_gr/gr_search.jsp" />
-   </definition>
-   <definition name="/boardGr/bGrDetail" extends="baseLayout2">
-      <put-attribute name="title" value="리뷰보드디테일" />
-      <put-attribute name="body" value="/WEB-INF/views/board_gr/grDetail.jsp" />
-   </definition>
-   <definition name="/boardGr/boardGrWrite" extends="baseLayout2">
-      <put-attribute name="title" value="리뷰게시판 작성" />
-      <put-attribute name="body" value="/WEB-INF/views/board_gr/gr_Insert.jsp" />
-   </definition>
-   <definition name="boardGr/boardGrUpdateform" extends="baseLayout2">
-      <put-attribute name="title" value="리뷰게시판 수정" />
-      <put-attribute name="body" value="/WEB-INF/views/board_gr/grUpdate.jsp" />
-   </definition>
-   <definition name="boardGr/boardGrReviewform" extends="baseLayout2">
-   <put-attribute name="title" value="리뷰게시판 답글" />
-   <put-attribute name="body" value="/WEB-INF/views/board_gr/GrReview.jsp" />
-   </definition>
-      <definition name="/boardGr/selectMyBoardGrList" extends="baseLayout2">
-   <put-attribute name="title" value="리뷰게시판" />
-   <put-attribute name="body" value="/WEB-INF/views/board_gr/gr_search.jsp" />
-   </definition>
-      <definition name="/boardGr/selectSellerBoardGrList" extends="baseLayout2">
-   <put-attribute name="title" value="리뷰게시판" />
-   <put-attribute name="body" value="/WEB-INF/views/board_gr/gr_search.jsp" />
-   </definition>
-      <definition name="boardGr/boardGrReviewUpdateform" extends="baseLayout2">
-   <put-attribute name="title" value="리뷰게시판" />
-   <put-attribute name="body" value="/WEB-INF/views/board_gr/GrReviewUpdate.jsp" />
-   </definition>
-   
+	<definition name="/boardGr/selectBoardGrList" extends="baseLayout2">
+		<put-attribute name="title" value="리뷰게시판 메인" />
+		<put-attribute name="body" value="/WEB-INF/views/board_gr/gr_search.jsp" />
+	</definition>
+	
+	<definition name="/boardGr/gr_detail" extends="baseLayout2">
+		<put-attribute name="title" value="리뷰보드디테일" />
+		<put-attribute name="body" value="/WEB-INF/views/board_gr/gr_detail.jsp" />
+	</definition>
+	
+	<definition name="/boardGr/boardGrWrite" extends="baseLayout2">
+		<put-attribute name="title" value="리뷰게시판 작성" />
+		<put-attribute name="body" value="/WEB-INF/views/board_gr/gr_insert.jsp" />
+	</definition>
+	
+	<definition name="boardGr/boardGrUpdateform" extends="baseLayout2">
+		<put-attribute name="title" value="리뷰게시판 수정" />
+		<put-attribute name="body" value="/WEB-INF/views/board_gr/gr_update.jsp" />
+	</definition>
+	
+	<definition name="boardGr/boardGrReviewform" extends="baseLayout2">
+	<put-attribute name="title" value="리뷰게시판 답글" />
+	<put-attribute name="body" value="/WEB-INF/views/board_gr/gr_review.jsp" />
+	</definition>
+	
+		<definition name="/boardGr/selectMyBoardGrList" extends="baseLayout2">
+	<put-attribute name="title" value="내 리뷰 보기" />
+	<put-attribute name="body" value="/WEB-INF/views/board_gr/gr_my_search.jsp" />
+	</definition>
+	
+		<definition name="/boardGr/selectSellerBoardGrList" extends="baseLayout2">
+	<put-attribute name="title" value="내 상품 리뷰 보기" />
+	<put-attribute name="body" value="/WEB-INF/views/board_gr/gr_my_search.jsp" />
+	</definition>
+	
+		<definition name="boardGr/boardGrReviewUpdateform" extends="baseLayout2">
+	<put-attribute name="title" value="리뷰 답글 수정" />
+	<put-attribute name="body" value="/WEB-INF/views/board_gr/gr_review_update.jsp" />
+	</definition>
+	
 </tiles-definitions>

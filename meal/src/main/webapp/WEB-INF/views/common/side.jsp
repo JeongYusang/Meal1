@@ -190,34 +190,43 @@
 
 				<c:when test="${not empty sellerInfo}">
 					<li class="side-list">
-						<H2>주요기능</H2> <br>
+						<H2>판매정보</H2> <br>
 						<ul class="sidebar-content">
-							<li><a href="${contextPath}/admin/goods/adminGoodsMain.do">상품관리</a></li>
-							<li><a href="${contextPath}/admin/order/adminOrderMain.do">주문관리</a></li>
-							<li><a href="${contextPath}/admin/member/adminMemberMain.do">회원관리</a></li>
-							<li><a href="#">배송관리</a></li>
-							<li><a href="#">게시판관리</a></li>
+							<li><a href="${contextPath}/admin/goods/adminGoodsMain.do">판매내역</a></li>
+							<li><a href="${contextPath}/admin/order/adminOrderMain.do">배송중인상품</a></li>
+							<li><a href="${contextPath}/admin/member/adminMemberMain.do">취소/반품/교환내역</a></li>
 						</ul>
 					</li>
+					<li class="side-list">
+						<h2>상품정보</h2> <br>
+						<ul class="sidebar-content">
+							<li><a href="${contextPath}/mypage/listMyOrderHistory.do">등록된상품</a></li>
+							<li><a href="#">상품등록</a></li>
+							<li><a href="#">상품수정</a></li>
+							<li><a href="#">상품삭제</a></li>
+						</ul>
+					</li>
+					<li class="side-list">
+						<h2>매출정보</h2> <br>
+						<ul class="sidebar-content">
+							<li><a href="${contextPath}/mypage/myDetailInfo.do">총매출내역</a></li>
+							<li><a href="#">상품별매출내역</a></li>
+							<li><a href="#">구매자별 매출내역</a></li>
 
-					<li class="side-list">
-						<h2>주문내역</h2> <br>
-						<ul class="sidebar-content">
-							<li><a href="${contextPath}/mypage/listMyOrderHistory.do">주문내역/배송
-									조회</a></li>
-							<li><a href="#">반품/교환 신청 및 조회</a></li>
-							<li><a href="#">취소 주문 내역</a></li>
-							<li><a href="#">세금 계산서</a></li>
 						</ul>
 					</li>
 					<li class="side-list">
-						<h2>정보내역</h2> <br>
+						<h2>나의활동</h2> <br>
 						<ul class="sidebar-content">
-							<li><a href="${contextPath}/mypage/myDetailInfo.do">회원정보관리</a></li>
-							<li><a href="#">나의 주소록</a></li>
-							<li><a href="#">개인정보 동의내역</a></li>
-							<li><button type="button" class="checkpw">회원수정</button></li>
-							<li><button type="button" class="checkpw1">회원탈퇴</button></li>
+							<li><a href="${contextPath}/boardGr/selectSellerBoardGrList.do">리뷰답글</a></li>
+							<li><a href="#">문의답변</a></li>
+						</ul>
+					</li>
+					<li class="side-list">
+						<h2>나의활동</h2> <br>
+						<ul class="sidebar-content">
+							<li><a href="#">정보수정</a></li>
+							<li><a href="#">회원탈퇴</a></li>
 						</ul>
 					</li>
 				</c:when>
@@ -276,7 +285,8 @@
 									1대1 문의</a></li>
 							<li><a href="${contextPath}/user/mypageboard_gq.do">나의
 									상품 문의</a></li>
-							<li><a href="${contextPath}/user/myreview.do">나의 상품 후가</a></li>
+							<li><a href="${contextPath}/boardGr/selectMyBoardGrList.do">나의
+									상품 후기</a></li>
 						</ul>
 					</li>
 
