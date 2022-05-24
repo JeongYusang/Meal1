@@ -72,4 +72,48 @@
 	<put-attribute name="body" value="/WEB-INF/views/board_gr/gr_review_update.jsp" />
 	</definition>
 	
+	<!-- 상품문의 보드테이블 -->
+	
+	<definition name="/boardGq/selectBoardGqList" extends="baseLayout2">
+		<put-attribute name="title" value="상품문의 게시판 메인" />
+		<put-attribute name="body" value="/WEB-INF/views/board_gq/gq_search.jsp" />
+	</definition>
+	
+	<definition name="/boardGq/gq_detail" extends="baseLayout2">
+		<put-attribute name="title" value="상품문의 보드디테일" />
+		<put-attribute name="body" value="/WEB-INF/views/board_gq/gq_detail.jsp" />
+	</definition>
+	
+	<definition name="/boardGq/boardGqWrite" extends="baseLayout2">
+		<put-attribute name="title" value="상품문의 게시판 작성" />
+		<put-attribute name="body" value="/WEB-INF/views/board_gq/gq_insert.jsp" />
+	</definition>
+	
+	<definition name="boardGq/boardGqUpdateform" extends="baseLayout2">
+		<put-attribute name="title" value="상품문의게시판 수정" />
+		<put-attribute name="body" value="/WEB-INF/views/board_gq/gq_update.jsp" />
+	</definition>
+	
+	<definition name="boardGq/boardGqReviewform" extends="baseLayout2">
+	<put-attribute name="title" value="상품문의게시판 답글" />
+	<put-attribute name="body" value="/WEB-INF/views/board_gq/gq_review.jsp" />
+	</definition>
+	
+		<definition name="/boardGq/selectMyBoardGqList" extends="baseLayout2">
+	<put-attribute name="title" value="내 상품문의 보기" />
+	<put-attribute name="body" value="/WEB-INF/views/board_gq/gq_my_search.jsp" />
+	</definition>
+	
+		<definition name="/boardGq/selectSellerBoardGqList" extends="baseLayout2">
+	<put-attribute name="title" value="내 상품문의 보기" />
+	<put-attribute name="body" value="/WEB-INF/views/board_gq/gq_my_search.jsp" />
+	</definition>
+	
+		<definition name="boardGq/boardGqReviewUpdateform" extends="baseLayout2">
+	<put-attribute name="title" value="상품문의 답글 수정" />
+	<put-attribute name="body" value="/WEB-INF/views/board_gq/gq_review_update.jsp" />
+	</definition>
+	
+	
+	
 </tiles-definitions>

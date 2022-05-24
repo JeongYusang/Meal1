@@ -11,6 +11,8 @@
 		<typeAlias type="com.meal.board.one.vo.Board1VO" alias="Board1VO" />
 		<typeAlias type="com.meal.board.gr.vo.BoardGrVO" alias="BoardGrVO" />
 		<typeAlias type="com.meal.board.gr.vo.Img_grVO" alias="Img_grVO" />
+		<typeAlias type="com.meal.board.gq.vo.BoardGqVO" alias="BoardGqVO" />
+		<typeAlias type="com.meal.board.gq.vo.Img_gqVO" alias="Img_gqVO" />
 		<typeAlias type="java.util.HashMap" alias="Map" />
 		<typeAlias type="com.meal.admin.vo.AdminVO" alias="adminVO" />
 		<typeAlias type="com.meal.order.vo.OrderVO" alias="orderVO" />

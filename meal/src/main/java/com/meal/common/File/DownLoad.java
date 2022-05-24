@@ -5,15 +5,19 @@ import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.meal.board.gq.service.BoardGqService;
+import com.meal.board.gq.vo.BoardGqVO;
+import com.meal.board.gr.service.BoardGrService;
+import com.meal.board.gr.vo.BoardGrVO;
 import com.meal.goods.service.GoodsService;
 import com.meal.goods.vo.GoodsVO;
 import com.meal.goods.vo.Img_gVO;
@@ -21,13 +25,23 @@ import com.meal.goods.vo.Img_gVO;
 import net.coobird.thumbnailator.Thumbnails;
 @Controller
 public class DownLoad {
-
+	
 	@Autowired
-	private Img_gVO img_gVO;
+	private GoodsService goodsService;
 	@Autowired
 	private GoodsVO goodsVO;
 	@Autowired
-	private GoodsService goodsService;
+	private Img_gVO img_gVO;
+	@Autowired
+	private BoardGrService boardGrService;
+	@Autowired
+	private BoardGrVO boardGrVO;
+	@Autowired
+	private BoardGqService boardGqService;
+	@Autowired
+	private BoardGqVO boardGqVO;
+	
+
 
 	private static String CURR_IMAGE_PATH = "C:\\Meal\\Image";
 	// 경로 C:\\Meal\\Image\\goods\\ g_id\\cate \\fileName(상품기준)
@@ -114,4 +128,39 @@ public class DownLoad {
 		out.write(buffer);
 		out.close();
 	}
+	//게시판에 관한 썸네일에 관한 다운로드
+	@RequestMapping(value = "/thumbnailsBoard.do", method = { RequestMethod.POST, RequestMethod.GET })
+	protected void thumbnails(@RequestParam("b_gr_id") int b_gr_id, HttpServletResponse response) throws Exception {
+		BoardGrVO boardGrVO = boardGrService.grdownload(b_gr_id);
+		String fileName = boardGrVO.getFileName();
+		int g_id = boardGrVO.getG_id();
+		OutputStream out = response.getOutputStream();
+		String filePath = CURR_IMAGE_PATH + "\\" + "goods" + "\\" + g_id + "\\" + "Gr" + "\\" + b_gr_id + "\\" + fileName;
+		File image = new File(filePath);
+
+		if (image.exists()) {
+			Thumbnails.of(image).size(300, 300).outputFormat("png").toOutputStream(out);
+		}
+		byte[] buffer = new byte[1024 * 8];
+		out.write(buffer);
+		out.close();
+	}
+	
+	@RequestMapping(value = "/thumbnailsBoardGq.do", method = { RequestMethod.POST, RequestMethod.GET })
+	protected void thumbnailsGq(@RequestParam("b_gq_id") int b_gq_id, HttpServletResponse response) throws Exception {
+		BoardGqVO boardGqVO = boardGqService.gqdownload(b_gq_id);
+		String fileName = boardGqVO.getFileName();
+		int g_id = boardGqVO.getG_id();
+		OutputStream out = response.getOutputStream();
+		String filePath = CURR_IMAGE_PATH + "\\" + "goods" + "\\" + g_id + "\\" + "Gq" + "\\" + b_gq_id + "\\" + fileName;
+		File image = new File(filePath);
+
+		if (image.exists()) {
+			Thumbnails.of(image).size(300, 300).outputFormat("png").toOutputStream(out);
+		}
+		byte[] buffer = new byte[1024 * 8];
+		out.write(buffer);
+		out.close();
+	}
+
 }

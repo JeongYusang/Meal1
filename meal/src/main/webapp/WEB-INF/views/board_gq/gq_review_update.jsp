@@ -25,7 +25,7 @@ function readURL(input) {
 		}
 	}
 	function backToList(obj) {
-		obj.action = "${contextPath}/boardGr/gr_detail.do?b_gr_id=${boardGrVO.parentNo}";
+		obj.action = "${contextPath}/boardGq/gq_detail.do?b_gq_id=${boardGqVO.parentNo}";
 		obj.submit();
 	}
 </script>
@@ -185,21 +185,21 @@ function readURL(input) {
 	font-size: 60px;
 }
 
-#grHead {
+#gqHead {
 	margin: 10px;
 }
 
-#grHead #title {
+#gqHead #title {
 	font-size: 20px;
 	float: left;
 }
 
-#grHead #date {
+#gqHead #date {
 	float: right;
 	margin: 5px;
 }
 
-#grHead #id {
+#gqHead #id {
 	margin: 5px;
 	float: right
 }
@@ -334,7 +334,7 @@ function result(){
 	<br>
 	<div class='board-wrap'>
 		<form name="frmArticle" method="post"
-			action="${contextPath}/boardGr/boardGrUpdate.do"
+			action="${contextPath}/boardGq/boardGqUpdate.do"
 			enctype="multipart/form-data">
 			<div class='table-wrap'>
 				<table>
@@ -342,10 +342,10 @@ function result(){
 					<tr>
 						<th class="td1">작성자 아이디</th>
 						<td class="td3">
-							<input class="B_Uid" type=hidden value="${boardGrVO.b_gr_id}" name="b_gr_id" /> 
-							<input class="B_Uid" type=text value="${boardGrVO.s_id }" name="_s_id" disabled /> 
-							<input type="hidden" value="${boardGrVO.s_id }" name="s_id">
-							<input type="hidden"value="${boardGrVO.parentNo }" name="parentNo">
+							<input class="B_Uid" type=hidden value="${boardGqVO.b_gq_id}" name="b_gq_id" /> 
+							<input class="B_Uid" type=text value="${boardGqVO.s_id }" name="_s_id" disabled /> 
+							<input type="hidden" value="${boardGqVO.s_id }" name="s_id">
+							<input type="hidden"value="${boardGqVO.parentNo }" name="parentNo">
 							<input type="hidden" value="seller" name="reg_id">
 							
 							<div class="secret-wrap">
@@ -355,20 +355,20 @@ function result(){
 					<tr>
 						<th class="td1">제목</th>
 						<td class="td2"><input type=text value="타이틀필드" name="title"
-							id="i_title" value="${boardGrVO.title}" /></td>
+							id="i_title" value="${boardGqVO.title}" /></td>
 
 					</tr>
 					<tr>
 						<th class="td1">내용</th>
 						<td class="td2"><textarea rows="20" cols="70" name="content"
-								id="i_content">${boardGrVO.content}</textarea></td>
+								id="i_content">${boardGqVO.content}</textarea></td>
 					</tr>
 					<tr>
 						<th class="td1">이미지</th>
 						<td class="td2"><c:forEach var="imageList"
 								items="${imageList}">
 								<<img id="g_image" width="300px" height="300px"
-									src="${contextPath}/thumbnailsBoard.do?b_gr_id=${boardGrVO.b_gr_id}&${imageList.fileName}">
+									src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${boardGqVO.b_gq_id}&${imageList.fileName}">
 							</c:forEach></td>
 					<tr height="200px">
 						<th class="td1">이미지파일 첨부 <input class="filecss	" type="file"

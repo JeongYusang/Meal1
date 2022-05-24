@@ -172,7 +172,7 @@
 			<h1>리뷰 작성</h1>
 		</div>
 		<form name="frmArticle" id="myform" method="post"
-			action="${contextPath}/boardGr/boardGrinsert.do"
+			action="${contextPath}/boardGq/boardGqinsert.do"
 			enctype="multipart/form-data">
 			<div class='table-wrap'>
 				<table>
@@ -184,10 +184,10 @@
 							value="2323" />
 							<div id="goods-info">
 								<br> <img
-									class="${contextPath}/thumbnailsBoard.do?g_id=${boardGrInfo.g_id}" />
+									class="${contextPath}/thumbnailsBoardGq.do?g_id=${boardGqInfo.g_id}" />
 								<div id="goodstext">
-									<h3>${boardGrInfo.s_id}</h3>
-									<h3>${boardGrInfo.g_name}</h3>
+									<h3>${boardGqInfo.s_id}</h3>
+									<h3>${boardGqInfo.g_name}</h3>
 								</div>
 							</div></td>
 					</tr>
@@ -195,7 +195,7 @@
 						<th class="td1">작성자 아이디</th>
 						<td class="td3"><input class="B_Uid" type=text
 							value="${ memberInfo.u_id}" name="_u_id" disabled /> <input
-							type="hidden" value="${memberInfo.u_id }" name="u_id"> <input
+							type="hidden" value="${memberInfo.u_id}" name="u_id"> <input
 							type="hidden" value="user" name="reg_id"><input
 							type="hidden" value="0" name="parentNo">
 							<div class="secret-wrap">
@@ -207,19 +207,6 @@
 						<td class="td2"><input type=text value="타이틀필드" name="title"
 							id="i_title" /></td>
 
-					</tr>
-					<tr>
-						<th class="td1">별점</th>
-						<td><fieldset>
-								<span class="text-bold"></span> <input type="radio" name="star"
-									value="5" id="rate1"><label for="rate1">★</label> <input
-									type="radio" name="star" value="4" id="rate2"><label
-									for="rate2">★</label> <input type="radio" name="star" value="3"
-									id="rate3"><label for="rate3">★</label> <input
-									type="radio" name="star" value="2" id="rate4"><label
-									for="rate4">★</label> <input type="radio" name="star" value="1"
-									id="rate5"><label for="rate5">★</label>
-							</fieldset></td>
 					</tr>
 
 					<tr>
