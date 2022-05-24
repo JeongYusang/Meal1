@@ -19,34 +19,53 @@
 }
 
 .div2 {
-	margin-left: 36%;
 	width: 335px;
 	height: 100px;
-	background: rgba(196, 196, 196, 1);
+	background: #ffc0cf;
 	text-align: center;
 	font-size: 50px;
 	line-height: 100px;
-	margin-bottom: 50px;
+	margin-left: 33%;
+	display: inline-block
+}
+
+.div2-1 {
+	display: inline-block;
+	float: right;
+	margin-right: 10%;
+	margin-top: 20px;
+	font-size: 20px;
+}
+
+.div2-1 a {
+	text-decoration: none;
+	background: #ffc0cf;
+	color: black;
+	border: 3px solid gray;
 }
 
 .div3 {
+	margin-top: 10px;
 	margin-left: 10%;
 	width: 80%;
 	height: 100px;
-	background: yellow;
+	background: #ffC0cf;
 	font-size: 45px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
-.div3 .s1 {
-	
+.div3 div {
+	display: inline-flex;
 }
 
-.div3 .s2 {
-	
-}
-
-.div3 .s3 {
+.div3 .div3-1 {
 	font-size: 30px;
+}
+
+.div3 .div3-3 {
+	font-size: 15px;
 }
 
 .div4 {
@@ -75,7 +94,7 @@
 	width: 300px;
 	height: auto;
 	text-align: center;
-	background: #f9f9f9;
+	background: #ffc0cf;
 	margin: 0 27px;
 }
 
@@ -99,12 +118,11 @@
 	box-sizing: border-box;
 	width: 100%;
 	height: 800px;
-	background: brown;
-	border: 0;
+	border: 5px solid #ffc0cf;
 }
 
 .div4 .tabmenu input:checked ~ label {
-	background: #ccc;
+	background: hotpink;
 }
 
 .div4 .tabmenu input:checked ~ .tabCon {
@@ -116,9 +134,17 @@
 
 	<div class="div1">
 		<div class="div2">회원정보</div>
+		<div class="div2-1">
+			<a href="${contextPath }/member/">수정</a><br>
+			<br>
+			<a href="#">삭제</a>
+		</div>
 		<div class="div3">
-			<span class="s1">등급(VIP) </span> <span class="s2">회원이름 </span> <span
-				class="s3">마일리지: x원 </span>
+			<div class="div3-1">등급(VIP)</div>
+			<div class="div3-2">회원이름</div>
+			<div class="div3-3">
+				마일리지: x원 <br> 총구매액:x원
+			</div>
 
 
 		</div>
@@ -135,8 +161,7 @@
 					</label>
 						<div class="tabCon">내용물2</div></li>
 					<li id="tab3" class="btnCon"><input type="radio"
-						name="tabmenu" id="tabmenu3"> <label for="tabmenu3">price<br>총
-							구매액
+						name="tabmenu" id="tabmenu3"> <label for="tabmenu3">N<br>작성게시글
 					</label>
 						<div class="tabCon">내용물3</div></li>
 				</ul>
