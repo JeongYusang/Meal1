@@ -343,8 +343,8 @@
 						</c:when>
 						<c:when test="${isLogOn==true and not empty sellerInfo }">
 							<li><c:out value="${sellerInfo.s_name}님 반갑습니다" /></li>
-							<li><a href="${contextPath }/goods/goodsForm.do">상품등록 |
-							</a></li>
+							<li><a href="${contextPath }/goods/goodsForm.do">상품등록 |</a></li>
+							<li><a href="${contextPath }/goods/selectGoodsPage.do">상품관리 |</a></li>
 							<li><a href="${contextPath }/seller/logout.do">로그아웃 |</a></li>
 							<li><a href="${contextPath }/user/mypagehome.do">마이페이지 |
 							</a></li>

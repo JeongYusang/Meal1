@@ -23,4 +23,5 @@ public interface GoodsDAO {
 	public List<GoodsVO> selectNew_Goods() throws DataAccessException;
 	public void updateNomalGoods(GoodsVO item) throws DataAccessException;
 	public GoodsVO selectGoodsDetail(int g_id) throws DataAccessException;
+	public List<GoodsVO> selectGoodsPage(HashMap<String, Object> pgMap) throws DataAccessException;
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -176,7 +177,54 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 	      return mav;
 
 	   }
-	//히히히히히히히히히히히히히히히히히히히
-  //하하하하하하하하하하하하하ㅏㅎ하ㅏㅎ
+	 
+	   //상품 관리에 관한 메소드
+		@RequestMapping(value = "/selectGoodsPage.do", method = { RequestMethod.POST, RequestMethod.GET })
+		public ModelAndView selectAllGoods(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+				@RequestParam(value = "section1", required = false) String section1,
+				@RequestParam(value = "pgNum", required = false) String pgNum, HttpServletRequest request,
+				HttpServletResponse response) throws Exception {
+			String viewName = (String) request.getAttribute("viewName");
+			ModelAndView mav = new ModelAndView(viewName);
+			HashMap<String, Object> pgMap = new HashMap<String, Object>();
+			Integer pg = 1;
+			Integer index1 = 0;
+			
+			if (pgNum != null) {
+
+				if (section1 != null) {
+					Integer pg1 = Integer.parseInt((String) pgNum);
+					Integer index2 = Integer.parseInt((String) section1);
+
+					System.out.println("인덱스" + index1);
+					Integer start = (pg1 - 1) * 10 + index2 * 100;
+					Integer end = 10;
+					//Integer end = (pg1) * 10 + index1 * 100; 출력개수를 정함.
+					pgMap.put("start", start);
+					pgMap.put("end", end);
+					System.out.println(start);
+					System.out.println(end);
+					System.out.println(pgMap);
+				} else {
+					Integer pg1 = Integer.parseInt((String) pgNum);
+
+					Integer start = (pg1 - 1) * 10 + index1 * 100;
+					Integer end = (pg1) * 10 + index1 * 100;
+					pgMap.put("start", start);
+					pgMap.put("end", end);
+				}
+			} else {
+				Integer start = (pg - 1) * 10 + index1 * 100;
+				Integer end = (pg) * 10 + index1 * 100;
+				pgMap.put("start", start);
+				pgMap.put("end", end);
+			}
+			System.out.println(pgMap);
+			List<GoodsVO> goodsList = goodsService.selectGoodsPage(pgMap);
+			mav.addObject("goodsList", goodsList);
+
+			
+			return mav;
+	}
 
 }
