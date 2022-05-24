@@ -212,9 +212,7 @@ a:hover {
 			</article>
 
 <div class ="f">
-			<aside id="quick">
-				<tiles:insertAttribute name="quickMenu" />
-			</aside>
+
 </div>
 
 

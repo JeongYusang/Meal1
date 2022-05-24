@@ -11,7 +11,7 @@
 <meta charset="UTF-8">
 <title>회원 조회하기</title>
 <c:if test='${not empty message }'>
-<script>
+	<script>
 window.onload=function()
 {
   result();
@@ -97,6 +97,10 @@ function result(){
 	background-color: #FFF0F0s;
 }
 
+#top-table span {
+	cursor: pointer;
+}
+
 #top-table tr, ths {
 	padding: 20px;
 }
@@ -113,6 +117,7 @@ function result(){
 tr.border-bottom td {
 	border-bottom: 1px solid black;
 	padding: 0px;
+	cursor: context-menu;
 }
 
 #tabletitle {
@@ -152,20 +157,22 @@ tr.border-bottom td {
 	text-align: center;
 	line-height: 100px;
 }
-#pick-user a{
-color: white;
+
+#pick-user a {
+	color: white;
 }
 
-#pagination{
-margin: 30px;
+#pagination {
+	margin: 30px;
 }
-	
+
 #pick-seller {
 	width: 400px;
 	height: 100px;
 	margin: 0 auto;
 	float: left;
-	font-size: 32px; text-align: center;
+	font-size: 32px;
+	text-align: center;
 	line-height: 100px;
 	border: 1px solid;
 }
@@ -197,18 +204,19 @@ margin: 30px;
 					<table id="stable-striped">
 						<thead>
 							<tr id="top-table">
-								<th onclick="sortTable(0)" width="80px">아이디</th>
-								<th onclick="sortTable(1)" width="60px">이름</th>
-								<th onclick="sortTable(2)" width="40px">성별</th>
-								<th onclick="sortTable(2)" width="100px">전화번호</th>
-								<th onclick="sortTable(3)" width="100px">이메일</th>
-								<th onclick="sortTable(4)" width="120px">주소</th>
-								<th onclick="sortTable(5)" width="70px">마일리지</th>
-								<th onclick="sortTable(6)" width="70px">등급</th>
-								<th onclick="sortTable(7)" width="100px">총결제액</th>
-								<th onclick="sortTable(8)" width="100px">생일</th>
-								<th onclick="sortTable(9)" width="100px">생성일</th>
-								<th onclick="sortTable(10)" width="100px">마지막 접속일</th>
+								<th onclick="sortTable(0)" width="80px"><span>아이디</span></th>
+								<th onclick="sortTable(1)" width="60px"><span>이름</span></th>
+								<th onclick="sortTable(2)" width="40px"><span>성별</span></th>
+								<th onclick="sortTable(2)" width="100px"><span>전화번호</span></th>
+								<th onclick="sortTable(3)" width="100px"><span>이메일</span></th>
+								<th onclick="sortTable(4)" width="120px"><span>주소</span></th>
+								<th onclick="sortTable(5)" width="70px"><span>마일리지</span></th>
+								<th onclick="sortTable(6)" width="70px"><span>등급</span></th>
+								<th onclick="sortTable(7)" width="100px"><span>총결제액</span></th>
+								<th onclick="sortTable(8)" width="100px"><span>생일</span></th>
+								<th onclick="sortTable(9)" width="100px"><span>생성일</span></th>
+								<th onclick="sortTable(10)" width="100px"><span>마지막
+										접속일</span></th>
 							</tr>
 						</thead>
 						<c:choose>
@@ -223,18 +231,26 @@ margin: 30px;
 									<label for="border-bottom"></label>
 									<tr class="border-bottom">
 
-										<td>${item.u_id}</td>
-										<td>${item.u_name}</td>
-										<td>${item.u_sex}</td>
-										<td>${item.u_hp1}</td>
-										<td>${item.u_email1}@${item.u_email2}</td>
-										<td>${item.u_addr1}${item.u_addr2}${item.u_addr3}</td>
-										<td>${item.u_mile}</td>
+										<td><a
+											href="${contextPath}/member/userDetail.do?id=${item.u_id}">${item.u_id}</a></td>
+										<td><a
+											href="${contextPath}/member/userDetail.do?id=${item.u_id}">${item.u_name}</a></td>
+										<td><a
+											href="${contextPath}/member/userDetail.do?id=${item.u_id}">${item.u_sex}</a></td>
+										<td><a
+											href="${contextPath}/member/userDetail.do?id=${item.u_id}">${item.u_hp1}</a></td>
+										<td><a
+											href="${contextPath}/member/userDetail.do?id=${item.u_id}">${item.u_email1}@${item.u_email2}</a></td>
+										<td><a
+											href="${contextPath}/member/userDetail.do?id=${item.u_id}">${item.u_addr1}${item.u_addr2}${item.u_addr3}</a></td>
+										<td><a
+											href="${contextPath}/member/userDetail.do?id=${item.u_id}">${item.u_mile}</a></td>
 										<td>${item.u_rank}</td>
 										<td>${item.u_id}</td>
 										<td>${item.u_birth}</td>
 										<td>${item.u_creDate}</td>
 										<td>${item.u_lastlog}</td>
+
 									</tr>
 								</c:forEach>
 							</c:otherwise>

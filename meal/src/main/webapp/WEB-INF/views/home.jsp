@@ -1,354 +1,173 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="result" value="${param.result }" />
 <c:set var="section" value="0" />
-
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>리뷰</title>
-<c:if test='${not empty message }'>
-	<script>
-		window.onload = function() {
-			result();
-		}
+<title>상품 조회하기</title>
 
-		function result() {
-			alert('${message}');
-		}
-	</script>
-</c:if>
-<script>
-	function sortTable(n) {
-		var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-		table = document.getElementById("stable-striped"); //테이블 명
-		switching = true;
-		//Set the sorting direction to ascending:
-		dir = "asc";
-		/*Make a loop that will continue until
-		no switching has been done:*/
-		while (switching) {
-			//start by saying: no switching is done:
-			switching = false;
-			rows = table.rows;
-			/*Loop through all table rows (except the
-			first, which contains table headers):*/
-			for (i = 1; i < (rows.length - 1); i++) {
-				//start by saying there should be no switching:
-				shouldSwitch = false;
-				/*Get the two elements you want to compare,
-				one from current row and one from the next:*/
-				x = rows[i].getElementsByTagName("TD")[n];
-				y = rows[i + 1].getElementsByTagName("TD")[n];
-				/*check if the two rows should switch place,
-				based on the direction, asc or desc:*/
-				if (dir == "asc") {
-					if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-						//if so, mark as a switch and break the loop:
-						shouldSwitch = true;
-						break;
-					}
-				} else if (dir == "desc") {
-					if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-						//if so, mark as a switch and break the loop:
-						shouldSwitch = true;
-						break;
-					}
-				}
-			}
-			if (shouldSwitch) {
-				/*If a switch has been marked, make the switch
-				and mark that a switch has been done:*/
-				rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-				switching = true;
-				//Each time a switch is done, increase this count by 1:
-				switchcount++;
-			} else {
-				/*If no switching has been done AND the direction is "asc",
-				set the direction to "desc" and run the while loop again.*/
-				if (switchcount == 0 && dir == "asc") {
-					dir = "desc";
-					switching = true;
-				}
-			}
-		}
-	}
-</script>
+<style type="text/css">
+.div1 {
+	width: 1080px;
+	height: 1000px;
+	position: relative;
+	overflow: hidden;
+}
 
-<style>
-#stable-striped {
-	margin: 0 auto; /* 가로로 중앙에 배치 */
+.div2 {
+	width: 335px;
+	height: 100px;
+	background: #ffc0cf;
 	text-align: center;
-	background-color: white;
-	font-size: 18px;
-	border-collapse: collapse;
-	color: black;
+	font-size: 50px;
+	line-height: 100px;
+	margin-left: 33%;
+	display: inline-block
 }
 
-#stable-striped tr:nth-child(even) {
-	background-color: #FFF6FA;
-}
-
-#stable-striped tr, td {
-	padding: 20px;
-}
-
-#top-table {
-	color: black;
-	text-align: center;
-	border-collapse: collapse;
-	background-color: #FFF0F0s;
-}
-
-#top-table tr, ths {
-	padding: 20px;
-}
-
-#body-table {
-	text-align: center;
-}
-
-tr.border-bottom td {
-	border-bottom: 1px black;
-}
-
-#write a {
+.div2-1 {
+	display: inline-block;
 	float: right;
+	margin-right: 10%;
+	margin-top: 20px;
+	font-size: 20px;
+}
+
+.div2-1 a {
+	text-decoration: none;
+	background: #ffc0cf;
+	color: black;
+	border: 3px solid gray;
+}
+
+.div3 {
+	margin-top: 10px;
+	margin-left: 10%;
+	width: 80%;
+	height: 100px;
+	background: #ffC0cf;
+	font-size: 45px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.div3 div {
+	display: inline-flex;
+}
+
+.div3 .div3-1 {
+	font-size: 30px;
+}
+
+.div3 .div3-3 {
+	font-size: 15px;
+}
+
+.div4 {
+	display: flex;
+	background: white;
+	height: 150px;
+	width: 100%;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+}
+
+.div4 ul {
+	list-style: none;
+	padding-inline-start: 0px;
+}
+
+.div4 .tabmenu {
+	width: 100%;
+	margin: 0 auto;
+	position: relative;
+	margin: 0 auto;
+}
+
+.div4 .tabmenu ul li {
+	display: inline-block;
+	width: 300px;
+	height: auto;
 	text-align: center;
-	background-color: #ffc0cb;
-	font-size: 14px;
-	border: 1px;
-	color: white;
-	padding: 10px;
-	margin-bottom: 10px;
-	'
+	background: #ffc0cf;
+	margin: 0 27px;
 }
 
-#tabletitle {
-	margin: 10px;
-	color: #FD6EB0;
-	font-size: 32px;
+.div4 .tabmenu label {
+	display: block;
+	width: 100%;
+	height: 100px;
+	font-size: 35px;
 }
 
-.pagination {
-	margin: 5px;
+.div4 .tabmenu input {
+	display: none;
 }
 
-.pagination a {
-	font-size: 22px;
-	border: 1px solid #ddd;
-	padding: 10px;
+.div4 .tabCon {
+	display: none;
+	text-align: left;
+	left: 0;
+	top: 80%;
+	position: absolute;
+	box-sizing: border-box;
+	width: 100%;
+	height: 800px;
+	border: 5px solid #ffc0cf;
 }
 
-.center {
-	text-align: center;
+.div4 .tabmenu input:checked ~ label {
+	background: hotpink;
 }
 
-.checked {
-	color: #ffc0cb;
-}
-
-#page {
-	font-size: 24px;
-	margin: 10px;
+.div4 .tabmenu input:checked ~ .tabCon {
+	display: block;
 }
 </style>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-	<div id="tabletitle">
-		<h1>리뷰</h1>
-	</div>
-	<hr>
-	<br>
-	<br>
 
-	<div class="table-container">
-		<table id="stable-striped">
-			<thead>
-				<tr class="stable-striped">
-					<th onclick="sortTable(0)" width="50px">번호</th>
-					<th onclick="sortTable(1)" width="150px">별점</th>
-					<th onclick="sortTable(2)" width="300px">제목</th>
-					<th onclick="sortTable(3)" width="100px">작성자</th>
-					<th onclick="sortTable(4)" width="150px">날짜123</th>
-					<th onclick="sortTable(4)" width="150px">답변여부</th>
-				</tr>
-			</thead>
-			<c:choose>
-				<c:when test="${empty boardGr}">
-					<tr>
-						<td colspan=5 class="fixed"><strong>작성된 글이 없습니다.</strong></td>
-					</tr>
-				</c:when>
-				<c:otherwise>
-					<c:forEach var="item" items="${boardGr}">
-						<label for="border-bottom"></label>
-						<tr class="item">
-							<c:choose>
-								<c:when test="${not empty item.u_id and empty item.secret }">
-									<td>${item.b_gr_id }</td>
-									<td><c:choose>
-											<c:when test="${item.star == 5}">
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-											</c:when>
-											<c:when test="${item.star == 4}">
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star"></span>
-											</c:when>
-											<c:when test="${item.star == 3}">
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-											</c:when>
-											<c:when test="${item.star == 2}">
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-											</c:when>
-											<c:otherwise>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-											</c:otherwise>
-										</c:choose></td>
-									<td><a
-										href="${contextPath}/boardGr/bGrDetail.do?b_gr_id=${item.b_gr_id}">${item.title}</a></td>
-									<td>${item.u_id}</td>
-									<td>${item.creDate}</td>
-									<td>${item.compare}</td>
-								</c:when>
-								<c:when test="${not empty item.u_id and not empty item.secret }">
-									<td>${item.b_gr_id }</td>
-									<td><c:choose>
-											<c:when test="${item.star == 5}">
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-											</c:when>
-											<c:when test="${item.star == 4}">
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star"></span>
-											</c:when>
-											<c:when test="${item.star == 3}">
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-											</c:when>
-											<c:when test="${item.star == 2}">
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-											</c:when>
-											<c:otherwise>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-											</c:otherwise>
-										</c:choose></td>
-									<td>비밀글입니다</td>
-									<td>****</td>
-									<td>${item.creDate}123123123</td>
-									<td>${item.compare}</td>
-								</c:when>
-							</c:choose>
-						</tr>
-					</c:forEach>
-				</c:otherwise>
-			</c:choose>
-
-
-
-			</tbody>
-		</table>
-		<center>
-			<div id="page">
-				<c:choose>
-					<c:when test="${memberVO != null }">
-						<c:forEach var="page" begin="1" end="9" step="1">
-							<c:if test="${section >0 && page==1 }">
-								<a
-									href="${contextPath}/boardGr/selectMyBoardGrList.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
-							</c:if>
-							<a
-								href="${contextPath}/boardGr/selectMyBoardGrList.do?section=${section}&pageNum=${page}">${(section)*10 +page}
-							</a>
-							<c:if test="${page ==10 }">
-								<a
-									href="${contextPath}/boardGr/selectMyBoardGrList.do?section=${section}+1&pageNum=${section*10}+1">next</a>
-							</c:if>
-						</c:forEach>
-					</c:when>
-					<c:when test="${sellerVO != null }">
-						<c:forEach var="page" begin="1" end="9" step="1">
-							<c:if test="${section >0 && page==1 }">
-								<a
-									href="${contextPath}/boardGr/selectSellerBoardGrList.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
-							</c:if>
-							<a
-								href="${contextPath}/boardGr/selectSellerBoardGrList.do?section=${section}&pageNum=${page}">${(section)*10 +page}
-							</a>
-							<c:if test="${page ==10 }">
-								<a
-									href="${contextPath}/boardGr/selectSellerBoardGrList.do?section=${section}+1&pageNum=${section*10}+1">next</a>
-							</c:if>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<c:forEach var="page" begin="1" end="9" step="1">
-							<c:if test="${section >0 && page==1 }">
-								<a
-									href="${contextPath}/boardGr/selectBoardGrList.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
-							</c:if>
-							<a
-								href="${contextPath}/boardGr/selectBoardGrList.do?section=${section}&pageNum=${page}">${(section)*10 +page}
-							</a>
-							<c:if test="${page ==10 }">
-								<a
-									href="${contextPath}/boardGr/selectBoardGrList.do?section=${section}+1&pageNum=${section*10}+1">next</a>
-							</c:if>
-						</c:forEach>
-
-					</c:otherwise>
-				</c:choose>
-		</center>
-		<hr>
-		<br>
-		<div id="write">
-			<a href="${contextPath }/boardGr/boardGrWrite.do">글쓰기</a>
+	<div class="div1">
+		<div class="div2">회원정보</div>
+		<div class="div2-1">
+			<a href="${contextPath }/member/">수정</a><br>
+			<br>
+			<a href="#">삭제</a>
 		</div>
+		<div class="div3">
+			<div class="div3-1">등급(VIP)</div>
+			<div class="div3-2">회원이름</div>
+			<div class="div3-3">
+				마일리지: x원 <br> 총구매액:x원
+			</div>
+
+
+		</div>
+
+		<div class="div4">
+			<div class="tabmenu">
+				<ul>
+					<li id="tab1" class="btnCon"><input type="radio" checked
+						name="tabmenu" id="tabmenu1"> <label for="tabmenu1">1<br>결제완료
+					</label>
+						<div class="tabCon">내용물1</div></li>
+					<li id="tab2" class="btnCon"><input type="radio"
+						name="tabmenu" id="tabmenu2"> <label for="tabmenu2">2<br>교/반/취
+					</label>
+						<div class="tabCon">내용물2</div></li>
+					<li id="tab3" class="btnCon"><input type="radio"
+						name="tabmenu" id="tabmenu3"> <label for="tabmenu3">N<br>작성게시글
+					</label>
+						<div class="tabCon">내용물3</div></li>
+				</ul>
+			</div>
+		</div>
+
 	</div>
-
-
 </body>
 </html>

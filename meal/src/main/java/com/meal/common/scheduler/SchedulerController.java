@@ -21,7 +21,7 @@ public class SchedulerController {
 	@Autowired
 	private GoodsDAO goodsDAO;
 
-	@Scheduled(cron="* 10 * * * *")
+	@Scheduled(cron="0 15 13 * * ?")
 	public void goodsCateUpdate() {
 		// 신상품 검색
 		String batchResult = "성공";
