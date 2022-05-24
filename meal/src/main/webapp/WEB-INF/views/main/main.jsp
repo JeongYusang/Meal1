@@ -4,10 +4,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:if test='${ not empty message}'>
+	<script>
+window.onload=function()
+{
+  result();
+}
+
+function result(){
+	alert("${message}");
+}
+</script>
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>
 <title>메인페이지</title>
+
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
 	$(function() {
@@ -126,14 +139,14 @@
 				<div class="maingList">
 
 					<!-- 다운로드 메소드를 통해서 한것 -->
-					<c:forEach var="item" items="${goodsMap.NewG}" begin="0" end ="3">
+					<c:forEach var="item" items="${goodsMap.NewG}" begin="0" end="3">
 						<ul class="ul">
-					
-							<li><a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}"><img
+
+							<li><a
+								href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}"><img
 									src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
-									width="250px" height="250px">
-									<br>${item.g_name }
-									<br>	${item.g_price}원</a></li>
+									width="250px" height="250px"> <br>${item.g_name } <br>
+									${item.g_price}원</a></li>
 						</ul>
 					</c:forEach>
 
@@ -141,34 +154,36 @@
 				<b class="b" style="font-size: 32px">일반상품</b>
 				<div class="maingList">
 					<!--썸네일 메소드를 이용한것  -->
-					<c:forEach var="item" items="${goodsMap.NomalG}" begin="0" end ="3">
+					<c:forEach var="item" items="${goodsMap.NomalG}" begin="0" end="3">
 						<ul class="ul">
-						
-							<li><a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}""><img
+
+							<li><a
+								href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}""><img
 									src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
-									width="250px" height="250px">
-									<br>${item.g_name }
-									<br>	${item.g_price}원</a></li>
+									width="250px" height="250px"> <br>${item.g_name } <br>
+									${item.g_price}원</a></li>
 						</ul>
 					</c:forEach>
 				</div>
 				<b class="b" style="font-size: 32px">인기상품</b>
 				<div class="maingList">
-					<c:forEach var="item" items="${goodsMap.bestG}" begin="0" end ="3">
+					<c:forEach var="item" items="${goodsMap.bestG}" begin="0" end="3">
 						<ul class="ul">
-							<li><a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}""><img
+							<li><a
+								href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}""><img
 									src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
-									width="250px" height="250px">
-									<br>${item.g_name }
-									<br>	${item.g_price}원</a></li>
+									width="250px" height="250px"> <br>${item.g_name } <br>
+									${item.g_price}원</a></li>
 						</ul>
 
 					</c:forEach>
 				</div>
+
 			</div>
 		</div>
 	</div>
 </body>
+
 </html>
 
 

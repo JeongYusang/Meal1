@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.meal.admin.service.AdminService;
+import com.meal.admin.vo.AdminVO;
 import com.meal.common.controller.BaseController;
 import com.meal.seller.service.SellerService;
 import com.meal.seller.vo.Img_sVO;
@@ -40,6 +40,7 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 	private AdminService adminService;
 	@Autowired
 	private SellerVO sellerVO;
+
 	@Autowired
 	private Img_sVO img_sVO;
 	@Autowired
@@ -165,7 +166,7 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 			List<Img_sVO> OldImgList = (List<Img_sVO>)sellerService.selectSellerImg(s_id);
 			//업로드한 이미지에 대하여 불러옴
 			List<HashMap<String, Object>> imageFileList = (List<HashMap<String, Object>>) upload(multipartRequest);
-			
+			// 기존 이미지와 신규이미지 비교
 			for(Img_sVO oldI: OldImgList) {
 				for(HashMap<String,Object> newI: imageFileList) {
 					String oldCate = oldI.getCate();
@@ -230,6 +231,7 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 		return resEntity;
 	}
 	
+	@Override
 	@RequestMapping(value = "/deleteSeller.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView deleteSeller(@RequestParam HashMap<String,Object> map, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -252,11 +254,54 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 				session.setAttribute("isLogOn", false);
 				session.removeAttribute("memberInfo");
 				session.removeAttribute("sellerInfo");
+				session.removeAttribute("adminInfo");
+				String message = "회원이 탈퇴 되었습니다.";
+				mav.addObject("message", message);
 				String viewName = "redirect:/main/main.do";
 				mav.setViewName(viewName);
 				return mav;			
 		}
 		mav.setViewName("/main/loginForm");
 		return mav;
+	}
+	//관리자 창에서 판매자 확인 및 판매자창에서 판매자확인
+	@Override
+	@RequestMapping(value = "/sellerDetail.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView sellerDetail(@RequestParam("id") String id, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		String viewName = (String) request.getAttribute("viewName");
+		mav.setViewName(viewName);
+		SellerVO sellerInfo = (SellerVO) sellerService.decode(id);
+
+		if (sellerVO != null) {
+			mav.addObject("sellerVO", sellerInfo);
+
+			// orderList (s_id) 주문수량 + 총 결제액 + 정산 받을수 있는 금액을 제공해보려고 함 .
+			// goodsList(s_id) 상품정보창에서 쓸수있게끔 만들예정
+			
+		} else {
+			String message = "오류가 발생하였습니다.";
+			mav.addObject("message",message);
+			mav.setViewName("redirect:/main/main.do");
+			return mav;
+		}
+		
+		
+		// 사이트 유효성 검사 ( 잘못된 get방식으로 들어왔을경우)
+		HttpSession session = request.getSession();
+		SellerVO sellerLog = (SellerVO)session.getAttribute("sellerLog");
+		AdminVO adminLog = (AdminVO)session.getAttribute("adminInfo");
+		if(sellerLog != null || adminLog != null) {			
+			return mav;
+		}else {
+			String message = "잘못된 경로로 이동하였습니다.";
+			mav.addObject("message",message);
+			mav.setViewName("redirect:/main/main.do");
+			return mav;			
+		}
+		
+		
+	
 	}
 }

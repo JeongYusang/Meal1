@@ -140,7 +140,7 @@
 			<a href="#">삭제</a>
 		</div>
 		<div class="div3">
-			<div class="div3-1" >등급(VIP) </div> <div class="div3-2">판매자이름 </div> 
+			<div class="div3-1" >등급(VIP) </div> <div class="div3-2">${sellerVO.s_Wname } </div> 
 			<div class="div3-3">이번달 판매금액 <br> 총 판매 금액 </div>
 
 

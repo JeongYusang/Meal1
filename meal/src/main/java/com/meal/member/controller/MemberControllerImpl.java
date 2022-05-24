@@ -190,13 +190,14 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 
 
 	// 회원 상세 정보창으로 가는것 admin 상세로도 사용중
+	@Override
 	@RequestMapping(value = "/memberDetail.do", method = RequestMethod.GET)
 	public ModelAndView memberDetail(@RequestParam("id") String id, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		String viewName = (String) request.getAttribute("viewName");
 		mav.setViewName(viewName);
-		MemberVO memberInfo = (MemberVO) memberService.memberDetail(id);
+		MemberVO memberInfo = (MemberVO) memberService.decode(id);
 
 		if (memberInfo != null) {
 			mav.addObject("memberVO", memberInfo);

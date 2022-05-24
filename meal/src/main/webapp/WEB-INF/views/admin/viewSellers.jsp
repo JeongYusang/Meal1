@@ -185,7 +185,7 @@ color: white;
 					<th onclick="sortTable(6)" width="100px">마지막 접속</th>
 					<th onclick="sortTable(7)" width="50px">수정</th>
 				</tr>
-			</thead>
+			</thead>	
 			 <c:choose>
             <c:when test="${empty sellerlist}">
                <tr>
@@ -198,12 +198,12 @@ color: white;
 				<label for="border-bottom"></label>
 				<tr class="border-bottom">
 
-					<td>${item.s_id}</td>
-					<td>${item.s_Wname}</td>
-					<td>${item.s_BL_Num}</td>
-					<td>등록된 상품수</td>
-					<td>판매수량</td>
-					<td>매출액</td>
+					<td><a href="${contextPath}/seller/sellerDetail.do?id=${item.s_id}">${item.s_id}</a></td>
+					<td><a href="${contextPath}/seller/sellerDetail.do?id=${item.s_id}">${item.s_Wname}</a></td>
+					<td><a href="${contextPath}/seller/sellerDetail.do?id=${item.s_id}">${item.s_BL_Num}</a></td>
+					<td><a href="${contextPath}/seller/sellerDetail.do?id=${item.s_id}">등록된 상품수</a></td>
+					<td><a href="${contextPath}/seller/sellerDetail.do?id=${item.s_id}">판매수량</a></td>
+					<td><a href="${contextPath}/seller/sellerDetail.do?id=${item.s_id}">매출액</a></td>
 					<td>${item.s_cate}</td>
 					<td>${item.s_lastLog}</td>
 					<!-- <td><a href ="${contextPath }/updateForm" -->

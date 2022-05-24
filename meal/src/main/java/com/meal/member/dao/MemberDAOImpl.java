@@ -56,10 +56,6 @@ public class MemberDAOImpl  implements MemberDAO{
 	public void lastLog(String u_id) throws DataAccessException {
 		sqlSession.update("mapper.user.lastLog",u_id);
 	}
-	@Override
-	public MemberVO memberDetail(String id) throws DataAccessException{
-		MemberVO memberVO = (MemberVO)sqlSession.selectOne("mapper.user.memberDetail", id);
-		return memberVO;
-	}
+
 }
 

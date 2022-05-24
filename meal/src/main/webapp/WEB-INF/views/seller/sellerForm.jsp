@@ -16,7 +16,7 @@ window.onload=function()
 }
 
 function result(){
-	alert(${message});
+	alert("${message}");
 }
 
 
