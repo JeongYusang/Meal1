@@ -194,21 +194,6 @@ margin: 10px;
             </td>
       </tr>
       <tr class="box">
-         <th>모범음식점 여부*</th>
-         <td><div id = "form-div">
-               <input type="radio" id="g_cate31" name="g_cate3" value="HACCP" checked>
-                <label for="g_cate31">HACCP</label> 
-                <input type="radio" id="g_cate32" name="g_cate3" value="모범음식점" checked>
-                <label for="g_cate32">모범음식점</label>
-				<br>
-                <input type="radio" id="g_cate33" name="g_cate3" value="HACCP/모범음식점" checked>
-                <label for="g_cate33">HACCP/모범음식점</label> 
-                <input type="radio" id="g_cate34" name="g_cate3" value="X" checked>
-                <label for="g_cate34">X</label> 
-            </div>
-            </td>
-      </tr>
-      <tr class="box">
          <th>조리 시간*</th>
          <td><input type="text" name="g_time" id="g_time" placeholder="조리시간(분)"
             required="required" /></td>
