@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>상품등록페이지</title>
+<title>상품수정페이지</title>
 </head>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
@@ -102,8 +102,11 @@ margin: 10px;
    <table class="goodsform">
       <tr class="box">
          <th>상품사진*</th>
-         <td><input type="file" name="main"  /></td>
-         
+         <td>
+			<img id="" width="150px" height="150px" src="${contextPath}/resources/image/mini1.PNG">
+			<br>
+         	<input type="file" name="main"  />
+         </td>
       </tr>
      <tr class="box">
          <th>상품명*</th>
@@ -240,19 +243,29 @@ margin: 10px;
       </tr>
       <tr class="box">
          <th>상세이미지*</th>
-         <td><input type="file" name="detail" /></td>
+         <td>
+         	<c:forEach var="imageList" items="${imageList}">
+         		<c:if test="${cate == main}">
+				<img id="g_image" width="300px" height="300px" src="${contextPath}/download1.do?g_id=${imageList.g_id}&${imageList.fileName}">
+				</c:if>
+			</c:forEach>
+         	<input type="file" name="detail" />
+         </td>
       </tr>
       <tr class="box">
          <th>상세설명*</th>
          <td><textarea id="test" name="g_detail1" cols="30" rows="10"></textarea>
             <div id="test_cnt">(0 / 2000)</div></td>
       </tr>
+      <tr class="box">
+		 <td colspan="2">
+    	 	<input type="submit" id="updateGoods" value="수정하기">
+    	 	<input type="button" id="pageBack" value="뒤로가기" onclick="#">
+    	 </td>
+      </tr>
 
 
    </table>
-
-   <input type="submit" id="addgoods"  value="상품등록" >
-
    </form>
    </div>
 </html>
