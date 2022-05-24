@@ -17,6 +17,6 @@ public interface MemberDAO {
 	public void updateMember(MemberVO memberVO) throws DataAccessException;
 	public MemberVO decode(String u_id) throws DataAccessException;
 	public void lastLog(String u_id) throws DataAccessException;
-	public MemberVO memberDetail(String id) throws DataAccessException;
+
 		
 }

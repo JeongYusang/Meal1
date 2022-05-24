@@ -30,5 +30,7 @@ public interface MemberController {
 
 	public ResponseEntity deleteMember(@RequestParam("map") HashMap<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
+	public ModelAndView memberDetail(@RequestParam("id") String id, HttpServletRequest request,
+			HttpServletResponse response) throws Exception ;
 
 }

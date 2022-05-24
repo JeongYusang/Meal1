@@ -22,6 +22,5 @@ public interface MemberService {
 
 	public void lastLog(String u_id) throws Exception;
 
-	public MemberVO memberDetail(String id) throws DataAccessException;
 
 }

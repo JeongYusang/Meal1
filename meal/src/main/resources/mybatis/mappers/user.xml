@@ -128,11 +128,5 @@ select u_id from user_tb where hp1 = #{hp1} and hp2 = #{hp2} and hp3 = #{hp3} an
 			]]>
 	</update>
 
-		<select id="memberDetail" resultType="memberVO"
-				parameterType="String">
-			    <![CDATA[
-					select * from user_tb
-					 where u_id=#{id}
-				]]>
-			</select>
+
 </mapper>

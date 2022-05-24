@@ -67,10 +67,5 @@ public class MemberServiceImpl implements MemberService {
 		memberDAO.lastLog(u_id);
 	}
 	
-	@Override
-	public MemberVO memberDetail(String id) throws DataAccessException{
-	//회원정보보기
-		MemberVO memberVO = (MemberVO)memberDAO.memberDetail(id);
-		return memberVO;
-	}
+
 }

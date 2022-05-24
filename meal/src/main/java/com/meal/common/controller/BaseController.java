@@ -56,13 +56,14 @@ public class BaseController {
 	BCryptPasswordEncoder passwordEncode;
 
 	@RequestMapping(value = "/main/main.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView main(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView main(@RequestParam(value = "message", required = false) String message,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
 		//메인창에 띄워줄 상품 정보를 저장 추후 쿼리를 바꿔줄 예정이긴함
 		Map<String,List<GoodsVO>> goodsMap = (Map<String,List<GoodsVO>>) goodsService.selectAllGoods();
 		System.out.println("베이스컨트롤러 메인 메소드");
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("goodsMap", goodsMap);
+		mav.addObject("message",message);
 		mav.setViewName(viewName);
 		return mav;
 	}

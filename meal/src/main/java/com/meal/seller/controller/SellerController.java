@@ -24,5 +24,6 @@ public interface SellerController {
 	public ModelAndView addSeller( MultipartHttpServletRequest request, HttpServletResponse response) throws Exception ;
 	public ModelAndView deleteSeller(@RequestParam HashMap<String,Object> map, HttpServletRequest request,
 			HttpServletResponse response) throws Exception ;
-	
+	public ModelAndView sellerDetail(@RequestParam("id") String id, HttpServletRequest request,
+			HttpServletResponse response) throws Exception ;
 	}
