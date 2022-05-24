@@ -51,13 +51,12 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 
 	@Override
 	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
-	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 		String u_id = memberInfo.getU_id();
-	
+
 		session.setAttribute("isLogOn", false);
 		session.removeAttribute("memberInfo");
 		mav.setViewName("redirect:/main/main.do");
@@ -103,8 +102,6 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 		return resEntity;
 	}
 
-
-
 	@Override
 	@RequestMapping(value = "/updatemember.do", method = RequestMethod.POST)
 	public ResponseEntity updateMember(@ModelAttribute("memberVO") MemberVO _memberVO, HttpServletRequest request,
@@ -147,18 +144,18 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 
 	@Override
 	@RequestMapping(value = "/deleteMember.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public ResponseEntity deleteMember(@RequestParam HashMap<String,Object> map, HttpServletRequest request,
+	public ResponseEntity deleteMember(@RequestParam HashMap<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
 		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession();
-		
+
 		MemberVO memberVO1 = (MemberVO) session.getAttribute("memberInfo");
-		//복호화를 위해 꺼내줌
+		// 복호화를 위해 꺼내줌
 		MemberVO memberVO2 = memberService.decode(memberVO1.getU_id());
-		//입력해준 값에 관하여 pw를 꺼내줌
-		String pw= (String) map.get("pw");
+		// 입력해준 값에 관하여 pw를 꺼내줌
+		String pw = (String) map.get("pw");
 		String message = "";
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
@@ -192,4 +189,22 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 	
 
 
+	// 회원 상세 정보창으로 가는것 admin 상세로도 사용중
+	@RequestMapping(value = "/memberDetail.do", method = RequestMethod.GET)
+	public ModelAndView memberDetail(@RequestParam("id") String id, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		String viewName = (String) request.getAttribute("viewName");
+		mav.setViewName(viewName);
+		MemberVO memberInfo = (MemberVO) memberService.memberDetail(id);
+
+		if (memberInfo != null) {
+			mav.addObject("memberVO", memberInfo);
+
+			// orderList (u_id) grList(u_id) gqList(u_id) oneList(u_id) 추가할예정
+		} else {
+			System.out.println("실패했음");
+		}
+		return mav;
+	}
 }
