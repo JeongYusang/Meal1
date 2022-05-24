@@ -178,15 +178,26 @@
 				<table>
 					<tr>
 						<th class="td1">상품</th>
-						<td><input type="hidden" name="g_id" value="1" /> <input
-							type="hidden" name="s_id" value="2323" /></td>
+						<td><input type="hidden" name="g_id" value="6" /> <input
+							type="hidden" name="s_id" value="2323" /><input type="hidden"
+							name="g_id" value="6" /> <input type="hidden" name="s_id"
+							value="2323" />
+							<div id="goods-info">
+								<br> <img
+									class="${contextPath}/thumbnails.do?g_id=${boardGrInfo.g_id}" />
+								<div id="goodstext">
+									<h3>${boardGrInfo.s_id}</h3>
+									<h3>${boardGrInfo.g_name}</h3>
+								</div>
+							</div></td>
 					</tr>
 					<tr>
 						<th class="td1">작성자 아이디</th>
 						<td class="td3"><input class="B_Uid" type=text
 							value="${ memberInfo.u_id}" name="_u_id" disabled /> <input
 							type="hidden" value="${memberInfo.u_id }" name="u_id"> <input
-							type="hidden" value="user" name="reg_id">
+							type="hidden" value="user" name="reg_id"><input
+							type="hidden" value="0" name="parentNo">
 							<div class="secret-wrap">
 								<input class="B_Uid1" type="checkbox" value="Y" name="secret">비밀글입니다
 							</div></td>
@@ -195,7 +206,7 @@
 						<th class="td1">제목</th>
 						<td class="td2"><input type=text value="타이틀필드" name="title"
 							id="i_title" /></td>
-						<input type="hidden" value="0" name="parentNo">
+
 					</tr>
 					<tr>
 						<th class="td1">별점</th>
@@ -214,7 +225,7 @@
 					<tr>
 						<th class="td1">내용</th>
 						<td class="td2"><textarea rows="20" cols="70" name="content"
-								id="i_content"> ${article.content } </textarea></td>
+								id="i_content"></textarea></td>
 					</tr>
 					<tr height="200px">
 						<th class="td1">이미지파일 첨부 <input class="filecss" type="file"

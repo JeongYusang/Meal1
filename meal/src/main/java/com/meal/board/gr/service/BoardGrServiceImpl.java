@@ -20,6 +20,7 @@ public class BoardGrServiceImpl implements BoardGrService {
 	@Autowired
 	private BoardGrDAO boardGrDAO;
 
+	/* 페이징 */
 	public List<BoardGrVO> selectBoardGrList(HashMap<String, Object> map) throws Exception {
 		List<BoardGrVO> listInfo = (List<BoardGrVO>) boardGrDAO.selectBoardGrList(map);
 		return listInfo;
