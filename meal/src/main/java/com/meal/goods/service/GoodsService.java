@@ -19,5 +19,5 @@ public interface GoodsService {
 	public Map<String, List<GoodsVO>> selectAllGoods() throws Exception;
 	public Img_gVO selectOneImg(HashMap<String, Object> map) throws Exception;
 	public GoodsVO selectGoodsDetail(int g_id) throws Exception;
-
+	public List<GoodsVO> selectGoodsPage(HashMap<String, Object> pgMap) throws Exception;
 }

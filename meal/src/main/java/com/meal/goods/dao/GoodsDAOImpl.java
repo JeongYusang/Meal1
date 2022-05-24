@@ -66,5 +66,11 @@ public class GoodsDAOImpl implements GoodsDAO {
 		GoodsVO goodsVO = (GoodsVO) sqlSession.selectOne("mapper.goods.selectGoodsDetail", g_id);
 		return goodsVO;
 	}
+	@Override
+	public List<GoodsVO> selectGoodsPage(HashMap<String, Object> pgMap) throws DataAccessException {
+		List<GoodsVO> GoodsInfo = (List<GoodsVO>)sqlSession.selectList("mapper.goods.goodsPage", pgMap);
+		return GoodsInfo;
+	}
+
 
 }

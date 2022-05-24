@@ -78,4 +78,10 @@ public class GoodsServiceImpl implements GoodsService {
 		GoodsVO goodsInfo = (GoodsVO)goodsDAO.selectGoodsDetail(g_id);
 		return goodsInfo;
 	}
+	
+	@Override
+	public List<GoodsVO> selectGoodsPage(HashMap<String, Object> pgMap) throws Exception {
+		 List<GoodsVO> listInfo = (List<GoodsVO>) goodsDAO.selectGoodsPage(pgMap);
+		 return listInfo;
+	}
 }
