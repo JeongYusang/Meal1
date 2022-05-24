@@ -24,4 +24,10 @@ public interface GoodsDAO {
 	public void updateNomalGoods(GoodsVO item) throws DataAccessException;
 	public GoodsVO selectGoodsDetail(int g_id) throws DataAccessException;
 	public List<GoodsVO> selectGoodsPage(HashMap<String, Object> pgMap) throws DataAccessException;
+	public List<GoodsVO> searchGoodsSale() throws DataAccessException;
+	public void goodsSaleBegin(GoodsVO goodsVO) throws DataAccessException;
+	public List<GoodsVO> searchGoodsSaleE() throws DataAccessException;
+	public void goodsSaleEnd(GoodsVO goodsVO) throws DataAccessException;
+		
+		
 }

@@ -71,6 +71,23 @@ public class GoodsDAOImpl implements GoodsDAO {
 		List<GoodsVO> GoodsInfo = (List<GoodsVO>)sqlSession.selectList("mapper.goods.goodsPage", pgMap);
 		return GoodsInfo;
 	}
-
-
+	@Override
+	public List<GoodsVO> searchGoodsSale() throws DataAccessException{
+		List<GoodsVO> goodsInfo = (List<GoodsVO>)sqlSession.selectList("mapper.goods.searchGoodsSale");
+		return goodsInfo;
+	}
+	@Override
+	public void goodsSaleBegin(GoodsVO goodsVO) throws DataAccessException{
+		sqlSession.update("mapper.goods.goodsSaleBegin", goodsVO);
+	}
+	@Override
+	public List<GoodsVO> searchGoodsSaleE() throws DataAccessException{
+		List<GoodsVO> goodsInfo = (List<GoodsVO>)sqlSession.selectList("mapper.goods.searchGoodsSaleE");
+		return goodsInfo;
+	}
+	public void goodsSaleEnd(GoodsVO goodsVO) throws DataAccessException{
+		sqlSession.update("mapper.goods.goodsSaleEnd", goodsVO);
+	}
+	
+	
 }
