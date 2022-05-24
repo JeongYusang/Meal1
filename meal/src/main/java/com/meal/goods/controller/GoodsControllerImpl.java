@@ -65,6 +65,9 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 	public ModelAndView addNewGoods(MultipartHttpServletRequest multipartRequest, HttpServletResponse response)
 			throws Exception {
 		ModelAndView mav = new ModelAndView();
+		HttpSession session = multipartRequest.getSession();
+		// 세션에 저장되어있던 sellerInfo를 꺼내옴
+		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
 		String imageFileName = null;
 
 		HashMap<String, Object> newGoodsMap = new HashMap<String, Object>();
@@ -77,10 +80,24 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 			newGoodsMap.put(name, value);
 
 		}
+		
+		String H = (String) sellerVO.getS_HACCP_Num();
+		String GR = (String) sellerVO.getS_GR_Num();
+		
+		if (H != null && GR != null) {
+			
+			String HGR = H + GR;
+			newGoodsMap.put("g_cate3", HGR);
+		
+		} else if (H != null && GR == null) {
+			
+			newGoodsMap.put("g_cate3", H);
+		
+		} else if (H == null && GR != null) {
+			newGoodsMap.put("g_cate3", GR);
+		
+		} 
 
-		HttpSession session = multipartRequest.getSession();
-		// 세션에 저장되어있던 sellerInfo를 꺼내옴
-		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
 		// newGoodsMap내부에 키g_name을 이용하여 A에 바인딩
 		String A = (String) newGoodsMap.get("g_name");
 		// 바인딩된 A에 sellerInfo에 등러있던 s_Wname을 더하여 g_name에 바인딩
