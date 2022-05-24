@@ -14,7 +14,7 @@ public class GoodsVO {
 	private String g_origin;
 	private int g_amount;
 	private int g_price;
-	private String g_saleWon;
+	private int g_saleWon;
 	private int g_salePer;
 	private Date g_saleDate1;
 	private Date g_saleDate2;
@@ -29,41 +29,7 @@ public class GoodsVO {
 	private String g_bang;
 	private String fileName;
 	private String s_id;
-	
-	
-	public String getS_id() {
-		return s_id;
-	}
-
-
-	public String getG_saleWon() {
-		return g_saleWon;
-	}
-
-
-	public void setG_saleWon(String g_saleWon) {
-		this.g_saleWon = g_saleWon;
-	}
-
-
-	public int getG_salePer() {
-		return g_salePer;
-	}
-
-
-	public void setG_salePer(int g_salePer) {
-		this.g_salePer = g_salePer;
-	}
-
-
-	public void setS_id(String s_id) {
-		this.s_id = s_id;
-	}
-
-
-	public GoodsVO() {}
-
-	
+	private int g_saleprice;
 	public int getG_id() {
 		return g_id;
 	}
@@ -111,6 +77,18 @@ public class GoodsVO {
 	}
 	public void setG_price(int g_price) {
 		this.g_price = g_price;
+	}
+	public int getG_saleWon() {
+		return g_saleWon;
+	}
+	public void setG_saleWon(int g_saleWon) {
+		this.g_saleWon = g_saleWon;
+	}
+	public int getG_salePer() {
+		return g_salePer;
+	}
+	public void setG_salePer(int g_salePer) {
+		this.g_salePer = g_salePer;
 	}
 	public Date getG_saleDate1() {
 		return g_saleDate1;
@@ -184,4 +162,19 @@ public class GoodsVO {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
+	public String getS_id() {
+		return s_id;
+	}
+	public void setS_id(String s_id) {
+		this.s_id = s_id;
+	}
+	public int getG_saleprice() {
+		return g_saleprice;
+	}
+	public void setG_saleprice(int g_saleprice) {
+		this.g_saleprice = g_saleprice;
+	}
+
+	
+
 }

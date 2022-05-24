@@ -14,7 +14,7 @@
 
 		<result property="g_amount" column="g_amount" />
 		<result property="g_price" column="g_price" />
-		<result property="g_sale" column="g_sale" />
+		<result property="g_saleprice" column="g_saleprice" />
 		<result property="g_saleDate1" column="g_saleDate1" />
 		<result property="g_saleDate2" column="g_saleDate2" />
 		<result property="g_eatDate" column="g_eatDate" />
@@ -57,7 +57,8 @@
 						g_salePer,
 						g_saleWon,
 						g_saleDate1,
-						g_saleDate2
+						g_saleDate2,
+						g_saleprice
 						)
 					values(
 						#{s_id},
@@ -75,7 +76,8 @@
 					  	#{g_salePer},
 					  	#{g_saleWon},
 					  	#{g_saleDate1},
-					  	#{g_saleDate2}
+					  	#{g_saleDate2},
+					  	#{g_saleprice}
 					 	)
 		]]>
 	</insert>
@@ -154,7 +156,7 @@ g_cate2 = #{g_cate2},
 g_cate3 = #{g_cate3}, 
 g_amount = #{g_amount}, 
 g_price = #{g_price}, 
-g_sale = #{g_sale},
+g_saleprice = #{g_saleprice},
 g_detail1 = #{g_detail1},
 g_allergy = #{g_allergy}, 
 g_nan = #{g_nan},
@@ -176,6 +178,44 @@ g_salePer = #{g_salePer}
 	   select R1.* from (select * from goods_tb order by g_id) R1 order by g_name asc limit #{start} , #{end} 
 	   ]]>
 	</select>
+
+
+<!-- 스케줄러에서 사용  -->
+
+<!-- 세일 조회 -->
+<select id = "searchGoodsSale" resultMap="goodsResult">
+
+<![CDATA[
+select * from goods_tb where g_saleDate2 <= now() and g_saleprice = 0
+]]>
+
+</select>
+
+
+<!-- 세일시작 -->
+<update id = "goodsSaleBegin" parameterType="GoodsVO">
+<![CDATA[
+update goods_tb set g_saleprice = #{g_saleprice} where g_id=#{g_id}
+]]>
+</update>
+
+
+
+
+<!-- 세일마감 -->
+<select id = "searchGoodsSaleE" resultMap="goodsResult">
+
+<![CDATA[
+select * from goods_tb where g_saleDate2 <= now() and g_saleprice != 0
+]]>
+</select>
+
+<update id = "goodsSaleEnd" parameterType="GoodsVO">
+<![CDATA[
+update goods_tb set g_saleprice = '0', g_saleDate1='null', g_saleDate2='null' , g_saleWon='0', g_salePer ='0' where g_id =#{g_id}
+]]>
+</update>
+
 
 </mapper>
  
