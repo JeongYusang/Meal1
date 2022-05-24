@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.meal.board.gr.service.BoardGrService;
 import com.meal.common.controller.BaseController;
 import com.meal.goods.dao.GoodsDAO;
 import com.meal.goods.service.GoodsService;
@@ -45,6 +46,9 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 	private GoodsVO goodsVO;
 	@Autowired
 	private SellerService sellerService;
+	@Autowired
+	private BoardGrService boardGrService;
+
 
 	//상품등록창
 	@RequestMapping(value = "/goodsForm.do", method = { RequestMethod.POST, RequestMethod.GET })
@@ -166,6 +170,8 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 	      System.out.println("goodsInfo" + goodsInfo);
 	      List<Img_gVO> imgList = (List<Img_gVO>)goodsService.selectImgList(g_id);
 	      System.out.println("imgList" + imgList);
+	      //굿즈디테일 상품리뷰 탭 부분
+	      //List<BoardGrVO> listGR = (List<BoardGrVO>)boardService.selectBoardGrallList();
 	
 	      mav.setViewName(viewName);
 	      mav.addObject("goodsInfo", goodsInfo);
