@@ -29,14 +29,14 @@ function result(){
 </c:if>
 
 <script>
-function fn_remove_board(url,b_gr_id){
+function fn_remove_board(url,b_gq_id){
 	 var form = document.createElement("form");
 	 form.setAttribute("method", "get");
 	 form.setAttribute("action", url);
    var articleNOInput = document.createElement("input");
    articleNOInput.setAttribute("type","hidden");
-   articleNOInput.setAttribute("name","b_gr_id");
-   articleNOInput.setAttribute("value", b_gr_id);
+   articleNOInput.setAttribute("name","b_gq_id");
+   articleNOInput.setAttribute("value", b_gq_id);
 	 
    form.appendChild(articleNOInput);
    document.body.appendChild(form);
@@ -53,28 +53,28 @@ function fn_return(url){
 	document.body.appendChild(form);
 	form.submit();
 }
-function fn_update(url,b_gr_id){
+function fn_update(url,b_gq_id){
 	 var form = document.createElement("form");
 	 form.setAttribute("method", "get");
 	 form.setAttribute("action", url);
   var articleNOInput = document.createElement("input");
   articleNOInput.setAttribute("type","hidden");
-  articleNOInput.setAttribute("name","b_gr_id");
-  articleNOInput.setAttribute("value", b_gr_id);
+  articleNOInput.setAttribute("name","b_gq_id");
+  articleNOInput.setAttribute("value", b_gq_id);
 	 
   form.appendChild(articleNOInput);
   document.body.appendChild(form);
   form.submit();
 
 }
-function fn_review(url,b_gr_id){
+function fn_review(url,b_gq_id){
 	 var form = document.createElement("form");
 	 form.setAttribute("method", "get");
 	 form.setAttribute("action", url);
  var articleNOInput = document.createElement("input");
  articleNOInput.setAttribute("type","hidden");
- articleNOInput.setAttribute("name","b_gr_id");
- articleNOInput.setAttribute("value", b_gr_id);
+ articleNOInput.setAttribute("name","b_gq_id");
+ articleNOInput.setAttribute("value", b_gq_id);
 	 
  form.appendChild(articleNOInput);
  document.body.appendChild(form);
@@ -84,10 +84,10 @@ function fn_review(url,b_gr_id){
 
 
 /* function fn_update(){
-	${boardGr.u_id},${memberInfo.u_id },${sellerInfo.s_id },${adminInfo.a_id }
-	var u_id = ${boardGr.u_id};
+	${boardGq.u_id},${memberInfo.u_id },${sellerInfo.s_id },${adminInfo.a_id }
+	var u_id = ${boardGq.u_id};
 	var u_id2 = ${memberInfo.u_id};
-	var s_id = ${boardGr.s_id};
+	var s_id = ${boardGq.s_id};
 	var s_id2 = ${sellerInfo.s_id};
 	var a_id = ${adminInfo.a_id}
 	if (u_id.equals(u_id2) || s_id.equals(s_id2) || a_id != null){
@@ -238,21 +238,21 @@ function fn_review(url,b_gr_id){
 	font-size: 60px;
 }
 
-#grHead {
+#gqHead {
 	margin: 10px;
 }
 
-#grHead #title {
+#gqHead #title {
 	font-size: 20px;
 	float: left;
 }
 
-#grHead #date {
+#gqHead #date {
 	float: right;
 	margin: 5px;
 }
 
-#grHead #id {
+#gqHead #id {
 	margin: 5px;
 	float: right
 }
@@ -271,18 +271,21 @@ function fn_review(url,b_gr_id){
 	font-size: 16px;
 	color: black;
 }
-#goods-info{
-height: 100px;
+
+#goods-info {
+	height: 100px;
 }
+
 #goods-info img {
-width: 100px;
-height: 100px;
-float: left;
-margin-right: 10px;
+	width: 100px;
+	height: 100px;
+	float: left;
+	margin-right: 10px;
 }
-#goodstext{
-font-size: 20px;
-color: black;
+
+#goodstext {
+	font-size: 20px;
+	color: black;
 }
 </style>
 
@@ -321,98 +324,61 @@ color: black;
 			</div>
 		</div>
 	</div>
-	
+
 	<div id="goods-info">
-			<br> <img src="${contextPath}/download1.do?g_id=${boardGrInfo.g_id}&cate=main" />
-			<div id="goodstext">
-				<b>판매자:</b> ${boardGrInfo.s_id}<br>
-				<b>상풍명:</b> ${boardGrInfo.g_name}<br>
-				<c:choose>
-					<c:when test="${boardGrInfo.star == 5}">
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-					</c:when>
-					<c:when test="${boardGrInfo.star == 4}">
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star"></span>
-					</c:when>
-					<c:when test="${boardGrInfo.star == 3}">
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star"></span>
-						<span class="fa fa-star"></span>
-					</c:when>
-					<c:when test="${boardGrInfo.star == 2}">
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star"></span>
-						<span class="fa fa-star"></span>
-						<span class="fa fa-star"></span>
-					</c:when>
-					<c:otherwise>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star"></span>
-						<span class="fa fa-star"></span>
-						<span class="fa fa-star"></span>
-						<span class="fa fa-star"></span>
-					</c:otherwise>
-				</c:choose>
-			</div>
+		<br> <img
+			src="${contextPath}/download1.do?g_id=${boardGqInfo.g_id}&cate=main" />
+		<div id="goodstext">
+			<b>판매자:</b> ${boardGqInfo.s_id}<br> <b>상풍명:</b>
+			${boardGqInfo.g_name}<br>
 		</div>
+	</div>
 
 
 	<div class='board-wrap'>
 		<div class="board-b-wrap">
-			<h1>리뷰 상세</h1>
+			<h1>상품문의</h1>
 			<c:choose>
-				<c:when test="${memberInfo.u_id eq boardGrInfo.u_id}">
+				<c:when test="${memberInfo.u_id eq boardGqInfo.u_id}">
 					<input type=button value="수정"
-						onClick="fn_update('${contextPath}/boardGr/boardGrUpdateform.do',${boardGrInfo.b_gr_id })" />
+						onClick="fn_update('${contextPath}/boardGq/boardGqUpdateform.do',${boardGqInfo.b_gq_id })" />
 					<input type=button value="삭제"
-						onClick="fn_remove_board('${contextPath}/boardGr/boardGrDelete.do',${boardGrInfo.b_gr_id })" />
+						onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${boardGqInfo.b_gq_id })" />
 				</c:when>
 
 
 
-				<c:when test="${sellerInfo.s_id eq boardGrInfo.s_id}">
+				<c:when test="${sellerInfo.s_id eq boardGqInfo.s_id}">
 					<input type=button value="답글"
-						onClick="fn_review('${contextPath}/boardGr/boardGrReviewform.do', ${boardGrInfo.b_gr_id})" />
+						onClick="fn_review('${contextPath}/boardGq/boardGqReviewform.do', ${boardGqInfo.b_gq_id})" />
 					<input type=button value="목록"
-						onClick="fn_return('${contextPath}/boardGr/selectBoardGrList.do')" />
+						onClick="fn_return('${contextPath}/boardGq/selectBoardGqList.do')" />
 
 				</c:when>
 				<c:otherwise>
 					<input type=button value="목록"
-						onClick="fn_return('${contextPath}/boardGr/selectBoardGrList.do')" />
+						onClick="fn_return('${contextPath}/boardGq/selectBoardGqList.do')" />
 				</c:otherwise>
 			</c:choose>
 
 		</div>
 
-	
+
 		<br>
-		<div id="grHead">
-			<div id="title">${boardGrInfo.title}</div>
-			<div id="date">${boardGrInfo.creDate}</div>
-			<div id="id">작성자:${boardGrInfo.u_id}</div>
+		<div id="gqHead">
+			<div id="title">${boardGqInfo.title}</div>
+			<div id="date">${boardGqInfo.creDate}</div>
+			<div id="id">작성자:${boardGqInfo.u_id}</div>
 		</div>
-		<br>
-		<br>
+		<br> <br>
 		<div class="board_main">
 			<br>
 			<div id="content">
 				<c:forEach var="imageList" items="${imageList}">
 					<img id="g_image" width="300px" height="300px"
-						src="${contextPath}/thumbnailsBoard.do?b_gr_id=${imageList.b_gr_id}&${imageList.fileName}">
+						src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${imageList.b_gq_id}&${imageList.fileName}">
 				</c:forEach>
-				<br> ${boardGrInfo.content}
+				<br> ${boardGqInfo.content}
 			</div>
 			<br>
 		</div>
@@ -422,16 +388,16 @@ color: black;
 				<c:forEach var="review" items="${ReviewList}">
 					<div class="board-b-wrap">
 						<h1>리뷰 수정</h1>
-						<c:if test="${sellerInfo.s_id eq boardGrInfo.s_id}">
+						<c:if test="${sellerInfo.s_id eq boardGqInfo.s_id}">
 							<input type=button value="수정"
-								onClick="fn_update('${contextPath}/boardGr/boardGrReviewUpdateform.do',${review.b_gr_id})" />
+								onClick="fn_update('${contextPath}/boardGq/boardGqReviewUpdateform.do',${review.b_gq_id})" />
 							<input type=button value="삭제"
-								onClick="fn_remove_board('${contextPath}/boardGr/boardGrDelete.do',${review.b_gr_id })" />
+								onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${review.b_gq_id })" />
 						</c:if>
 
 
 					</div>
-					<div id="grHead">
+					<div id="gqHead">
 						<div id="title">${review.title}</div>
 						<div id="date">${review.creDate}</div>
 						<div id="id">작성자:${review.s_id}</div>
@@ -439,11 +405,11 @@ color: black;
 
 					<div class="board_main">
 						<div id="content">
-						<c:if test="${imageList != null}">
-							<c:forEach var="imageList" items="${imageList}">
-								<img id="g_image" width="300px" height="300px"
-									src="${contextPath}/thumbnailsBoard.do?b_gr_id=${review.b_gr_id}&${imageList.fileName}">
-							</c:forEach>
+							<c:if test="${imageList != null}">
+								<c:forEach var="imageList" items="${imageList}">
+									<img id="g_image" width="300px" height="300px"
+										src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${review.b_gq_id}&${imageList.fileName}">
+								</c:forEach>
 							</c:if>
 							<br> ${review.content}
 						</div>

@@ -172,92 +172,32 @@ tr.border-bottom td {
 	<div class="table-container">
 		<table id="stable-striped">
 			<thead>
-				<c:choose>
-					<c:when test="${sellerVO != null}">
-						<tr class="stable-striped">
-							<th onclick="sortTable(0)" width="50px">번호</th>
-							<th onclick="sortTable(1)" width="150px">별점</th>
-							<th onclick="sortTable(2)" width="200px">상품명</th>
-							<th onclick="sortTable(3)" width="300px">제목</th>
-							<th onclick="sortTable(4)" width="100px">작성자</th>
-							<th onclick="sortTable(5)" width="150px">날짜</th>
-							<th onclick="sortTable(6)" width="50px">답변여부</th>
-						</tr>
-					</c:when>
-					<c:when test="${memberVO != null}">
-						<th onclick="sortTable(0)" width="50px">번호</th>
-						<th onclick="sortTable(1)" width="300px">상품명</th>
-						<th onclick="sortTable(2)" width="300px">제목</th>
-						<th onclick="sortTable(3)" width="150px">날짜</th>
-						<th onclick="sortTable(4)" width="150px">답변여부</th>
-					</c:when>
-				</c:choose>
+				<tr class="stable-striped">
+					<th onclick="sortTable(0)" width="50px">번호</th>
+					<th onclick="sortTable(1)" width="300px">상품</th>
+					<th onclick="sortTable(2)" width="300px">제목</th>
+					<th onclick="sortTable(3)" width="150px">날짜</th>
+					<th onclick="sortTable(4)" width="150px">답변여부</th>
+				</tr>
 			</thead>
-
 			<c:choose>
-				<c:when test="${sellerVO != null}">
-					<c:forEach var="item" items="${boardGr}">
+				<c:when test="${empty boardGq}">
+					<tr>
+						<td colspan=5 class="fixed"><strong>작성된 글이 없습니다.</strong></td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="item" items="${boardGq}">
 						<label for="border-bottom"></label>
 						<tr class="item">
-							<td>${item.b_gr_id }</td>
-							<td><c:choose>
-									<c:when test="${item.star == 5}">
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-									</c:when>
-									<c:when test="${item.star == 4}">
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star"></span>
-									</c:when>
-									<c:when test="${item.star == 3}">
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-									</c:when>
-									<c:when test="${item.star == 2}">
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-									</c:when>
-									<c:otherwise>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-									</c:otherwise>
-								</c:choose></td>
-							<td>${item.g_name}</td>
-							<td><a
-								href="${contextPath}/boardGr/gr_detail.do?b_gr_id=${item.b_gr_id}">${item.title}</a></td>
-							<td>${item.u_id}</td>
-							<td>${item.creDate}</td>
-							<td>${item.compare}</td>
+									<td>${item.b_gq_id }</td>
+									<td>${item.g_name}</td>
+									<td><a href="${contextPath}/boardGq/gq_detail.do?b_gq_id=${item.b_gq_id}">${item.title}</a></td>
+									<td>${item.creDate}</td>
+									<td>${item.compare}</td>
 						</tr>
 					</c:forEach>
-				</c:when>
-				<c:when test="${memberVO != null}">
-					<c:forEach var="item" items="${boardGr}">
-						<label for="border-bottom"></label>
-						<tr class="item">
-							<td>${item.b_gr_id }</td>
-							<td>${item.g_name}</td>
-							<td><a href="${contextPath}/boardGr/gr_detail.do?b_gr_id=${item.b_gr_id}">${item.title}</a></td>
-							<td>${item.creDate}</td>
-							<td>${item.compare}</td>
-						</tr>
-					</c:forEach>
-				</c:when>
+				</c:otherwise>
 			</c:choose>
 
 
@@ -271,14 +211,14 @@ tr.border-bottom td {
 						<c:forEach var="page" begin="1" end="9" step="1">
 							<c:if test="${section >0 && page==1 }">
 								<a
-									href="${contextPath}/boardGr/selectMyBoardGrList.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
+									href="${contextPath}/boardGq/selectMyBoardGqList.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
 							</c:if>
 							<a
-								href="${contextPath}/boardGr/selectMyBoardGrList.do?section=${section}&pageNum=${page}">${(section)*10 +page}
+								href="${contextPath}/boardGq/selectMyBoardGqList.do?section=${section}&pageNum=${page}">${(section)*10 +page}
 							</a>
 							<c:if test="${page ==10 }">
 								<a
-									href="${contextPath}/boardGr/selectMyBoardGrList.do?section=${section}+1&pageNum=${section*10}+1">next</a>
+									href="${contextPath}/boardGq/selectMyBoardGqList.do?section=${section}+1&pageNum=${section*10}+1">next</a>
 							</c:if>
 						</c:forEach>
 					</c:when>
@@ -286,14 +226,14 @@ tr.border-bottom td {
 						<c:forEach var="page" begin="1" end="9" step="1">
 							<c:if test="${section >0 && page==1 }">
 								<a
-									href="${contextPath}/boardGr/selectSellerBoardGrList.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
+									href="${contextPath}/boardGq/selectSellerBoardGqList.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
 							</c:if>
 							<a
-								href="${contextPath}/boardGr/selectSellerBoardGrList.do?section=${section}&pageNum=${page}">${(section)*10 +page}
+								href="${contextPath}/boardGq/selectSellerBoardGqList.do?section=${section}&pageNum=${page}">${(section)*10 +page}
 							</a>
 							<c:if test="${page ==10 }">
 								<a
-									href="${contextPath}/boardGr/selectSellerBoardGrList.do?section=${section}+1&pageNum=${section*10}+1">next</a>
+									href="${contextPath}/boardGq/selectSellerBoardGqList.do?section=${section}+1&pageNum=${section*10}+1">next</a>
 							</c:if>
 						</c:forEach>
 					</c:when>
@@ -301,14 +241,14 @@ tr.border-bottom td {
 						<c:forEach var="page" begin="1" end="9" step="1">
 							<c:if test="${section >0 && page==1 }">
 								<a
-									href="${contextPath}/boardGr/selectBoardGrList.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
+									href="${contextPath}/boardGq/selectBoardGqList.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
 							</c:if>
 							<a
-								href="${contextPath}/boardGr/selectBoardGrList.do?section=${section}&pageNum=${page}">${(section)*10 +page}
+								href="${contextPath}/boardGq/selectBoardGqList.do?section=${section}&pageNum=${page}">${(section)*10 +page}
 							</a>
 							<c:if test="${page ==10 }">
 								<a
-									href="${contextPath}/boardGr/selectBoardGrList.do?section=${section}+1&pageNum=${section*10}+1">next</a>
+									href="${contextPath}/boardGq/selectBoardGqList.do?section=${section}+1&pageNum=${section*10}+1">next</a>
 							</c:if>
 						</c:forEach>
 
@@ -318,7 +258,7 @@ tr.border-bottom td {
 		<hr>
 		<br>
 		<div id="write">
-			<a href="${contextPath }/boardGr/boardGrWrite.do">글쓰기</a>
+			<a href="${contextPath }/boardGq/boardGqWrite.do">글쓰기</a>
 		</div>
 	</div>
 

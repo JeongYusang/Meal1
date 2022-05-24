@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.boardGq">
+
+	<resultMap id="BoardGqResult" type="BoardGqVO">
+		<result property="b_gq_id" column="b_gq_id" />
+		<result property="reg_id" column="reg_id" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="creDate" column="creDate" />
+		<result property="parentNo" column="parentNo" />
+		<result property="u_id" column="u_id" />
+		<result property="s_id" column="s_id" />
+		<result property="g_id" column="g_id" />
+		<result property="secret" column="secret" />
+		<result property="g_name" column="g_name" />
+	</resultMap>
+
+	<resultMap id="img_gqResult" type="Img_gqVO">
+		<result property="ib_gq_id" column="ib_gq_id" />
+		<result property="fileName" column="fileName" />
+		<result property="creDate" column="creDate" />
+		<result property="s_id" column="s_id" />
+		<result property="b_gq_id" column="b_gq_id" />
+	</resultMap>
+	
+		<insert id="boardGqWrite" parameterType="BoardGqVO">
+  <![CDATA[
+       insert into board_gq(
+       reg_id,
+       title,
+       content,
+       u_id,
+       s_id,
+       g_id,
+       secret,
+       parentNo
+      )
+           values(#{reg_id},
+                  #{title},
+                  #{content},
+                  #{u_id},
+                  #{s_id},
+                  #{g_id},
+                  #{secret},
+                  #{parentNo}) 
+   ]]>
+	</insert>
+
+	<update id="boardGqUpdate" parameterType="Map">
+<![CDATA[
+update board_gq set title = #{title}, content = #{content}, secret = #{secret} where b_gq_id = #{b_gq_id}
+]]>
+	</update>
+
+	<select id="boardGqPage" resultMap="BoardGqResult"
+		parameterType="Map">
+   <![CDATA[
+	   select R1.* from (select * from board_gq) R1 where parentNo = 0 order by b_gq_id desc limit #{start} , #{end} 
+	   ]]>
+	</select>
+
+	<select id="MyboardGqPage" resultMap="BoardGqResult"
+		parameterType="Map">
+   <![CDATA[
+	    select R1.* from (select * from board_gq) R1 where parentNo = 0 and u_id = #{u_id} order by b_gq_id desc limit #{start} , #{end} 
+	   ]]>
+	</select>
+	<select id="SellerboardGqPage" resultMap="BoardGqResult"
+		parameterType="Map">
+   <![CDATA[
+	    select R1.* from (select * from board_gq) R1 where parentNo = 0 and s_id = #{s_id} order by b_gq_id desc limit #{start} , #{end} 
+	   ]]>
+	</select>
+
+
+	<select id="selectBoardGqallList" resultMap="BoardGqResult">
+       <![CDATA[
+            select * from board_gq
+             ]]>
+	</select>
+
+	<select id="selectMyBoardGqallList" resultMap="BoardGqResult">
+       <![CDATA[
+           select gq.*, g.g_name from board_gq gq LEFT OUTER JOIN goods_tb g on g.g_id = gq.g_id where gq.u_id = #{u_id}
+             ]]>
+	</select>
+	
+		<select id="selectSellerBoardGqallList" resultMap="BoardGqResult" parameterType="String">
+       <![CDATA[
+           select gq.*, g.g_name from board_gq gq LEFT OUTER JOIN goods_tb g on g.g_id = gq.g_id where gq.s_id = #{s_id}
+             ]]>
+	</select>
+
+	<select id="boardGqView" resultType="BoardGqVO"
+		parameterType="Integer">
+       <![CDATA[
+            select * from board_gq where b_gq_id = #{b_gq_id}   
+          
+      ]]>
+	</select>
+
+	<select id="boardGqViewReview" resultMap="BoardGqResult"
+		parameterType="Integer">
+       <![CDATA[
+            select * from board_gq where parentNo = #{b_gq_id}   
+          
+      ]]>
+	</select>
+	<delete id="boardGqDelete1" parameterType="Integer">
+	<![CDATA[
+	delete from board_gq where b_gq_id=#{b_gq_id}
+	]]>
+	</delete>
+	<delete id="boardGqDelete2" parameterType="Integer">
+	<![CDATA[
+	delete from board_gq where parentNo = #{b_gq_id}
+	]]>
+	</delete>
+
+	<insert id="addImg" parameterType="Map">
+	<![CDATA[
+	insert into img_b_gq(fileName,b_gq_id,reg_id) values (#{fileName}, #{b_gq_id}, #{reg_id})
+	]]>
+	</insert>
+	<select id="findb_gq_id" resultMap="BoardGqResult">
+       <![CDATA[
+            SELECT * FROM board_gq WHERE b_gq_id = (SELECT max(b_gq_id) FROM board_gq);
+      ]]>
+	</select>
+	<select id="selectBoardGqDetail" resultMap="BoardGqResult"
+		parameterType="Integer">
+	    <![CDATA[
+		    SELECT g.g_name, g.s_id, gq.*,d.fileName
+			FROM board_gq gq
+			LEFT OUTER JOIN goods_tb g ON g.g_id = gq.g_id
+			LEFT OUTER JOIN img_b_gq d ON d.b_gq_id = gq.b_gq_id
+		    where #{b_gq_id}= gq.b_gq_id
+    	]]>
+	</select>
+	<select id="selectBoardGqDetailImage" resultMap="img_gqResult"
+		parameterType="String">
+	    <![CDATA[
+		    	select * from  img_b_gq
+				where b_gq_id=#{b_gq_id}
+    	]]>
+	</select>
+	
+	<select id="boardgq_download" resultMap="BoardGqResult"
+		parameterType="Integer">
+	    <![CDATA[
+		    		SELECT i.*, g.g_id FROM img_b_gq i 
+		    		LEFT OUTER JOIN board_gq g ON g.b_gq_id = i.b_gq_id 
+		    		where i.b_gq_id=#{b_gq_id}
+    	]]>
+	</select>
+	
+	</mapper>

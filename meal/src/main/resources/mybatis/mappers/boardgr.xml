@@ -56,7 +56,7 @@
 
 	<update id="boardGrUpdate" parameterType="Map">
 <![CDATA[
-update board_gr set content = #{content}, secret = #{secret} where b_gr_id = #{b_gr_id} 
+update board_gr set title = #{title}, content = #{content}, secret = #{secret} where b_gr_id = #{b_gr_id} 
 ]]>
 	</update>
 
@@ -89,13 +89,13 @@ update board_gr set content = #{content}, secret = #{secret} where b_gr_id = #{b
 
 	<select id="selectMyBoardGrallList" resultMap="boardGrResult">
        <![CDATA[
-            select * from board_gr where u_id = #{u_id}
+           select gr.*, g.g_name from board_gr gr LEFT OUTER JOIN goods_tb g on g.g_id = gr.g_id where gr.u_id = #{u_id}
              ]]>
 	</select>
 	
 		<select id="selectSellerBoardGrallList" resultMap="boardGrResult" parameterType="String">
        <![CDATA[
-            select * from board_gr where s_id = #{s_id}
+            select gr.*, g.g_name from board_gr gr LEFT OUTER JOIN goods_tb g on g.g_id = gr.g_id where gr.s_id = #{s_id}
              ]]>
 	</select>
 
@@ -138,11 +138,10 @@ update board_gr set content = #{content}, secret = #{secret} where b_gr_id = #{b
 	<select id="selectBoardGrDetail" resultMap="boardGrResult"
 		parameterType="Integer">
 	    <![CDATA[
-		    SELECT g.g_name, g.s_id, gr.*,d.fileName
-	FROM board_gr gr
-	LEFT OUTER JOIN goods_tb g ON g.g_id = gr.g_id
-	LEFT OUTER JOIN img_b_gr d ON d.b_gr_id = gr.b_gr_id
-    where #{b_gr_id}= gr.b_gr_id
+		    SELECT g.g_name, g.s_id, gr.*,d.fileName FROM board_gr gr
+			LEFT OUTER JOIN goods_tb g ON g.g_id = gr.g_id
+			LEFT OUTER JOIN img_b_gr d ON d.b_gr_id = gr.b_gr_id
+		    where #{b_gr_id}= gr.b_gr_id
     	]]>
 	</select>
 	<select id="selectBoardGrDetailImage" resultMap="img_grResult"

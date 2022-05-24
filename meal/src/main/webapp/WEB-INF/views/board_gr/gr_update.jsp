@@ -156,21 +156,12 @@ request.setCharacterEncoding("UTF-8");
 				<table>
 					<tr>
 						<th class="td1">작성자 아이디</th>
-						<td class="td3"><c:choose>
-								<c:when test="${not empty boardGrVO}">
-									<input class="B_Uid" type=text value="${boardGrVO.u_id}"
-										name="_u_id" disabled />
-									<input type="hidden" value="${boardGrVO.u_id }" name="u_id">
-									<input type="hidden" value="user" name="reg_id">
-								</c:when>
-								<c:when test="${not empty boardGrVO }">
-									<input class="B_Uid" type=text value="${boardGrVO.u_id}"
-										name="_u_id" disabled />
-									<input type="hidden" value="${boardGrVO.u_id }" name="u_id">
-									<input type="hidden" value="user" name="reg_id">
-								</c:when>
-							</c:choose> <c:choose>
-								<c:when test="${not empty boardGrVO.secret }">
+						<td class="td3"><input class="B_Uid" type=text
+							value="${boardGrVO.u_id}" name="_u_id" disabled /> <input
+							type="hidden" value="${boardGrVO.u_id }" name="u_id"> <input
+							type="hidden" value="user" name="reg_id"> 
+							<c:choose>
+								<c:when test="${not empty boardGrVO.secret}">
 									<div class="secret-wrap">
 										<input class="B_Uid1" type="checkbox" value="Y" name="secret"
 											checked>비밀글입니다.
@@ -224,24 +215,22 @@ request.setCharacterEncoding("UTF-8");
 							</c:choose></td>
 					<tr>
 						<th class="td1">제목</th>
-						<td class="td2"><input type="text"
-							value="${boardGrVO.title }" name="title" id="i_title" disabled />
-							<input type="hidden" value="${boardGrVO.title }" name="title">
-							<input type="hidden" value="${boardGrVO.parentNo }"
-							name="parentNo"> <input type="hidden"
-							value="${boardGrVO.b_gr_id }" name="b_gr_id"></td>
+						<td class="td2"><input type="text" value="${boardGrVO.title}"
+							name="title" id="i_title" /> <input type="hidden"
+							value="${boardGrVO.parentNo}" name="parentNo"> <input
+							type="hidden" value="${boardGrVO.b_gr_id}" name="b_gr_id"></td>
 					</tr>
 					<tr>
 						<th class="td1">내용</th>
 						<td class="td2"><textarea rows="20" cols="70" name="content"
-								id="i_content"> ${boardGrVO.content } </textarea></td>
+								id="i_content"> ${boardGrVO.content} </textarea></td>
 					</tr>
 					<tr>
 						<th class="td1">사진</th>
 						<td class="td2"><c:forEach var="imageList"
 								items="${imageList}">
 								<img id="g_image" width="300px" height="300px"
-									src="${contextPath}/thumbnails.do?b_gr_id=${imageList.b_gr_id}&${imageList.fileName}">
+									src="${contextPath}/thumbnailsBoard.do?b_gr_id=${imageList.b_gr_id}&${imageList.fileName}">
 							</c:forEach></td>
 					</tr>
 					<tr height="200px">

@@ -25,7 +25,7 @@ function readURL(input) {
 		}
 	}
 	function backToList(obj) {
-		obj.action = "${contextPath}/boardGr/gr_detail.do?b_gr_id=${boardGrVO.parentNo}";
+		obj.action = "${contextPath}/board/listArticles.do";
 		obj.submit();
 	}
 </script>
@@ -185,21 +185,21 @@ function readURL(input) {
 	font-size: 60px;
 }
 
-#grHead {
+#gqHead {
 	margin: 10px;
 }
 
-#grHead #title {
+#gqHead #title {
 	font-size: 20px;
 	float: left;
 }
 
-#grHead #date {
+#gqHead #date {
 	float: right;
 	margin: 5px;
 }
 
-#grHead #id {
+#gqHead #id {
 	margin: 5px;
 	float: right
 }
@@ -327,51 +327,110 @@ function result(){
 }
 </script>
 	</c:if>
-	<div class="board-b-wrap">
-
-		<h1>답변 수정</h1>
-	</div>
-	<br>
 	<div class='board-wrap'>
+		<div class="board-b-wrap">
+
+			<h1>리뷰 상세</h1>
+		</div>
+		<div id="goods-info">
+			<br> <img class="imagegoods"
+				src="${contextPath}/resources/image/new1.png" />
+			<div id="goodstext">
+				<h3>${boardGqVO.s_id}</h3>
+				<h3>${boardGqVO.g_name}</h3>
+			</div>
+		</div>
+		<br>
+		<div class="board_main">
+			<div id="gqHead">
+				<div id="title">${boardGqVO.title}</div>
+				<div id="date">${boardGqVO.creDate}</div>
+				<div id="id">작성자:${boardGqVO.u_id}</div>
+			</div>
+			<br>
+			<div id="content">
+				<c:forEach var="imageList" items="${imageList}">
+					<img id="g_image" width="300px" height="300px"
+						src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${imageList.b_gq_id}">
+				</c:forEach>
+				<br> ${boardGqVO.content}
+			</div>
+			<br>
+		</div>
+
+		<c:choose>
+			<c:when test="${not empty ReviewList }">
+
+				<c:forEach var="review" items="${ReviewList}">
+					<div class="board-r-wrap">
+
+						<h1>답글입니다</h1>
+						<input type=button value="수정"
+							onClick="fn_update('${contextPath}/boardGq/boardGqUpdateform.do',${review.b_gq_id })" />
+						<input type=button value="삭제"
+							onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${review.b_gq_id })" />
+						<input type=button value="목록"
+							onClick="fn_return('${contextPath}/boardGq/selectBoardGqList.do')" />
+						<input type=button value="답글"
+							onClick="fn_review('${contextPath}/boardGq/boardGqReviewform.do', ${boardGqVO.b_gq_id})" />
+					</div>
+
+					<div class='table-wrap1'>
+						<table>
+
+
+							<tr>
+								<th class="td1">제목</th>
+								<td class="td2"><input type=text value="" name="title"
+									id="i_title" disabled /></td>
+							</tr>
+							<tr>
+								<th class="td1">내용</th>
+								<td class="td2"><textarea rows="20" cols="70"
+										name="content" id="i_content" disabled></textarea></td>
+							</tr>
+						</table>
+					</div>
+				</c:forEach>
+			</c:when>
+		</c:choose>
+	</div>
+	<div class='board-wrap'>
+		<div class='board-title'>
+			<h1>답변쓰기</h1>
+		</div>
 		<form name="frmArticle" method="post"
-			action="${contextPath}/boardGr/boardGrUpdate.do"
+			action="${contextPath}/boardGq/boardGqinsert.do"
 			enctype="multipart/form-data">
 			<div class='table-wrap'>
 				<table>
 
 					<tr>
 						<th class="td1">작성자 아이디</th>
-						<td class="td3">
-							<input class="B_Uid" type=hidden value="${boardGrVO.b_gr_id}" name="b_gr_id" /> 
-							<input class="B_Uid" type=text value="${boardGrVO.s_id }" name="_s_id" disabled /> 
-							<input type="hidden" value="${boardGrVO.s_id }" name="s_id">
-							<input type="hidden"value="${boardGrVO.parentNo }" name="parentNo">
-							<input type="hidden" value="seller" name="reg_id">
-							
+						<td class="td3"><input class="B_Uid" type=hidden
+							value="${boardGqVO.g_id}" name="g_id" /> <input class="B_Uid"
+							type=text value="${boardGqVO.s_id }" name="_s_id" disabled /> <input
+							type="hidden" value="${boardGqVO.s_id }" name="s_id"> <input
+							type="hidden" value="seller" name="reg_id">
 							<div class="secret-wrap">
-								<input class="B_Uid1" type="checkbox" name="secret" value="Y" onclick="#">비밀글입니다.
+								<input class="B_Uid1" type="checkbox" name="secret" value="Y"
+									onclick="#">비밀글입니다.
 							</div></td>
 					</tr>
 					<tr>
 						<th class="td1">제목</th>
 						<td class="td2"><input type=text value="타이틀필드" name="title"
-							id="i_title" value="${boardGrVO.title}" /></td>
+							id="i_title" /><input type="hidden"
+							value="${boardGqVO.b_gq_id }" name="parentNo"></td>
 
 					</tr>
 					<tr>
 						<th class="td1">내용</th>
 						<td class="td2"><textarea rows="20" cols="70" name="content"
-								id="i_content">${boardGrVO.content}</textarea></td>
+								id="i_content"></textarea></td>
 					</tr>
-					<tr>
-						<th class="td1">이미지</th>
-						<td class="td2"><c:forEach var="imageList"
-								items="${imageList}">
-								<<img id="g_image" width="300px" height="300px"
-									src="${contextPath}/thumbnailsBoard.do?b_gr_id=${boardGrVO.b_gr_id}&${imageList.fileName}">
-							</c:forEach></td>
 					<tr height="200px">
-						<th class="td1">이미지파일 첨부 <input class="filecss	" type="file"
+						<th class="td1">이미지파일 첨부 <input class="filecss" type="file"
 							name="imageFileName" onchange="readURL(this);" /></th>
 						<td class='td2'><input type="image" id="preview" src="#"
 							alt="이미지 출력창 입니다." /></td>
@@ -380,7 +439,7 @@ function result(){
 			</div>
 			<div class="board-b-wrap">
 				<input type='submit' value="글쓰기" /> <input type=button value="목록"
-					onClick="backToList()" />
+					onClick="backToList(this.form)" />
 			</div>
 
 		</form>

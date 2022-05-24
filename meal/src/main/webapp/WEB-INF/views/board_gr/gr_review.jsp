@@ -388,7 +388,7 @@ function result(){
 			<div id="content">
 				<c:forEach var="imageList" items="${imageList}">
 					<img id="g_image" width="300px" height="300px"
-						src="${contextPath}/thumbnails.do?b_gr_id=${imageList.b_gr_id}">
+						src="${contextPath}/thumbnailsBoard.do?b_gr_id=${imageList.b_gr_id}">
 				</c:forEach>
 				<br> ${boardGrVO.content}
 			</div>
