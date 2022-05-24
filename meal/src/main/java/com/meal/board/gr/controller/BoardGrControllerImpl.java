@@ -53,7 +53,7 @@ public class BoardGrControllerImpl extends BaseController implements BoardGrCont
 		ModelAndView mav = new ModelAndView();
 		String imageFileName = null;
 		HttpSession session = multipartRequest.getSession();
-
+//asd
 		HashMap<String, Object> newboardGrMap = new HashMap<String, Object>();
 		Enumeration enu = multipartRequest.getParameterNames();
 		while (enu.hasMoreElements()) {
