@@ -141,9 +141,11 @@
 		</div>
 		<div class="div3">
 			<div class="div3-1">등급(VIP)</div>
-			<div class="div3-2">회원이름</div>
+			<div class="div3-2">${memberVO.u_name }</div>
 			<div class="div3-3">
-				마일리지: x원 <br> 총구매액:x원
+				마일리지: 
+				${memberVO.u_mile }원
+				 <br> 총구매액:x원
 			</div>
 
 

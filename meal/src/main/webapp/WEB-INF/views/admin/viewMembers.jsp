@@ -232,19 +232,19 @@ tr.border-bottom td {
 									<tr class="border-bottom">
 
 										<td><a
-											href="${contextPath}/member/userDetail.do?id=${item.u_id}">${item.u_id}</a></td>
+											href="${contextPath}/member/memberDetail.do?id=${item.u_id}">${item.u_id}</a></td>
 										<td><a
-											href="${contextPath}/member/userDetail.do?id=${item.u_id}">${item.u_name}</a></td>
+											href="${contextPath}/member/memberDetail.do?id=${item.u_id}">${item.u_name}</a></td>
 										<td><a
-											href="${contextPath}/member/userDetail.do?id=${item.u_id}">${item.u_sex}</a></td>
+											href="${contextPath}/member/memberDetail.do?id=${item.u_id}">${item.u_sex}</a></td>
 										<td><a
-											href="${contextPath}/member/userDetail.do?id=${item.u_id}">${item.u_hp1}</a></td>
+											href="${contextPath}/member/memberDetail.do?id=${item.u_id}">${item.u_hp1}</a></td>
 										<td><a
-											href="${contextPath}/member/userDetail.do?id=${item.u_id}">${item.u_email1}@${item.u_email2}</a></td>
+											href="${contextPath}/member/memberDetail.do?id=${item.u_id}">${item.u_email1}@${item.u_email2}</a></td>
 										<td><a
-											href="${contextPath}/member/userDetail.do?id=${item.u_id}">${item.u_addr1}${item.u_addr2}${item.u_addr3}</a></td>
+											href="${contextPath}/member/memberDetail.do?id=${item.u_id}">${item.u_addr1}${item.u_addr2}${item.u_addr3}</a></td>
 										<td><a
-											href="${contextPath}/member/userDetail.do?id=${item.u_id}">${item.u_mile}</a></td>
+											href="${contextPath}/member/memberDetail.do?id=${item.u_id}">${item.u_mile}</a></td>
 										<td>${item.u_rank}</td>
 										<td>${item.u_id}</td>
 										<td>${item.u_birth}</td>

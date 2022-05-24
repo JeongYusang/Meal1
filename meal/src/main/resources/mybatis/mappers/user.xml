@@ -121,15 +121,18 @@ select u_id from user_tb where hp1 = #{hp1} and hp2 = #{hp2} and hp3 = #{hp3} an
                                      u_addr3 = #{u_addr3} where u_id=#{u_id} ]]>
 
 	</update>
-	<select id="checkpw" resultType="String" parameterType="String">
-  <![CDATA[
-select u_pw from user_tb where u_id = #{id};
-]]>
-	</select>
+
 	<update id="lastLog" parameterType="String">
   <![CDATA[
 		update user_tb set u_lastlog = current_timestamp() where u_id = #{u_id};
 			]]>
 	</update>
 
+		<select id="memberDetail" resultType="memberVO"
+				parameterType="String">
+			    <![CDATA[
+					select * from user_tb
+					 where u_id=#{id}
+				]]>
+			</select>
 </mapper>
