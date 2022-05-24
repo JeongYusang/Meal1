@@ -78,7 +78,7 @@
 	}
 
 	function fn_overlapped() {
-		var _id = $("#_u_id").val();
+		var _id = $("#_a_id").val();
 		if (_id == '') {
 			alert("ID를 입력하세요");
 			return;
@@ -95,9 +95,9 @@
 				if (data == 'false') {
 					alert("사용할 수 있는 ID입니다.");
 					$('#btnOverlapped').prop("disabled", true);
-					$('#_u_id').prop("disabled", true);
+					$('#_a_id').prop("disabled", true);
 					$('#addmember').prop("disabled", false);
-					$('#u_id').val(_id);
+					$('#a_id').val(_id);
 				} else {
 					alert("사용할 수 없는 ID입니다.");
 				}
@@ -115,7 +115,7 @@
 	 function chkPW() {
 
 	 var pw = $("#pwd").val();
-	 var id = $("#u_id").val();
+	 var id = $("#a_id").val();
 	 var checkNumber = pw.search(/[0-9]/g);
 	 var checkEnglish = pw.search(/[a-z]/ig);
 
@@ -141,11 +141,11 @@
 	    $(function() {
 	        $('#select').change(function() {
 	            if ($('#select').val() == 'directly') {
-	                $('#u_email2').attr("disabled", false);
-	                $('#u_email2').val("");
-	                $('#u_email2').focus();
+	                $('#a_email2').attr("disabled", false);
+	                $('#a_email2').val("");
+	                $('#a_email2').focus();
 	            } else {
-	                $('#u_email2').val($('#select').val());
+	                $('#a_email2').val($('#select').val());
 	            }
 	        })
 	    });
@@ -335,7 +335,7 @@ tr.box {
 	font-size: medium;
 }
 
-#frmMem input#u_sex {
+#frmMem input#a_sex {
 	margin-left: 60px;
 }
 
@@ -501,21 +501,21 @@ tr.box {
 	</div>
 	<section>
 		<div id="container">
-			<form id="frm" name="frmM" action="${contextPath}/member/addMember.do"
+			<form id="frm" name="frmM" action="${contextPath}/admin/addadmin.do"
 				method="post">
 				<table class="any">
 					<h1 style="text-align: center">일반고객 회원가입</h1>
 					<tr class="box">
 						<th>아이디*</th>
-						<td><input type="text" name="_u_id" id="_u_id"
+						<td><input type="text" name="_a_id" id="_a_id"
 							placeholder="아이디" required="required" /> <input type="hidden"
-							name="u_id" id="u_id" />
+							name="a_id" id="a_id" />
 						<td colspan="2" class="righttd"><input type="button"
 							id="btnOverlapped" value="중복확인" onClick="fn_overlapped()" /></td>
 					</tr>
 					<tr class="box">
 						<th>비밀번호*</th>
-						<td colspan="3"><input name="u_pw" id="pwd" type="password"
+						<td colspan="3"><input name="a_pw" id="pwd" type="password"
 							placeholder="비밀번호" required="required" /></td>
 					</tr>
 					<tr class="box">
@@ -524,7 +524,7 @@ tr.box {
 							type="password" placeholder="비밀번호 확인" required="required" /></td>
 						<!-- 			<tr class="box">
 						<th>비밀번호*</th>
-						<td colspan="3"><input name="u_pw" id="pwd" type="password"
+						<td colspan="3"><input name="a_pw" id="pwd" type="password"
 							placeholder="비밀번호" required="required" onchange="chkPW()" /></td>
 					</tr>
 					<tr class="box">
@@ -535,17 +535,17 @@ tr.box {
 					</tr>
 					<tr class="box">
 						<th>이름*</th>
-						<td colspan="3"><input name="u_name" id="name" type="text"
+						<td colspan="3"><input name="a_name" id="name" type="text"
 							required="required" /></td>
 					</tr>
 					<tr class="box">
 						<th>생년월일*</th>
-						<td colspan="3"><input name="u_birth" id="YMD" type="date"
+						<td colspan="3"><input name="a_birth" id="YMD" type="date"
 							value="submit" required="required" /></td>
 					</tr>
 					<tr class="box">
 						<th>휴대폰*</th>
-						<td><input type="tel" name="u_hp1" id="hp1"
+						<td><input type="tel" name="a_hp1" id="hp1"
 							required="required" /></td>
 						<td colspan="2" class="righttd"><input type="button" id="hp2"
 							value="인증 전송" /></td>
@@ -560,14 +560,14 @@ tr.box {
 					<tr class="box">
 						<th>email*</th>
 						<td>
-						<input type="text" name="u_email1" id="u_email1"
+						<input type="text" name="a_email1" id="a_email1"
 							style="width: 100px"> @
-						<input type="text" name="u_email2" id="u_email2"
+						<input type="text" name="a_email2" id="a_email2"
 							style="width: 100px;"  value="">
 						<select style="width: 100px; margin-right: 10px"
-							name="u_email2" id="select">
+							name="a_email2" id="select">
 							<option value="" disabled selected>E-Mail 선택</option>
-							<option value="directly" id="u_email2">직접 입력하기</option>
+							<option value="directly" id="a_email2">직접 입력하기</option>
 							<option value="naver.com">naver.com</option>
 							<option value="hanmail.net">hanmail.net</option>
 							<option value="hotmail.com">hotmail.com</option>
@@ -586,28 +586,8 @@ tr.box {
 
 
 					</tr>
-					<tr class="box">
-						<th>성별</th>
-						<td colspan="3" class="righttd"><input id="u_sex"
-							name="u_sex" type="radio" value="m" required="required" />남자 <input
-							id="u_sex" name="u_sex" type="radio" value="f"
-							required="required" />여자</td>
-					</tr>
-					<tr class="box">
-						<th rowspan="3">주소*</th>
-						<td id="zipcode33"><input type="text" name="u_addr1"
-							id="zipcode" placeholder="우편번호"></td>
-						<td id="zipcode22"><input type="button" value="우편번호 찾기"
-							id="zipcode1" onclick="execDaumPostcode()"></td>
-					</tr>
-					<tr class="box">
-						<td id="road" colspan="2"><input type="text" id="roadAddress"
-							name="u_addr2" placeholder="도로명 주소"></td>
-					</tr>
-					<tr class="box" colspan="2">
-						<td id="detailzip"><input type="text" name="u_addr3"
-							class="detail" placeholder="상세주소"></td>
-					</tr>
+					
+					
 					<tr class="box">
 						<th rowspan="2"><h4>필수동의*</h4></th>
 						<td colspan="4"><input type="checkbox" value="agree" required>이용약관
@@ -619,10 +599,6 @@ tr.box {
 							수집 및 이용동의 (필수)
 							<button id="agree2" type="button">약관보기</button></td>
 					</tr>
-					<!-- 	이부분이 유효성검사가능
-		<tr class="box13">
-				<td colspan="4"><input type="submit" class="addmember" id="addmember" value="회원 가입"></td> colspan=3
-			</tr> -->
 				</table>
 				<center>
 					<input type="submit" value="회원가입" id="addmember" disabled="true">
