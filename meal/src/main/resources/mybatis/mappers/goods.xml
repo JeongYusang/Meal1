@@ -173,7 +173,7 @@ g_salePer = #{g_salePer}
 	<select id="goodsPage" resultMap="goodsResult"
 		parameterType="Map">
    <![CDATA[
-	   select R1.* from (select * from goods_tb order by g_id) R1 order by g_name asc limit #{start} , #{end} 
+	   select R1.* from (select * from goods_tb order by g_id) R1 where s_id = #{s_id} order by g_creDate DESC limit #{start} , #{end} 
 	   ]]>
 	</select>
 

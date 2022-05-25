@@ -205,8 +205,11 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 		@RequestMapping(value = "/selectGoodsPage.do", method = { RequestMethod.POST, RequestMethod.GET })
 		public ModelAndView selectAllGoods(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 				@RequestParam(value = "section1", required = false) String section1,
-				@RequestParam(value = "pgNum", required = false) String pgNum, HttpServletRequest request,
-				HttpServletResponse response) throws Exception {
+				@RequestParam(value = "pgNum", required = false) String pgNum, 
+				HttpServletRequest request, HttpServletResponse response) throws Exception {
+			HttpSession session = request.getSession();
+			SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
+			String s_id = sellerVO.getS_id();
 			String viewName = (String) request.getAttribute("viewName");
 			ModelAndView mav = new ModelAndView(viewName);
 			HashMap<String, Object> pgMap = new HashMap<String, Object>();
@@ -242,6 +245,7 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 				pgMap.put("start", start);
 				pgMap.put("end", end);
 			}
+			pgMap.put("s_id", s_id);
 			System.out.println(pgMap);
 			List<GoodsVO> goodsList = goodsService.selectGoodsPage(pgMap);
 			mav.addObject("goodsList", goodsList);
