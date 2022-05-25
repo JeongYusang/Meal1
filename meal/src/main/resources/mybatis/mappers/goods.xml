@@ -213,6 +213,14 @@ update goods_tb set g_saleprice = '0', g_saleDate1= null, g_saleDate2= null , g_
 ]]>
 </update>
 
+<select id="goodsG_Info" parameterType="int"
+		resultType="GoodsVO">
+	<![CDATA[
+		   select * from goods_tb
+		   where g_id = #{g_id}
+		]]>
+	</select>
+
 
 </mapper>
  

@@ -249,5 +249,33 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 			
 			return mav;
 	}
+		@Override
+		@RequestMapping(value="/updateGoodsForm.do", method= {RequestMethod.POST, RequestMethod.GET})
+		public ModelAndView updateGoodsForm(@RequestParam("g_id") int g_id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+			ModelAndView mav = new ModelAndView();
+			HttpSession session = request.getSession();
+			SellerVO sellerInfo = (SellerVO) session.getAttribute("sellerInfo");
+			//AdminVO adminInfo = (AdminVO) session.getAttribute("AdminInfo");
+			GoodsVO goodsInfo = (GoodsVO) goodsService.goodsG_Info(g_id);
+
+			if (sellerInfo.getS_id().equals(goodsInfo.getS_id())) {
+				String viewName = "/goods/updateGoodsForm";
+				mav.setViewName(viewName);
+				return mav;
+
+			} //else if (adminInfo != null) { 
+				//String viewName = "/goods/updateGoodsForm";
+				//mav.setViewName(viewName);
+				//return mav;
+
+			//} 
+			else {
+				String message = "회원정보가 일치하지 않습니다.";
+				mav.addObject("message", message);
+				String viewName = "redirect:/goods/searchGoods.do";
+				mav.setViewName(viewName);
+				return mav;
+			}
+		}
 
 }
