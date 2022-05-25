@@ -1,5 +1,9 @@
 package com.meal.goods.vo;
 
+
+
+import java.util.Date;
+
 import org.springframework.stereotype.Component;
 
 @Component("img_gVO")
@@ -9,8 +13,15 @@ public class Img_gVO {
 	private String fileName;
 	private int g_id;
 	private String cate;
+	private Date creDate;
 	
 	
+	public Date getCreDate() {
+		return creDate;
+	}
+	public void setCreDate(Date creDate) {
+		this.creDate = creDate;
+	}
 	public int getIg_id() {
 		return ig_id;
 	}

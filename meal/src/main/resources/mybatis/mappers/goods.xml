@@ -57,8 +57,7 @@
 						g_salePer,
 						g_saleWon,
 						g_saleDate1,
-						g_saleDate2,
-						g_saleprice
+						g_saleDate2
 						)
 					values(
 						#{s_id},
@@ -76,8 +75,7 @@
 					  	#{g_salePer},
 					  	#{g_saleWon},
 					  	#{g_saleDate1},
-					  	#{g_saleDate2},
-					  	#{g_saleprice}
+					  	#{g_saleDate2}
 					 	)
 		]]>
 	</insert>
@@ -123,7 +121,7 @@
 	<select id="selectOneImg" parameterType="Map"
 		resultType="img_gVO">
  <![CDATA[
- select * from img_g where g_id =#{g_id} and cate = #{cate}
+ select * from img_g where g_id =#{g_id} and cate = #{cate} 
  ]]>
 	</select>
 	<!-- 스케줄러 -->
@@ -182,20 +180,19 @@ g_salePer = #{g_salePer}
 
 <!-- 스케줄러에서 사용  -->
 
-<!-- 세일 조회 -->
+<!-- 세일시작 -->
+
 <select id = "searchGoodsSale" resultMap="goodsResult">
 
 <![CDATA[
-select * from goods_tb where g_saleDate2 <= now() and g_saleprice = 0
+select * from goods_tb where g_saleDate1 <= now() and g_saleprice =0
 ]]>
 
 </select>
 
-
-<!-- 세일시작 -->
 <update id = "goodsSaleBegin" parameterType="GoodsVO">
 <![CDATA[
-update goods_tb set g_saleprice = #{g_saleprice} where g_id=#{g_id}
+update goods_tb set g_saleprice = #{g_saleprice} where g_id= #{g_id}
 ]]>
 </update>
 
@@ -212,7 +209,7 @@ select * from goods_tb where g_saleDate2 <= now() and g_saleprice != 0
 
 <update id = "goodsSaleEnd" parameterType="GoodsVO">
 <![CDATA[
-update goods_tb set g_saleprice = '0', g_saleDate1='null', g_saleDate2='null' , g_saleWon='0', g_salePer ='0' where g_id =#{g_id}
+update goods_tb set g_saleprice = '0', g_saleDate1= null, g_saleDate2= null , g_saleWon='0', g_salePer ='0' where g_id =#{g_id}
 ]]>
 </update>
 
