@@ -227,8 +227,8 @@
 					<li class="side-list">
 						<h2>나의활동</h2> <br>
 						<ul class="sidebar-content">
-							<li><a href="#">정보수정</a></li>
-							<li><a href="#">회원탈퇴</a></li>
+							<li><button type="button" class="checkpw">회원수정</button></li>
+							<li><button type="button" class="checkpw1">회원탈퇴</button></li>
 						</ul>
 					</li>
 				</c:when>
