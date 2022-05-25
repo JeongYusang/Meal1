@@ -257,10 +257,13 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 			SellerVO sellerInfo = (SellerVO) session.getAttribute("sellerInfo");
 			//AdminVO adminInfo = (AdminVO) session.getAttribute("AdminInfo");
 			GoodsVO goodsInfo = (GoodsVO) goodsService.goodsG_Info(g_id);
-
+			List<Img_gVO> imageList = (List<Img_gVO>) goodsService.selectImgList(g_id);
+			
 			if (sellerInfo.getS_id().equals(goodsInfo.getS_id())) {
 				String viewName = "/goods/updateGoodsForm";
+				mav.addObject("goodsInfo", goodsInfo);
 				mav.setViewName(viewName);
+				mav.addObject("imageList", imageList);
 				return mav;
 
 			} //else if (adminInfo != null) { 

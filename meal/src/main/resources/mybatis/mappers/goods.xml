@@ -115,7 +115,7 @@
 	<!--상품상세를 위한 출력 -->
 	<select id="selectGoodsImg" parameterType="int"
 		resultMap="img_GResult">
-		select * from img_g where g_id =#{g_id}
+		select * from img_g where g_id = #{g_id}
 	</select>
 
 	<select id="selectOneImg" parameterType="Map"

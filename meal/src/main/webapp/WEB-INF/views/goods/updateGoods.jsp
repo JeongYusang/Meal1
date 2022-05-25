@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
    pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -96,14 +97,14 @@ margin: 10px;
 </style>
 <body>
 <div id="goodsform-container">
-<h1> 상품 등록하기</h1>
-<form id="frminsertgoods" name="frminsertgoods" action="${contextPath}/goods/addNewGoods.do" method="post" enctype="multipart/form-data">
+<h1> 상품 수정하기</h1>
+<form id="frmUpdateGoods" name="frmUpdateGoods" action="${contextPath}/goods/updateGoods.do" method="post" enctype="multipart/form-data">
 <input type="hidden" name="s_id" value= "${sellerInfo.s_id}"/>
    <table class="goodsform">
       <tr class="box">
          <th>상품사진*</th>
          <td>
-			<img id="" width="150px" height="150px" src="${contextPath}/resources/image/mini1.PNG">
+			<img id="" width="150px" height="150px" src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=main">${imageList[0].fileName}
 			<br>
          	<input type="file" name="main"  />
          </td>
@@ -111,7 +112,7 @@ margin: 10px;
      <tr class="box">
          <th>상품명*</th>
          <td>
-         	<input type="text" name="g_name" id="_g_name" value="" placeholder="상품명" required="required">
+         	<input type="text" name="g_name" id="_g_name" value="${goodsInfo.g_name }" required="required">
    <!--  	<input type="hidden" name="g_name" id="g_name"> -->
     	 	<input type="button" value="중복확인" onclick="fn_overlapped()" id="btnOverlapped">
          </td>
@@ -119,21 +120,21 @@ margin: 10px;
          <tr class="box">
          <th>상품가격*</th>
          <td>
-         	<input type="text" name="g_price" id="g_price" required="required" />
+         	<input type="text" name="g_price" id="g_price" value="${goodsInfo.g_price }" required="required" />
          </td>
       </tr>
       <tr class="box">
          <th>할인가격</th>
          <td>
-         	<input type="text" name="g_saleWon" id="g_saleWon" required="required">
+         	<input type="text" name="g_saleWon" id="g_saleWon" value="${goodsInfo.g_saleWon }" required="required">
          </td>
       </tr>
       <tr class="box">
          <th>할인율</th>
          <td>
-             <select name="g_salePer" id="g_salePer">
-                 <option value="" disabled selected>선택하세요</option>
-                 <option value="5%" id="g_salePer">5%</option>
+             <select name="g_salePer" id="g_salePer" title="${goodsInfo.g_salePer}">
+                 <option value="${goodsInfo.g_salePer }">${goodsInfo.g_salePer }</option>
+                 <option value="5%" >5%</option>
                  <option value="10%">10%</option>
                  <option value="15%">15%</option>
                  <option value="20%">20%</option>
@@ -147,51 +148,51 @@ margin: 10px;
       	</td>
       </tr>
       <tr class="box">
-         <th>할인기간</th>
+         <th>적용된 할인기간</th>
          	<td>
-         		<input name="g_saleDate1" id="g_saleDate1" type="date" value="submit"> ~ 
-    			<input name="g_saleDate2" id="g_saleDate2" type="date" value="submit">
+         		<fmt:formatDate value="${goodsInfo.g_saleDate1 }" type="Date" dateStyle="short"/> ~ 
+            	<fmt:formatDate value="${goodsInfo.g_saleDate2 }" type="Date" dateStyle="short"/>
+            	<input type="hidden" name="s_id" value= "${goodsInfo.g_saleDate1}"/>
+            	<input type="hidden" name="s_id" value= "${goodsInfo.g_saleDate2}"/>
+            </td>
+      </tr>
+      <tr class="box">
+         <th>변경할 할인기간</th>
+         	<td>
+         		<input name="g_saleDate3" id="g_saleDate1" type="date" value="submit"> ~ 
+    			<input name="g_saleDate4" id="g_saleDate2" type="date" value="submit">
             </td>
       </tr>
       <tr class="box">
          <th>수량*</th>
          <td>
-         	<input type="text" name="g_amount" id="g_amount" placeholder="재고 수량을 입력해주세요" required="required" />
+         	<input type="text" name="g_amount" id="g_amount" value="${goodsInfo.g_amount }" required="required" />
          </td>
       </tr>
       <tr class="box">
          <th>카테고리 설정*</th>
          <td>
-         <div id = "form-div">
-                <input type="radio" id="g_cate21" name="g_cate2" value="찌개/탕/찜" checked>
-                <label for="g_cate21">찌개/탕/찜</label> 
-                <input type="radio" id="g_cate22" name="g_cate2" value="식사/안주" checked>
-                <label for="g_cate22">식사/안주</label> 
-         </div>
-         <div id = "form-div">
-         		<input type="radio" id="g_cate23" name="g_cate2" value="죽" checked> 
-                <label for="g_cate23">죽</label>
-                <input type="radio" id="g_cate24" name="g_cate2" value="간편식" checked>
-                <label for="g_cate24">간편식</label> 
-                <input type="radio" id="g_cate25" name="g_cate2" value="고기"checked>
-                <label for="g_cate25">고기</label>
-                <br> 
-                <input type="radio" id="g_cate26" name="g_cate2" value="기타" checked> 
-                <label for="g_cate26">기타</label>
-         </div>
+         <select name="g_cate2" id="g_cate2" title="${goodsInfo.g_cate2}">
+                 <option value="${goodsInfo.g_cate2 }" disabled selected>${goodsInfo.g_cate2 }</option>
+                 <option value="찌개/탕/찜">찌개/탕/찜</option>
+                 <option value="식사/안주">식사/안주</option>
+                 <option value="죽">죽</option>
+                 <option value="간편식">간편식</option>
+                 <option value="고기">고기</option>
+                 <option value="기타">기타</option>
+             </select>
          </td>
       </tr>
       <tr class="box">
          <th>난이도*</th>
-         <td><div id = "form-div">
-               <input type="radio" id="g_nan1" name="g_nan" value="상" checked>
-                <label for="g_nan1">상</label> 
-                <input type="radio" id="g_nan2" name="g_nan" value="중" checked>
-                <label for="g_nan2">중</label> 
-                 <input type="radio" id="g_nan3" name="g_nan" value="하" checked>
-                <label for="g_nan3">하</label> 
-            </div>
-            </td>
+         <td>
+         	<select name="g_nan" id="g_nan" title="${goodsInfo.g_nan}">
+                 <option value="${goodsInfo.g_nan}" disabled selected>${goodsInfo.g_nan}</option>
+                 <option value="상">상</option>
+                 <option value="중">중</option>
+                 <option value="하">하</option>
+             </select>
+         </td>
       </tr>
       <tr class="box">
          <th>조리 시간*</th>
@@ -200,46 +201,43 @@ margin: 10px;
       </tr>
       <tr class="box">
          <th>보관방법*</th>
-         <td><div id = "form-div"> 
-         <input type="radio" id="g_bang1" name="g_bang" value="냉동" checked>
-                <label for="g_bang1">냉동</label> 
-                <input type="radio" id="g_bang2" name="g_bang" value="냉장" checked> 
-                <label for="g_bang2">냉장</label>
-                <input type="radio" id="g_bang3" name="g_bang" value="실온" checked> 
-                <label for="g_bang3">실온</label>
-                </div>
-                </td>
+         <td>
+         	 <select name="g_bang" id="g_bang" title="${goodsInfo.g_bang}">
+                 <option value="${goodsInfo.g_bang}" disabled selected>${goodsInfo.g_bang}</option>
+                 <option value="냉동">냉동</option>
+                 <option value="냉장">냉장</option>
+                 <option value="실온">실온</option>
+             </select>
+         </td>
       </tr>
       <tr class="box">
          <th>인분수*</th>
-         <td><div id = "form-div"> 
-         <input type="radio" id="g_inbun1" name="g_inbun" value="1~2인분" checked>
-                <label for="g_inbun1">1~2인분</label> 
-                <input type="radio" id="g_inbun2" name="g_inbun" value="2~3인분" checked> 
-                <label for="g_inbun2">2~3인분</label>
-                <br>
-                <input type="radio" id="g_inbun3" name="g_inbun" value="3~4인분" checked> 
-                <label for="g_inbun3">3~4인분</label>
-                </div></td>
+         <td>
+         	 <select name="g_inbun" id="g_inbun" title="${goodsInfo.g_inbun}">
+                 <option value="${goodsInfo.g_inbun}" disabled selected>${goodsInfo.g_inbun}</option>
+                 <option value="1~2인분">1~2인분</option>
+                 <option value="2~3인분">2~3인분</option>
+                 <option value="3~4인분">3~4인분</option>
+             </select>
+         </td>
       </tr>
       <tr class="box">
          <th>알러지 유발 성분*</th>
-         <td colspan="3"><textarea id="allergy" name = "g_allergy" cols="30" rows="10"></textarea></td>
+         <td colspan="3">
+         	<textarea id="allergy" name = "g_allergy" cols="30" rows="10" >${goodsInfo.g_allergy}</textarea>
+         </td>
       </tr>
       <tr class="box">
          <th>상세이미지*</th>
          <td>
-         	<c:forEach var="imageList" items="${imageList}">
-         		<c:if test="${cate == main}">
-				<img id="g_image" width="300px" height="300px" src="${contextPath}/download1.do?g_id=${imageList.g_id}&${imageList.fileName}">
-				</c:if>
-			</c:forEach>
+			<img id="g_image" width="150px" height="150px" src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=detail" >${imageList[1].fileName}
+			<br>
          	<input type="file" name="detail" />
          </td>
       </tr>
       <tr class="box">
          <th>상세설명*</th>
-         <td><textarea id="test" name="g_detail1" cols="30" rows="10"></textarea>
+         <td><textarea id="test" name="g_detail1" cols="30" rows="10">${goodsInfo.g_detail1 }</textarea>
             <div id="test_cnt">(0 / 2000)</div></td>
       </tr>
       <tr class="box">
