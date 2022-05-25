@@ -20,7 +20,7 @@ window.onload=function()
 }
 
 function result(){
-	alert(});
+	alert("${message}");
 }
 </script>
 </c:if>

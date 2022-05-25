@@ -186,8 +186,10 @@
 	<nav class="side-nav-wrap">
 		<ul>
 			<c:choose>
-
+			
 				<c:when test="${not empty sellerInfo}">
+					<!-- sellerMode -->
+				
 					<li class="side-list">
 						<H2>판매정보</H2> <br>
 						<ul class="sidebar-content">
@@ -230,8 +232,11 @@
 						</ul>
 					</li>
 				</c:when>
-
+				
 				<c:when test="${not empty adminInfo}">
+				
+				<!-- adminMode -->
+				
 					<li class="side-list">
 						<H2>주요기능</H2> <br>
 						<ul class="sidebar-content">
@@ -245,7 +250,8 @@
 
 					<li class="side-list">
 						<H2>주요기능</H2> <br>
-						<ul class="sidebar-content">
+						<ul class="sidebar-content">							
+							<li><a href="${contextPath }/admin/selectAlladmins.do">관리자 조회</a></li>
 							<li><a href="${contextPath}/admin/selectAllMembers.do">회원관리</a></li>
 							<li><a href="${contextPath}/admin/selectAllSellers.do">판매자관리</a></li>
 							<li><a href="${contextPath}/admin/member/adminMemberMain.do">회원관리</a></li>
@@ -264,9 +270,11 @@
 						</ul>
 					</li>
 				</c:when>
-
+			
 				<c:when test="${not empty memberInfo}">
-					<!-- 일반회원모드 -->
+						<!-- 일반회원모드 -->
+					
+					
 					<li class="side-list">
 						<H2>구매정보</H2>
 						<ul class="sidebar-content">

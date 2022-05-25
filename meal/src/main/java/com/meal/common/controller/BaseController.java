@@ -73,6 +73,8 @@ public class BaseController {
 	      String viewName = (String) request.getAttribute("viewName");// 인터셉터있을때 없으면주석
 	      /* String viewName = (String)request.getAttribute("viewName"); 인터셉터없을때 */
 	      ModelAndView mav = new ModelAndView(viewName);
+	      logger.info("BaseController의 "+"/*/*.do" + viewName);
+	      
 	      return mav;
 	   }
 
@@ -127,6 +129,22 @@ public class BaseController {
 		HttpSession session = request.getSession();
 		String u_id = loginMap.get("u_id");
 		String u_pw = loginMap.get("u_pw");
+		
+		if(u_id == null) {
+			String viewName = "/main/loginForm";
+			String message = "아이디를 입력해주세요.";
+			mav.setViewName(viewName);
+			mav.addObject("message", message);
+			return mav;
+		}
+		if(u_pw == null) {
+			String viewName = "/main/loginForm";
+			String message = "비밀번호를 입력해주세요.";
+			mav.setViewName(viewName);
+			mav.addObject("message", message);
+			return mav;
+		}
+		
 		MemberVO memberInfo = memberService.decode(u_id);
 		SellerVO sellerInfo = sellerService.decode(u_id);
 		AdminVO adminInfo = adminService.decode(u_id);
@@ -142,6 +160,11 @@ public class BaseController {
 				String viewName = "redirect:/main/main.do";
 				mav.setViewName(viewName);
 				return mav;
+			}else {
+				String message = "회원정보가 일치하지 않습니다.";
+				mav.addObject("message", message);
+				mav.setViewName("/main/loginForm");
+				return mav;
 			}
 		}
 		if (sellerInfo != null) {
@@ -155,6 +178,11 @@ public class BaseController {
 				System.out.println(sellerVO);
 				String viewName = "redirect:/main/main.do";
 				mav.setViewName(viewName);
+				return mav;
+			}else {
+				String message = "회원정보가 일치하지 않습니다.";
+				mav.addObject("message", message);
+				mav.setViewName("/main/loginForm");
 				return mav;
 			}
 		}

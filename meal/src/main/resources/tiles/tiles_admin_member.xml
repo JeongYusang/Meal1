@@ -21,11 +21,18 @@
 			value="/WEB-INF/views/admin/viewSellers.jsp" />
 	</definition>
 
-	<!--판매자 등록창  -->
+	<!--관리자 등록창 -->
+
+	<definition name="/admin/selectAlladmins"
+		extends="baseLayout2">
+		<put-attribute name="title" value="관리자 조회창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/admin/viewAdmins.jsp" />
+	</definition>
 	<definition name="/admin/addAdminForm" extends="baseLayout2">
 		<put-attribute name="title" value="관리자 등록창" />
 		<put-attribute name="body"
-			value="/WEB-INF/views/admin/addAdminForm.jsp" />
+			value="/WEB-INF/views/admin/adminAddForm.jsp" />
 	</definition>
 
 

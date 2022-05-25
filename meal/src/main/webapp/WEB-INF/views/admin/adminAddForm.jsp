@@ -504,7 +504,7 @@ tr.box {
 			<form id="frm" name="frmM" action="${contextPath}/admin/addadmin.do"
 				method="post">
 				<table class="any">
-					<h1 style="text-align: center">일반고객 회원가입</h1>
+					<h1 style="text-align: center">관리자 등록창</h1>
 					<tr class="box">
 						<th>아이디*</th>
 						<td><input type="text" name="_a_id" id="_a_id"
@@ -557,6 +557,7 @@ tr.box {
 						<td colspan="2" class="righttd"><input type="button"
 							id="hpA1" value="인증 확인" /></td>
 					</tr>
+					
 					<tr class="box">
 						<th>email*</th>
 						<td>

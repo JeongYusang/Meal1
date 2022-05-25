@@ -17,5 +17,6 @@ public interface AdminDAO{
 	public List<SellerVO> selectAllSellers(HashMap<String, Object> pagingMap) throws DataAccessException;
 	public void insertReason(HashMap<String, Object> map) throws DataAccessException;
 	public String selectOverlappedId(String pw) throws DataAccessException;
-		
+	public List<AdminVO> selectAllAdmins(HashMap<String,Object> pagingMap) throws DataAccessException;
+			
 }
