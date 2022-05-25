@@ -47,4 +47,11 @@ public class AdminDAOImpl implements AdminDAO {
 		    String result = (String)sqlSession.selectOne("mapper.admin.selectOverlappedId", pw);
 		    return result;
 		}
+		@Override
+		public List<AdminVO> selectAllAdmins(HashMap<String,Object> pagingMap) throws DataAccessException{
+			List<AdminVO> adminList = (List<AdminVO>)sqlSession.selectList("mapper.admin.selectAllAdmin", pagingMap);
+			return adminList;
+		}
+
 }
+

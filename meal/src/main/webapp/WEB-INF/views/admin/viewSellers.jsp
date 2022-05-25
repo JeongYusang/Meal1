@@ -83,17 +83,22 @@ function sortTable(n) {
 	border-collapse: collapse;
 	background-color: #FFF0F0s;
 }
+#top-table th {
+cursor:pointer;
+}
+#top-table span {
+	cursor: pointer;
+}
 
 #top-table tr, ths {
 	padding: 20px;
-	
-	
 }
 
-#top-table{
-border-bottom: 1px solid black;
-}}
+#top-table {
+	border-bottom: 1px solid black;
+}
 
+}
 #body-table {
 	text-align: center;
 }
@@ -101,6 +106,7 @@ border-bottom: 1px solid black;
 tr.border-bottom td {
 	border-bottom: 1px solid black;
 	padding: 0px;
+	cursor: context-menu;
 }
 
 #tabletitle {
@@ -114,10 +120,6 @@ tr.border-bottom td {
 	margin: 20px;
 }
 
-#pagination{
-margin: 30px;
-}
-
 #maintitle {
 	font-size: 48px;
 	background-color: #ffc0cf;
@@ -127,39 +129,42 @@ margin: 30px;
 .main-container {
 	margin-left: 10px;
 }
-#pick{
- display: flex;
- margin-top: 20px;
- margin-bottom: 20px;
+
+#pick {
+	display: flex;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
+
 #pick-user {
-width:400px;
-height:100px;
-margin: 0 auto;
-float:left;
-font-size: 32px;
-text-align: center;
-line-height: 100px;
-border: 1px solid;
-
+	width: 400px;
+	height: 100px;
+	background-color: #ffc0cf;
+	margin: 0 auto;
+	float: left;
+	font-size: 32px;
+	text-align: center;
+	line-height: 100px;
 }
+
+#pick-user a {
+	color: white;
+}
+
+#pagination {
+	margin: 30px;
+}
+
 #pick-seller {
-width:400px;
-height:100px;
-background-color: #ffc0cf;
-margin: 0 auto;
-float:left;
-font-size: 32px;
-text-align: center;
-line-height: 100px;
-color: white;
+	width: 400px;
+	height: 100px;
+	margin: 0 auto;
+	float: left;
+	font-size: 32px;
+	text-align: center;
+	line-height: 100px;
+	border: 1px solid;
 }
-
-#pick-seller a{
-color: white;
-}
-
-
 </style>
 </head>
 <body>

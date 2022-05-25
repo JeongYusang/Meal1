@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.meal.admin.dao.AdminDAO;
@@ -44,4 +45,8 @@ public class AdminServiceImpl implements AdminService {
 	adminDAO.insertReason(map);
 	}
 	
+	public List<AdminVO> selectAllAdmins(HashMap<String,Object> pagingMap) throws DataAccessException{
+	List<AdminVO> adminList = (List<AdminVO>)adminDAO.selectAllAdmins(pagingMap);
+	return adminList;
+	}	
 }
