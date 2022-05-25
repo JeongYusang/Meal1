@@ -29,5 +29,6 @@ public interface GoodsDAO {
 	public List<GoodsVO> searchGoodsSaleE() throws DataAccessException;
 	public void goodsSaleEnd(GoodsVO goodsVO) throws DataAccessException;
 	public GoodsVO goodsG_Info(int g_id) throws DataAccessException;
-		
+
+
 }

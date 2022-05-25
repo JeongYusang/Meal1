@@ -156,6 +156,48 @@ margin: 30px;
 	line-height: 100px;
 	border: 1px solid;
 }
+
+.check-context {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.7);
+	z-index: 500;
+	display: none;
+}
+
+.check-context .check-inner {
+	width: 80%;
+	height: 80%;
+	background: #ffc0cf;
+	top: 30px;
+	left: 50%;
+	transform: translateX(-50%);
+	position: absolute;
+	text-align: center;
+	box-sizing: border-box;
+	padding: 20px;
+	font-size: 20px;
+}
+
+.check-context .check-inner {
+	width: 30px;
+	height: 27px;
+	border: 0;
+	position: absolute;
+	right: 35%;
+	top: 10px;
+	background: #ffc0cf;
+	/* 백그라운드는 이너와 맞춰줄것 */
+}
+
+.check-context .check-inner  {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
 </style>
 </head>
 <body>
