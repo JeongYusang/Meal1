@@ -156,76 +156,10 @@ margin: 30px;
 	line-height: 100px;
 	border: 1px solid;
 }
-
-.check-context {
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	background: rgba(0, 0, 0, 0.7);
-	z-index: 500;
-	display: none;
-}
-
-.check-context .check-inner {
-	width: 80%;
-	height: 80%;
-	background: #ffc0cf;
-	top: 30px;
-	left: 50%;
-	transform: translateX(-50%);
-	position: absolute;
-	text-align: center;
-	box-sizing: border-box;
-	padding: 20px;
-	font-size: 20px;
-}
-
-.check-context .check-inner {
-	width: 30px;
-	height: 27px;
-	border: 0;
-	position: absolute;
-	right: 35%;
-	top: 10px;
-	background: #ffc0cf;
-	/* 백그라운드는 이너와 맞춰줄것 */
-}
-
-.check-context .check-inner  {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-}
 </style>
 </head>
 <body>
-<!-- 모달시작 -->
-<div class="check-context">
-<div class="check-inner">
-<div class="checkform">
-				<h1>비밀번호 재확인</h1>
-				<h3>회원의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인해주세요</h3>
-				<hr>
-				<form id="checkForm" method='post' action="${contextPath}/goods/goodsUpdateForm.do">
-					<table class="pw">
-						<tr>
-							<th><h1>비밀번호</h1></th>
-							<td><input type="password" name="pw1" class="pw" style="height: 22px; margin-top: 10px; margin-left: 10px;" />
-								<input type="hidden" name="g_id" value="${goodsInfo.g_id }"/>
-							</td>
-						</tr>
-					</table>
-					<center>
-						<button class="submit" type="submit">전송하기</button>
-						<button class="check-close" type="button">돌아가기</button>
-					</center>
-				</form>
-			</div>
-		</div>
-	</div>
-	<!-- 모달끝 -->
+<form action="url" method="post" enctype="multipart/form-data">
 			<div class="main-container">
 				<div id=maintitle>상품관리</div>
 				<div class="table-container">
@@ -272,7 +206,12 @@ margin: 30px;
 										<td>${item.g_inbun}</td>
 										<td>${item.g_bang}</td>
 										<td><fmt:formatDate value="${item.g_creDate}" type="Date" dateStyle="short" /></td>
-										<td><input type="button" value="수정하기" class="checkpw"><br><br><input type="button" value="삭제하기" ></td>
+										<td>
+											<a href="${contextPath}/goods/updateGoodsForm.do?g_id=${item.g_id}">수정하기</a>
+											<br>
+											<br>
+											<a href="${contextPath}/goods/updateGoodsForm.do?g_id=${item.g_id}">삭제하기</a>
+										</td>
 									</tr>
 								</c:forEach>
 							</c:when>
@@ -298,20 +237,6 @@ margin: 30px;
 
 				</div>
 			</div>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="${contextPath }/resources/js/viewGoods.js"></script>
-<script>
-$(".checkpw").click(function() {		// html내부
-	/*사이트맵버튼클릭시}*/
-	$(".check-context").fadeIn();
-	$(".nav_ul").css("display", "none");   // (레이아웃)네비바 가려야 함.
-
-});
-$(".check-close").click(function() {		// 모달창 내부
-	/*사이트맵닫기버튼*/
-	$(".check-context").fadeOut();
-	$(".nav_ul").css("display", "block"); //(레이아웃)네비바 표출해야함.
-})
-</script>
+	</form>
 </body>
 </html>

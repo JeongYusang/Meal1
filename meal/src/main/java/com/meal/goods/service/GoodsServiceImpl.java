@@ -84,4 +84,8 @@ public class GoodsServiceImpl implements GoodsService {
 		 List<GoodsVO> listInfo = (List<GoodsVO>) goodsDAO.selectGoodsPage(pgMap);
 		 return listInfo;
 	}
+	@Override
+	public GoodsVO goodsG_Info(int g_id) throws Exception {
+		return goodsDAO.goodsG_Info(g_id);
+	}
 }

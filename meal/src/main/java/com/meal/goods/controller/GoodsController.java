@@ -14,5 +14,5 @@ import org.springframework.web.servlet.ModelAndView;
 public interface GoodsController {
 	public ModelAndView addNewGoods(MultipartHttpServletRequest multipartRequest, HttpServletResponse response)  throws Exception;
 	public ResponseEntity goodsoverlapped(@RequestParam("g_name") String g_name, HttpServletRequest request,HttpServletResponse response) throws Exception;
-
+	public ModelAndView updateGoodsForm(@RequestParam("g_id") int g_id, HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

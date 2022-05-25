@@ -28,8 +28,16 @@
    
    <!-- 상품관리 -->
    <definition name="/goods/selectGoodsPage" extends="baseLayout">
-      <put-attribute name="title" value="상품등록창" />
+      <put-attribute name="title" value="상품관리창" />
       <put-attribute name="body"
          value="/WEB-INF/views/goods/goodsSearch.jsp" />
+   </definition>
+   
+   <!-- 상품수정 -->
+    <!-- 상품관리 -->
+   <definition name="/goods/updateGoodsForm" extends="baseLayout">
+      <put-attribute name="title" value="상품수정창" />
+      <put-attribute name="body"
+         value="/WEB-INF/views/goods/updateGoods.jsp" />
    </definition>
 </tiles-definitions>
