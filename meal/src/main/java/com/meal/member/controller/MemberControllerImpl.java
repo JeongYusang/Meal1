@@ -186,8 +186,6 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 		ResponseEntity resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
 		return resEntity;
 	}
-	
-
 
 	// 회원 상세 정보창으로 가는것 admin 상세로도 사용중
 	@Override
@@ -207,5 +205,83 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 			System.out.println("실패했음");
 		}
 		return mav;
+	}
+
+	// email 인증
+	@RequestMapping(value = "/FindIDResult.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView FindID(@RequestParam HashMap<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		String viewName = (String) request.getAttribute("/member/FindIDResult");
+		mav.setViewName(viewName);
+		try {
+			String name = (String) map.get("name");
+			String email = (String) map.get("email");
+			//이메일을 적지 않았을경우 분기
+			if (email == null || email == "" ||name == null || name=="") {
+				String message = "정보를 입력해주세요.";
+				mav.addObject("message", message);
+				mav.setViewName("/member/FindID");
+				return mav;
+
+			} 
+				// @로 들어간 email 쪼개주기
+				String[] rep = email.split("@");
+				String email1 = rep[0];
+				String email2 = rep[1];
+				logger.info("==========================");
+				logger.info("name = " + name);
+				logger.info("email = " + email);
+				logger.info("email1 = " + email1);
+				logger.info("email2 = " + email2);
+				logger.info("==========================");
+			
+
+			return mav;
+		} catch (Exception e) {
+			String message = "형식을 지켜주세요.";
+			mav.addObject("message", message);
+			mav.setViewName("/member/FindID");
+			return mav;
+		}
+
+	}
+
+	// hp 인증
+	@RequestMapping(value = "/FindIDResult2.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView FindIDEmail(@RequestParam HashMap<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		String viewName = (String) request.getAttribute("/member/FindIDResult");
+		mav.setViewName(viewName);
+		try {
+			String name = (String) map.get("name");
+			String hp1 = (String) map.get("hp1");
+			if (hp1 == null || hp1 == "" ||name == null || name=="") {
+				String message = "번호를 입력해주세요.";
+				mav.addObject("message", message);
+				mav.setViewName("/member/FindID");
+				return mav;
+
+			} 
+			
+			logger.info("==========================");
+			logger.info("name = " + name);
+			logger.info("hp1 = " + hp1);
+
+			logger.info("==========================");
+			if (hp1.indexOf("-") != 0) {
+				hp1.split("-");
+
+			}
+
+			return mav;
+		} catch (Exception e) {
+			String message = "형식을 지켜주세요.";
+			mav.addObject("message", message);
+			mav.setViewName("/member/FindID");
+			return mav;
+		}
+
 	}
 }

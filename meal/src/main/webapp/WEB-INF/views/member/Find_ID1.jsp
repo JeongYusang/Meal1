@@ -8,9 +8,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>너도 요리할 수 있어</title>
-
+<meta charset="EUC-KR">
+<title>Insert title here</title>
 <style>
 #tab {
 max-width: 100%;
@@ -156,38 +155,38 @@ border-radius: 4px;
 width: 300px;
 height: 45px;
 }
-
 </style>
 </head>
 <body>
-<form action="${contextPath}/member/FindIDResult.do" method="post" method="post">
+<form action="${contextPath}/member/FindIDResult2.do" method="post" method="post">
   <div id="tab">
   	<div id="dadada">
   	<h1>아이디 찾기</h1>
     <ul class="tabnav">
-      <li class="list1"><a href="${contextPath }/member/FindID.do">이메일</a></li>
+      <li class="list1"><a href="${contextPath}/member/FindID.do">이메일</a></li>
       <li class="list2"><a href="${contextPath }/member/FindID1.do">전화번호</a></li>
     </ul>
     </div>
     <div class="tabcontent">
-      <div id="tab01">
+
+      <div id="tab02">
 	  		<table id="table">
 				<tr>
 					<td class="name1">이름</td>
-					<td class="name2"><input type="text" placeholder="이름을 입력하세요" name="name" required></td>				
+					<td class="name2"><input class="" type="text" placeholder="이름을 입력하세요" name="name" required></td>			
 				</tr>
 				<tr>
-					<td class="email1">이메일</td>
-					<td class="email2"><input type="text" id="email" placeholder="이메일을 @포함 입력하세요" name="email" required></td>
+					<td class="hp1">전화번호</td>
+					<td class="hp2"><input class="" type="text" placeholder="전화번호를 - 없이 입력하세요" name="hp1" required></td>
 				</tr>
 				<tr>
 					<td class="click1"><input type="submit" id="pub1" value="찾기"></td>
 					<td class="click2"><input type="button" onclick="history.go(-1);" id="pub2" value="취소"></td>
-				</tr>				
+				</tr>
 			</table>
 	  </div>
-
- </form>
-
+    </div>
+  </div>
+   </form>
 </body>
 </html>
