@@ -89,7 +89,7 @@
 			<scope>runtime</scope>
 		</dependency>
 
-	<!-- sql logger -->
+		<!-- sql logger -->
 		<dependency>
 			<groupId>org.bgee.log4jdbc-log4j2</groupId>
 			<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
@@ -118,7 +118,19 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>4.0.0.RELEASE</version>
 		</dependency>
-		<!-- -->
+		<!-- 이메일 인증 API -->
+		<!-- MimeClass -->
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.5.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
 
 		<!-- @Inject -->
 		<dependency>
@@ -155,11 +167,11 @@
 		</dependency>
 		<!-- Spring Test -->
 		<dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${org.springframework-version}</version>
-            <scope>test</scope>
-        </dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework-version}</version>
+			<scope>test</scope>
+		</dependency>
 		<!-- JDBC 설정하기 -->
 		<dependency>
 			<groupId>commons-beanutils</groupId>
@@ -201,7 +213,7 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-	
+
 
 		<dependency><!-- sqlSessionFactory 만들때 없으면 에러남 -->
 			<groupId>cglib</groupId>
@@ -255,7 +267,11 @@
 			<version>2.4</version>
 			<classifier>jdk15</classifier>
 		</dependency>
-
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.5.1</version>
+		</dependency>
 
 		<!-- AOP -->
 		<dependency>

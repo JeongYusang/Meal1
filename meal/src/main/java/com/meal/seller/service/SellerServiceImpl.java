@@ -63,6 +63,12 @@ public class SellerServiceImpl implements SellerService {
 	public void lastLog(String s_id) throws Exception{
 		SellerDAO.lastLog(s_id);
 	}
+	@Override
+	public SellerVO FindPW(HashMap<String,Object> map) throws Exception{
+		
+		return (SellerVO)SellerDAO.FindPW(map);
+	}
+	
 
 }
 

@@ -78,4 +78,9 @@ public class SellerDAOImpl implements SellerDAO {
 			sqlSession.update("mapper.seller.lastLog",s_id);
 		}
 
+		@Override
+		public SellerVO FindPW(HashMap<String,Object> map) throws DataAccessException{
+			return (SellerVO)sqlSession.selectOne("mapper.seller.FindPW", map);
+			
+		}
 }

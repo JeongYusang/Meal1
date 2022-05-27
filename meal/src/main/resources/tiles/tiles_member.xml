@@ -79,6 +79,12 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/member/Find_PW.jsp" />
 	</definition>
+	<definition name="/email/PwView" extends="baseLayout">
+		<put-attribute name="title" value="이메일비밀번호변경창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/FindPWChange.jsp" />
+	</definition>
+	
 
 	<definition name="/main/FindPWResult" extends="baseLayout">
 		<put-attribute name="title" value="비밀번호찾기결과창" />

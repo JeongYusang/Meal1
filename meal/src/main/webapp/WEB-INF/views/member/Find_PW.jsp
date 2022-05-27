@@ -10,6 +10,43 @@
 <head>
 <meta charset="UTF-8">
 <title>너도 요리할 수 있어</title>
+<script src ='http://code.jquery.com/jquery-latest.min.js'></script>
+<script>
+function fnc_LoginFindPW(){
+	var _email = $("#email").val();
+	var _id = $("#id").val()
+	console.log("email = "+_email);
+	console.log("id = "+ _id);
+	
+	$.ajax({
+		type:"post",
+		async:false,
+		url:"${contextPath}/Email/FindPW.do",
+		data:{ id : _id , email : _email },
+		success:function(data){
+			var message = data.message
+			alert(data.message);
+			console.log("data.key = "+data.key);
+			console.log("data.result= " + data.result );
+			
+		},
+		error: function(data){
+			console.log("data.key = "+data.key);
+			console.log("data.result= " + data.result );
+	alert("이메일 형식을 지켜주세요");
+		},
+		complete:function(data){
+/* 				$(".check-context").fadeOut();
+				$(".nav_ul").css("display", "block");
+						
+	alert("작업을 완료했습니다.");
+ */		}
+		
+	});
+	
+	
+}
+</script>
 <style>
 #pwd01 {
 max-width: 100%;
@@ -95,22 +132,24 @@ height: 45px;
 }
 
 </style>
+<script src ='http://code.jquery.com/jquery-latest.min.js'>
+</script>
 </head>
 <body>
-<form action="${contextPath}/main/FindPWResult.do" method="post">
+<form action="${contextPath}/Email/FindPW.do" method="post">
 	<div  id="pwd01">
 	<h2>비밀번호 찾기</h2>
 		<table id="PWtable">
 			<tr>
-				<td class="name1">이름</td>
-				<td class="name2"><input type="text" name="member_name" placeholder="이름을 입력하세요" required="required"/></td>
+				<td class="name1">아이디</td>
+				<td class="name2"><input type="text" name="id" id="id" placeholder="아이디를 입력하세요" required="required"/></td>
 			</tr>
+				<tr>
+					<td class="email1">이메일</td>
+					<td class="email2"><input type="text" id="email" placeholder="이메일을 @포함 입력하세요" name="email" required></td>
+				</tr>
 			<tr>
-				<td class="ID1">아이디</td>
-				<td class="ID2"><input type="text" name="member_id" placeholder="아이디를 입력하세요" required="required"/></td>
-			</tr>
-			<tr>
-				<td class="click1"><input type="submit" value="비밀번호 찾기" id="pub1"/></td> 
+				<td class="click1"><input type="button" onclick="fnc_LoginFindPW()" value="비밀번호 찾기" id="pub1"/></td> 
 				<td class="click2"><input type="button" value="뒤로가기" onclick="location.href='loginForm.do'" id="pub2"/></td>
 			</tr>
 		</table>

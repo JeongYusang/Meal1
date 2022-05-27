@@ -565,7 +565,7 @@ tr.box {
 						<input type="text" name="u_email2" id="u_email2"
 							style="width: 100px;"  value="">
 						<select style="width: 100px; margin-right: 10px"
-							name="u_email2" id="select">
+							title="u_email2" id="select">
 							<option value="" disabled selected>E-Mail 선택</option>
 							<option value="directly" id="u_email2">직접 입력하기</option>
 							<option value="naver.com">naver.com</option>

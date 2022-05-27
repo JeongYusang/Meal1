@@ -95,7 +95,7 @@
 	<select id="FindId" resultType="memberVO"
 		parameterType="Map">
   <![CDATA[
-select u_id from user_tb where email1 = #{email1} and email2 = #{email2} and u_name = #{name}
+select u_id from user_tb where u_email1 = #{email1} and u_email2 = #{email2} and u_name = #{name}
 ]]>
 	</select>
 
@@ -107,6 +107,12 @@ select u_id from user_tb where hp1 = #{hp1} and u_name = #{name}
 ]]>
 	</select>
 
+	<select id="FindPW" resultType="memberVO"
+		parameterType="Map">
+  <![CDATA[
+select * from user_tb where u_email1 = #{email1} and u_email2 = #{email2} and u_id = #{id}
+]]>
+	</select>
 
 
 	<update id="updateMember" parameterType="memberVO">
