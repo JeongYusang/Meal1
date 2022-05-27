@@ -153,15 +153,6 @@
 #myform input[type=radio]:checked ~ label {
 	text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
-#g_image {
-	float: left;
-	width: 100px;
-	height: 100px;
-}
-#goodstext {
-font-size: 16px;
-color: black;
-}
 </style>
 </head>
 <body>
@@ -187,22 +178,23 @@ color: black;
 				<table>
 					<tr>
 						<th class="td1">상품</th>
-						<td><input type="hidden" name="g_id" value="${goodsVO.g_id}" /> 
-						<input type="hidden" name="s_id" value="${goodsVO.s_id}" /> 
-						<input type="hidden" name="o_id" value="${o_id}" />
+						<td><input type="hidden" name="g_id" value="6" /> <input
+							type="hidden" name="s_id" value="2323" /><input type="hidden"
+							name="g_id" value="6" /> <input type="hidden" name="s_id"
+							value="2323" />
 							<div id="goods-info">
-								<br> <img id=g_image src="${contextPath}/download1.do?g_id=${goodsVO.g_id}&cate=main">
+								<br> <img
+									class="${contextPath}/thumbnailsBoard.do?g_id=${boardGrInfo.g_id}" />
 								<div id="goodstext">
-									${goodsVO.s_id}<br>
-									${goodsVO.g_name}<br>
-									${goodsVO.g_price}
+									<h3>${boardGrInfo.s_id}</h3>
+									<h3>${boardGrInfo.g_name}</h3>
 								</div>
 							</div></td>
 					</tr>
 					<tr>
 						<th class="td1">작성자 아이디</th>
 						<td class="td3"><input class="B_Uid" type=text
-							value="${memberInfo.u_id}" name="_u_id" disabled /> <input
+							value="${ memberInfo.u_id}" name="_u_id" disabled /> <input
 							type="hidden" value="${memberInfo.u_id }" name="u_id"> <input
 							type="hidden" value="user" name="reg_id"><input
 							type="hidden" value="0" name="parentNo">

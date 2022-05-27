@@ -1,17 +1,15 @@
 package com.meal.order.vo;
 
-import java.sql.Date;
-
 import org.springframework.stereotype.Component;
 
 @Component("orderVO")
 public class OrderVO {
-	public int o_id;
+	public String o_id;
 	public String u_name;
 	public String g_name;
 	public String ig_id;
-	public int o_goods_qty;
-	public int o_goods_price;
+	public String o_goods_qty;
+	public String o_goods_price;
 	public String receiver_name;
 	public String receiver_hp;
 	public String receiver_addr1;
@@ -24,27 +22,17 @@ public class OrderVO {
 	public String card_com_name;
 	public String card_pay_month;
 	public String good_cancel;
-	public Date pay_order_time;
-	public int g_id;
+	public String pay_order_time;
+	public String g_id;
 	public String u_id;
 	public String s_id;
-	public int n_id;
-	public int o_useMile;
-	public int parentNo;
-	public String review;
-	public int b_gr_id;
+	public String n_id;
+	public String o_useMile;
 	
-	
-	public int getB_gr_id() {
-		return b_gr_id;
-	}
-	public void setB_gr_id(int b_gr_id) {
-		this.b_gr_id = b_gr_id;
-	}
-	public int getO_id() {
+	public String getO_id() {
 		return o_id;
 	}
-	public void setO_id(int o_id) {
+	public void setO_id(String o_id) {
 		this.o_id = o_id;
 	}
 	public String getU_name() {
@@ -65,16 +53,16 @@ public class OrderVO {
 	public void setIg_id(String ig_id) {
 		this.ig_id = ig_id;
 	}
-	public int getO_goods_qty() {
+	public String getO_goods_qty() {
 		return o_goods_qty;
 	}
-	public void setO_goods_qty(int o_goods_qty) {
+	public void setO_goods_qty(String o_goods_qty) {
 		this.o_goods_qty = o_goods_qty;
 	}
-	public int getO_goods_price() {
+	public String getO_goods_price() {
 		return o_goods_price;
 	}
-	public void setO_goods_price(int o_goods_price) {
+	public void setO_goods_price(String o_goods_price) {
 		this.o_goods_price = o_goods_price;
 	}
 	public String getReceiver_name() {
@@ -149,16 +137,16 @@ public class OrderVO {
 	public void setGood_cancel(String good_cancel) {
 		this.good_cancel = good_cancel;
 	}
-	public Date getPay_order_time() {
+	public String getPay_order_time() {
 		return pay_order_time;
 	}
-	public void setPay_order_time(Date pay_order_time) {
+	public void setPay_order_time(String pay_order_time) {
 		this.pay_order_time = pay_order_time;
 	}
-	public int getG_id() {
+	public String getG_id() {
 		return g_id;
 	}
-	public void setG_id(int g_id) {
+	public void setG_id(String g_id) {
 		this.g_id = g_id;
 	}
 	public String getU_id() {
@@ -173,31 +161,17 @@ public class OrderVO {
 	public void setS_id(String s_id) {
 		this.s_id = s_id;
 	}
-	public int getN_id() {
+	public String getN_id() {
 		return n_id;
 	}
-	public void setN_id(int n_id) {
+	public void setN_id(String n_id) {
 		this.n_id = n_id;
 	}
-	public int getO_useMile() {
+	public String getO_useMile() {
 		return o_useMile;
 	}
-	public void setO_useMile(int o_useMile) {
+	public void setO_useMile(String o_useMile) {
 		this.o_useMile = o_useMile;
 	}
-	public int getParentNo() {
-		return parentNo;
-	}
-	public void setParentNo(int parentNo) {
-		this.parentNo = parentNo;
-	}
-	public String getReview() {
-		return review;
-	}
-	public void setReview(String review) {
-		this.review = review;
-	}
-	
-	
 
 }

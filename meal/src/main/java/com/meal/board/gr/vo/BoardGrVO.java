@@ -20,16 +20,7 @@ public class BoardGrVO {
 	public String g_name;
 	public int ib_gr_id;
 	public String fileName;
-	public int o_id;
 	
-	
-	
-	public int getO_id() {
-		return o_id;
-	}
-	public void setO_id(int o_id) {
-		this.o_id = o_id;
-	}
 	public int getIb_gr_id() {
 		return ib_gr_id;
 	}

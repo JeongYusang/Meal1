@@ -337,7 +337,7 @@
 						<c:when test="${isLogOn==true and not empty memberInfo}">
 							<li><c:out value="${memberInfo.u_name}님 반갑습니다" /></li>
 							<li><a href="${contextPath}/member/logout.do">로그아웃 |</a></li>
-							<li><a href="${contextPath }/order/selectUserOrders.do">마이페이지 |
+							<li><a href="${contextPath }/user/mypagehome.do">마이페이지 |
 							</a></li>
 							<li><a href="#">주문배송</a></li>
 						</c:when>

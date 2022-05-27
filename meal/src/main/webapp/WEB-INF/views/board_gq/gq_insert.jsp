@@ -163,7 +163,7 @@
 			}
 
 			function result() {
-				alert("${message}");
+				alert('${message}');
 			}
 		</script>
 	</c:if>

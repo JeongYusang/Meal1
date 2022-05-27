@@ -317,6 +317,9 @@ tr.border-bottom td {
 		</center>
 		<hr>
 		<br>
+		<div id="write">
+			<a href="${contextPath }/boardGr/boardGrWrite.do">글쓰기</a>
+		</div>
 	</div>
 
 

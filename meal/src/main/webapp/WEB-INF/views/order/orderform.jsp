@@ -70,6 +70,22 @@
         }).open();
     }
     
+  window.onload=function()
+  {
+    init();
+  }
+
+  function init(){
+  	var form_order=document.form_order;
+  	var h_tel1=form_order.h_tel1;
+  	var h_hp1=form_order.h_hp1;
+  	var tel1=h_tel1.value;
+  	var hp1=h_hp1.value;
+  	var select_tel1=form_order.tel1;
+  	var select_hp1=form_order.hp1;
+  	select_tel1.value=tel1;
+  	select_hp1.value=hp1;
+  }
   
 /*   $(function () {
 	  $("#o_useMile").keydown(function () {
@@ -134,7 +150,7 @@
 			buyer_name : '${memberInfo.u_name}',
 			buyer_tel : '${memberInfo.u_hp1}',
 			buyer_addr : '${memberInfo.u_addr2} + ${memberInfo.u_addr3}',
-			buyer_postcode : '${memberInfo.u_addr1}'
+			buyer_postcode : '${memberInfo.u_addr3}'
 	    }, function (rsp) { // callback
 	      if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
 	        // jQuery로 HTTP 요청
@@ -142,7 +158,6 @@
 	            url: "${contextPath}/order/insertOrder.do", // 예: https://www.myservice.com/payments/complete
 	            method: "POST",
 	            data: {
-	            	u_id: document.getElementById("u_id").value,
 	                o_id: rsp.merchant_uid,
 	                u_name: rsp.buyer_name,
 	                g_name: rsp.name,
@@ -254,7 +269,7 @@ input[type="number"]::-webkit-inner-spin-button {
          result();
       }
       function result() {
-         alert("${message}");
+         alert(${message});
       }
    </script>
 </c:if>
@@ -276,18 +291,43 @@ input[type="number"]::-webkit-inner-spin-button {
 				</thead>
 				<tbody align=center>
 					<tr class="line">
-						<td class="goods_image"><img src="${contextPath}/download1.do?g_id=${goodsVO.g_id}&cate=main" width="50px"
-							height="50px" /> <a href="${contextPath}/goods/goodsDetail.do?g_id=${goodsVO.g_id}"><br>${goodsVO.g_name}</a>
+						<td class="goods_image"><img
+							src="${contextPath}/resources/image/new4.PNG" width="50px"
+							height="50px" /> <a
+							href="${pageContext.request.contextPath}/goods/goods.do?command=goods_detail&goods_id=${item.goods_id }">${item.goods_title }</A>
+							<input type="hidden" id="h_goods_title" name="h_goods_title"
+							value="${item.g_name}" /></td>
 						<td>
-							<h4 id= o_goods_qty>1개</h4> <input type="hidden" id="order_goods_qty"
+							<h4>1개</h4> <input type="hidden" id="order_goods_qty"
 							name="h_order_goods_qty" value="${item.o_goods_qty}" />
 						</td>
-						<td>${goodsVO.g_price}원</td>
-						<td>3000원</td>
-						<td>${goodsVO.g_price * 0.1}포인트
-						<input type="hidden" id="each_goods_price" name="each_goods_price" value="${item.goods_price * item.order_goods_qty}" />
+						<td>${item.o_goods_price}</td>
+						<td>< <c:if test=""></c:if>
 						</td>
-						<td>${goodsVO.g_price * 1} + 3000</td>
+						<td>${item.totalprice *0.9}</td>
+						<td>13000원 <input type="hidden" id="each_goods_price"
+							name="each_goods_price"
+							value="${item.goods_price * item.order_goods_qty}" />
+						</td>
+					</tr>
+					<tr class="line">
+						<td class="goods_image"><img
+							src="${contextPath}/resources/image/new4.PNG" width="50px"
+							height="50px" /> <a
+							href="${pageContext.request.contextPath}/goods/goods.do?command=goods_detail&goods_id=${item.goods_id }">${item.goods_title }</A>
+							<input type="hidden" id="h_goods_title" name="h_goods_title"
+							value="${item.g_name}" /></td>
+						<td>
+							<h4>1개</h4> <input type="hidden" id="order_goods_qty"
+							name="h_order_goods_qty" value="${item.o_goods_qty}" />
+						</td>
+						<td>${item.o_goods_price}</td>
+						<td><c:if test=""></c:if></td>
+						<td>${item.totalprice *0.9}</td>
+						<td>13000원 <input type="hidden" id="each_goods_price"
+							name="each_goods_price"
+							value="${item.goods_price * item.order_goods_qty}" />
+						</td>
 					</tr>
 					<c:set var="final_total_order_price"
 						value="${final_total_order_price+ item.goods_sales_price* item.order_goods_qty}" />
@@ -319,7 +359,8 @@ input[type="number"]::-webkit-inner-spin-button {
 								<td class="fixed_join"><h4>주소</h4></td>
 								<td><input type="text" id="zipcode" name="zipcode" size="5"
 									value="${memberInfo.u_addr1}">
-									<button> <a href="javascript:execDaumPostcode()">우편번호검색</a>
+									<button>
+										<a href="javascript:execDaumPostcode()">우편번호검색</a>
 									</button> <br> <br> 도로명 주소: <input type="text"
 									id="roadAddress" name="receiver_addr2" size="50"
 									value="${memberInfo.u_addr2 }" /> <br> <br> 나머지 주소:
@@ -351,9 +392,9 @@ input[type="number"]::-webkit-inner-spin-button {
 								type="text" size="50" placeholder="택배 기사님께 전달할 메시지를 남겨주세요." /></td>
 						</tr>
 						<tr>
-						<input type="radio" id="deliver_method" name="deliver_method" value ="새벽배송"/>
+						<input type="radio" id="deliver_method" name="deliver_method"/>
 					 새벽배송
-					 <input type="radio" id="deliver_method" name="deliver_method" value="일반택배"/>
+					 <input type="radio" id="deliver_method" name="deliver_method"/>
 					일반택배
 						</tr>
 						</tboby>
@@ -365,9 +406,8 @@ input[type="number"]::-webkit-inner-spin-button {
 					<tbody>
 						<tr class="line">
 							<td><h4>이름</h4></td>
-							<td><input type="text" value="${memberInfo.u_name}"size="15" />
-							<input type="hidden" value="${memberInfo.u_id}" id="u_id"/>
-							</td>
+							<td><input type="text" value="${memberInfo.u_name }"
+								size="15" /></td>
 						</tr>
 						<tr class="line">
 							<td><h4>핸드폰</h4></td>
@@ -396,7 +436,7 @@ input[type="number"]::-webkit-inner-spin-button {
 						<tr>
 							<td>마일리지 사용</td>
 							<td><input class="underline" id="o_useMile" name="o_useMile" type="number"
-								size="10" min = "0" max="${memberInfo.u_mile}"oninput="MaxInput()" value="0"/>원&nbsp;&nbsp;
+								size="10" min = "0" max="${memberInfo.u_mile}"oninput="MaxInput()"/>원&nbsp;&nbsp;
 								<button>모두 사용하기</button></td>
 						</tr>
 					</tbody>

@@ -36,10 +36,10 @@ public interface BoardGrDAO {
 
 	public List<BoardGrVO> selectMyBoardGrList(HashMap<String, Object> Map)throws DataAccessException;
 
-	public BoardGrVO grdownload(int b_gr_id)throws DataAccessException;
+	public BoardGrVO grdownload(int b_gr_id);
 
-	public List<BoardGrVO> selectSellerBoardGrallList(String s_id)throws DataAccessException;
+	public List<BoardGrVO> selectSellerBoardGrallList(String s_id);
 
-	public List<BoardGrVO> selectSellerBoardGrList(HashMap<String, Object> map)throws DataAccessException;
+	public List<BoardGrVO> selectSellerBoardGrList(HashMap<String, Object> map);
 
 }

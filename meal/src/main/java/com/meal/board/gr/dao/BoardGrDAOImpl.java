@@ -112,6 +112,4 @@ public class BoardGrDAOImpl implements BoardGrDAO {
 		return (BoardGrVO) sqlSession.selectOne("mapper.boardGr.boardgr_download",b_gr_id);
 	}
 
-	
-
 }

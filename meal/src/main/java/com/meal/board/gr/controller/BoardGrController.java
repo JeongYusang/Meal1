@@ -54,7 +54,7 @@ public interface BoardGrController {
 			HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes)
 			throws Exception;
 
-	public ModelAndView boardGrWrite(@RequestParam("g_id")int g_id,@RequestParam("o_id")int o_id,HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView writeCheck(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	public ModelAndView boardGrReviewUpdateForm(@RequestParam(value = "b_gr_id", required = false) Integer b_gr_id,
 			HttpServletRequest request, HttpServletResponse response) throws Exception;

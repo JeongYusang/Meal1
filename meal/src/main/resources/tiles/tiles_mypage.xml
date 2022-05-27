@@ -38,8 +38,11 @@
 		<put-attribute name="title" value="회원 마일리지" />
 		<put-attribute name="body" value="/WEB-INF/views/user/mileage.jsp" />
 	</definition>
-	
-	
+	<definition name="/user/myreview" extends="baseLayout2">
+		<put-attribute name="title" value="회원 리뷰" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/user/myreview.jsp" />
+	</definition>
 	
 	<!--판매자  -->
 	

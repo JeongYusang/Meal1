@@ -219,8 +219,7 @@
 						<h2>나의활동</h2> <br>
 						<ul class="sidebar-content">
 							<li><a href="${contextPath}/boardGr/selectSellerBoardGrList.do">리뷰답글</a></li>
-                     		<li><a href="${contextPath}/boardGq/selectSellerBoardGqList.do">문의답변</a></li>
-
+							<li><a href="#">문의답변</a></li>
 						</ul>
 					</li>
 					<li class="side-list">
@@ -285,9 +284,10 @@
 							<li><a href="${contextPath}/user/mymileage.do">마일리지</a></li>
 							<li><a href="${contextPath}/board1/selectallBoard1.do">나의
 									1대1 문의</a></li>
-							<li><a href="${contextPath}/boardGq/selectMyBoardGqList.do">나의 상품 문의</a></li>
-                     		<li><a href="${contextPath}/boardGr/selectMyBoardGrList.do">나의 상품 후기</a></li>
-
+							<li><a href="${contextPath}/user/mypageboard_gq.do">나의
+									상품 문의</a></li>
+							<li><a href="${contextPath}/boardGr/selectMyBoardGrList.do">나의
+									상품 후기</a></li>
 						</ul>
 					</li>
 
