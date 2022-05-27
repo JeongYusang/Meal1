@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.meal.board.gr.service.BoardGrService;
 import com.meal.common.controller.BaseController;
+import com.meal.common.logger.LoggerInterCeptor;
 import com.meal.goods.dao.GoodsDAO;
 import com.meal.goods.service.GoodsService;
 import com.meal.goods.vo.GoodsVO;
@@ -34,11 +38,9 @@ import com.meal.seller.vo.SellerVO;
 @RequestMapping("/goods")
 public class GoodsControllerImpl extends BaseController implements GoodsController {
 	private static final String CURR_IMAGE_UPLOAD_PATH = "C:\\Meal\\Image";
-	private static final HttpServletRequest multipartRequest = null;
+	protected Log log = LogFactory.getLog(GoodsController.class);
 	@Autowired
 	private GoodsService goodsService;
-	@Autowired
-	private GoodsDAO goodsDAO;
 	@Autowired
 	private Img_gVO img_gVO;
 	@Autowired
@@ -284,5 +286,89 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 				return mav;
 			}
 		}
+		@Override
+		@RequestMapping(value = "/updateGoods.do", method = {RequestMethod.GET, RequestMethod.POST})
+		public ResponseEntity updateGoods(@RequestParam("g_id") int g_id, MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception {
+			HttpSession session = multipartRequest.getSession();
+			GoodsVO goodsInfo = (GoodsVO) goodsService.goodsG_Info(g_id);
+			HashMap<String, Object> newGoodsMap = new HashMap<String, Object>();
+			
+			
+			Enumeration enu = multipartRequest.getParameterNames();
+			// input type=file제외 모두 들어감
+			while (enu.hasMoreElements()) {
+				String name = (String) enu.nextElement();
+				String value = multipartRequest.getParameter(name);
+				System.out.println("name + value : " + name + value);
+				newGoodsMap.put(name, value);
 
+			}
+			
+			String message = null;
+			ResponseEntity resEntity = null;
+			HttpHeaders responseHeaders = new HttpHeaders();
+			responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+			try {
+				//이미지 추출을 위하여 g_id사용
+				int g_id1 = (Integer) goodsInfo.getG_id();
+				//현재 저장된 상품 이미지리스트를 불러옴
+				List<Img_gVO> OldimageList = (List<Img_gVO>) goodsService.selectImgList(g_id);
+				List<HashMap<String, Object>> imageFileList = (List<HashMap<String, Object>>) upload(multipartRequest);
+				//기존 이미지와 신규 이미지 비교
+				for(Img_gVO oldi : OldimageList) {
+					for(HashMap<String, Object> newi: imageFileList) {
+						String oldCate = oldi.getCate();
+						String newCate = (String) newi.get("cate");
+						String newImgFileName = (String) newi.get("fileName");
+						String oldImgFileName = oldi.getFileName();
+						newi.put("g_id", g_id);
+						//기존 이미지목록과 새로운 이미지 목록에 관한 비교문임
+						if (oldCate.equals(newCate)) {
+							//기존이미지가 있고 신규미이지 등록을 하였을 경우
+							if(oldImgFileName != null && newImgFileName != null) {
+								String oldpath = CURR_IMAGE_UPLOAD_PATH + "\\" + "goods" + "\\" + g_id +"\\" +oldCate;
+								deleteFolder(oldpath);
+								//등록할 이미지 경로설정(upload)메소드로 path내부에 이미 존재함
+								File srcFile = new File(CURR_IMAGE_UPLOAD_PATH + "\\" + "temp" + "\\" + newImgFileName);
+								// 이동하고자 하는 이미지 파일경로 설정
+								File destDir = new File(CURR_IMAGE_UPLOAD_PATH + "\\" + "goods" + "\\" + g_id + "\\" + newCate);
+								// 이동
+								FileUtils.moveFileToDirectory(srcFile, destDir, true);
+								// db에 있는 이미지 정보 변경해주기
+								goodsService.updateGoodsImg(newi);
+								System.out.println(newi);
+								//신규이미지 등록일 경우에
+							} else if (oldImgFileName == null && newImgFileName != null) {
+								//등록할 이미지 경로설정(upload)메소드로 path내부에 이미 존재함
+								File srcFile = new File(CURR_IMAGE_UPLOAD_PATH + "\\" + "temp" + "\\" + newImgFileName);
+								// 이동하고자 하는 이미지 파일경로 설정
+								File destDir = new File(CURR_IMAGE_UPLOAD_PATH + "\\" + "goods" + "\\" + g_id + "\\" + newCate);
+								// 이동
+								FileUtils.moveFileToDirectory(srcFile, destDir, true);
+								//DB에 저장
+								goodsService.addGoodsImg(newi);
+								System.out.println(newi);
+							}
+						}
+					}
+				}
+				goodsService.updateGoods(newGoodsMap);
+				message = "<script>";
+				message += " alert('상품수정이 완료되었습니다..');";
+				//컨트롤러 내부를 거쳐서 가는거기 때문에 바인딩해줄 요소가 없음
+				message += " location.href='" + multipartRequest.getContextPath() + "/goods/selectGoodsPage.do';";
+				message += " </script>";
+
+			} catch (Exception e) {
+				
+				message = "<script>";
+				message += " alert('다시 내용을 입력해주세요');";
+				message += " location.href='" + multipartRequest.getContextPath() + "/goods/updateGoodsForm.do';";
+				message += " </script>";
+				e.printStackTrace();
+			}
+			resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
+			return resEntity;
+			
+		}
 }

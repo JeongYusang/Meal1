@@ -93,6 +93,17 @@ public class GoodsDAOImpl implements GoodsDAO {
 		GoodsVO goodsVO = (GoodsVO) sqlSession.selectOne("mapper.goods.selectGoodsDetail", g_id);
 		return goodsVO;
 	}
+
+	@Override
+	public void updateGoods(HashMap<String, Object> newGoodsMap) throws DataAccessException {
+		sqlSession.update("mapper.goods.updateGoods", newGoodsMap);
+	}
+
+	@Override
+	public void updateGoodsImg(HashMap<String, Object> newi) throws DataAccessException {
+		sqlSession.update("mapper.goods.updateGoodsImg", newi);
+	}
+
 	
 	
 }

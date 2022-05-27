@@ -29,6 +29,7 @@ public interface GoodsDAO {
 	public List<GoodsVO> searchGoodsSaleE() throws DataAccessException;
 	public void goodsSaleEnd(GoodsVO goodsVO) throws DataAccessException;
 	public GoodsVO goodsG_Info(int g_id) throws DataAccessException;
-
+	public void updateGoodsImg(HashMap<String, Object> newi) throws DataAccessException;
+	public void updateGoods(HashMap<String, Object> newGoodsMap) throws DataAccessException;
 
 }

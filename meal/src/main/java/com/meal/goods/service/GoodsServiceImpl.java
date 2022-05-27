@@ -88,4 +88,16 @@ public class GoodsServiceImpl implements GoodsService {
 	public GoodsVO goodsG_Info(int g_id) throws Exception {
 		return goodsDAO.goodsG_Info(g_id);
 	}
+
+	@Override
+	public void updateGoods(HashMap<String, Object> newGoodsMap) throws Exception {
+		goodsDAO.updateGoods(newGoodsMap);
+		
+	}
+
+	@Override
+	public void updateGoodsImg(HashMap<String, Object> newi) throws Exception {
+		goodsDAO.updateGoodsImg(newi);		
+	}
+
 }

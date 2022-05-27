@@ -201,9 +201,8 @@
 					<li class="side-list">
 						<h2>상품정보</h2> <br>
 						<ul class="sidebar-content">
-							<li><a href="${contextPath}/mypage/listMyOrderHistory.do">등록된상품</a></li>
-							<li><a href="#">상품등록</a></li>
-							<li><a href="#">상품수정</a></li>
+							<li><a href="${contextPath }/goods/goodsForm.do">상품등록</a></li>
+							<li><a href="${contextPath }/goods/selectGoodsPage.do">상품관리</a></li>
 							<li><a href="#">상품삭제</a></li>
 						</ul>
 					</li>

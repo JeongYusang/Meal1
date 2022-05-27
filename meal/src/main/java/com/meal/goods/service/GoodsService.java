@@ -21,4 +21,6 @@ public interface GoodsService {
 	public GoodsVO selectGoodsDetail(int g_id) throws Exception;
 	public List<GoodsVO> selectGoodsPage(HashMap<String, Object> pgMap) throws Exception;
 	public GoodsVO goodsG_Info(int g_id) throws Exception;
+	public void updateGoods(HashMap<String, Object> newGoodsMap) throws Exception;
+	public void updateGoodsImg(HashMap<String, Object> newi) throws Exception;
 }
