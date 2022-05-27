@@ -1,11 +1,17 @@
 package com.meal.order.service;
 
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.meal.board.gr.vo.BoardGrVO;
+import com.meal.goods.vo.GoodsVO;
 import com.meal.order.dao.OrderDAO;
 import com.meal.order.vo.OrderVO;
 
@@ -18,14 +24,65 @@ public class OrderServiceImpl implements OrderService {
 	private OrderDAO orderDAO;
 
 	@Override
-	public void insertOrder(OrderVO _orderVO) {
+	public void insertOrder(OrderVO _orderVO) throws Exception {
 		orderDAO.insertOrder(_orderVO);
 		
 	}
 
+	@Override
+	public List<OrderVO> selectUserOrders(String u_id) throws Exception {
+		List<OrderVO> listInfo = (List<OrderVO>) orderDAO.selectUserOrders(u_id);
+		 return listInfo;
+	}
 	
+	@Override
+	public List<OrderVO> UserboardOrderPage(HashMap<String, Object> Map) throws Exception {
+		List<OrderVO> listInfo = (List<OrderVO>) orderDAO.UserboardOrderPage(Map);
+		return listInfo;
+	}
+	
+	@Override
+	public Map<String, List<OrderVO>> orderlist(String u_id) throws Exception {
+		HashMap<String, String> FindMap = new HashMap<String, String>();
+		FindMap.put("u_id", u_id);
+		FindMap.put("delivery_state", "배송완료");
+		List<OrderVO> orderListDone = orderDAO.selectorderList(FindMap);
+		for(OrderVO item : orderListDone){
+			int o_id =  item.getO_id();
+			String review = orderDAO.overlappedO_id(o_id);
+			item.setReview(review);
+		}
+		HashMap<String, String> FindMap2 = new HashMap<String, String>();
+		FindMap2.put("u_id", u_id);
+		FindMap2.put("delivery_state", "배송시작");
+		List<OrderVO> orderListDstart = orderDAO.selectorderList(FindMap2);
+		HashMap<String, String> FindMap3 = new HashMap<String, String>();
+		FindMap3.put("u_id", u_id);
+		FindMap3.put("delivery_state", "결제완료");
+		List<OrderVO> orderListPaid = orderDAO.selectorderList(FindMap3);
+		Map<String,List<OrderVO>> orderMap=new HashMap<String,List<OrderVO>>();
+		orderMap.put("orderListDone",orderListDone);
+		orderMap.put("orderListPaid",orderListPaid);
+		orderMap.put("orderListDstart",orderListDstart);
+		return orderMap;
+	}
 
+	@Override
+	public String findU_id(int o_id) {
+		return orderDAO.findU_id(o_id);
+	}
+
+	@Override
+	public void deleteOrder(int o_id) {
+		orderDAO.deleteOrder(o_id);
 		
 	}
+
+	@Override
+	public String overlappedO_id(int o_id) {
+		return orderDAO.overlappedO_id(o_id);
+	}
+
+}
 
 

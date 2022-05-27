@@ -29,14 +29,17 @@
 		<result property="u_id" column="u_id" />
 		<result property="s_id" column="s_id" />
 		<result property="o_useMile" column="o_useMile" />
+		<result property="b_gr_id" column="b_gr_id" />
 	</resultMap>
 
 
 	<insert id="insertOrder" parameterType="orderVO">
 	    <![CDATA[
-		            insert into order_tb (g_id,
+		            insert into order_tb (u_id,
+		            g_id,
 		            o_goods_price,
-		            u_name, g_name,
+		            u_name, 
+		            g_name,
 		            receiver_hp,
 		            receiver_addr1,
 		            receiver_addr2,
@@ -47,7 +50,8 @@
 		            deliver_method,
 		            deliver_message,
 		            o_useMile) values
-		            (#{g_id},
+		            (#{u_id},
+		            #{g_id},
 		            #{o_goods_price},
 		            #{u_name},
 		            #{g_name},
@@ -60,8 +64,48 @@
 		            #{card_pay_month},
 		            #{deliver_method},
 		            #{deliver_message},
-		            #{o_useMile}
-		            )          
+		            #{o_useMile})          
 		]]>
 	</insert>
+	
+	<select id="selectUserOrders" parameterType="String" resultMap="orderResult">
+	<![CDATA[
+		   select * from order_tb where u_id=#{u_id} order by pay_order_time desc
+		]]>
+	</select>
+	
+	<select id="UserboardOrderPage"  parameterType="String" resultMap="orderResult">
+   <![CDATA[
+	    select R1.* from (select * from order_tb) R1 where u_id = #{u_id} order by pay_order_time desc limit #{start} , #{end} 
+	   ]]>
+	</select>
+	
+	<select id="selectOrderList"  parameterType="String" resultMap="orderResult">
+   <![CDATA[
+	   select o.*, gr.b_gr_id from order_tb o left outer join board_gr gr on o.o_id = gr.o_id where o.delivery_state = #{delivery_state} and o.u_id = #{u_id};
+	   ]]>
+	</select>
+	
+	<select id="findU_id"  parameterType="Integer" resultType="String">
+   <![CDATA[
+	    select u_id from order_tb where o_id = #{o_id}
+	   ]]>
+	</select>
+	<delete id="deleteOrder" parameterType="Integer">
+	<![CDATA[
+	delete from order_tb where o_id=#{o_id}
+	]]>
+	</delete>
+	
+	<select id="overlappedO_id"  parameterType="Integer" resultType="String">
+   <![CDATA[
+	   select if(count(*), 'true', 'false')
+	   from board_gr where o_id = #{o_id}
+	   ]]>
+	</select>
+	
+	
+	
+	
+	
 </mapper>
