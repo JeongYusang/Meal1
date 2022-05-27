@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.meal.board.gq.vo.BoardGqVO;
 import com.meal.common.controller.BaseController;
 import com.meal.goods.dao.GoodsDAO;
 import com.meal.goods.service.GoodsService;
@@ -142,16 +143,31 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 		}
 		@Override
 		@RequestMapping(value ="/OrderForm.do", method = { RequestMethod.POST, RequestMethod.GET })
-		public ModelAndView OrderForm(@RequestParam("g_id") int g_id,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		public ModelAndView OrderForm(@RequestParam("g_id") int g_id,@RequestParam("o_goods_qty") int o_goods_qty,HttpServletRequest request, HttpServletResponse response) throws Exception {
 			HttpSession session = request.getSession();
 			ModelAndView mav = new ModelAndView();
 			String viewName = (String) request.getAttribute("viewName");
 			MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			logger.info("뷰네임 :" + viewName);
+			OrderVO orderVO = new OrderVO();
+			orderVO.setO_goods_qty(o_goods_qty);
 			if (memberInfo != null) {
 				GoodsVO goodsVO = goodsService.selectGoodsDetail(g_id);
+				//1차 계산
+				int G_price = goodsVO.getG_price();
+				int sum = G_price * o_goods_qty;
+				if (sum < 30000) {
+					int D_price = 3000;
+					orderVO.setSum(sum);
+					orderVO.setD_price(D_price);
+				}else {
+					int D_price = 0;
+					orderVO.setSum(sum);
+					orderVO.setD_price(D_price);
+					}
 				mav.setViewName(viewName);
 				mav.addObject("goodsVO",goodsVO);
+				mav.addObject("orderVO",orderVO);
 				return mav;
 			} else {
 				String viewName2 = "redirect:/Non/NonUser.do";

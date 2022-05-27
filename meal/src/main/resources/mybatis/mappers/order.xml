@@ -30,6 +30,7 @@
 		<result property="s_id" column="s_id" />
 		<result property="o_useMile" column="o_useMile" />
 		<result property="b_gr_id" column="b_gr_id" />
+		<result property="parentNo" column="parentNo" />
 	</resultMap>
 
 
@@ -49,7 +50,8 @@
 		            card_pay_month,
 		            deliver_method,
 		            deliver_message,
-		            o_useMile) values
+		            o_useMile,
+		            parentNo) values
 		            (#{u_id},
 		            #{g_id},
 		            #{o_goods_price},
@@ -64,7 +66,8 @@
 		            #{card_pay_month},
 		            #{deliver_method},
 		            #{deliver_message},
-		            #{o_useMile})          
+		            #{o_useMile},
+		            #{parentNo})          
 		]]>
 	</insert>
 	

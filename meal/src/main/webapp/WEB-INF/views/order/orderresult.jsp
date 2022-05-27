@@ -93,10 +93,10 @@ background: white;
                             <li>2개</li>
                         </ul>
                     </td>
-                    <td class="price">10000원</div></td>
+                    <td class="price">10000원</td>
                     <td class="quantity">1개</td>
                     <td class="mileage">100포인트</td>
-                    <td class="total">10000원 * 1개 = 10000원</div></td>
+                    <td class="total">10000원 * 1개 = 10000원</td>
                 </tr>
                 <tr>
                     <td class="thumb"><a href="/product/detail.html{$param}"><img src="" onerror="this.src='http://img.echosting.cafe24.com/thumb/img_product_small.gif';" alt="" /></a></td>
@@ -107,7 +107,7 @@ background: white;
                         </ul>
                        
                     </td>
-                    <td class="price">10000원</div></td>
+                    <td class="price">10000원</td>
                     <td class="quantity">1개</td>
                     <td class="mileage">100포인트</td>
                     <td class="total">10000원 * 2개 = 20000원</td>
