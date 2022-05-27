@@ -219,7 +219,7 @@
 						<h2>나의활동</h2> <br>
 						<ul class="sidebar-content">
 							<li><a href="${contextPath}/boardGr/selectSellerBoardGrList.do">리뷰답글</a></li>
-                     		<li><a href="${contextPath}/boardGq/selectSellerBoardGqList.do">문의답변</a></li>
+                            <li><a href="${contextPath}/boardGq/selectSellerBoardGqList.do">문의답변</a></li>
 
 						</ul>
 					</li>
@@ -271,44 +271,39 @@
 				</c:when>
 			
 				<c:when test="${not empty memberInfo}">
-						<!-- 일반회원모드 -->
-					
-					
-					<li class="side-list">
-						<H2>구매정보</H2>
-						<ul class="sidebar-content">
-							<li><a
-								href="${contextPath}/member/memberDetail.do?id=${memberInfo.u_id}">회원정보보기</a></li>
-							<li><a href="${contextPath}/user/mypagehome.do">구매내역</a></li>
-							<li><a href="${contextPath}/user/mypagecancel.do">취소/반품/교환내역</a></li>
-						</ul>
-					</li>
+               <!-- 일반회원모드 -->
+               <li class="side-list">
+                  <H2>구매정보</H2>
+                  <ul class="sidebar-content">
+                  <li><a href="${contextPath}/member/memberDetail.do?id=${memberInfo.u_id}">회원정보보기</a></li>
+                     <li><a href="${contextPath}/user/mypagehome.do">구매내역</a></li>
+                     <li><a href="${contextPath}/user/mypagecancel.do">취소/반품/교환내역</a></li>
+                  </ul>
+               </li>
 
-					<li class="side-list">
-						<h2>MY활동</h2>
-						<ul class="sidebar-content">
-							<li><a href="${contextPath}/main/cart.do">장바구니</a></li>
-							<li><a href="${contextPath}/user/wishlist.do">찜한 상품</a></li>
-							<li><a href="${contextPath}/user/mymileage.do">마일리지</a></li>
-							<li><a href="${contextPath}/board1/selectallBoard1.do">나의
-									1대1 문의</a></li>
-							<li><a href="${contextPath}/boardGq/selectMyBoardGqList.do">나의
-									상품 문의</a></li>
-							<li><a href="${contextPath}/boardGr/selectMyBoardGrList.do">나의
-									상품 후기</a></li>
+               <li class="side-list">
+                  <h2>MY활동</h2>
+                  <ul class="sidebar-content">
+                     <li><a href="${contextPath}/main/cart.do">장바구니</a></li>
+                     <li><a href="${contextPath}/user/wishlist.do">찜한 상품</a></li>
+                     <li><a href="${contextPath}/user/mymileage.do">마일리지</a></li>
+                     <li><a href="${contextPath}/board1/selectallBoard1.do">나의
+                           1대1 문의</a></li>
+                     <li><a href="${contextPath}/boardGq/selectMyBoardGqList.do">나의 상품 문의</a></li>
+                           <li><a href="${contextPath}/boardGr/selectMyBoardGrList.do">나의 상품 후기</a></li>
 
-						</ul>
-					</li>
+                  </ul>
+               </li>
 
-					<li class="side-list">
-						<h2>MY정보</h2>
-						<ul class="sidebar-content">
-							<li><button type="button" class="checkpw">회원수정</button></li>
-							<li><button type="button" class="checkpw1">회원탈퇴</button></li>
-						</ul>
-					</li>
+               <li class="side-list">
+                  <h2>MY정보</h2>
+                  <ul class="sidebar-content">
+                     <li><button type="button" class="checkpw">회원수정</button></li>
+                     <li><button type="button" class="checkpw1">회원탈퇴</button></li>
+                  </ul>
+               </li>
 
-				</c:when>
+            </c:when>
 			</c:choose>
 		</ul>
 	</nav>
