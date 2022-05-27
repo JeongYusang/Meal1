@@ -100,6 +100,7 @@ margin: 10px;
 <h1> 상품 수정하기</h1>
 <form id="frmUpdateGoods" name="frmUpdateGoods" action="${contextPath}/goods/updateGoods.do" method="post" enctype="multipart/form-data">
 <input type="hidden" name="s_id" value= "${sellerInfo.s_id}"/>
+<input type="hidden" name="g_id" value= "${goodsInfo.g_id}"/>
    <table class="goodsform">
       <tr class="box">
          <th>상품사진*</th>
@@ -134,17 +135,18 @@ margin: 10px;
          <td>
              <select name="g_salePer" id="g_salePer" title="${goodsInfo.g_salePer}">
                  <option value="${goodsInfo.g_salePer }">${goodsInfo.g_salePer }</option>
-                 <option value="5%" >5%</option>
-                 <option value="10%">10%</option>
-                 <option value="15%">15%</option>
-                 <option value="20%">20%</option>
-                 <option value="25%">25%</option>
-                 <option value="30%">30%</option>
-                 <option value="35%">35%</option>
-                 <option value="40%">40%</option>
-                 <option value="45%">45%</option>
-                 <option value="50%">50%</option>
-             </select>
+                 <option value="0" >0</option>
+                 <option value="5" >5</option>
+                 <option value="10">10</option>
+                 <option value="15">15</option>
+                 <option value="20">20</option>
+                 <option value="25">25</option>
+                 <option value="30">30</option>
+                 <option value="35">35</option>
+                 <option value="40">40</option>
+                 <option value="45">45</option>
+                 <option value="50">50</option>
+             </select>%
       	</td>
       </tr>
       <tr class="box">
@@ -152,8 +154,8 @@ margin: 10px;
          	<td>
          		<fmt:formatDate value="${goodsInfo.g_saleDate1 }" type="Date" dateStyle="short"/> ~ 
             	<fmt:formatDate value="${goodsInfo.g_saleDate2 }" type="Date" dateStyle="short"/>
-            	<input type="hidden" name="s_id" value= "${goodsInfo.g_saleDate1}"/>
-            	<input type="hidden" name="s_id" value= "${goodsInfo.g_saleDate2}"/>
+            	<input type="hidden" name="goodsInfo.g_saleDate1" value= "${goodsInfo.g_saleDate1}"/>
+            	<input type="hidden" name="goodsInfo.g_saleDate2" value= "${goodsInfo.g_saleDate2}"/>
             </td>
       </tr>
       <tr class="box">
@@ -173,7 +175,7 @@ margin: 10px;
          <th>카테고리 설정*</th>
          <td>
          <select name="g_cate2" id="g_cate2" title="${goodsInfo.g_cate2}">
-                 <option value="${goodsInfo.g_cate2 }" disabled selected>${goodsInfo.g_cate2 }</option>
+                 <option value="${goodsInfo.g_cate2 }" selected>${goodsInfo.g_cate2 }</option>
                  <option value="찌개/탕/찜">찌개/탕/찜</option>
                  <option value="식사/안주">식사/안주</option>
                  <option value="죽">죽</option>
@@ -187,7 +189,7 @@ margin: 10px;
          <th>난이도*</th>
          <td>
          	<select name="g_nan" id="g_nan" title="${goodsInfo.g_nan}">
-                 <option value="${goodsInfo.g_nan}" disabled selected>${goodsInfo.g_nan}</option>
+                 <option value="${goodsInfo.g_nan}" selected>${goodsInfo.g_nan}</option>
                  <option value="상">상</option>
                  <option value="중">중</option>
                  <option value="하">하</option>
@@ -196,14 +198,14 @@ margin: 10px;
       </tr>
       <tr class="box">
          <th>조리 시간*</th>
-         <td><input type="text" name="g_time" id="g_time" placeholder="조리시간(분)"
+         <td><input type="text" name="g_time" id="g_time" placeholder="조리시간(분)" value="${goodsInfo.g_time}"
             required="required" /></td>
       </tr>
       <tr class="box">
          <th>보관방법*</th>
          <td>
          	 <select name="g_bang" id="g_bang" title="${goodsInfo.g_bang}">
-                 <option value="${goodsInfo.g_bang}" disabled selected>${goodsInfo.g_bang}</option>
+                 <option value="${goodsInfo.g_bang}" selected>${goodsInfo.g_bang}</option>
                  <option value="냉동">냉동</option>
                  <option value="냉장">냉장</option>
                  <option value="실온">실온</option>
@@ -214,7 +216,7 @@ margin: 10px;
          <th>인분수*</th>
          <td>
          	 <select name="g_inbun" id="g_inbun" title="${goodsInfo.g_inbun}">
-                 <option value="${goodsInfo.g_inbun}" disabled selected>${goodsInfo.g_inbun}</option>
+                 <option value="${goodsInfo.g_inbun}" selected>${goodsInfo.g_inbun}</option>
                  <option value="1~2인분">1~2인분</option>
                  <option value="2~3인분">2~3인분</option>
                  <option value="3~4인분">3~4인분</option>
@@ -242,7 +244,7 @@ margin: 10px;
       </tr>
       <tr class="box">
 		 <td colspan="2">
-    	 	<input type="submit" id="updateGoods" value="수정하기">
+    	 	<input type="submit" value="수정하기">
     	 	<input type="button" id="pageBack" value="뒤로가기" onclick="#">
     	 </td>
       </tr>
