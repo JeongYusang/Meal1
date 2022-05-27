@@ -163,7 +163,7 @@ tr.border-bottom td {
 </head>
 <body>
 	<div id="tabletitle">
-		<h1>리뷰</h1>
+		<h1>상품문의</h1>
 	</div>
 	<hr>
 	<br>

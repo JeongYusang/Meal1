@@ -128,7 +128,7 @@ public class DownLoad {
 		out.write(buffer);
 		out.close();
 	}
-	//게시판에 관한 썸네일에 관한 다운로드
+	//리뷰게시판에 관한 썸네일에 관한 다운로드
 	@RequestMapping(value = "/thumbnailsBoard.do", method = { RequestMethod.POST, RequestMethod.GET })
 	protected void thumbnails(@RequestParam("b_gr_id") int b_gr_id, HttpServletResponse response) throws Exception {
 		BoardGrVO boardGrVO = boardGrService.grdownload(b_gr_id);
@@ -145,7 +145,7 @@ public class DownLoad {
 		out.write(buffer);
 		out.close();
 	}
-	
+	//상품문의게시판에 관한 썸네일에 관한 다운로드
 	@RequestMapping(value = "/thumbnailsBoardGq.do", method = { RequestMethod.POST, RequestMethod.GET })
 	protected void thumbnailsGq(@RequestParam("b_gq_id") int b_gq_id, HttpServletResponse response) throws Exception {
 		BoardGqVO boardGqVO = boardGqService.gqdownload(b_gq_id);
