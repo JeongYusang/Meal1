@@ -207,15 +207,15 @@ tr.border-bottom td {
 								<th onclick="sortTable(0)" width="80px"><span>아이디</span></th>
 								<th onclick="sortTable(1)" width="60px"><span>이름</span></th>
 								<th onclick="sortTable(2)" width="40px"><span>성별</span></th>
-								<th onclick="sortTable(2)" width="100px"><span>전화번호</span></th>
-								<th onclick="sortTable(3)" width="100px"><span>이메일</span></th>
-								<th onclick="sortTable(4)" width="120px"><span>주소</span></th>
-								<th onclick="sortTable(5)" width="70px"><span>마일리지</span></th>
-								<th onclick="sortTable(6)" width="70px"><span>등급</span></th>
-								<th onclick="sortTable(7)" width="100px"><span>총결제액</span></th>
-								<th onclick="sortTable(8)" width="100px"><span>생일</span></th>
-								<th onclick="sortTable(9)" width="100px"><span>생성일</span></th>
-								<th onclick="sortTable(10)" width="100px"><span>마지막
+								<th onclick="sortTable(3)" width="100px"><span>전화번호</span></th>
+								<th onclick="sortTable(4)" width="100px"><span>이메일</span></th>
+								<th onclick="sortTable(5)" width="120px"><span>주소</span></th>
+								<th onclick="sortTable(6)" width="70px"><span>마일리지</span></th>
+								<th onclick="sortTable(7)" width="70px"><span>등급</span></th>
+								<th onclick="sortTable(8)" width="100px"><span>총결제액</span></th>
+								<th onclick="sortTable(9)" width="100px"><span>생일</span></th>
+								<th onclick="sortTable(10)" width="100px"><span>생성일</span></th>
+								<th onclick="sortTable(11)" width="100px"><span>마지막
 										접속일</span></th>
 							</tr>
 						</thead>
