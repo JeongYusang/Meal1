@@ -154,8 +154,8 @@ margin: 10px;
          	<td>
          		<fmt:formatDate value="${goodsInfo.g_saleDate1 }" type="Date" dateStyle="short"/> ~ 
             	<fmt:formatDate value="${goodsInfo.g_saleDate2 }" type="Date" dateStyle="short"/>
-            	<input type="hidden" name="goodsInfo.g_saleDate1" value= "${goodsInfo.g_saleDate1}"/>
-            	<input type="hidden" name="goodsInfo.g_saleDate2" value= "${goodsInfo.g_saleDate2}"/>
+            	<input type="hidden" value= "${goodsInfo.g_saleDate1}"/>
+            	<input type="hidden"  value= "${goodsInfo.g_saleDate2}"/>
             </td>
       </tr>
       <tr class="box">

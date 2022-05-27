@@ -184,13 +184,9 @@ update goods_tb set g_cate1 ='Nomal' where g_cate1 =#{g_cate1} and g_id =#{g_id}
 		g_bang = #{g_bang},
 		</if>
 		
-		
 		g_saleDate1 = #{g_saleDate3},
-		
 
-		
 		g_saleDate2 = #{g_saleDate4},
-		
 
 		<if test="g_saleWon != null or g_saleWon !=''">
 			g_saleWon = #{g_saleWon},
