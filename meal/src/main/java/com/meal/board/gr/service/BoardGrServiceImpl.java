@@ -66,8 +66,6 @@ public class BoardGrServiceImpl implements BoardGrService {
 
 	}
 
-
-	
 	@Override
 	public List<BoardGrVO> selectMyBoardGrallList(String u_id) throws Exception {
 		List<BoardGrVO> listInfo = (List<BoardGrVO>) boardGrDAO.selectMyBoardGrallList(u_id);
@@ -97,6 +95,7 @@ public class BoardGrServiceImpl implements BoardGrService {
 		return boardGrDAO.findb_gr_id();
 	}
 	
+		
 	@Override
 	public BoardGrVO grdownload(int b_gr_id) {
 		return boardGrDAO.grdownload(b_gr_id);

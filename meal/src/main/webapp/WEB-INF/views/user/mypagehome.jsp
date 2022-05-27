@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="result" value="${param.result }" />
+<c:set var="section" value="0" />
 
 
 
@@ -11,6 +14,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <title>상품 상세 정보</title>
+<c:if test='${not empty message }'>
+	<script>
+		window.onload = function() {
+			result();
+		}
+
+		function result() {
+			alert("${message}");
+		}
+	</script>
+</c:if>
 
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -154,11 +168,6 @@ ul.tabs li.current {
 	margin-bottom: 50px;
 }
 
-.imagegoods {
-	height: 100px;
-	width: 130px;
-	display: inline;
-}
 
 .description-wrap {
 	display: inline;
@@ -175,6 +184,12 @@ ul.tabs li.current {
 	background-color: white;
 	font-size: 24px;
 	border-collapse: collapse;
+}
+
+.review-table img {
+	height: 100px;
+	width: 130px;
+	display: inline;
 }
 
 #top-table {
@@ -199,8 +214,8 @@ tr.orderlist td {
 			<div>
 				<img src="${contextPath}/resources/image/new4.PNG" />
 				<ul class="texts">
-					<li class="name">&nbsp;한태상<span class="milage">
-							마일리지:1000원&nbsp;</span></li>
+					<li class="name">&nbsp;${memberInfo.u_name}<span
+						class="milage"> 마일리지:${memberInfo.u_mile}&nbsp;</span></li>
 				</ul>
 			</div>
 		</div>
@@ -226,34 +241,53 @@ tr.orderlist td {
 							</tr>
 						</thead>
 
-						<tr class="orderlist">
-							<td><a href="${contextPath }/main/goodsDetail.do"><img
-									class="imagegoods"
-									src="${contextPath}/resources/image/new1.png"></a></td>
-							<td id="title"><a href="${contextPath }/main/goodsDetail.do"">볼케이노순두부찌개</a></td>
-							<td>1개<br>10000원
-							</td>
-							<td><b id="state">주문완료</b><br> <a href="#">주문 취소하기</a></td>
-						</tr>
-						<tr class="orderlist">
-							<td><a href="${contextPath }/main/goodsDetail.do"><img
-									class="imagegoods"
-									src="${contextPath}/resources/image/new1.png"></a></td>
-							<td id="title"><a href="${contextPath }/main/goodsDetail.do"">볼케이노순두부찌개</a></td>
-							<td>1개<br>10000원
-							</td>
-							<td><b id="state">배송시작</b><br> <a href="#">배송 조회하기</a></td>
-						</tr>
-						<tr class="orderlist">
-							<td><a href="${contextPath }/main/goodsDetail.do"><img
-									class="imagegoods"
-									src="${contextPath}/resources/image/new1.png"></a></td>
-							<td id="title"><a href="${contextPath }/main/goodsDetail.do"">볼케이노순두부찌개</a></td>
-							<td>1개<br>10000원
-							</td>
-							<td><b id="state">배송완료</b><br> <a href="#">후기 작성하기</a></td>
-						</tr>
+
+						<c:choose>
+							<c:when test="${OrderVO != null}">
+								<c:forEach var="OrderList" items="${OrderList}">
+									<tr class="orderlist">
+										<td><a
+											href="${contextPath}/goods/goodsDetail.do?g_id=${OrderList.g_id}"><img src="${contextPath}/download1.do?g_id=${OrderList.g_id}&cate=main"></a></td>
+										<td id="title"><a href="${contextPath }/goods/goodsDetail.do?g_id=${OrderList.g_id}">${OrderList.g_name}</a></td>
+										<td>${OrderList.o_goods_qty}개/${OrderList.o_goods_price}원
+										</td>
+										<td><b id="state">${OrderList.delivery_state}</b><br>
+											<c:if test="${OrderList.delivery_state == '주문완료'}">
+												<a href="#">주문내역 확인</a>
+											</c:if> <c:if test="${OrderList.delivery_state == '배송시작'}">
+												<a href="#">배송 조회하기</a>
+											</c:if> <c:if test="${OrderList.delivery_state == '주문확인중'}">
+												<a href="${contextPath}/order/deleteOrder.do?o_id=${OrderList.o_id}">주문 취소하기</a>
+											</c:if> <c:if test="${OrderList.delivery_state eq '배송완료'}">
+												<a href="#">후기 작성하기</a>
+											</c:if></td>
+									</tr>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<td>주문 내역이 없습니다.</td>
+							</c:otherwise>
+						</c:choose>
+
+
 					</table>
+					<c:choose>
+						<c:when test="${OrderVO != null}">
+							<c:forEach var="page" begin="1" end="9" step="1">
+								<c:if test="${section >0 && page==1 }">
+									<a
+										href="${contextPath}/order/selectUserOrders.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
+								</c:if>
+								<a
+									href="${contextPath}/order/selectUserOrders.do?section=${section}&pageNum=${page}">${(section)*10 +page}
+								</a>
+								<c:if test="${page ==10 }">
+									<a
+										href="${contextPath}/order/selectUserOrders.do?section=${section}+1&pageNum=${section*10}+1">next</a>
+								</c:if>
+							</c:forEach>
+						</c:when>
+					</c:choose>
 				</div>
 			</div>
 			<div id="tab-2" class="tab-content">
@@ -267,34 +301,14 @@ tr.orderlist td {
 								<th width="20%">배송상태</th>
 							</tr>
 						</thead>
-
+						<c:forEach var="OrderMap" items="${orderMap.orderListPaid}">
 						<tr class="orderlist">
-							<td><a href="${contextPath }/main/goodsDetail.do"><img
-									class="imagegoods"
-									src="${contextPath}/resources/image/new1.png"></a></td>
-							<td id="title"><a href="${contextPath }/main/goodsDetail.do">볼케이노순두부찌개</a></td>
-							<td>1개<br>10000원
-							</td>
-							<td><b id="state">주문완료</b><br> <a href="#">주문 취소하기</a></td>
+							<td><a href="${contextPath}/goods/goodsDetail.do?g_id=${OrderMap.g_id}"> <img src="${contextPath}/download1.do?g_id=${OrderMap.g_id}&cate=main"></a></td>
+							<td id="title"><a href="${contextPath }/goods/goodsDetail.do?g_id=${OrderMap.g_id}">${OrderMap.g_name}</a></td>
+							<td>${OrderMap.o_goods_qty}개/${OrderMap.o_goods_price}원</td>
+							<td><b id="state">${OrderMap.delivery_state}</b><br><a href="${contextPath}/order/deleteOrder.do?o_id=${OrderMap.o_id}">주문 취소하기</a></td>
 						</tr>
-						<tr class="orderlist">
-							<td><a href="${contextPath }/main/goodsDetail.do"><img
-									class="imagegoods"
-									src="${contextPath}/resources/image/new1.png"></a></td>
-							<td id="title"><a href="${contextPath }/main/goodsDetail.do">볼케이노순두부찌개</a></td>
-							<td>1개<br>10000원
-							</td>
-							<td><b id="state">주문완료</b><br> <a href="#">주문 취소하기</a></td>
-						</tr>
-						<tr class="orderlist">
-							<td><a href="${contextPath }/main/goodsDetail.do"><img
-									class="imagegoods"
-									src="${contextPath}/resources/image/new1.png"></a></td>
-							<td id="title"><a href="${contextPath }/main/goodsDetail.do">볼케이노순두부찌개</a></td>
-							<td>1개<br>10000원
-							</td>
-							<td><b id="state">주문완료</b><br> <a href="#">주문 취소하기</a></td>
-						</tr>
+					</c:forEach>
 					</table>
 				</div>
 
@@ -311,33 +325,14 @@ tr.orderlist td {
 							</tr>
 						</thead>
 
+						<c:forEach var="OrderMap" items="${orderMap.orderListDstart}">
 						<tr class="orderlist">
-							<td><a href="${contextPath }/main/goodsDetail.do"><img
-									class="imagegoods"
-									src="${contextPath}/resources/image/new1.png"></a></td>
-							<td id="title"><a href="${contextPath }/main/goodsDetail.do"">볼케이노순두부찌개</a></td>
-							<td>1개<br>10000원
-							</td>
-							<td><b id="state">배송시작</b><br> <a href="#">배송 조회하기</a></td>
+							<td><a href="${contextPath}/goods/goodsDetail.do?g_id=${OrderMap.g_id}"> <img src="${contextPath}/download1.do?g_id=${OrderMap.g_id}&cate=main"></a></td>
+							<td id="title"><a href="${contextPath }/goods/goodsDetail.do?g_id=${OrderMap.g_id}">${OrderMap.g_name}</a></td>
+							<td>${OrderMap.o_goods_qty}개/${OrderMap.o_goods_price}원</td>
+							<td><b id="state">${OrderMap.delivery_state}</b><br><a href="https://tracker.delivery/#/kr.cjlogistics/560067553920" target="_blank">배송 조회하기</a></td>
 						</tr>
-						<tr class="orderlist">
-							<td><a href="${contextPath }/main/goodsDetail.do"><img
-									class="imagegoods"
-									src="${contextPath}/resources/image/new1.png"></a></td>
-							<td id="title"><a href="${contextPath }/main/goodsDetail.do"">볼케이노순두부찌개</a></td>
-							<td>1개<br>10000원
-							</td>
-							<td><b id="state">배송시작</b><br> <a href="#">배송 조회하기</a></td>
-						</tr>
-						<tr class="orderlist">
-							<td><a href="${contextPath }/main/goodsDetail.do"><img
-									class="imagegoods"
-									src="${contextPath}/resources/image/new1.png"></a></td>
-							<td id="title"><a href="${contextPath }/main/goodsDetail.do"">볼케이노순두부찌개</a></td>
-							<td>1개<br>10000원
-							</td>
-							<td><b id="state">배송시작</b><br> <a href="#">배송 조회하기</a></td>
-						</tr>
+					</c:forEach>
 					</table>
 				</div>
 			</div>
@@ -353,33 +348,19 @@ tr.orderlist td {
 							</tr>
 						</thead>
 
+						<c:forEach var="OrderMap" items="${orderMap.orderListDone}">
 						<tr class="orderlist">
-							<td><a href="${contextPath }/main/goodsDetail.do"><img
-									class="imagegoods"
-									src="${contextPath}/resources/image/new1.png"></a></td>
-							<td id="title"><a href="${contextPath }/main/goodsDetail.do">볼케이노순두부찌개</a></td>
-							<td>1개<br>10000원
-							</td>
-							<td><b id="state">배송완료</b><br> <a href="#">후기 작성하기</a></td>
+							<td><a href="${contextPath}/goods/goodsDetail.do?g_id=${OrderMap.g_id}"> <img src="${contextPath}/download1.do?g_id=${OrderMap.g_id}&cate=main"></a></td>
+							<td id="title"><a href="${contextPath }/goods/goodsDetail.do?g_id=${OrderMap.g_id}">${OrderMap.g_name}</a></td>
+							<td>${OrderMap.o_goods_qty}개/${OrderMap.o_goods_price}원</td>
+							<td><b id="state">${OrderMap.delivery_state}</b><br>
+							<c:if test="${OrderMap.review == 'false'}">
+							<a href="${contextPath}/boardGr/boardGrWrite.do?g_id=${OrderMap.g_id}&o_id=${OrderMap.o_id}">후기 작성하기</a></c:if>
+							<c:if test="${OrderMap.review == 'true'}">
+							<a href="${contextPath}/boardGr/gr_detail.do?b_gr_id=${OrderMap.b_gr_id}">후기 보기</a></c:if></td>
+							
 						</tr>
-						<tr class="orderlist">
-							<td><a href="${contextPath }/main/goodsDetail.do"><img
-									class="imagegoods"
-									src="${contextPath}/resources/image/new1.png"></a></td>
-							<td id="title"><a href="${contextPath }/main/goodsDetail.do">볼케이노순두부찌개</a></td>
-							<td>1개<br>10000원
-							</td>
-							<td><b id="state">배송완료</b><br> <a href="#">후기 작성하기</a></td>
-						</tr>
-					<tr class="orderlist">
-							<td><a href="${contextPath }/main/goodsDetail.do"><img
-									class="imagegoods"
-									src="${contextPath}/resources/image/new1.png"></a></td>
-							<td id="title"><a href="${contextPath }/main/goodsDetail.do">볼케이노순두부찌개</a></td>
-							<td>1개<br>10000원
-							</td>
-							<td><b id="state">배송완료</b><br> <a href="#">후기 작성하기</a></td>
-						</tr>
+					</c:forEach>
 					</table>
 				</div>
 			</div>

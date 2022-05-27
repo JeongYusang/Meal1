@@ -18,6 +18,7 @@
 		<result property="secret" column="secret" />
 		<result property="star" column="star" />
 		<result property="g_name" column="g_name" />
+		<result property="o_id" column="o_id" />
 	</resultMap>
 
 	<resultMap id="img_grResult" type="Img_grVO">
@@ -40,7 +41,8 @@
        g_id,
        secret,
        parentNo,
-       star
+       star,
+       o_id
       )
            values(#{reg_id},
                   #{title},
@@ -50,9 +52,17 @@
                   #{g_id},
                   #{secret},
                   #{parentNo},
-                  #{star}) 
+                  #{star},
+                  #{o_id}) 
    ]]>
 	</insert>
+	
+	<insert id="addImg" parameterType="Map">
+	<![CDATA[
+	insert into img_b_gr(fileName,b_gr_id,reg_id) values (#{fileName}, #{b_gr_id}, #{reg_id})
+	]]>
+	</insert>
+	
 
 	<update id="boardGrUpdate" parameterType="Map">
 <![CDATA[
@@ -87,7 +97,7 @@ update board_gr set title = #{title}, content = #{content}, secret = #{secret} w
              ]]>
 	</select>
 
-	<select id="selectMyBoardGrallList" resultMap="boardGrResult">
+	<select id="selectMyBoardGrallList" resultMap="boardGrResult" parameterType="String">
        <![CDATA[
            select gr.*, g.g_name from board_gr gr LEFT OUTER JOIN goods_tb g on g.g_id = gr.g_id where gr.u_id = #{u_id}
              ]]>
@@ -125,11 +135,6 @@ update board_gr set title = #{title}, content = #{content}, secret = #{secret} w
 	]]>
 	</delete>
 
-	<insert id="addImg" parameterType="Map">
-	<![CDATA[
-	insert into img_b_gr(fileName,b_gr_id,reg_id) values (#{fileName}, #{b_gr_id}, #{reg_id})
-	]]>
-	</insert>
 	<select id="findb_gr_id" resultMap="boardGrResult">
        <![CDATA[
             SELECT * FROM board_gr WHERE b_gr_id = (SELECT max(b_gr_id) FROM board_gr);
