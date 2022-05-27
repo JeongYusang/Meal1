@@ -93,20 +93,26 @@
 	</select>
 	<!-- 아이디찾기 -->
 	<select id="FindId" resultType="memberVO"
-		parameterType="java.util.Map">
+		parameterType="Map">
   <![CDATA[
-select u_id from user_tb where email1 = #{email1} and email2 = #{email2} and u_name = #{u_name}
+select u_id from user_tb where u_email1 = #{email1} and u_email2 = #{email2} and u_name = #{name}
 ]]>
 	</select>
 
 	<select id="FindId2" resultType="memberVO"
-		parameterType="java.util.Map">
+		parameterType="Map">
 
 <![CDATA[
-select u_id from user_tb where hp1 = #{hp1} and hp2 = #{hp2} and hp3 = #{hp3} and u_name = #{u_name}
+select u_id from user_tb where hp1 = #{hp1} and u_name = #{name}
 ]]>
 	</select>
 
+	<select id="FindPW" resultType="memberVO"
+		parameterType="Map">
+  <![CDATA[
+select * from user_tb where u_email1 = #{email1} and u_email2 = #{email2} and u_id = #{id}
+]]>
+	</select>
 
 
 	<update id="updateMember" parameterType="memberVO">

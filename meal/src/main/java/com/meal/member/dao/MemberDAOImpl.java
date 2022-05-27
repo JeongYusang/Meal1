@@ -52,5 +52,10 @@ public class MemberDAOImpl  implements MemberDAO{
 		sqlSession.update("mapper.user.lastLog",u_id);
 	}
 
+	@Override
+	public MemberVO FindPW(HashMap<String,Object> map) throws DataAccessException{
+		MemberVO memberVO = (MemberVO)sqlSession.selectOne("mapper.user.FindPW", map);
+		return memberVO;
+	}
 }
 

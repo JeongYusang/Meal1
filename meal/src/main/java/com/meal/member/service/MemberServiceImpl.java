@@ -1,9 +1,8 @@
 package com.meal.member.service;
 
-import java.util.Map;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,6 +65,9 @@ public class MemberServiceImpl implements MemberService {
 	public void lastLog(String u_id) throws Exception {
 		memberDAO.lastLog(u_id);
 	}
-	
+	@Override
+	public MemberVO FindPW(HashMap<String,Object> map) throws Exception {
+		return (MemberVO)memberDAO.FindPW(map);
+	}
 
 }

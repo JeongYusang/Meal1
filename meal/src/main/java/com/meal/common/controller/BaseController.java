@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -74,13 +73,21 @@ public class BaseController {
 		String viewName = (String) request.getAttribute("viewName");// 인터셉터있을때 없으면주석
 		/* String viewName = (String)request.getAttribute("viewName"); 인터셉터없을때 */
 		ModelAndView mav = new ModelAndView(viewName);
-		logger.info("BaseController의 " + "/*/*.do" + viewName);
-
+		logger.info("=================================");
+		logger.info("BaseController의 " + "/*/*.do : [" + viewName+"]");
+		logger.info("=================================");
 		return mav;
 	}
 
-	@RequestMapping(value = "/err/error.do", method = { RequestMethod.POST, RequestMethod.GET })
+	@RequestMapping(value = "/err/error404.do", method = { RequestMethod.POST, RequestMethod.GET })
 	protected ModelAndView errForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName = (String) request.getAttribute("viewName");// 인터셉터있을때 없으면주석
+		/* String viewName = (String)request.getAttribute("viewName"); 인터셉터없을때 */
+		ModelAndView mav = new ModelAndView(viewName);
+		return mav;
+	}
+	@RequestMapping(value = "/err/error500.do", method = { RequestMethod.POST, RequestMethod.GET })
+	protected ModelAndView errForm500(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");// 인터셉터있을때 없으면주석
 		/* String viewName = (String)request.getAttribute("viewName"); 인터셉터없을때 */
 		ModelAndView mav = new ModelAndView(viewName);

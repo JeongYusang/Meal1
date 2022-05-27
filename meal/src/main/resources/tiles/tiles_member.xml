@@ -18,16 +18,6 @@
 			value="/WEB-INF/views/member/memberForm.jsp" />
 	</definition>
 
-	<definition name="/main/agreement" extends="baseLayout">
-		<put-attribute name="title" value="약관" />
-		<put-attribute name="body"
-			value="/WEB-INF/views/member/agreement.jsp" />
-	</definition>
-	<definition name="/main/personalAgree" extends="baseLayout">
-		<put-attribute name="title" value="약관" />
-		<put-attribute name="body"
-			value="/WEB-INF/views/member/personalAgree.jsp" />
-	</definition>
 	<definition name="/member/memberResult" extends="baseLayout">
 		<put-attribute name="title" value="일반회원결과창" />
 		<put-attribute name="body"
@@ -67,10 +57,15 @@
 
 
 	<!--아이디/비밀번호찾기 -->
-	<definition name="/main/FindID" extends="baseLayout">
+	<definition name="/member/FindID" extends="baseLayout">
 		<put-attribute name="title" value="아이디찾기" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/member/Find_ID.jsp" />
+	</definition>
+		<definition name="/member/FindID1" extends="baseLayout">
+		<put-attribute name="title" value="아이디찾기" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/Find_ID1.jsp" />
 	</definition>
 
 	<definition name="/main/FindIDResult" extends="baseLayout">
@@ -84,6 +79,12 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/member/Find_PW.jsp" />
 	</definition>
+	<definition name="/email/PwView" extends="baseLayout">
+		<put-attribute name="title" value="이메일비밀번호변경창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/FindPWChange.jsp" />
+	</definition>
+	
 
 	<definition name="/main/FindPWResult" extends="baseLayout">
 		<put-attribute name="title" value="비밀번호찾기결과창" />

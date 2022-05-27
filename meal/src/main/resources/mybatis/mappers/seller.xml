@@ -25,7 +25,7 @@
 		<result property="s_cate" column="s_cate" />
 		<result property="s_lastLog" column="s_lastLog" />
 	</resultMap>
-	
+
 	<resultMap id="img_sResult" type="Img_sVO">
 		<result property="is_id" column="is_id" />
 		<result property="fileName" column="fileName" />
@@ -90,12 +90,16 @@ s_cate)
    ]]>
 	</insert>
 
-	<update id="updateSeller" parameterType="sellerVO">
+	<update id="updateSeller" parameterType="Map">
 
 		update seller_tb set
-		s_pw = #{s_pw},
-		s_name = #{s_name},
-		s_hp1 = #{s_hp1}
+
+		s_pw = #{s_pw}
+
+		<if test="s_name != null or s_name != ''">
+			,s_name = #{s_name}
+		</if>
+		,s_hp1 = #{s_hp1}
 		<if test="s_email1 != null or s_email1 != ''">
 			,s_email1 = #{s_email1}
 		</if>
@@ -118,8 +122,10 @@ s_cate)
 		<if test="s_Waddr3 != null or s_Waddr3 !=''">
 			,s_Waddr3 = #{s_Waddr3}
 		</if>
-		,s_Wname = #{s_Wname}
+		<if test="s_Wname != null or s_Wname !=''">
 
+			,s_Wname = #{s_Wname}
+		</if>
 		where s_id =#{s_id}
 
 
@@ -165,4 +171,11 @@ delete from img_s where s_id = #{s_id} and  cate=#{cate}
 		update seller_tb set s_lastLog = current_timestamp() where s_id = #{s_id};
 			]]>
 	</update>
+
+
+	<select id="FindPW" resultType="sellerVO" parameterType="Map">
+  <![CDATA[
+select * from seller_tb where s_email1 = #{email1} and s_email2 = #{email2} and s_id = #{id}
+]]>
+	</select>
 </mapper>

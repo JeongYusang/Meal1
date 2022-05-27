@@ -115,7 +115,7 @@ function result(){
 			<INPUT type="submit" value="로그인"> 
 			<INPUT type="button" value="초기화"> <br> <br> <a
 				href="${contextPath}/main/memberFormS.do">회원가입</a> | <a
-				href="${contextPath}/main/FindID.do">아이디찾기</a> | <a
+				href="${contextPath}/member/FindID.do">아이디찾기</a> | <a
 				href="${contextPath}/main/FindPW.do">비밀번호찾기</a><br> <br>
 			<p>간편로그인</p>
 			<div class="btbtbt">

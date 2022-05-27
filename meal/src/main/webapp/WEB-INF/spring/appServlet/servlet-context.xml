@@ -5,6 +5,7 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.1.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
@@ -39,13 +40,13 @@
 			value="org.springframework.web.servlet.view.tiles2.TilesView" />
 		<beans:property name="order" value="1" />
 	</beans:bean>
- 	<beans:bean
+	<beans:bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 		<beans:property name="order" value="2" />
-	</beans:bean> 
-	
+	</beans:bean>
+
 
 
 	<context:component-scan base-package="com.meal" />
@@ -60,10 +61,11 @@
 			<beans:bean
 				class="com.meal.common.interceptor.InterCeptor1" />
 		</mvc:interceptor>
-		<mvc:interceptor> 
-		<mvc:mapping path="/**"/> 
-		<beans:bean id="loggerInterceptor" class="com.meal.common.logger.LoggerInterCeptor">
-		</beans:bean> 
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<beans:bean id="loggerInterceptor"
+				class="com.meal.common.logger.LoggerInterCeptor">
+			</beans:bean>
 		</mvc:interceptor>
 
 	</mvc:interceptors>
@@ -77,8 +79,18 @@
 
 
 	<!-- task:scheduler -->
-	<task:annotation-driven scheduler="scheduler"/>
-	<task:scheduler id="scheduler" pool-size="10"/>
+	<task:annotation-driven scheduler="scheduler" />
+	<task:scheduler id="scheduler" pool-size="10" />
 
-	
+<!-- AJAX MODELANDVIEW -->
+<beans:bean id="beanNameResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="3" />
+<beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+    <beans:property name="contentType" value="application/json;charset=UTF-8"></beans:property>
+</beans:bean>
+
+
+
+
+
+
 </beans:beans>
