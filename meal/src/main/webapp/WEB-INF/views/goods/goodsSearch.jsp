@@ -65,6 +65,15 @@
 		}
 	}
 </script>
+<script>
+function delOk() {
+	if(!confirm('삭제하면 복구할 수 없습니다. 삭제하시겠습니까?')) {
+		return true;
+	} else {
+		return false;
+	}
+}
+</script>
 <style>
 #stable-striped {
 	width: 100%;
@@ -252,7 +261,7 @@ margin: 30px;
 											<a href="${contextPath}/goods/updateGoodsForm.do?g_id=${item.g_id}">수정하기</a>
 											<br>
 											<br>
-											<a href="${contextPath}/goods/updateGoodsForm.do?g_id=${item.g_id}">삭제하기</a>
+											<a href="${contextPath}/goods/deleteGoods.do?g_id=${item.g_id}" onClick="delOk()">삭제하기</a>
 										</td>
 									</tr>
 								</c:forEach>

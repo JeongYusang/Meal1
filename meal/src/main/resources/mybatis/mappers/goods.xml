@@ -259,6 +259,14 @@ update goods_tb set g_saleprice = '0', g_saleDate1= null, g_saleDate2= null , g_
 			update img_g set fileName = #{fileName} where g_id=#{g_id} and cate=#{cate}
 		]]>
 	</select>
+	
+	<delete id="deleteGoods" parameterType="GoodsVO">
+
+		<![CDATA[
+			delete from goods_tb where g_id = #{g_id}
+		]]>
+
+	</delete>
 
 
 </mapper>
