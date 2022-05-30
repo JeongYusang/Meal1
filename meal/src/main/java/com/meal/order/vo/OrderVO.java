@@ -33,8 +33,21 @@ public class OrderVO {
 	public int parentNo;
 	public String review;
 	public int b_gr_id;
+	public int sum;
+	public int d_price;
 	
-	
+	public int getD_price() {
+		return d_price;
+	}
+	public void setD_price(int d_price) {
+		this.d_price = d_price;
+	}
+	public int getSum() {
+		return sum;
+	}
+	public void setSum(int sum) {
+		this.sum = sum;
+	}
 	public int getB_gr_id() {
 		return b_gr_id;
 	}

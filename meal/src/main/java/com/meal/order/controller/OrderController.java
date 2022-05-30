@@ -22,6 +22,6 @@ public interface OrderController {
 
 	public ModelAndView deleteOrder(@RequestParam("o_id") int o_id,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
-	public ModelAndView OrderForm(@RequestParam("g_id") int g_id,HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView OrderForm(@RequestParam("g_id") int g_id,@RequestParam("amount") int amount,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 }

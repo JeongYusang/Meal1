@@ -1,178 +1,183 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<!-- 주문자 휴대폰 번호 -->
-<c:set var="orderer_hp" value="" />
-<!-- 최종 결제 금액 -->
-<c:set var="final_total_order_price" value="0" />
+<c:set var="sum" value="${orderVO.sum + orderVO.d_price}" />
 
-<!-- 총주문 금액 -->
-<c:set var="total_order_price" value="0" />
-<!-- 총 상품수 -->
-<c:set var="total_order_goods_qty" value="0" />
-<!-- 총할인금액 -->
-<c:set var="total_mileage_use" value="0" />
-<!-- 총 배송비 -->
-<c:set var="total_delivery_price" value="0" />
+
 
 <head>
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
-    function execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	function execDaumPostcode() {
+		new daum.Postcode(
+				{
+					oncomplete : function(data) {
+						// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-                // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
-                var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+						// 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+						// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+						var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+						var extraRoadAddr = ''; // 도로명 조합형 주소 변수
 
-                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                    extraRoadAddr += data.bname;
-                }
-                // 건물명이 있고, 공동주택일 경우 추가한다.
-                if(data.buildingName !== '' && data.apartment === 'Y'){
-                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                }
-                // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                if(extraRoadAddr !== ''){
-                    extraRoadAddr = ' (' + extraRoadAddr + ')';
-                }
-                // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
-                if(fullRoadAddr !== ''){
-                    fullRoadAddr += extraRoadAddr;
-                }
+						// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+						// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+						if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+							extraRoadAddr += data.bname;
+						}
+						// 건물명이 있고, 공동주택일 경우 추가한다.
+						if (data.buildingName !== '' && data.apartment === 'Y') {
+							extraRoadAddr += (extraRoadAddr !== '' ? ', '
+									+ data.buildingName : data.buildingName);
+						}
+						// 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+						if (extraRoadAddr !== '') {
+							extraRoadAddr = ' (' + extraRoadAddr + ')';
+						}
+						// 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+						if (fullRoadAddr !== '') {
+							fullRoadAddr += extraRoadAddr;
+						}
 
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('zipcode').value = data.zonecode; //5자리 새우편번호 사용
-                document.getElementById('roadAddress').value = fullRoadAddr;
-                document.getElementById('jibunAddress').value = data.jibunAddress;
-                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-                if(data.autoRoadAddress) {
-                    //예상되는 도로명 주소에 조합형 주소를 추가한다.
-                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                    document.getElementById('guide').innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+						// 우편번호와 주소 정보를 해당 필드에 넣는다.
+						document.getElementById('zipcode').value = data.zonecode; //5자리 새우편번호 사용
+						document.getElementById('roadAddress').value = fullRoadAddr;
+						document.getElementById('jibunAddress').value = data.jibunAddress;
+						// 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+						if (data.autoRoadAddress) {
+							//예상되는 도로명 주소에 조합형 주소를 추가한다.
+							var expRoadAddr = data.autoRoadAddress
+									+ extraRoadAddr;
+							document.getElementById('guide').innerHTML = '(예상 도로명 주소 : '
+									+ expRoadAddr + ')';
 
-                } else if(data.autoJibunAddress) {
-                    var expJibunAddr = data.autoJibunAddress;
-                    document.getElementById('guide').innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+						} else if (data.autoJibunAddress) {
+							var expJibunAddr = data.autoJibunAddress;
+							document.getElementById('guide').innerHTML = '(예상 지번 주소 : '
+									+ expJibunAddr + ')';
 
-                } else {
-                    document.getElementById('guide').innerHTML = '';
-                }
-            }
-        }).open();
-    }
-    
-  
-/*   $(function () {
-	  $("#o_useMile").keydown(function () {
-	    // Save old value.
-	    if (!$(this).val() || (parseInt($(this).val()) <= ${memberInfo.u_mile} && parseInt($(this).val()) >= 0))
-	    $(this).data("old", $(this).val());
-	  });
-	  $("#o_useMile").keyup(function () {
-	    // Check correct, else revert back to old value.
-	    if (!$(this).val() || (parseInt($(this).val()) <= ${memberInfo.u_mile} && parseInt($(this).val()) >= 0));
-	    else
-	      $(this).val($(this).data("old"));
-	    alert("보유 마일리지")
-	  });
-	}); */
+						} else {
+							document.getElementById('guide').innerHTML = '';
+						}
+					}
+				}).open();
+	}
+
+	/*   $(function () {
+	 $("#o_useMile").keydown(function () {
+	 // Save old value.
+	 if (!$(this).val() || (parseInt($(this).val()) <= ${memberInfo.u_mile} && parseInt($(this).val()) >= 0))
+	 $(this).data("old", $(this).val());
+	 });
+	 $("#o_useMile").keyup(function () {
+	 // Check correct, else revert back to old value.
+	 if (!$(this).val() || (parseInt($(this).val()) <= ${memberInfo.u_mile} && parseInt($(this).val()) >= 0));
+	 else
+	 $(this).val($(this).data("old"));
+	 alert("보유 마일리지")
+	 });
+	 }); */
 	//var s_name = document.asdfqwre
-
-	// 결제창
-/* 	var IMP = window.IMP; // 생략 가능
-	IMP.init('imp53396567');
-	function fn_buyBTN() {
-		IMP.request_pay({
-			pg : 'html5_inicis', // version 1.1.0부터 지원.
-			pay_method : 'card',
-			merchant_uid : 'merchant_',
-			name : '${goodsInfo.g_name}',
-			amount : 100, //판매 가격
-			buyer_email : '${memberInfo.u_email1} + ${memberInfo.u_email2}',
-			buyer_name : '${memberInfo.u_name}',
-			buyer_tel : '${memberInfo.u_hp1}',
-			buyer_addr : '${memberInfo.u_addr2} + ${memberInfo.u_addr3}',
-			buyer_postcode : '${memberInfo.u_addr3}'
-		}, function(rsp) {
-			if (rsp.success) {
-				var msg = '결제가 완료되었습니다.';
-				msg += '고유ID : ' + rsp.imp_uid;
-				msg += '상점 거래ID : ' + rsp.merchant_uid;
-				msg += '결제 금액 : ' + rsp.paid_amount;
-				msg += '카드 승인번호 : ' + rsp.apply_num;
-				
-				// action="" 보낼 컨트롤러  +summit;
-			} else {
-				var msg = '결제에 실패하였습니다.';
-				msg += '에러내용 : ' + rsp.error_msg;
-			}
-			alert(msg);
-		});
-	}; */
-	
 	var IMP = window.IMP; // 생략 가능
 	IMP.init('imp53396567');
-
 	function fn_buyBTN() {
-		
-	 IMP.request_pay({
-		 pg : 'html5_inicis', // version 1.1.0부터 지원.
-			pay_method : 'card',
-			merchant_uid : 'merchant_' + new Date().getTime(),
-			name : '${goodsInfo.g_name}1',
-			amount : 100, //판매 가격
-			buyer_email : '${memberInfo.u_email1} + ${memberInfo.u_email2}',
-			buyer_name : '${memberInfo.u_name}',
-			buyer_tel : '${memberInfo.u_hp1}',
-			buyer_addr : '${memberInfo.u_addr2} + ${memberInfo.u_addr3}',
-			buyer_postcode : '${memberInfo.u_addr1}'
-	    }, function (rsp) { // callback
-	      if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
-	        // jQuery로 HTTP 요청
-	        jQuery.ajax({
-	            url: "${contextPath}/order/insertOrder.do", // 예: https://www.myservice.com/payments/complete
-	            method: "POST",
-	            data: {
-	            	u_id: document.getElementById("u_id").value,
-	                o_id: rsp.merchant_uid,
-	                u_name: rsp.buyer_name,
-	                g_name: rsp.name,
-	                o_goods_qty: rsp.amount,
-	                o_goods_price: rsp.paid_amount,
-	                pay_method: rsp.pay_method,
-	                pay_order_time: new Date().getTime(),
-	                pay_method: rsp.pay_method,
-	                card_pay_month: rsp.card_quota,
-	                receiver_hp: document.getElementById("receiver_hp").value,
-	                receiver_name: document.getElementById("receiver_name").value,
-	        		receiver_addr1: document.getElementById("zipcode").value,
-	        		receiver_addr2: document.getElementById("roadAddress").value,
-	        		receiver_addr3: document.getElementById("namujiAddress").value,
-	        		deliver_message: document.getElementById("deliver_message").value,
-	        		deliver_method: document.getElementById("deliver_method").value,
-	        		o_useMile: document.getElementById('o_useMile').value
-	            }
-	        }).done(function (data) {
-	        	console.log()
-	        })
-	      } else {
-	        alert("결제에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
-	      }
-	    });
+
+		IMP.request_pay({
+							pg : 'html5_inicis', // version 1.1.0부터 지원.
+							pay_method : 'card',
+							merchant_uid : 'merchant_' + new Date().getTime(),
+							name : document.getElementById("g_name").value,
+							amount : parseInt(document.getElementById("final_total_Price").value), //판매 가격
+							buyer_email : '${memberInfo.u_email1} + ${memberInfo.u_email2}',
+							buyer_name : '${memberInfo.u_name}',
+							buyer_tel : '${memberInfo.u_hp1}',
+							buyer_addr : '${memberInfo.u_addr2} + ${memberInfo.u_addr3}',
+							buyer_postcode : '${memberInfo.u_addr1}'
+						}, function(rsp) {
+						      if ( rsp.success ) {
+							         //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+							         jQuery.ajax({
+							        	 url : "${contextPath}/order/insertOrder.do", //cross-domain error가 발생하지 않도록 주의해주세요
+							            type: 'POST',
+							            data : {
+											u_id : document.getElementById("u_id").value,
+											g_id : parseInt(document.getElementById("g_id").value),
+											u_name : rsp.buyer_name,
+											g_name : rsp.name,
+											o_goods_qty : parseInt(document.getElementById("h_order_goods_qty").value),
+											o_goods_price : parseInt(rsp.paid_amount),
+											pay_method : rsp.pay_method,
+											pay_order_time : new Date().getTime(),
+											pay_method : rsp.pay_method,
+											card_pay_month : rsp.card_quota,
+											receiver_hp : document.getElementById("receiver_hp").value,
+											receiver_name : document.getElementById("receiver_name").value,
+											receiver_addr1 : document.getElementById("zipcode").value,
+											receiver_addr2 : document.getElementById("roadAddress").value,
+											receiver_addr3 : document.getElementById("namujiAddress").value,
+											deliver_message : document.getElementById("deliver_message").value,
+											deliver_method : document.getElementById("deliver_method").value,
+											o_useMile : parseInt(document.getElementById('o_useMile').value),
+											parentNo : parseInt(rsp.merchant_uid)
+										}
+							         }).done(function(data) {
+							            if ( everythings_fine ) {
+							               msg = '결제가 완료되었습니다.';
+							               msg += '\n고유ID : ' + rsp.imp_uid;
+							               msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+							               msg += '\n결제 금액 : ' + rsp.paid_amount;
+							               msg += '카드 승인번호 : ' + rsp.apply_num;
+
+							               alert(msg);
+							            } else {
+							               //[3] 아직 제대로 결제가 되지 않았습니다.
+							               //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+							            }
+							         });
+							         //성공시 이동할 페이지
+							         location.href='${path}/ticket/ticketing/success';
+							      } else {
+							         msg = '결제에 실패하였습니다.';
+							         msg += '에러내용 : ' + rsp.error_msg;
+							         //실패시 이동할 페이지
+							         location.href="${path}/ticket/ticketing/fail";
+							         alert(msg);
+							      }
+							   });
 	}
-/* 	total_mileage_use = document.getElementById('o_useMile').value; */
-     
+	
+	
+	
+
+	function calculatePay() {
+		var price1 = document.getElementById("totalPrice").value;
+		var price2 = document.getElementById("o_useMile").value;
+		document.order.FinalTotalPrice.value = parseInt(price1) + ${orderVO.d_price} - parseInt(price2);
+		document.order.u_mile.value = price2;
+	}
+
+
+
+	function maxMile(){
+		var price1 = document.getElementById("totalPrice").value;
+		     if(${memberInfo.u_mile} > ${orderVO.sum}) {
+			document.getElementById("o_useMile").value = ${orderVO.sum};
+			var price2 = document.getElementById("o_useMile").value;
+			document.order.FinalTotalPrice.value = parseInt(price1) + ${orderVO.d_price} - parseInt(price2);
+			document.order.u_mile.value = price2;
+		}else {
+				document.getElementById("o_useMile").value = ${memberInfo.u_mile};
+				var price2 = document.getElementById("o_useMile").value;
+				document.order.FinalTotalPrice.value = parseInt(price1) + ${orderVO.d_price} - parseInt(price2);
+				document.order.u_mile.value = price2;
+			}
+		}
 </script>
-<style>
+
+<style type="text/css">
 .order {
 	border: none;
 	color: white;
@@ -231,37 +236,39 @@
 	border: 1px solid black;
 }
 
-input.underline {
-	　border-left-width:0;
-　border-right-width:0;
-　border-top-width:0;
-　border-bottom-width:1;
+#final_total_Price, #max_mile, #totalPrice, #u_mile  { 
+  border:none; border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;  /* 테두리 없애기 */
+  outline:none; select-dummy: expression(this.hideFocus=true);  /* 링크 점선없애기 */
 }
-//숫자 인풋박스 화살표 없애기
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+
+//
+숫자 인풋박스 화살표 없애기
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button
+	{
+	-webkit-appearance: none;
+	margin: 0;
 }
- input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-    }
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+}
 </style>
 <c:if test='${not empty message}'>
 	<script>
-      window.onload = function() {
-         result();
-      }
-      function result() {
-         alert("${message}");
-      }
-   </script>
+		window.onload = function() {
+			result();
+		}
+		function result() {
+			alert("${message}");
+		}
+	</script>
 </c:if>
 </head>
 <body>
 	<div id="main-wrap">
-		<form name="form_order">
+		<form name="order">
+			<input type="hidden" id="g_name" value="${goodsVO.g_name}"> <input
+				type="hidden" id="g_id" value="${goodsVO.g_id}">
 			<H1>1.주문확인</H1>
 			<table class="goods_info">
 				<thead>
@@ -276,25 +283,19 @@ input[type="number"]::-webkit-inner-spin-button {
 				</thead>
 				<tbody align=center>
 					<tr class="line">
-						<td class="goods_image"><img src="${contextPath}/download1.do?g_id=${goodsVO.g_id}&cate=main" width="50px"
-							height="50px" /> <a href="${contextPath}/goods/goodsDetail.do?g_id=${goodsVO.g_id}"><br>${goodsVO.g_name}</a>
+						<td class="goods_image"><img
+							src="${contextPath}/download1.do?g_id=${goodsVO.g_id}&cate=main"
+							width="50px" height="50px" /> <a
+							href="${contextPath}/goods/goodsDetail.do?g_id=${goodsVO.g_id}"><br>${goodsVO.g_name}</a>
 						<td>
-							<h4 id= o_goods_qty>1개</h4> <input type="hidden" id="order_goods_qty"
-							name="h_order_goods_qty" value="${item.o_goods_qty}" />
+							<h4>${orderVO.o_goods_qty}</h4> 
+							<input type="hidden" id="h_order_goods_qty" name="h_order_goods_qty" value="${orderVO.o_goods_qty}" />
 						</td>
 						<td>${goodsVO.g_price}원</td>
-						<td>3000원</td>
-						<td>${goodsVO.g_price * 0.1}포인트
-						<input type="hidden" id="each_goods_price" name="each_goods_price" value="${item.goods_price * item.order_goods_qty}" />
-						</td>
-						<td>${goodsVO.g_price * 1} + 3000</td>
+						<td>${orderVO.d_price}원</td>
+						<td>${goodsVO.g_price * 0.1}원</td>
+						<td>${sum}원</td>
 					</tr>
-					<c:set var="final_total_order_price"
-						value="${final_total_order_price+ item.goods_sales_price* item.order_goods_qty}" />
-					<c:set var="total_order_price"
-						value="${total_order_price+ item.goods_sales_price* item.order_goods_qty}" />
-					<c:set var="total_order_goods_qty"
-						value="${total_order_goods_qty+item.order_goods_qty }" />
 				</tbody>
 			</table>
 			<H1>2.배송지 정보</H1>
@@ -306,8 +307,7 @@ input[type="number"]::-webkit-inner-spin-button {
 						<tr class="line">
 							<td class="fixed_join"><h4>받으실 분</h4></td>
 							<td><input id="receiver_name" name="receiver_name"
-								type="text" size="40" value="${memberInfo.u_name }" /> <%-- <input type="hidden" id="receiver_name" name="receiver_name"
-								value="${memberInfo.u_name }" /> --%>
+								type="text" size="40" value="${memberInfo.u_name }" />
 						</tr>
 						<tr class="line">
 							<td><h4>핸드폰</h4></td>
@@ -319,7 +319,8 @@ input[type="number"]::-webkit-inner-spin-button {
 								<td class="fixed_join"><h4>주소</h4></td>
 								<td><input type="text" id="zipcode" name="zipcode" size="5"
 									value="${memberInfo.u_addr1}">
-									<button> <a href="javascript:execDaumPostcode()">우편번호검색</a>
+									<button>
+										<a href="javascript:execDaumPostcode()">우편번호검색</a>
 									</button> <br> <br> 도로명 주소: <input type="text"
 									id="roadAddress" name="receiver_addr2" size="50"
 									value="${memberInfo.u_addr2 }" /> <br> <br> 나머지 주소:
@@ -334,10 +335,9 @@ input[type="number"]::-webkit-inner-spin-button {
 									href="javascript:execDaumPostcode()">우편번호검색</a> <br> 도로명
 									주소:<br> <input type="text" id="roadAddress"
 									name="roadAddress" size="50" value="${orderer.roadAddress }" />
-									
-									<br>
-								<br> 나머지 주소: <input type="text" id="namujiAddress"
-									name="namujiAddress" size="50" value="" /> 
+
+									<br> <br> 나머지 주소: <input type="text"
+									id="namujiAddress" name="namujiAddress" size="50" value="" />
 									<!-- <input
 									type="hidden" id="h_zipcode" name="h_zipcode" value="" /> <input
 									type="hidden" id="h_roadAddress" name="h_roadAddress" value="" />
@@ -350,14 +350,13 @@ input[type="number"]::-webkit-inner-spin-button {
 							<td><input id="deliver_message" name="deliver_message"
 								type="text" size="50" placeholder="택배 기사님께 전달할 메시지를 남겨주세요." /></td>
 						</tr>
-						<tr>
-						<input type="radio" id="deliver_method" name="deliver_method" value ="새벽배송"/>
-					 새벽배송
-					 <input type="radio" id="deliver_method" name="deliver_method" value="일반택배"/>
-					일반택배
-						</tr>
-						</tboby>
+					</tbody>
 				</table>
+				<input type="radio" id="deliver_method" name="deliver_method"
+					value="새벽배송" /> 새벽배송 <input type="radio" id="deliver_method"
+					name="deliver_method" value="일반택배" checked /> 일반택배
+
+
 			</div>
 			<div>
 				<h2>3.주문고객</h2>
@@ -365,9 +364,9 @@ input[type="number"]::-webkit-inner-spin-button {
 					<tbody>
 						<tr class="line">
 							<td><h4>이름</h4></td>
-							<td><input type="text" value="${memberInfo.u_name}"size="15" />
-							<input type="hidden" value="${memberInfo.u_id}" id="u_id"/>
-							</td>
+							<td><input type="text" value="${memberInfo.u_name}"
+								size="15" /> <input type="hidden" value="${memberInfo.u_id}"
+								id="u_id" /></td>
 						</tr>
 						<tr class="line">
 							<td><h4>핸드폰</h4></td>
@@ -391,13 +390,11 @@ input[type="number"]::-webkit-inner-spin-button {
 				<table>
 					<tbody>
 						<tr class="line">
-							<td><h3>보유 마일리지 ${memberInfo.u_mile}원</h3></td>
+							<td>보유 마일리지 <input type="text" size = "5" id="max_mile"value="${memberInfo.u_mile}" readonly>원</td>
 						</tr>
 						<tr>
-							<td>마일리지 사용</td>
-							<td><input class="underline" id="o_useMile" name="o_useMile" type="number"
-								size="10" min = "0" max="${memberInfo.u_mile}"oninput="MaxInput()" value="0"/>원&nbsp;&nbsp;
-								<button>모두 사용하기</button></td>
+							<td>마일리지 사용 <input id="o_useMile" size = "5" name="o_useMile" type="number" onChange="calculatePay()" value= "0" />원
+								<button type="button" name="useMile" onClick="maxMile()">모두 사용</button></td>
 						</tr>
 					</tbody>
 				</table>
@@ -415,38 +412,28 @@ input[type="number"]::-webkit-inner-spin-button {
 						<td>최종 결제금액</td>
 					</tr>
 					<tr align=center>
-						<td id="">
-							<p id="p_totalNum">${total_order_goods_qty}개</p> <input
-							id="h_total_order_goods_qty" type="hidden"
-							value="${total_order_goods_qty}" />
+						<td>
+							${orderVO.o_goods_qty}<input id="h_total_order_goods_qty"
+							type="hidden" value="${total_order_goods_qty}" />
+						</td>
+						<td><input id="totalPrice" type="text" value="${orderVO.sum}"
+							size="10" onChange="calculatePay()" />원 <input id="h_totalPrice"
+							type="hidden" value="${orderVO.sum}" /></td>
+						<td>
+							<p id="p_totalDelivery">${orderVO.d_price}원</p> <input
+							id="h_totalDelivery" type="hidden" value="${orderVO.d_price}" />
 						</td>
 						<td>
-							<p id="p_totalPrice">${total_order_price}원</p> <input
-							id="h_totalPrice" type="hidden" value="${total_order_price}" />
+							<input type ="number" id="u_mile" name="u_mile" value = "0">원
 						</td>
-						<td>
-							<p id="p_totalDelivery">${total_delivery_price }원</p> <input
-							id="h_totalDelivery" type="hidden"
-							value="${total_delivery_price}" />
-						</td>
-						<td>
-							<p id="p_totalSalesPrice">${total_mileage_use}원</p> <input
-							id="total_mileage_use" type="hidden"
-							value="${total_mileage_use}" />
-						</td>
-						<td>
-							<p id="p_final_totalPrice">
-								<font size="15">${final_total_order_price }원 </font>
-							</p> <input id="h_final_total_Price" type="hidden"
-							value="${final_total_order_price}" />
-						</td>
+						<td><input id="final_total_Price" type="number"
+name="FinalTotalPrice" size=10 value="${sum}" readonly>원</td>
 					</tr>
 				</tbody>
 			</table>
 			<br> <br> <br>
 		</form>
 
-		<br>
 		<center>
 			<input class='order' type='button' value='결제하기' onclick="fn_buyBTN()" />
 			<button class="order">
