@@ -111,6 +111,7 @@
 			}
 		}); //end ajax  	
 	}
+	
 	/* 
 	 function chkPW() {
 

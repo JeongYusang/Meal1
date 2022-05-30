@@ -11,34 +11,36 @@
 <meta charset="UTF-8">
 <title>너도 요리할 수 있어</title>
 <script src ='http://code.jquery.com/jquery-latest.min.js'></script>
-
 <script>
-function FindID(){
+function fnc_findId(){
 	var _email = $("#email").val();
 	var _name = $("#name").val()
+	console.log("email = "+_email);
+	console.log("name = "+ _name);
+	
 	$.ajax({
 		type:"post",
 		async:false,
-		url:"${contextPath}/Email/emailtest.do",
-		dataType:"text",
-		data:{ name : _name , email = _email },
-		success:function(data,textStatus){
-			console.log("성공");
-			alert("작업성공");
+		url:"${contextPath}/Email/IDemail.do",
+		data:{ name : _name , email : _email },
+		success:function(data){
+			var message = data.message
+			alert(data.message+"님의 아이디는"+data.id+"입니다.");
+			console.log("data.id = "+data.id);
+			console.log("data.message= " + data.message );
 			
 		},
-		error: function(data,textStatus){
-		$(".check-context").fadeOut();
-		$(".nav_ul").css("display", "block");
-						
-	alert("에러가발생했습니다");
-		}/* ,
-		complete:function(data,textStatus){
-				$(".check-context").fadeOut();
+		error: function(data){
+			console.log("data.id = "+data.id);
+			console.log("data.message= " + data.message );
+			alert("이메일 형식을 지켜주세요");
+		},
+		complete:function(data){
+/* 				$(".check-context").fadeOut();
 				$(".nav_ul").css("display", "block");
 						
 	alert("작업을 완료했습니다.");
-		} */
+ */		}
 		
 	});
 	
@@ -195,7 +197,7 @@ height: 45px;
 </style>
 </head>
 <body>
-<form action="${contextPath}/Email/emailtest.do" method="post" method="post">
+<form action="${contextPath}/Email/IDemail.do" method="post" method="post">
   <div id="tab">
   	<div id="dadada">	
   	<h1>아이디 찾기</h1>
@@ -216,7 +218,7 @@ height: 45px;
 					<td class="email2"><input type="text" id="email" placeholder="이메일을 @포함 입력하세요" name="email" required></td>
 				</tr>
 				<tr>
-					<td class="click1"><input type="button" onclick ="FindID" id="pub1" value="찾기"></td>
+					<td class="click1"><input type="button" onclick="fnc_findId()" id="pub1" value="찾기"></td>
 					<td class="click2"><input type="button" onclick="history.go(-1);" id="pub2" value="취소"></td>
 				</tr>				
 			</table>

@@ -4,6 +4,8 @@ package com.meal.seller.service;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
+
 import com.meal.seller.vo.Img_sVO;
 import com.meal.seller.vo.SellerVO;
 
@@ -25,5 +27,6 @@ public interface SellerService {
 
 	public void lastLog(String s_id) throws Exception;
 	public SellerVO FindPW(HashMap<String,Object> map) throws Exception;
-		
+
+	public String FindId(HashMap<String,Object> map) throws Exception;
 }

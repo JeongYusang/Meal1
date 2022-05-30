@@ -24,4 +24,5 @@ public interface MemberService {
 
 	public MemberVO FindPW(HashMap<String,Object> map) throws Exception;
 
+	public String FindId(HashMap<String , Object> map) throws Exception;
 }

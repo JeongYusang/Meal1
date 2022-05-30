@@ -92,7 +92,7 @@
 	]]>
 	</select>
 	<!-- 아이디찾기 -->
-	<select id="FindId" resultType="memberVO"
+	<select id="FindId" resultType="String"
 		parameterType="Map">
   <![CDATA[
 select u_id from user_tb where u_email1 = #{email1} and u_email2 = #{email2} and u_name = #{name}
