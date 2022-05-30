@@ -16,4 +16,5 @@ public interface GoodsController {
 	public ResponseEntity goodsoverlapped(@RequestParam("g_name") String g_name, HttpServletRequest request,HttpServletResponse response) throws Exception;
 	public ModelAndView updateGoodsForm(@RequestParam("g_id") int g_id, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ResponseEntity updateGoods(int g_id, MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception;
+	public ModelAndView deleteGoods(@RequestParam HashMap<String, Object> map, @RequestParam("g_id") int g_id, HttpServletRequest request, HttpServletResponse repsponse) throws Exception;
 }

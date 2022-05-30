@@ -104,6 +104,11 @@ public class GoodsDAOImpl implements GoodsDAO {
 		sqlSession.update("mapper.goods.updateGoodsImg", newi);
 	}
 
+	@Override
+	public void deleteGoods(GoodsVO goodsInfo) throws DataAccessException {
+		sqlSession.delete("mapper.goods.deleteGoods", goodsInfo);
+	}
+
 	
 	
 }

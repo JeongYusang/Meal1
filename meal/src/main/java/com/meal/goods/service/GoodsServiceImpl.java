@@ -100,4 +100,9 @@ public class GoodsServiceImpl implements GoodsService {
 		goodsDAO.updateGoodsImg(newi);		
 	}
 
+	@Override
+	public void deleteGoods(GoodsVO goodsInfo) throws Exception {
+		goodsDAO.deleteGoods(goodsInfo);
+	}
+
 }

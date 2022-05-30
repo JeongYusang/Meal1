@@ -31,5 +31,5 @@ public interface GoodsDAO {
 	public GoodsVO goodsG_Info(int g_id) throws DataAccessException;
 	public void updateGoodsImg(HashMap<String, Object> newi) throws DataAccessException;
 	public void updateGoods(HashMap<String, Object> newGoodsMap) throws DataAccessException;
-
+	public void deleteGoods(GoodsVO goodsInfo) throws DataAccessException;
 }

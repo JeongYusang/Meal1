@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,8 +26,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.meal.board.gr.service.BoardGrService;
 import com.meal.common.controller.BaseController;
-import com.meal.common.logger.LoggerInterCeptor;
-import com.meal.goods.dao.GoodsDAO;
 import com.meal.goods.service.GoodsService;
 import com.meal.goods.vo.GoodsVO;
 import com.meal.goods.vo.Img_gVO;
@@ -38,7 +36,7 @@ import com.meal.seller.vo.SellerVO;
 @RequestMapping("/goods")
 public class GoodsControllerImpl extends BaseController implements GoodsController {
 	private static final String CURR_IMAGE_UPLOAD_PATH = "C:\\Meal\\Image";
-	protected Log log = LogFactory.getLog(GoodsController.class);
+	private static final Logger logger = LoggerFactory.getLogger(GoodsController.class);
 	@Autowired
 	private GoodsService goodsService;
 	@Autowired
@@ -113,6 +111,7 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 
 		GoodsVO goodsInfo = (GoodsVO) goodsService.findg_id(g_name);
 		int g_id = (Integer) goodsInfo.getG_id();
+		
 
 		// 베이스 컨트롤러로 이동하여 파일에 대하여 C\Meal\Image\temp로 저장시켜줌
 		List<HashMap<String, Object>> imageFileList = (List<HashMap<String, Object>>) upload(multipartRequest);
@@ -286,22 +285,41 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 				return mav;
 			}
 		}
+
 		@Override
 		@RequestMapping(value = "/updateGoods.do", method = {RequestMethod.GET, RequestMethod.POST})
-		public ResponseEntity updateGoods(@RequestParam("g_id") int g_id, MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception {
+		public ResponseEntity updateGoods(@RequestParam("g_id") int g_id , MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception {
 			HttpSession session = multipartRequest.getSession();
 			GoodsVO goodsInfo = (GoodsVO) goodsService.goodsG_Info(g_id);
 			HashMap<String, Object> newGoodsMap = new HashMap<String, Object>();
 			
-			
+			String g_saleDate1 = (String)newGoodsMap.get("g_saleDate1");
+			String g_saleDate2 = (String)newGoodsMap.get("g_saleDate2");
+			String g_saleDate3 = (String)newGoodsMap.get("g_saleDate3");
+			String g_saleDate4 = (String)newGoodsMap.get("g_saleDate4");
+
 			Enumeration enu = multipartRequest.getParameterNames();
 			// input type=file제외 모두 들어감
 			while (enu.hasMoreElements()) {
 				String name = (String) enu.nextElement();
 				String value = multipartRequest.getParameter(name);
 				System.out.println("name + value : " + name + value);
-				newGoodsMap.put(name, value);
-
+				System.out.println("value.class.name = " + value.getClass().getName());
+				if( value != null && value != "") {
+					newGoodsMap.put(name, value);					
+				}
+			}
+			
+			
+			if (g_saleDate3 == null || g_saleDate3 == "") {
+				newGoodsMap.put("g_saleDate1", null);
+			} else if (g_saleDate3 != null || g_saleDate3 != "") {
+				newGoodsMap.put("g_saleDate1", g_saleDate3);
+			} 
+			if (g_saleDate4 == null || g_saleDate4 == "") {
+				newGoodsMap.put("g_saleDate2", null); 
+			} else if (g_saleDate4 != null || g_saleDate4 != "") {
+				newGoodsMap.put("g_saleDate2", g_saleDate4);
 			}
 			
 			String message = null;
@@ -353,6 +371,7 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 					}
 				}
 				goodsService.updateGoods(newGoodsMap);
+				session.setAttribute("isLogOn", true);
 				message = "<script>";
 				message += " alert('상품수정이 완료되었습니다..');";
 				//컨트롤러 내부를 거쳐서 가는거기 때문에 바인딩해줄 요소가 없음
@@ -360,15 +379,42 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 				message += " </script>";
 
 			} catch (Exception e) {
-				
 				message = "<script>";
 				message += " alert('다시 내용을 입력해주세요');";
-				message += " location.href='" + multipartRequest.getContextPath() + "/goods/updateGoodsForm.do';";
+				message += " location.href='" + multipartRequest.getContextPath() + "/main/main.do';";
 				message += " </script>";
 				e.printStackTrace();
 			}
 			resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
 			return resEntity;
 			
+		}
+		@Override
+		@RequestMapping(value="/deleteGoods.do", method= {RequestMethod.POST, RequestMethod.GET})
+		public ModelAndView deleteGoods(@RequestParam HashMap<String, Object> map, @RequestParam("g_id") int g_id,
+				HttpServletRequest request, HttpServletResponse repsponse) throws Exception {
+			ModelAndView mav = new ModelAndView();
+			HttpSession session = request.getSession();
+			SellerVO sellerInfo = (SellerVO) session.getAttribute("sellerInfo");
+			GoodsVO goodsInfo = (GoodsVO) goodsService.goodsG_Info(g_id);
+			String s_id = (String) sellerInfo.getS_id();
+			String s_id1 = (String) goodsInfo.getS_id();
+			
+			if (s_id.equals(s_id1)) {
+				String path = CURR_IMAGE_UPLOAD_PATH + "\\" + "goods" + "\\" + goodsInfo.getG_id();
+				deleteFolder(path);
+				goodsService.deleteGoods(goodsInfo);
+				
+				session.setAttribute("isLogOn", true);
+				String message = "상품이 삭제되었습니다.";
+				mav.addObject("message", message);
+				String viewName = "redirect:/goods/selectGoodsPage.do";
+				mav.setViewName(viewName);
+				return mav;
+			}else {
+				String viewName = "redirect:/goods/selectGoodsPage.do";
+				mav.setViewName(viewName);
+				return mav;	
+			}
 		}
 }
