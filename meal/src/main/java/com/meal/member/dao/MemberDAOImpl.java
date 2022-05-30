@@ -53,6 +53,11 @@ public class MemberDAOImpl  implements MemberDAO{
 	public void lastLog(String u_id) throws DataAccessException {
 		sqlSession.update("mapper.user.lastLog",u_id);
 	}
+	@Override
+	public String FindId(HashMap<String , Object> map) throws DataAccessException{
+		return  (String)sqlSession.selectOne("mapper.user.FindId",map);
+		
+	}
 
 	@Override
 	public MemberVO FindPW(HashMap<String,Object> map) throws DataAccessException{

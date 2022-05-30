@@ -23,4 +23,6 @@ public interface SellerDAO {
 	public void updateSellerImg(HashMap<String,Object> map) throws DataAccessException;
 	public void lastLog(String s_id) throws DataAccessException;
 	public SellerVO FindPW(HashMap<String,Object> map) throws DataAccessException;		
+
+	public String FindId(HashMap<String,Object> map) throws DataAccessException;
 }

@@ -173,6 +173,13 @@ delete from img_s where s_id = #{s_id} and  cate=#{cate}
 	</update>
 
 
+	<select id="FindId" resultType="String"
+		parameterType="Map">
+  <![CDATA[
+select s_id from seller_tb where s_email1 = #{email1} and s_email2 = #{email2} and s_Wname = #{name}
+]]>
+	</select>
+
 	<select id="FindPW" resultType="sellerVO" parameterType="Map">
   <![CDATA[
 select * from seller_tb where s_email1 = #{email1} and s_email2 = #{email2} and s_id = #{id}

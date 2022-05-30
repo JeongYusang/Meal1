@@ -1,5 +1,6 @@
 package com.meal.common.email;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -8,6 +9,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -74,6 +76,68 @@ public class EmailControllerImpl extends BaseController {
 		this.size = size;
 		return init();
 	}
+	
+	// email 인증
+	@ResponseBody
+	@RequestMapping(value = "/IDemail.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public Map<String,Object> FindID(@RequestParam String name, @RequestParam String email, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		Map<String,Object> ResultMap = new HashMap<String,Object>();
+		try {
+
+
+			//이메일을 적지 않았을경우 분기
+			if (email == null || email == "" ||name == null || name=="") {
+				String message = "정보를 입력해주세요.";
+				ResultMap.put("message", message);
+
+			} 
+				// @로 들어간 email 쪼개주기
+				String[] rep = email.split("@");
+				String email1 = rep[0];
+				String email2 = rep[1];
+				logger.info("==========================");
+				logger.info("name = " + name);
+				logger.info("email = " + email);
+				logger.info("email1 = " + email1);
+				logger.info("email2 = " + email2);
+				logger.info("==========================");
+				
+				
+				HashMap<String , Object> map = new HashMap<String,Object>();
+				map.put("name", name);
+				map.put("email1", email1);
+				map.put("email2", email2);
+				
+				String id = "";
+				
+				
+				id = memberService.FindId(map);
+				if (id != null && id !="") {
+					String message= "일반 회원";
+					ResultMap.put("id", id);
+					ResultMap.put("message", message);
+					return ResultMap;
+				}
+				id= sellerService.FindId(map);
+				if(id != null && id !="") {
+					String message = "판매자";
+					ResultMap.put("id", id);
+					ResultMap.put("message", message);
+					return ResultMap;
+				}
+				String Errmessage= "해당 정보의 회원이 없습니다.";
+				ResultMap.put("Errmessage", Errmessage);
+				return ResultMap;
+		} catch (Exception e) {
+
+			String Errmessage= "형식을 지켜주세요.";
+			ResultMap.put("Errmessage", Errmessage);
+			return ResultMap;
+		}
+
+	}
 
 	// 회원가입 발송 이메일(인증키 발송)
 	@RequestMapping(value = "/emailtest.do", method = { RequestMethod.POST, RequestMethod.GET })
@@ -89,7 +153,7 @@ public class EmailControllerImpl extends BaseController {
 				+ "<p>인증하기 버튼을 누르시면 로그인을 하실 수 있습니다 : " + "<h2>해당 키 의 값은</h2>" + "<h1>" + key + "</h1>"
 				+ "(혹시 잘못 전달된 메일이라면 이 이메일을 무시하셔도 됩니다)";
 		try {
-			mail.setSubject("[본인인증] MS :p 민수르님의 인증메일입니다", "utf-8");
+			mail.setSubject("[너도요 본인인증] "+name+"님의 아이디 확인 메일입니다.", "utf-8");
 			mail.setText(htmlStr, "utf-8", "html");
 			mail.addRecipient(RecipientType.TO, new InternetAddress(email));
 			mailSender.send(mail);

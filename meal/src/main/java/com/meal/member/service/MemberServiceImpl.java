@@ -21,10 +21,10 @@ public class MemberServiceImpl implements MemberService {
 	private SellerDAO sellerDAO;
 	@Autowired
 	private AdminDAO adminDAO;
-	
+
 	@Override
-	public MemberVO decode(String u_id) throws Exception{
-		MemberVO mem =(MemberVO)memberDAO.decode(u_id);
+	public MemberVO decode(String u_id) throws Exception {
+		MemberVO mem = (MemberVO) memberDAO.decode(u_id);
 		return mem;
 	}
 
@@ -37,11 +37,10 @@ public class MemberServiceImpl implements MemberService {
 	public String overlapped(String id) throws Exception {
 		String result = memberDAO.selectOverlappedID(id);
 
-		if (result.equals("true") || result =="true") {
+		if (result.equals("true") || result == "true") {
 			return result;
 
-
-		} else if (result !="true") {
+		} else if (result != "true") {
 			result = sellerDAO.selectOverlappedID(id);
 			return result;
 		} else {
@@ -60,14 +59,19 @@ public class MemberServiceImpl implements MemberService {
 		memberDAO.delMember(memberVO);
 	}
 
-
 	@Override
 	public void lastLog(String u_id) throws Exception {
 		memberDAO.lastLog(u_id);
 	}
+
 	@Override
-	public MemberVO FindPW(HashMap<String,Object> map) throws Exception {
-		return (MemberVO)memberDAO.FindPW(map);
+	public String FindId(HashMap<String, Object> map) throws Exception {
+		return (String)memberDAO.FindId(map);
+	}
+
+	@Override
+	public MemberVO FindPW(HashMap<String, Object> map) throws Exception {
+		return (MemberVO) memberDAO.FindPW(map);
 	}
 
 }

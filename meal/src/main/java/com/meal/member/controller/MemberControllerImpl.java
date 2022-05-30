@@ -1,6 +1,7 @@
 package com.meal.member.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -207,45 +208,7 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 		return mav;
 	}
 
-	// email 인증
-	@RequestMapping(value = "/FindIDResult.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView FindID(@RequestParam HashMap<String, Object> map, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		ModelAndView mav = new ModelAndView();
-		String viewName = (String) request.getAttribute("/member/FindIDResult");
-		mav.setViewName(viewName);
-		try {
-			String name = (String) map.get("name");
-			String email = (String) map.get("email");
-			//이메일을 적지 않았을경우 분기
-			if (email == null || email == "" ||name == null || name=="") {
-				String message = "정보를 입력해주세요.";
-				mav.addObject("message", message);
-				mav.setViewName("/member/FindID");
-				return mav;
 
-			} 
-				// @로 들어간 email 쪼개주기
-				String[] rep = email.split("@");
-				String email1 = rep[0];
-				String email2 = rep[1];
-				logger.info("==========================");
-				logger.info("name = " + name);
-				logger.info("email = " + email);
-				logger.info("email1 = " + email1);
-				logger.info("email2 = " + email2);
-				logger.info("==========================");
-			
-
-			return mav;
-		} catch (Exception e) {
-			String message = "형식을 지켜주세요.";
-			mav.addObject("message", message);
-			mav.setViewName("/member/FindID");
-			return mav;
-		}
-
-	}
 
 	// hp 인증
 	@RequestMapping(value = "/FindIDResult2.do", method = { RequestMethod.GET, RequestMethod.POST })
