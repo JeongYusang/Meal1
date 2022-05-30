@@ -140,24 +140,27 @@ public class EmailControllerImpl extends BaseController {
 	}
 
 	// 회원가입 발송 이메일(인증키 발송)
+	@ResponseBody
 	@RequestMapping(value = "/emailtest.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public Map<String, Object> mailSendWithUserKey(@RequestParam String name, @RequestParam String email,
-			HttpServletRequest request) {
+	public Map<String, Object> mailSendWithUserKey( @RequestParam String email,	HttpServletRequest request,HttpServletResponse response) {
 
 		String key = getKey(false, 20);
 		// String name = (String) map.get("name");
 		// String email = (String) map.get("email");
 		Map<String, Object> map = new HashMap<String, Object>();
 		MimeMessage mail = mailSender.createMimeMessage();
-		String htmlStr = "<h2>안녕하세요 '너도 요리할 수 있어!' 입니다!</h2><br><br>" + "<h3>" + name + "님</h3>"
-				+ "<p>인증하기 버튼을 누르시면 로그인을 하실 수 있습니다 : " + "<h2>해당 키 의 값은</h2>" + "<h1>" + key + "</h1>"
-				+ "(혹시 잘못 전달된 메일이라면 이 이메일을 무시하셔도 됩니다)";
+		String htmlStr = "<h2>안녕하세요 '너도 요리할 수 있어!' 입니다!</h2><br><br>" +  "<br><h2>해당 키 의 값은</h2>" + "<h1>" + key + "</h1>"
+				+ "<br><br><br>(혹시 잘못 전달된 메일이라면 이 이메일을 무시하셔도 됩니다)";
 		try {
-			mail.setSubject("[너도요 본인인증] "+name+"님의 아이디 확인 메일입니다.", "utf-8");
+			mail.setSubject("[너도요 본인인증] 회원가입 인증 메일입니다.", "utf-8");
 			mail.setText(htmlStr, "utf-8", "html");
 			mail.addRecipient(RecipientType.TO, new InternetAddress(email));
 			mailSender.send(mail);
-
+		
+			String message = "해당 이메일로 전송이 완료되었니다.";
+		
+			map.put("key", key);
+			map.put("message", message);
 			return map;
 		} catch (MessagingException e) {
 			e.printStackTrace();

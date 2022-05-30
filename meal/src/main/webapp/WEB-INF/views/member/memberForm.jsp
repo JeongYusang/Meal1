@@ -20,137 +20,7 @@
 
 <meta charset="utf-8">
 <title>너도 요리할 수 있어!</title>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script>
-	function execDaumPostcode() {
-		new daum.Postcode(
-				{
-					oncomplete : function(data) {
-						// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-						// 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
-						// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-						var ftrlRoadAddr = data.roadAddress; // 도로명 주소 변수
-						var extraRoadAddr = ''; // 도로명 조합형 주소 변수
-
-						// 법정동명이 있을 경우 추가한다. (법정리는 제외)
-						// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-						if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-							extraRoadAddr += data.bname;
-						}
-						// 건물명이 있고, 공동주택일 경우 추가한다.
-						if (data.buildingName !== '' && data.apartment === 'Y') {
-							extraRoadAddr += (extraRoadAddr !== '' ? ', '
-									+ data.buildingName : data.buildingName);
-						}
-						// 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-						if (extraRoadAddr !== '') {
-							extraRoadAddr = ' (' + extraRoadAddr + ')';
-						}
-						// 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
-						if (ftrlRoadAddr !== '') {
-							ftrlRoadAddr += extraRoadAddr;
-						}
-
-						// 우편번호와 주소 정보를 해당 필드에 넣는다.
-						document.getElementById('zipcode').value = data.zonecode; //5자리 새우편번호 사용
-						document.getElementById('roadAddress').value = ftrlRoadAddr;
-						document.getElementById('jibunAddress').value = data.jibunAddress;
-
-						// 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-						if (data.autoRoadAddress) {
-							//예상되는 도로명 주소에 조합형 주소를 추가한다.
-							var expRoadAddr = data.autoRoadAddress
-									+ extraRoadAddr;
-							document.getElementById('guide').innerHTML = '(예상 도로명 주소 : '
-									+ expRoadAddr + ')';
-
-						} else if (data.autoJibunAddress) {
-							var expJibunAddr = data.autoJibunAddress;
-							document.getElementById('guide').innerHTML = '(예상 지번 주소 : '
-									+ expJibunAddr + ')';
-						} else {
-							document.getElementById('guide').innerHTML = '';
-						}
-
-					}
-				}).open();
-	}
-
-	function fn_overlapped() {
-		var _id = $("#_u_id").val();
-		if (_id == '') {
-			alert("ID를 입력하세요");
-			return;
-		}
-		$.ajax({
-			type : "post",
-			async : false,
-			url : "${contextPath}/member/overlapped.do",
-			dataType : "text",
-			data : {
-				id : _id
-			},
-			success : function(data, textStatus) {
-				if (data == 'false') {
-					alert("사용할 수 있는 ID입니다.");
-					$('#btnOverlapped').prop("disabled", true);
-					$('#_u_id').prop("disabled", true);
-					$('#addmember').prop("disabled", false);
-					$('#u_id').val(_id);
-				} else {
-					alert("사용할 수 없는 ID입니다.");
-				}
-			},
-			error : function(data, textStatus) {
-				alert("에러가 발생했습니다.");
-				ㅣ
-			},
-			complete : function(data, textStatus) {
-				//alert("작업을완료 했습니다");
-			}
-		}); //end ajax  	
-	}
-	
-	/* 
-	 function chkPW() {
-
-	 var pw = $("#pwd").val();
-	 var id = $("#u_id").val();
-	 var checkNumber = pw.search(/[0-9]/g);
-	 var checkEnglish = pw.search(/[a-z]/ig);
-
-	 if (!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(pw)) {
-	 alert('숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다.');
-	 return false;
-	 } else if (checkNumber < 0 || checkEnglish < 0) {
-	 alert("숫자와 영문자를 혼용하여야 합니다.");
-	 return false;
-	 } else if (/(\w)\1\1\1/.test(pw)) {
-	 alert('같은 문자를 4번 이상 사용하실 수 없습니다.');
-	 return false;
-	 } else if (pw.search(id) > -1) {
-	 alert("비밀번호에 아이디가 포함되었습니다.");
-	 return false;
-	 } else {
-
-	 console.log("통과");
-
-	 }
-
-	 } */
-	    $(function() {
-	        $('#select').change(function() {
-	            if ($('#select').val() == 'directly') {
-	                $('#u_email2').attr("disabled", false);
-	                $('#u_email2').val("");
-	                $('#u_email2').focus();
-	            } else {
-	                $('#u_email2').val($('#select').val());
-	            }
-	        })
-	    });
-</script>
 <style>
 #container {
 	display: flex;
@@ -502,8 +372,8 @@ tr.box {
 	</div>
 	<section>
 		<div id="container">
-			<form id="frm" name="frmM" action="${contextPath}/member/addMember.do"
-				method="post">
+			<form id="frm" name="frmM"
+				action="${contextPath}/member/addMember.do" method="post">
 				<table class="any">
 					<h1 style="text-align: center">일반고객 회원가입</h1>
 					<tr class="box">
@@ -517,12 +387,16 @@ tr.box {
 					<tr class="box">
 						<th>비밀번호*</th>
 						<td colspan="3"><input name="u_pw" id="pwd" type="password"
-							placeholder="비밀번호" required="required" /></td>
+							placeholder="비밀번호" required="required" onchange="pwCheck()" /></td>
 					</tr>
 					<tr class="box">
 						<th>비밀번호 확인*</th>
-						<td colspan="3"><input name="pwtest" id="pwtest2"
-							type="password" placeholder="비밀번호 확인" required="required" /></td>
+						<td colspan="1"><input name="pwtest" id="pwtest2"
+							type="password" placeholder="비밀번호 확인" required="required" onchange="pwCheck()"/>
+							 <input	type="hidden" id="pwDoubleCheck"></td>
+							 <td><span class="passwordResult"></span>
+							</td>
+						
 						<!-- 			<tr class="box">
 						<th>비밀번호*</th>
 						<td colspan="3"><input name="u_pw" id="pwd" type="password"
@@ -548,7 +422,7 @@ tr.box {
 						<th>휴대폰*</th>
 						<td><input type="tel" name="u_hp1" id="hp1"
 							required="required" /></td>
-						<td colspan="2" class="righttd"><input type="button" id="hp2"
+						<td class="righttd"><input type="button" id="hp2"
 							value="인증 전송" /></td>
 					</tr>
 					<tr class="box">
@@ -560,33 +434,43 @@ tr.box {
 					</tr>
 					<tr class="box">
 						<th>email*</th>
-						<td>
-						<input type="text" name="u_email1" id="u_email1"
-							style="width: 100px"> @
-						<input type="text" name="u_email2" id="u_email2"
-							style="width: 100px;"  value="">
-						<select style="width: 100px; margin-right: 10px"
-							title="u_email2" id="select">
-							<option value="" disabled selected>E-Mail 선택</option>
-							<option value="directly" id="u_email2">직접 입력하기</option>
-							<option value="naver.com">naver.com</option>
-							<option value="hanmail.net">hanmail.net</option>
-							<option value="hotmail.com">hotmail.com</option>
-							<option value="nate.com">nate.com</option>
-							<option value="yahoo.co.kr">yahoo.co.kr</option>
-							<option value="empas.com">empas.com</option>
-							<option value="dreamwiz.com">dreamwiz.com</option>
-							<option value="freechal.com">freechal.com</option>
-							<option value="lycos.co.kr">lycos.co.kr</option>
-							<option value="korea.com">korea.com</option>
-							<option value="gmail.com">gmail.com</option>
-							<option value="hanmir.com">hanmir.com</option>
-							<option value="paran.com">paran.com</option>
-						
-						</select></td> 
+						<td><input type="text" name="u_email1" id="u_email1"
+							style="width: 70px"> @ <input type="text" name="u_email2"
+							id="u_email2" style="width: 70px;" value=""> <select
+							style="width: 100px; margin-right: 10px" title="u_email2"
+							id="select">
+								<option value="" disabled selected>E-Mail 선택</option>
+								<option value="directly" id="u_email2">직접 입력하기</option>
+								<option value="naver.com">naver.com</option>
+								<option value="hanmail.net">hanmail.net</option>
+								<option value="hotmail.com">hotmail.com</option>
+								<option value="nate.com">nate.com</option>
+								<option value="yahoo.co.kr">yahoo.co.kr</option>
+								<option value="empas.com">empas.com</option>
+								<option value="dreamwiz.com">dreamwiz.com</option>
+								<option value="freechal.com">freechal.com</option>
+								<option value="lycos.co.kr">lycos.co.kr</option>
+								<option value="korea.com">korea.com</option>
+								<option value="gmail.com">gmail.com</option>
+								<option value="hanmir.com">hanmir.com</option>
+								<option value="paran.com">paran.com</option>
 
+						</select> <br> <span class="successEmailChk"></span></td>
+
+						<td colspan="2" class="righttd"><input type="button"
+							id="emailBTN" value="인증메일 보내기" /></td>
 
 					</tr>
+					<tr class="box">
+						<th>이메일 인증하기</th>
+						<td><input type="text" name="emailKey" id="emailKey"
+							required="required" /> <br> <span class="KeyInfo"></span></td>
+						<td class="righttd"><input type="button" id="emailKeyResult"
+							value="인증 하기" disabled /> <input type="hidden"
+							id="emailDoubleChk" /></td>
+
+					</tr>
+
 					<tr class="box">
 						<th>성별</th>
 						<td colspan="3" class="righttd"><input id="u_sex"
@@ -634,7 +518,208 @@ tr.box {
 	</section>
 </body>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="${contextPath }/resources/js/memberForm.js">
-	
+<script src="${contextPath }/resources/js/memberForm.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+	function execDaumPostcode() {
+		new daum.Postcode(
+				{
+					oncomplete : function(data) {
+						// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+						// 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+						// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+						var ftrlRoadAddr = data.roadAddress; // 도로명 주소 변수
+						var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+
+						// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+						// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+						if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+							extraRoadAddr += data.bname;
+						}
+						// 건물명이 있고, 공동주택일 경우 추가한다.
+						if (data.buildingName !== '' && data.apartment === 'Y') {
+							extraRoadAddr += (extraRoadAddr !== '' ? ', '
+									+ data.buildingName : data.buildingName);
+						}
+						// 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+						if (extraRoadAddr !== '') {
+							extraRoadAddr = ' (' + extraRoadAddr + ')';
+						}
+						// 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+						if (ftrlRoadAddr !== '') {
+							ftrlRoadAddr += extraRoadAddr;
+						}
+
+						// 우편번호와 주소 정보를 해당 필드에 넣는다.
+						document.getElementById('zipcode').value = data.zonecode; //5자리 새우편번호 사용
+						document.getElementById('roadAddress').value = ftrlRoadAddr;
+						document.getElementById('jibunAddress').value = data.jibunAddress;
+
+						// 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+						if (data.autoRoadAddress) {
+							//예상되는 도로명 주소에 조합형 주소를 추가한다.
+							var expRoadAddr = data.autoRoadAddress
+									+ extraRoadAddr;
+							document.getElementById('guide').innerHTML = '(예상 도로명 주소 : '
+									+ expRoadAddr + ')';
+
+						} else if (data.autoJibunAddress) {
+							var expJibunAddr = data.autoJibunAddress;
+							document.getElementById('guide').innerHTML = '(예상 지번 주소 : '
+									+ expJibunAddr + ')';
+						} else {
+							document.getElementById('guide').innerHTML = '';
+						}
+
+					}
+				}).open();
+	}
+
+	function fn_overlapped() {
+		var _id = $("#_u_id").val();
+		if (_id == '') {
+			alert("ID를 입력하세요");
+			return;
+		}
+		$.ajax({
+			type : "post",
+			async : false,
+			url : "${contextPath}/member/overlapped.do",
+			dataType : "text",
+			data : {
+				id : _id
+			},
+			success : function(data, textStatus) {
+				if (data == 'false') {
+					alert("사용할 수 있는 ID입니다.");
+					$('#btnOverlapped').prop("disabled", true);
+					$('#_u_id').prop("disabled", true);
+					$('#addmember').prop("disabled", false);
+					$('#u_id').val(_id);
+				} else {
+					alert("사용할 수 없는 ID입니다.");
+				}
+			},
+			error : function(data, textStatus) {
+				alert("에러가 발생했습니다.");
+				ㅣ
+			},
+			complete : function(data, textStatus) {
+				//alert("작업을완료 했습니다");
+			}
+		}); //end ajax  	
+	}
+	// 이메일 인증 전송에 관한 메소드
+	var code = "";
+	$("#emailBTN").click(function() {
+		var _email1 = $("#u_email1").val();
+		var _email2 = $("#u_email2").val();
+		var _email = _email1 + "@" + _email2;
+		console.log("_email : " + _email);
+
+		$.ajax({
+			type : "GET",
+			url : "${contextPath}/Email/emailtest.do",
+			data : {
+				email : _email
+			},
+			success : function(data) {
+				if (data.key == null) {
+					alert(data.message);
+					$("#u_email1").attr("autofocus", true);
+					$(".successEmailChk").text("유효한 이메일 주소를 입력해주세요.");
+					$(".successEmailChk").css("color", "red");
+					$(".successEmailChk").css("font-size", "5px");
+
+				} else {
+					alert(data.message);
+					$("#u_email1").attr("disabled", false);
+					$("#u_email2").attr("disabled", false);
+					$("#emailKeyResult").attr("disabled", false);
+					$("#emailChk2").css("display", "inline-block");
+					$(".successEmailChk").text("전송완료.");
+					$(".successEmailChk").css("font-size", "5px");
+					$(".successEmailChk").css("color", "green");
+
+					code = data.key;
+				}
+			}
+		});
+	});
+	// 이메일 키 인증 관련 코드
+	$("#emailKeyResult").click(function() {
+		if ($("#emailKey").val() == code) {
+			$(".KeyInfo").text("인증번호가 일치합니다.");
+			$(".KeyInfo").css("color", "green");
+			$(".KeyInfo").css("font-size", "5px");
+			$("#emailDoubleChk").val("true");
+			$("#emailKey").attr("disabled", true);
+
+		} else {
+			$(".KeyInfo").text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+			$(".KeyInfo").css("color", "red");
+			$(".KeyInfo").css("font-size", "5px");
+			$("#emailDoubleChk").val("false");
+			$("#emailKey").attr("autofocus", true);
+		}
+	});
+
+	function pwCheck() {
+		var pw = $("#pwd").val();
+		var pwCheck = $("#pwtest2").val();
+
+		if (pw != '' && pwCheck != '') {
+			if (pw == pwCheck) {
+				$(".passwordResult").text("일치합니다.");
+				$(".passwordResult").css("color", "green");
+				$(".passwordResult").css("font-size", "5px");
+			} else {
+				$(".passwordResult").text("일치하지 않습니다.");
+				$(".passwordResult").css("color", "red");
+				$(".passwordResult").css("font-size", "5px");
+				$(".pwtest2").focus();
+			}
+		}
+	}
+
+	/* 
+	 function chkPW() {
+
+	 var pw = $("#pwd").val();
+	 var id = $("#u_id").val();
+	 var checkNumber = pw.search(/[0-9]/g);
+	 var checkEnglish = pw.search(/[a-z]/ig);
+
+	 if (!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(pw)) {
+	 alert('숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다.');
+	 return false;
+	 } else if (checkNumber < 0 || checkEnglish < 0) {
+	 alert("숫자와 영문자를 혼용하여야 합니다.");
+	 return false;
+	 } else if (/(\w)\1\1\1/.test(pw)) {
+	 alert('같은 문자를 4번 이상 사용하실 수 없습니다.');
+	 return false;
+	 } else if (pw.search(id) > -1) {
+	 alert("비밀번호에 아이디가 포함되었습니다.");
+	 return false;
+	 } else {
+
+	 console.log("통과");
+
+	 }
+
+	 } */
+	$(function() {
+		$('#select').change(function() {
+			if ($('#select').val() == 'directly') {
+				$('#u_email2').attr("disabled", false);
+				$('#u_email2').val("");
+				$('#u_email2').focus();
+			} else {
+				$('#u_email2').val($('#select').val());
+			}
+		})
+	});
 </script>
 </html>
