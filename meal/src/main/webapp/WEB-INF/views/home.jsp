@@ -1,173 +1,133 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8" isELIgnored="false"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="section" value="0" />
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>상품 조회하기</title>
+<title>검색결과</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<style type="text/css">
-.div1 {
-	width: 1080px;
-	height: 1000px;
-	position: relative;
-	overflow: hidden;
+
+
+
+<style>
+.maingoodslist{
+width:1280px;
+position:inline-flex
+position:relative;
+text-align: center;
+}
+.maingList{
+width:100%;
+position:inline-flex;	
+}
+#searchDetailWrap{
+width:100%;
+height:50px;
+}
+#searchDetailWrap #searchText{
+width:50%;
+height:30px;
+}
+#searchBTN{
+height : 30px;
 }
 
-.div2 {
-	width: 335px;
-	height: 100px;
-	background: #ffc0cf;
-	text-align: center;
-	font-size: 50px;
-	line-height: 100px;
-	margin-left: 33%;
-	display: inline-block
+.mangList .ul li a{
+display: inline-block;
 }
-
-.div2-1 {
+.maingList .ul li, .maingoodslist .ol li {
+display: inline-block;
+text-align: center;
+}
+#main-wrap .img {
 	display: inline-block;
-	float: right;
-	margin-right: 10%;
-	margin-top: 20px;
-	font-size: 20px;
+	margin: 0 10px 0 10px;
+	
 }
 
-.div2-1 a {
+
+#main-wrap a:link {
 	text-decoration: none;
-	background: #ffc0cf;
 	color: black;
-	border: 3px solid gray;
 }
 
-.div3 {
-	margin-top: 10px;
-	margin-left: 10%;
-	width: 80%;
-	height: 100px;
-	background: #ffC0cf;
-	font-size: 45px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+#main-wrap a:visited {
+	text-decoration: none;
+	color: black;
 }
 
-.div3 div {
-	display: inline-flex;
+#main-wrap a:active {
+display:block;
+	text-decoration: none;
+	color: black;
 }
 
-.div3 .div3-1 {
-	font-size: 30px;
+#main-wrap a:hover {
+	text-decoration: none;
+	color: black;
 }
 
-.div3 .div3-3 {
-	font-size: 15px;
+#main-wrap a{
+color: black;
 }
 
-.div4 {
-	display: flex;
-	background: white;
-	height: 150px;
-	width: 100%;
-	flex-wrap: nowrap;
-	justify-content: space-around;
+#main-wrap .b{
+margin-left:40px;
+text-align:center;
 }
-
-.div4 ul {
-	list-style: none;
-	padding-inline-start: 0px;
+#main-wrap{
+position:relative;
+display:flex;
+justify-content: center;
+align-items: center;
+width:1280px;
 }
-
-.div4 .tabmenu {
-	width: 100%;
-	margin: 0 auto;
-	position: relative;
-	margin: 0 auto;
-}
-
-.div4 .tabmenu ul li {
-	display: inline-block;
-	width: 300px;
-	height: auto;
-	text-align: center;
-	background: #ffc0cf;
-	margin: 0 27px;
-}
-
-.div4 .tabmenu label {
-	display: block;
-	width: 100%;
-	height: 100px;
-	font-size: 35px;
-}
-
-.div4 .tabmenu input {
-	display: none;
-}
-
-.div4 .tabCon {
-	display: none;
-	text-align: left;
-	left: 0;
-	top: 80%;
-	position: absolute;
-	box-sizing: border-box;
-	width: 100%;
-	height: 800px;
-	border: 5px solid #ffc0cf;
-}
-
-.div4 .tabmenu input:checked ~ label {
-	background: hotpink;
-}
-
-.div4 .tabmenu input:checked ~ .tabCon {
-	display: block;
+.w3-bar{
+margin-left: 50px;
 }
 </style>
 </head>
 <body>
 
-	<div class="div1">
-		<div class="div2">회원정보</div>
-		<div class="div2-1">
-			<a href="${contextPath }/member/">수정</a><br>
-			<br>
-			<a href="#">삭제</a>
-		</div>
-		<div class="div3">
-			<div class="div3-1">등급(VIP)</div>
-			<div class="div3-2">회원이름</div>
-			<div class="div3-3">
-				마일리지: x원 <br> 총구매액:x원
-			</div>
+<div id="main-wrap">
 
 
-		</div>
-
-		<div class="div4">
-			<div class="tabmenu">
-				<ul>
-					<li id="tab1" class="btnCon"><input type="radio" checked
-						name="tabmenu" id="tabmenu1"> <label for="tabmenu1">1<br>결제완료
-					</label>
-						<div class="tabCon">내용물1</div></li>
-					<li id="tab2" class="btnCon"><input type="radio"
-						name="tabmenu" id="tabmenu2"> <label for="tabmenu2">2<br>교/반/취
-					</label>
-						<div class="tabCon">내용물2</div></li>
-					<li id="tab3" class="btnCon"><input type="radio"
-						name="tabmenu" id="tabmenu3"> <label for="tabmenu3">N<br>작성게시글
-					</label>
-						<div class="tabCon">내용물3</div></li>
-				</ul>
-			</div>
-		</div>
-
+	<div class="maingoodslist">
+	
+	<div id="searchDetailWrap">
+	검색조건 <input type = "text" name="search" id="searchText" placeholder="검색조건을 기입해주세요."> 
+	<input type ="button" id="searchBTN" value="검색하기">
 	</div>
+		<br>
+<div class="w3-bar">
+  <a href="#" class="w3-bar-item">가격낮은순</a>
+  <a href="#" class="w3-bar-item">가격높은순</a>
+  <a href="#" class="w3-bar-item">신상품순</a>
+  <a href="#" class="w3-bar-item">평점높은순</a>
+</div>
+	<div class="maingList">
+		<ul class="ul">
+			<li><a href="${contextPath }/main/goodsDetail.do"><img src="${contextPath}/resources/image/new1.png" width="250px"
+					height="250px"><br>서울식 소불고기 전골<br>19800월</a></li>
+			<li><a href="${contextPath }/main/goodsDetail.do"><img src="${contextPath}/resources/image/new2.png" width="250px"
+					height="250px"><br>볼케이노순두부전골<br>18900원</a></li>
+			<li><a href="${contextPath }/main/goodsDetail.do"><img src="${contextPath}/resources/image/new3.png" width="250px"
+					height="250px"><br>피스타<br>10000원</a></li>
+			<li><a href="${contextPath }/main/goodsDetail.do"><img src="${contextPath}/resources/image/new4.PNG" width="250px"
+					height="250px"><br>포크찹 스테이크<br>30000월</a></li>
+		</ul>
+		
+	</div>
+	</div>
+	</div>
+
+
 </body>
 </html>
+
+
+

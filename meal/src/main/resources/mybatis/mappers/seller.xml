@@ -96,33 +96,33 @@ s_cate)
 
 		s_pw = #{s_pw}
 
-		<if test="s_name != null or s_name != ''">
+		<if test="s_name != null and s_name != ''">
 			,s_name = #{s_name}
 		</if>
 		,s_hp1 = #{s_hp1}
-		<if test="s_email1 != null or s_email1 != ''">
+		<if test="s_email1 != null and s_email1 != ''">
 			,s_email1 = #{s_email1}
 		</if>
 
-		<if test="s_GR_Num != null or s_GR_Num != ''">
+		<if test="s_GR_Num != null and s_GR_Num != ''">
 			,s_GR_Num = #{s_GR_Num}
 		</if>
-		<if test="s_HACCP_Num != null or s_HACCP_Num != ''">
+		<if test="s_HACCP_Num != null and s_HACCP_Num != ''">
 			,s_HACCP_Num = #{s_HACCP_Num}
 		</if>
 
-		<if test="s_Waddr1 != null or s_Waddr1 != ''">
+		<if test="s_Waddr1 != null and s_Waddr1 != ''">
 			,s_Waddr1 = #{s_Waddr1}
 		</if>
 
-		<if test="s_Waddr2 != null or s_Waddr2 != ''">
+		<if test="s_Waddr2 != null and s_Waddr2 != ''">
 			,s_Waddr2 = #{s_Waddr2}
 		</if>
 
-		<if test="s_Waddr3 != null or s_Waddr3 !=''">
+		<if test="s_Waddr3 != null and s_Waddr3 !=''">
 			,s_Waddr3 = #{s_Waddr3}
 		</if>
-		<if test="s_Wname != null or s_Wname !=''">
+		<if test="s_Wname != null and s_Wname !=''">
 
 			,s_Wname = #{s_Wname}
 		</if>
