@@ -70,6 +70,22 @@ function fn_overlapped(){
        }
     });  //end ajax    
  }   
+ 
+ function check1() {
+	 var g_allergy_M = '';
+
+	 $('input[type="checkbox"]:checked').each(function (index) {
+	     if (index != 0) {
+	    	 g_allergy_M += '/ ';
+	  
+	     }       
+	     g_allergy_M += $(this).val();
+
+	 });
+	 console.log(g_allergy_M);
+	 document.getElementById("g_allergy_M").value = g_allergy_M
+	 
+ }
 </script>
 
 <style>
@@ -97,7 +113,7 @@ margin: 10px;
 <body>
 <div id="goodsform-container">
 <h1> 상품 등록하기</h1>
-<form id="frminsertgoods" name="frminsertgoods" action="${contextPath}/goods/addNewGoods.do" method="post" enctype="multipart/form-data">
+<form id="frminsertgoods" name="frminsertgoods" action="${contextPath}/goods/addNewGoods.do" method="post" enctype="multipart/form-data" onsubmit="check1()">
 <input type="hidden" name="s_id" value= "${sellerInfo.s_id}"/>
    <table class="goodsform">
       <tr class="box">
@@ -143,13 +159,6 @@ margin: 10px;
                  <option value="50">50</option>
              </select>%
       	</td>
-      </tr>
-      <tr class="box">
-         <th>할인기간</th>
-         	<td>
-         		<input name="g_saleDate1" id="g_saleDate1" type="date" value="submit"> ~ 
-    			<input name="g_saleDate2" id="g_saleDate2" type="date" value="submit">
-            </td>
       </tr>
       <tr class="box">
          <th>수량*</th>
@@ -237,7 +246,20 @@ margin: 10px;
       </tr>
       <tr class="box">
          <th>알러지 유발 성분*</th>
-         <td colspan="3"><textarea id="allergy" name = "g_allergy" cols="30" rows="10"></textarea></td>
+         <td colspan="3" >
+         	<input type="checkbox" value="갑각류" id="g_allergy_M1" >갑각류
+         	<input type="checkbox" value="견과류" id="g_allergy_M2" >견과류
+         	<input type="checkbox" value="대두" id="g_allergy_M3" >대두
+         	<br>
+         	<input type="checkbox" value="유제품" id="g_allergy_M4" >유제품
+         	<input type="checkbox" value="계란류" id="g_allergy_M5" >계란류
+         	<input type="checkbox" value="밀" id="g_allergy_M6" >밀
+         	<input type="hidden" id="g_allergy_M" name="g_allergy_M" value="">
+         </td>
+      </tr>
+      <tr class="box">
+         <th>알러지 상세항목</th>
+         <td><textarea id="test" name="g_allergy_D" cols="30" rows="3"></textarea></td>
       </tr>
       <tr class="box">
          <th>상세이미지*</th>
