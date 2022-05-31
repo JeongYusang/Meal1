@@ -355,8 +355,8 @@ body {
 						<li class="cate1"><a href="#home">Home</a></li>
 						<li class="cate1"><a href="#news">News</a></li>
 						<li class="search">
-							<form action="${contextPath }/main/searchGoods.do">
-								<input type="search" placeholder="상품검색" aria-label="상품검색">
+							<form action="${contextPath }/search/SearchGoods.do">
+								<input type="search" name = "text" placeholder="상품검색" aria-label="상품검색">
 								<button class="search_btn" type="submit">검색하기</button>
 							</form>
 						</li>

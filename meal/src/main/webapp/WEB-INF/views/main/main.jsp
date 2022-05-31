@@ -6,15 +6,14 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <c:if test='${ not empty message}'>
 	<script>
-window.onload=function()
-{
-  result();
-}
+		window.onload = function() {
+			result();
+		}
 
-function result(){
-	alert("${message}");
-}
-</script>
+		function result() {
+			alert("${message}");
+		}
+	</script>
 </c:if>
 <!DOCTYPE html>
 <html>
@@ -113,6 +112,10 @@ function result(){
 	height: 277px;
 	width: 1256px;
 }
+
+.goodsPriceStyle {
+	text-decoration: line-through
+}
 </style>
 
 </head>
@@ -146,7 +149,15 @@ function result(){
 								href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}"><img
 									src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
 									width="250px" height="250px"> <br>${item.g_name } <br>
-									${item.g_price}원</a></li>
+									<c:if
+										test="${empty item.g_saleprice or item.g_saleprice eq 0 }">
+										<br> 
+								가격: ${item.g_price }원
+								</c:if> <c:if
+										test="${not empty item.g_saleprice and item.g_saleprice ne 0}">
+										<span class="goodsPriceStyle">가격 : ${item.g_price }원</span>
+										<br> 할인 가격 : ${item.g_saleprice }원
+								</c:if> </a></li>
 						</ul>
 					</c:forEach>
 
@@ -161,7 +172,15 @@ function result(){
 								href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}""><img
 									src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
 									width="250px" height="250px"> <br>${item.g_name } <br>
-									${item.g_price}원</a></li>
+									<c:if
+										test="${empty item.g_saleprice or item.g_saleprice eq 0 }">
+										<br> 
+								가격: ${item.g_price }원
+								</c:if> <c:if
+										test="${not empty item.g_saleprice and item.g_saleprice ne 0}">
+										<span class="goodsPriceStyle">가격 : ${item.g_price }원</span>
+										<br> 할인 가격 : ${item.g_saleprice }원
+								</c:if></a></li>
 						</ul>
 					</c:forEach>
 				</div>
@@ -173,7 +192,15 @@ function result(){
 								href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}""><img
 									src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
 									width="250px" height="250px"> <br>${item.g_name } <br>
-									${item.g_price}원</a></li>
+									<c:if
+										test="${empty item.g_saleprice or item.g_saleprice eq 0 }">
+										<br> 
+								가격: ${item.g_price }원
+								</c:if> <c:if
+										test="${not empty item.g_saleprice and item.g_saleprice ne 0}">
+										<span class="goodsPriceStyle">가격 : ${item.g_price }원</span>
+										<br> 할인 가격 : ${item.g_saleprice }원
+								</c:if> </a></li>
 						</ul>
 
 					</c:forEach>
