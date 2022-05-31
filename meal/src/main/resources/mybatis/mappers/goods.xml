@@ -45,38 +45,32 @@
 		   				s_id,
 		                g_name,
                     	g_cate2,
-                    	g_cate3,
 						g_amount,
 						g_price,
 						g_detail1,
-						g_allergy,
+						g_allergy_M,
+						g_allergy_D,
 						g_time,
 						g_nan,
 						g_inbun,
 						g_bang,
 						g_salePer,
-						g_saleWon,
-						g_saleDate1,
-						g_saleDate2
-						)
+						g_saleWon)
 					values(
 						#{s_id},
 					  	#{g_name},
 					  	#{g_cate2},
-					  	#{g_cate3},
 					  	#{g_amount},
 					  	#{g_price},
 					  	#{g_detail1},
-					  	#{g_allergy},
+					  	#{g_allergy_M},
+					  	#{g_allergy_D},
 						#{g_time},
 					  	#{g_nan},
 					  	#{g_inbun},	
 					  	#{g_bang},
 					  	#{g_salePer},
-					  	#{g_saleWon},
-					  	#{g_saleDate1},
-					  	#{g_saleDate2}
-					 	)
+					  	#{g_saleWon})
 		]]>
 	</insert>
 
@@ -148,51 +142,52 @@ update goods_tb set g_cate1 ='Nomal' where g_cate1 =#{g_cate1} and g_id =#{g_id}
 	<update id="updateGoods" parameterType="Map">
 	
 		update goods_tb set
-		<if test="g_name != null or g_name != ''">
+		<if test="g_name != null and !(g_name.equals(''))">
 			g_name = #{g_name},
 		</if>
 		
-		<if test="g_cate2 != null or g_cate2 != ''">
+		<if test="g_cate2 != null and !(g_cate2.equals(''))">
 			g_cate2 = #{g_cate2},
 		</if>
 		
-		<if test="g_amount != null or g_amount != ''">
+		<if test="g_amount != null and !(g_amount.equals(''))">
 			g_amount = #{g_amount},
 		</if>
 
-		<if test="g_price != null or g_price != ''">
+		<if test="g_price != null and !(g_price.equals(''))">
 			g_price = #{g_price},
 		</if>
 
-		<if test="g_detail1 != null or g_detail1 != ''">
+		<if test="g_detail1 != null and !(g_detail1.equals(''))">
 			g_detail1 = #{g_detail1},
 		</if>
 
-		<if test="g_allergy != null or g_allergy != ''">
+		<if test="g_allergy != null and !(g_allergy.equals(''))">
 			g_allergy = #{g_allergy},
 		</if>
 		
-		<if test="g_nan != null or g_nan !=''">
+		<if test="g_nan != null and !(g_nan.equals(''))">
 		g_nan = #{g_nan},
 		</if>
 		
-		<if test="g_inbun != null or g_inbun !=''">
+		<if test="g_inbun != null and !(g_inbun.equals(''))">
 		g_inbun = #{g_inbun},
 		</if>
 		
-		<if test="g_bang != null or g_bang !=''">
+		<if test="g_bang != null and !(g_bang.equals(''))">
 		g_bang = #{g_bang},
 		</if>
-		
+		<if test="g_saleDate3 != null and !(g_saleDate3.equals(''))">
 		g_saleDate1 = #{g_saleDate3},
-
+		</if>
+		<if test="g_saleDate4 != null and !(g_saleDate4.equals(''))">
 		g_saleDate2 = #{g_saleDate4},
-
-		<if test="g_saleWon != null or g_saleWon !=''">
+		</if>
+		<if test="g_saleWon != null and !(g_saleWon.equals(''))">
 			g_saleWon = #{g_saleWon},
 		</if>
 
-		<if test="g_salePer != null or g_salePer !=''">
+		<if test="g_salePer != null and !(g_salePer.equals(''))">
 		g_salePer = #{g_salePer}
 		</if>
 
@@ -267,6 +262,21 @@ update goods_tb set g_saleprice = '0', g_saleDate1= null, g_saleDate2= null , g_
 		]]>
 
 	</delete>
+	
+	 <!-- goodsSearch -->
+   <select id="SearchGoods" parameterType="Map"
+      resultMap="goodsResult">
+      select * from goods_tb where g_name like
+      CONCAT('%',#{text},'%') limit #{start} , #{end}
+   </select>
+
+   <!-- 알레르기 품목 제외 검색에 관한 쿼리 -->
+   <select id="alergySearch" parameterType="Map"
+      resultMap="goodsResult">
+      select * from goods_tb where g_name not like
+      CONCAT('%','#{text}','%') limit #{start} , #{end}
+   </select>
+	
 
 
 </mapper>
