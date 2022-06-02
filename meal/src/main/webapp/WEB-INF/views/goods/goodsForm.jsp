@@ -43,9 +43,34 @@ $(document).ready(function() {
     });
 })
 
+
+
 //추후 변경할 예정
 function fn_overlapped(){
     var _g_name=$("#_g_name").val();
+
+	 var salePer = document.getElementById("g_salePer").value;
+	 var saleWon = document.getElementById("g_saleWon").value;
+	 var saleDate1 = document.getElementById("g_saleDate1").value;
+	 var saleDate2 = document.getElementById("g_saleDate2").value;
+	 console.log("per 값 "+ salePer);
+	 console.log("won 값 "+saleWon);
+	 console.log("D1 값 "+saleDate1);
+	 console.log("D2 값 "+saleDate2);
+	 console.log("per 무 "+!salePer);
+	 console.log("won 무 "+!saleWon);
+	 console.log("D1 무 "+!saleDate1);
+	 console.log("D2 무 "+!saleDate2);
+	 console.log(" (salePer == null) "+ (salePer == null));
+	 console.log(" (saleWon == null) "+ (saleWon == null));
+	 console.log(" (salePer.equals('')) "+ (salePer == ''));
+	 console.log(" (saleWon.equals('')) "+ (saleWon == ''));
+	 /* 조건에 관한 것  */
+	 console.log(" (!salePer ^ !saleWon) "+ (!salePer ^ !saleWon));
+	 console.log("!(!salePer && !saleWon) " + !(!salePer && !saleWon));
+	 console.log(" !(!saleDate1 || !saleDate2) " +!(!saleDate1 || !saleDate2));
+	 console.log(" (salePer != '' || saleWon !='') " + (salePer != '' || saleWon != ''));
+    if(_g_name != null && _g_name != ""){
     $.ajax({
        type:"post",
        async:false,  
@@ -59,32 +84,72 @@ function fn_overlapped(){
               $('#g_name').val(_g_name); 
            
           }else{
-             alert("사용할 수 없는 상품명입니다.");
+             alert("중복 된 상품명입니다.");
           }
        },
        error:function(data,textStatus){
           alert("에러가 발생했습니다.");
-       },
-       complete:function(data,textStatus){
-          //alert("작업을완료 했습니다");
        }
-    });  //end ajax    
+    }); //end ajax    
+    
+    }else{	
+    	alert("상품명을 입력해주세요.");
+    }
+    // end if 
  }   
  
+ /* 전송 버튼시 작동 */
  function check1() {
+	
+	 var salePer = document.getElementById("g_salePer").value;
+	 var saleWon = document.getElementById("g_saleWon").value;
+	 var saleDate1 = document.getElementById("g_saleDate1").value;
+	 var saleDate2 = document.getElementById("g_saleDate2").value;
+	 console.log("per 값 "+ salePer);
+	 console.log("won 값 "+saleWon);
+	 console.log("D1 값 "+saleDate1);
+	 console.log("D2 값 "+saleDate2);
+	 console.log("per 무 "+!salePer);
+	 console.log("won 무 "+!saleWon);
+	 console.log("D1 무 "+!saleDate1);
+	 console.log("D2 무 "+!saleDate2);
+	 console.log("연산자 "+ (!salePer && !saleWon));
+	 console.log("!(!salePer && !saleWon) " + !(!salePer && !saleWon));
+	 console.log(" (!salePer ^ !saleWon) "+ (!salePer ^ !saleWon));
+	 console.log(" !(!saleDate1 || !saleDate2) " +!(!saleDate1 || !saleDate2));
+	 console.log(" (salePer != '' || saleWon !='') " + (salePer != '' || saleWon != ''));
+	 
+	 if(salePer != '' && saleWon != '' ){
+		 alert("할인 적용유형을 한가지만 기입해주세요.");
+		 return false;
+	 }
+	 	
+	 if(salePer != '' || saleWon != '' )  {
+		 if(saleDate1 == '' || saleDate2 == '' ) {
+			 alert("할인 금액에 따른 기간을 설정해주세요!");
+			 return false;
+		 }
+	 }
+	
+	 if(saleDate1 == '' || saleDate2 == '' ) {
+		 
+		 if(salePer == '' && saleWon == '')  {
+		 alert ("할인 기간에 따른 할인율 또는 할인가격을 적어주세요.")
+			return false;
+		 } 
+	 }
+	 
 	 var g_allergy_M = '';
-
 	 $('input[type="checkbox"]:checked').each(function (index) {
 	     if (index != 0) {
 	    	 g_allergy_M += '/ ';
 	  
 	     }       
 	     g_allergy_M += $(this).val();
-
+		 
 	 });
-	 console.log(g_allergy_M);
-	 document.getElementById("g_allergy_M").value = g_allergy_M
-	 
+	 document.getElementById("g_allergy_M").value = g_allergy_M;
+	 return true;
  }
 </script>
 
@@ -113,7 +178,7 @@ margin: 10px;
 <body>
 <div id="goodsform-container">
 <h1> 상품 등록하기</h1>
-<form id="frminsertgoods" name="frminsertgoods" action="${contextPath}/goods/addNewGoods.do" method="post" enctype="multipart/form-data" onsubmit="check1()">
+<form id="frminsertgoods" name="frminsertgoods" action="${contextPath}/goods/addNewGoods.do" method="post" enctype="multipart/form-data" onsubmit="return check1()">
 <input type="hidden" name="s_id" value= "${sellerInfo.s_id}"/>
    <table class="goodsform">
       <tr class="box">
@@ -145,8 +210,8 @@ margin: 10px;
          <th>할인율</th>
          <td>
              <select name="g_salePer" id="g_salePer">
-                 <option value="" disabled selected>선택하세요</option>
-                 <option value="0" id="g_salePer">0</option>
+                 <option value="" selected>선택하세요</option>
+                 <option value="" id="g_salePer" >0</option>
                  <option value="5">5</option>
                  <option value="10">10</option>
                  <option value="15">15</option>
@@ -159,6 +224,13 @@ margin: 10px;
                  <option value="50">50</option>
              </select>%
       	</td>
+      </tr>
+      <tr class="box">
+         <th>할인기간</th>
+         	<td>
+         		<input name="g_saleDate1" id="g_saleDate1" type="date" value="submit"> ~ 
+    			<input name="g_saleDate2" id="g_saleDate2" type="date" value="submit">
+            </td>
       </tr>
       <tr class="box">
          <th>수량*</th>
@@ -200,21 +272,7 @@ margin: 10px;
             </div>
             </td>
       </tr>
-      <tr class="box">
-         <th>모범음식점 여부*</th>
-         <td><div id = "form-div">
-               <input type="radio" id="g_cate31" name="g_cate3" value="HACCP" checked>
-                <label for="g_cate31">HACCP</label> 
-                <input type="radio" id="g_cate32" name="g_cate3" value="모범음식점" checked>
-                <label for="g_cate32">모범음식점</label>
-				<br>
-                <input type="radio" id="g_cate33" name="g_cate3" value="HACCP/모범음식점" checked>
-                <label for="g_cate33">HACCP/모범음식점</label> 
-                <input type="radio" id="g_cate34" name="g_cate3" value="X" checked>
-                <label for="g_cate34">X</label> 
-            </div>
-            </td>
-      </tr>
+  
       <tr class="box">
          <th>조리 시간*</th>
          <td><input type="text" name="g_time" id="g_time" placeholder="조리시간(분)"

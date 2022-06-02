@@ -73,6 +73,13 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 		HttpSession session = multipartRequest.getSession();
 		// 세션에 저장되어있던 sellerInfo를 꺼내옴
 		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
+		if(sellerVO == null) {
+			String viewName="redirect:/main/main.do";
+			String message= "판매자로 로그인 해주세요.";
+			mav.addObject("message", message);
+			mav.setViewName(viewName);
+			return mav;
+		}
 		String imageFileName = null;
 
 		HashMap<String, Object> newGoodsMap = new HashMap<String, Object>();
@@ -81,27 +88,33 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 		while (enu.hasMoreElements()) {
 			String name = (String) enu.nextElement();
 			String value = multipartRequest.getParameter(name);
-			System.out.println("name + value : " + name + value);
+			System.out.println("name + value : " + name + " + "+ value);
 			newGoodsMap.put(name, value);
-
 		}
 		
 		String H = (String) sellerVO.getS_HACCP_Num();
 		String GR = (String) sellerVO.getS_GR_Num();
+		System.out.println("H : "+H);
+		System.out.println("GR : "+ GR);
+		logger.debug("===================================");
+		logger.debug("H : " +H);
+		logger.debug("GR : " +GR);
 		
+		logger.debug("===================================");
 		if (H != null && GR != null) {
-			
-			String HGR = H + GR;
-			newGoodsMap.put("g_cate3", HGR);
+			newGoodsMap.put("g_cate3", "HGR");
 		
 		} else if (H != null && GR == null) {
 			
-			newGoodsMap.put("g_cate3", H);
+			newGoodsMap.put("g_cate3", "H");
 		
 		} else if (H == null && GR != null) {
-			newGoodsMap.put("g_cate3", GR);
-		
-		} 
+			newGoodsMap.put("g_cate3", "GR");
+		} else {
+			newGoodsMap.put("g_cate3","N");
+			
+		}
+		System.out.println("g_cate3 : " + (String)newGoodsMap.get("g_cate3"));
 
 		// newGoodsMap내부에 키g_name을 이용하여 A에 바인딩
 		String A = (String) newGoodsMap.get("g_name");
@@ -178,9 +191,10 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 		HttpSession session = request.getSession();
 		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
 
-		String g_name1 = sellerVO.getS_Wname() + " " + g_name;
+		String g_name1 = "["+sellerVO.getS_Wname() + "] " + g_name;
 		String result = goodsService.goodsoverlapped(g_name1);
 
+		
 		resEntity = new ResponseEntity(result, HttpStatus.OK);
 		return resEntity;
 	}
@@ -469,8 +483,9 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 				return mav;	
 			}
 		}
-		@RequestMapping(value="/dateUp.", method= {RequestMethod.POST, RequestMethod.GET})
-		public void dateUp(int g_id) throws Exception {
-			goodsService.dateUp(g_id);
-		}
+		/*
+		 * @RequestMapping(value="/dateUp.", method= {RequestMethod.POST,
+		 * RequestMethod.GET}) public void dateUp(int g_id) throws Exception {
+		 * goodsService.dateUp(g_id); }
+		 */
 }

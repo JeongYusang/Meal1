@@ -12,7 +12,7 @@
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>/WEB-INF/config/jdbc/jdbc.properties</value>
+				<value>/WEB-INF/config/jdbc/jdbc1.properties</value>
 				<value>/WEB-INF/config/email/email.properties</value>
 			</list>
 		</property>

@@ -47,6 +47,8 @@ $(document).ready(function() {
 //추후 변경할 예정
 function fn_overlapped(){
     var _g_name=$("#_g_name").val();
+    
+    if(_g_name != null && _g_name != ""){
     $.ajax({
        type:"post",
        async:false,  
@@ -70,6 +72,10 @@ function fn_overlapped(){
           //alert("작업을완료 했습니다");
        }
     });  //end ajax    
+    }else{	
+    	alert("상품명을 입력해주세요.");
+    }
+    // end if 
  }   
 </script>
 
@@ -161,8 +167,8 @@ margin: 10px;
       <tr class="box">
          <th>변경할 할인기간</th>
          	<td>
-         		<input name="g_saleDate3" id="g_saleDate1" type="date" value="submit"> ~ 
-    			<input name="g_saleDate4" id="g_saleDate2" type="date" value="submit">
+         		<input name="g_saleDate3" id="g_saleDate3" type="date" value="submit"> ~ 
+    			<input name="g_saleDate4" id="g_saleDate4" type="date" value="submit">
             </td>
       </tr>
       <tr class="box">
