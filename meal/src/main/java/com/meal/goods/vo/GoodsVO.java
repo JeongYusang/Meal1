@@ -20,7 +20,8 @@ public class GoodsVO {
 	private Date g_saleDate2;
 	private String g_eatDate;
 	private String g_detail1;
-	private String g_allergy;
+	private String g_allergy_M;
+	private String g_allergy_D;
 	private String g_state;
 	private Date g_creDate;
 	private String g_time;
@@ -30,6 +31,20 @@ public class GoodsVO {
 	private String fileName;
 	private String s_id;
 	private int g_saleprice;
+	
+	
+	public String getG_allergy_M() {
+		return g_allergy_M;
+	}
+	public void setG_allergy_M(String g_allergy_M) {
+		this.g_allergy_M = g_allergy_M;
+	}
+	public String getG_allergy_D() {
+		return g_allergy_D;
+	}
+	public void setG_allergy_D(String g_allergy_D) {
+		this.g_allergy_D = g_allergy_D;
+	}
 	public int getG_id() {
 		return g_id;
 	}
@@ -113,12 +128,6 @@ public class GoodsVO {
 	}
 	public void setG_detail1(String g_detail1) {
 		this.g_detail1 = g_detail1;
-	}
-	public String getG_allergy() {
-		return g_allergy;
-	}
-	public void setG_allergy(String g_allergy) {
-		this.g_allergy = g_allergy;
 	}
 	public String getG_state() {
 		return g_state;
