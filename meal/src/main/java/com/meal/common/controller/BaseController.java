@@ -35,7 +35,7 @@ import com.meal.seller.vo.SellerVO;
 @Controller
 public class BaseController {
 	private static final String CURR_IMAGE_REPO_PATH = "C:\\Meal\\Image\\temp";
-	private static final Logger logger = LoggerFactory.getLogger(BaseController.class);
+//	private static final Logger logger = LoggerFactory.getLogger(BaseController.class);
 
 	@Autowired
 	private MemberService memberService;
@@ -73,9 +73,10 @@ public class BaseController {
 		String viewName = (String) request.getAttribute("viewName");// 인터셉터있을때 없으면주석
 		/* String viewName = (String)request.getAttribute("viewName"); 인터셉터없을때 */
 		ModelAndView mav = new ModelAndView(viewName);
-		logger.info("=================================");
-		logger.info("BaseController의 " + "/*/*.do : [" + viewName+"]");
-		logger.info("=================================");
+		//logger.info("=================================");
+		//logger.info("BaseController의 " + "/*/*.do : [" + viewName+"]");
+		//logger.info("=================================");
+		
 		return mav;
 	}
 
@@ -137,11 +138,11 @@ public class BaseController {
 		HttpSession session = request.getSession();
 		String u_id = loginMap.get("u_id");
 		String u_pw = loginMap.get("u_pw");
-		logger.info("=========================================");
+		/*logger.info("=========================================");
 		logger.info("u_id: " + u_id);
 		logger.info("u_pw: " + u_pw);
 		logger.info("=========================================");
-
+*/
 		if (u_id == null || u_id=="") {
 			String viewName = "/main/loginForm";
 			String message = "아이디를 입력해주세요.";

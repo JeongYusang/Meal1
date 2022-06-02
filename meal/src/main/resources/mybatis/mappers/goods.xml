@@ -41,38 +41,71 @@
 	</resultMap>
 
 	<insert id="insertNewGoods" parameterType="Map">
-	    <![CDATA[
-		   insert into goods_tb(
-		   				s_id,
-		                g_name,
-                    	g_cate2,
-						g_amount,
-						g_price,
-						g_detail1,
-						g_allergy_M,
-						g_allergy_D,
-						g_time,
-						g_nan,
-						g_inbun,
-						g_bang,
-						g_salePer,
-						g_saleWon)
-					values(
-						#{s_id},
-					  	#{g_name},
-					  	#{g_cate2},
-					  	#{g_amount},
-					  	#{g_price},
-					  	#{g_detail1},
-					  	#{g_allergy_M},
-					  	#{g_allergy_D},
-						#{g_time},
-					  	#{g_nan},
-					  	#{g_inbun},	
-					  	#{g_bang},
-					  	#{g_salePer},
-					  	#{g_saleWon})
-		]]>
+
+		insert into goods_tb(
+		s_id
+		,g_name
+		,g_cate2
+		,g_cate3
+		,g_amount
+		,g_price
+		,g_detail1
+		<if test="g_allergy_M != null and !(g_allergy_M.equals(''))">
+		,g_allergy_M
+		</if>
+		<if test="g_allergy_D != null and !(g_allergy_D.equals(''))">
+		,g_allergy_D
+		</if>
+		,g_time
+		,g_nan
+		,g_inbun
+		,g_bang
+		<if test="g_saleDate1 != null and !(g_saleDate1.equals(''))">
+		,g_saleDate1
+		</if>
+		<if test="g_saleDate2 != null and !(g_saleDate2.equals(''))">
+		,g_saleDate2
+		</if>
+		<if test="g_saleWon != null and !(g_saleWon.equals(''))">
+		,g_saleWon
+		</if>
+
+		<if test="g_salePer != null and !(g_salePer.equals(''))">
+		,g_salePer
+		</if>
+		) values(
+		#{s_id},
+		#{g_name},
+		#{g_cate2},
+		#{g_cate3},
+		#{g_amount},
+		#{g_price},
+		#{g_detail1}
+		<if test="g_allergy_M != null and !(g_allergy_M.equals(''))">
+			,#{g_allergy_M}
+		</if>
+		<if test="g_allergy_D != null and !(g_allergy_D.equals(''))">
+			,#{g_allergy_D}
+		</if>
+		,#{g_time}
+		,#{g_nan}
+		,#{g_inbun}
+		,#{g_bang}
+		<if test="g_saleDate1 != null and !(g_saleDate1.equals(''))">
+			,#{g_saleDate3}
+		</if>
+		<if test="g_saleDate2 != null and !(g_saleDate2.equals(''))">
+			,#{g_saleDate4}
+		</if>
+		<if test="g_saleWon != null and !(g_saleWon.equals(''))">
+			,#{g_saleWon}
+		</if>
+
+		<if test="g_salePer != null and !(g_salePer.equals(''))">
+			,#{g_salePer}
+		</if>
+		)
+
 	</insert>
 
 
@@ -139,18 +172,18 @@ update goods_tb set g_cate1 ='Nomal' where g_cate1 =#{g_cate1} and g_id =#{g_id}
 ]]>
 	</update>
 
-<!-- 상품수정창 -->
+	<!-- 상품수정창 -->
 	<update id="updateGoods" parameterType="Map">
-	
+
 		update goods_tb set
 		<if test="g_name != null and !(g_name.equals(''))">
 			g_name = #{g_name},
 		</if>
-		
+
 		<if test="g_cate2 != null and !(g_cate2.equals(''))">
 			g_cate2 = #{g_cate2},
 		</if>
-		
+
 		<if test="g_amount != null and !(g_amount.equals(''))">
 			g_amount = #{g_amount},
 		</if>
@@ -166,34 +199,34 @@ update goods_tb set g_cate1 ='Nomal' where g_cate1 =#{g_cate1} and g_id =#{g_id}
 		<if test="g_allergy_M != null and !(g_allergy_M.equals(''))">
 			g_allergy_M = #{g_allergy_M},
 		</if>
-		
+
 		<if test="g_allergy_D != null and !(g_allergy_D.equals(''))">
 			g_allergy_D = #{g_allergy_D},
 		</if>
-		
+
 		<if test="g_nan != null and !(g_nan.equals(''))">
-		g_nan = #{g_nan},
+			g_nan = #{g_nan},
 		</if>
-		
+
 		<if test="g_inbun != null and !(g_inbun.equals(''))">
-		g_inbun = #{g_inbun},
+			g_inbun = #{g_inbun},
 		</if>
-		
+
 		<if test="g_bang != null and !(g_bang.equals(''))">
-		g_bang = #{g_bang},
+			g_bang = #{g_bang},
 		</if>
 		<if test="g_saleDate3 != null and !(g_saleDate3.equals(''))">
-		g_saleDate1 = #{g_saleDate3},
+			g_saleDate1 = #{g_saleDate3},
 		</if>
 		<if test="g_saleDate4 != null and !(g_saleDate4.equals(''))">
-		g_saleDate2 = #{g_saleDate4},
+			g_saleDate2 = #{g_saleDate4},
 		</if>
 		<if test="g_saleWon != null and !(g_saleWon.equals(''))">
 			g_saleWon = #{g_saleWon},
 		</if>
 
 		<if test="g_salePer != null and !(g_salePer.equals(''))">
-		g_salePer = #{g_salePer}
+			g_salePer = #{g_salePer}
 		</if>
 
 		where g_id =#{g_id}
@@ -209,40 +242,40 @@ update goods_tb set g_cate1 ='Nomal' where g_cate1 =#{g_cate1} and g_id =#{g_id}
 	</select>
 
 
-<!-- 스케줄러에서 사용  -->
+	<!-- 스케줄러에서 사용 -->
 
-<!-- 세일시작 -->
+	<!-- 세일시작 -->
 
-<select id = "searchGoodsSale" resultMap="goodsResult">
+	<select id="searchGoodsSale" resultMap="goodsResult">
 
 <![CDATA[
 select * from goods_tb where g_saleDate1 <= now() and g_saleprice =0
 ]]>
 
-</select>
+	</select>
 
-<update id = "goodsSaleBegin" parameterType="GoodsVO">
+	<update id="goodsSaleBegin" parameterType="GoodsVO">
 <![CDATA[
 update goods_tb set g_saleprice = #{g_saleprice} where g_id= #{g_id}
 ]]>
-</update>
+	</update>
 
 
 
 
-<!-- 세일마감 -->
-<select id = "searchGoodsSaleE" resultMap="goodsResult">
+	<!-- 세일마감 -->
+	<select id="searchGoodsSaleE" resultMap="goodsResult">
 
 <![CDATA[
 select * from goods_tb where g_saleDate2 <= now() and g_saleprice != 0
 ]]>
-</select>
+	</select>
 
-<update id = "goodsSaleEnd" parameterType="GoodsVO">
+	<update id="goodsSaleEnd" parameterType="GoodsVO">
 <![CDATA[
 update goods_tb set g_saleprice = '0', g_saleDate1= null, g_saleDate2= null , g_saleWon='0', g_salePer ='0' where g_id =#{g_id}
 ]]>
-</update>
+	</update>
 
 	<select id="goodsG_Info" parameterType="int"
 		resultType="GoodsVO">
@@ -251,15 +284,15 @@ update goods_tb set g_saleprice = '0', g_saleDate1= null, g_saleDate2= null , g_
 		   where g_id = #{g_id}
 		]]>
 	</select>
-	
-	
-	
+
+
+
 	<select id="updateGoodsImg" parameterType="Map">
 		<![CDATA[
 			update img_g set fileName = #{fileName} where g_id=#{g_id} and cate=#{cate}
 		]]>
 	</select>
-	
+
 	<delete id="deleteGoods" parameterType="GoodsVO">
 
 		<![CDATA[
@@ -267,21 +300,21 @@ update goods_tb set g_saleprice = '0', g_saleDate1= null, g_saleDate2= null , g_
 		]]>
 
 	</delete>
-	
-	 <!-- goodsSearch -->
-   <select id="SearchGoods" parameterType="Map"
-      resultMap="goodsResult">
-      select * from goods_tb where g_name like
-      CONCAT('%',#{text},'%') limit #{start} , #{end}
-   </select>
 
-   <!-- 알레르기 품목 제외 검색에 관한 쿼리 -->
-   <select id="alergySearch" parameterType="Map"
-      resultMap="goodsResult">
-      select * from goods_tb where g_name not like
-      CONCAT('%','#{text}','%') limit #{start} , #{end}
-   </select>
-	
+	<!-- goodsSearch -->
+	<select id="SearchGoods" parameterType="Map"
+		resultMap="goodsResult">
+		select * from goods_tb where g_name like
+		CONCAT('%',#{text},'%') limit #{start} , #{end}
+	</select>
+
+	<!-- 알레르기 품목 제외 검색에 관한 쿼리 -->
+	<select id="alergySearch" parameterType="Map"
+		resultMap="goodsResult">
+		select * from goods_tb where g_name not like
+		CONCAT('%','#{text}','%') limit #{start} , #{end}
+	</select>
+
 
 
 </mapper>
