@@ -1,9 +1,13 @@
 package com.meal.goods.controller;
 
 import java.io.File;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.meal.board.gr.service.BoardGrService;
 import com.meal.common.controller.BaseController;
+import com.meal.goods.dao.GoodsDAO;
 import com.meal.goods.service.GoodsService;
 import com.meal.goods.vo.GoodsVO;
 import com.meal.goods.vo.Img_gVO;
@@ -141,8 +146,10 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 				}
 			}
 			// 결과창에 출력해주기 위해 판매자 정보를 저장해줌
+			String message = "상품등록이 완료되었습니다.";
 			mav.addObject("goodsInfo", goodsInfo);
 			String viewName= "redirect:/main/main.do";
+			mav.addObject("message", message);
 			mav.setViewName(viewName);
 			return mav;
 		} catch (Exception e) {
@@ -293,11 +300,6 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 			GoodsVO goodsInfo = (GoodsVO) goodsService.goodsG_Info(g_id);
 			HashMap<String, Object> newGoodsMap = new HashMap<String, Object>();
 			
-			String g_saleDate1 = (String)newGoodsMap.get("g_saleDate1");
-			String g_saleDate2 = (String)newGoodsMap.get("g_saleDate2");
-			String g_saleDate3 = (String)newGoodsMap.get("g_saleDate3");
-			String g_saleDate4 = (String)newGoodsMap.get("g_saleDate4");
-
 			Enumeration enu = multipartRequest.getParameterNames();
 			// input type=file제외 모두 들어감
 			while (enu.hasMoreElements()) {
@@ -310,18 +312,67 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 				}
 			}
 			
+			String g_saleDate1 = (String)newGoodsMap.get("g_saleDate1");
+			String g_saleDate2 = (String)newGoodsMap.get("g_saleDate2");
+			String g_saleDate3 = (String)newGoodsMap.get("g_saleDate3");
+			String g_saleDate4 = (String)newGoodsMap.get("g_saleDate4");
+
 			
-			if (g_saleDate3 == null || g_saleDate3 == "") {
-				newGoodsMap.put("g_saleDate1", null);
-			} else if (g_saleDate3 != null || g_saleDate3 != "") {
+			DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+			
+			
+			
+			if (g_saleDate3.contains("-") ) {
 				newGoodsMap.put("g_saleDate1", g_saleDate3);
-			} 
-			if (g_saleDate4 == null || g_saleDate4 == "") {
-				newGoodsMap.put("g_saleDate2", null); 
-			} else if (g_saleDate4 != null || g_saleDate4 != "") {
-				newGoodsMap.put("g_saleDate2", g_saleDate4);
+				logger.info("==============================");
+				logger.info("if1 : in");
+				logger.info("==============================");
+				
+			} else {
+				String beforeDate1 = g_saleDate1;
+				Date date1 = dateFormat.parse(beforeDate1);
+				String afterDate1 = sdf.format(date1);
+				newGoodsMap.put("g_saleDate1", afterDate1);
+				logger.info("==============================");
+				logger.info("g_saleD1 : "+ afterDate1);
+				logger.info("g_saleD3 : "+ g_saleDate3);
+				logger.info("g_saleD4 : "+ g_saleDate4);
+				logger.info("if1 : "+newGoodsMap.containsKey("g_saleDate3"));
+				logger.info("if1 : "+newGoodsMap.containsKey("g_saleDate4"));
+				logger.info("if1 : "+newGoodsMap.containsValue("g_saleDate3"));
+				logger.info("if2 : "+newGoodsMap.containsValue("g_saleDate4"));
+				logger.info("==============================");
+				
 			}
+			if (g_saleDate4.contains("-")) {
+				newGoodsMap.put("g_saleDate2", g_saleDate4);
+				logger.info("==============================");
+				logger.info("if2 : in");
+				logger.info("==============================");
+				
+			} else {
+				String beforeDate2 = g_saleDate2;
+				Date date2 = dateFormat.parse(beforeDate2);
+				String afterDate2 = sdf.format(date2);
+				newGoodsMap.put("g_saleDate2", afterDate2);
+				logger.info("==============================");
+				logger.info("g_saleD2 : "+ afterDate2);
+				logger.info("g_saleD3 : "+ g_saleDate3);
+				logger.info("g_saleD4 : "+ g_saleDate4);
+				logger.info("if1 : "+newGoodsMap.containsKey("g_saleDate3"));
+				logger.info("if1 : "+newGoodsMap.containsKey("g_saleDate4"));
+				logger.info("if1 : "+newGoodsMap.containsValue("g_saleDate3"));
+				logger.info("if2 : "+newGoodsMap.containsValue("g_saleDate4"));
+				logger.info("==============================");
+			} 
 			
+			//3.4있대
+			/*
+			 * if (g_saleDate3 != null || g_saleDate3 != "") {
+			 * newGoodsMap.put("g_saleDate1", g_saleDate3); } if (g_saleDate4 != null ||
+			 * g_saleDate4 != "") { newGoodsMap.put("g_saleDate2", g_saleDate4); }
+			 */
 			String message = null;
 			ResponseEntity resEntity = null;
 			HttpHeaders responseHeaders = new HttpHeaders();
@@ -371,14 +422,14 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 					}
 				}
 				goodsService.updateGoods(newGoodsMap);
-				session.setAttribute("isLogOn", true);
 				message = "<script>";
 				message += " alert('상품수정이 완료되었습니다..');";
 				//컨트롤러 내부를 거쳐서 가는거기 때문에 바인딩해줄 요소가 없음
-				message += " location.href='" + multipartRequest.getContextPath() + "/goods/selectGoodsPage.do';";
+				message += " location.href='" + multipartRequest.getContextPath() + "/main/main.do';";
 				message += " </script>";
 
 			} catch (Exception e) {
+				
 				message = "<script>";
 				message += " alert('다시 내용을 입력해주세요');";
 				message += " location.href='" + multipartRequest.getContextPath() + "/main/main.do';";
@@ -389,6 +440,7 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 			return resEntity;
 			
 		}
+		
 		@Override
 		@RequestMapping(value="/deleteGoods.do", method= {RequestMethod.POST, RequestMethod.GET})
 		public ModelAndView deleteGoods(@RequestParam HashMap<String, Object> map, @RequestParam("g_id") int g_id,
@@ -416,5 +468,9 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 				mav.setViewName(viewName);
 				return mav;	
 			}
+		}
+		@RequestMapping(value="/dateUp.", method= {RequestMethod.POST, RequestMethod.GET})
+		public void dateUp(int g_id) throws Exception {
+			goodsService.dateUp(g_id);
 		}
 }

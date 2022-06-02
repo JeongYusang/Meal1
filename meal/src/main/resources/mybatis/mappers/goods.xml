@@ -20,7 +20,8 @@
 		<result property="g_eatDate" column="g_eatDate" />
 		<result property="g_detail1" column="g_detail1" />
 
-		<result property="g_allergy" column="g_allergy" />
+		<result property="g_allergy_M" column="g_allergy_M" />
+		<result property="g_allergy_D" column="g_allergy_D" />
 		<result property="g_state" column="g_state" />
 		<result property="g_creDate" column="g_creDate" />
 		<result property="s_id" column="s_id" />
@@ -162,8 +163,12 @@ update goods_tb set g_cate1 ='Nomal' where g_cate1 =#{g_cate1} and g_id =#{g_id}
 			g_detail1 = #{g_detail1},
 		</if>
 
-		<if test="g_allergy != null and !(g_allergy.equals(''))">
-			g_allergy = #{g_allergy},
+		<if test="g_allergy_M != null and !(g_allergy_M.equals(''))">
+			g_allergy_M = #{g_allergy_M},
+		</if>
+		
+		<if test="g_allergy_D != null and !(g_allergy_D.equals(''))">
+			g_allergy_D = #{g_allergy_D},
 		</if>
 		
 		<if test="g_nan != null and !(g_nan.equals(''))">
