@@ -8,19 +8,25 @@ import org.springframework.dao.DataAccessException;
 import com.meal.order.vo.OrderVO;
 
 public interface OrderDAO {
-	public void insertOrder(OrderVO orderVO) throws DataAccessException;
+	public int insertOrder(OrderVO orderVO) throws DataAccessException;
 
 	public List<OrderVO> selectUserOrders(String u_id) throws DataAccessException;
 	
 	public List<OrderVO> UserboardOrderPage(HashMap<String, Object> map) throws DataAccessException;
 
-	public List<OrderVO> selectorderList(HashMap<String, String> OrderState);
+	public List<OrderVO> selectorderList(HashMap<String, String> OrderState) throws DataAccessException;
 
-	public String findU_id(int o_id);
+	public String findU_id(int o_id) throws DataAccessException;
 
-	public void deleteOrder(int o_id);
+	public void deleteOrder(int o_id) throws DataAccessException;
 
-	public String overlappedO_id(int o_id);
+	public String overlappedO_id(int o_id) throws DataAccessException;
+
+	public List<OrderVO> OrderResult(int parentNo) throws DataAccessException;
+
+	public List<OrderVO> UserboardOrderListPage(HashMap<String, Object> pagingMap)throws DataAccessException;
+
+	public List<OrderVO> tabpageorderlist(HashMap<String, Object> infoMap)throws DataAccessException;
 
 
 }

@@ -15,8 +15,9 @@ public class OrderDAOImpl implements OrderDAO {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public void insertOrder(OrderVO _orderVO) throws DataAccessException {
+	public int insertOrder(OrderVO _orderVO) throws DataAccessException {
 		sqlSession.insert("mapper.order.insertOrder", _orderVO);
+		return _orderVO.getParentNo();
 	}
 
 	@Override
@@ -38,18 +39,36 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public String findU_id(int o_id) {
+	public String findU_id(int o_id) throws DataAccessException {
 		return (String) sqlSession.selectOne("mapper.order.findU_id", o_id);
 	}
 
 	@Override
-	public void deleteOrder(int o_id) {
+	public void deleteOrder(int o_id) throws DataAccessException {
 		 sqlSession.delete("mapper.order.deleteOrder", o_id);
 		
 	}
 
 	@Override
-	public String overlappedO_id(int o_id) {
+	public String overlappedO_id(int o_id) throws DataAccessException {
 		return (String) sqlSession.selectOne("mapper.order.overlappedO_id", o_id);
+	}
+
+	@Override
+	public List<OrderVO> OrderResult(int parentNo) throws DataAccessException {
+		List<OrderVO> orderList = (List<OrderVO>) sqlSession.selectList("mapper.order.OrderResult", parentNo);
+		return orderList;
+	}
+
+	@Override
+	public List<OrderVO> UserboardOrderListPage(HashMap<String, Object> pagingMap) throws DataAccessException {
+		List<OrderVO> listInfo = (List<OrderVO>) sqlSession.selectList("mapper.order.UserboardOrderListPage", pagingMap);
+		return listInfo;
+	}
+
+	@Override
+	public List<OrderVO> tabpageorderlist(HashMap<String, Object> infoMap) throws DataAccessException {
+		List<OrderVO> listInfo = (List<OrderVO>) sqlSession.selectList("mapper.order.tabpageorderlist", infoMap);
+		return listInfo;
 	}
 }

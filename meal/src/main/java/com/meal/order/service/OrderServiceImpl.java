@@ -24,8 +24,9 @@ public class OrderServiceImpl implements OrderService {
 	private OrderDAO orderDAO;
 
 	@Override
-	public void insertOrder(OrderVO _orderVO) throws Exception {
-		orderDAO.insertOrder(_orderVO);
+	public int insertOrder(OrderVO _orderVO) throws Exception {
+		int parentNo = orderDAO.insertOrder(_orderVO);
+		return parentNo;
 		
 	}
 
@@ -47,6 +48,7 @@ public class OrderServiceImpl implements OrderService {
 		FindMap.put("u_id", u_id);
 		FindMap.put("delivery_state", "배송완료");
 		List<OrderVO> orderListDone = orderDAO.selectorderList(FindMap);
+		//상품 주문당 1 후기를 위한 후기글 중복 검사
 		for(OrderVO item : orderListDone){
 			int o_id =  item.getO_id();
 			String review = orderDAO.overlappedO_id(o_id);
@@ -56,10 +58,12 @@ public class OrderServiceImpl implements OrderService {
 		FindMap2.put("u_id", u_id);
 		FindMap2.put("delivery_state", "배송시작");
 		List<OrderVO> orderListDstart = orderDAO.selectorderList(FindMap2);
+		
 		HashMap<String, String> FindMap3 = new HashMap<String, String>();
 		FindMap3.put("u_id", u_id);
 		FindMap3.put("delivery_state", "결제완료");
 		List<OrderVO> orderListPaid = orderDAO.selectorderList(FindMap3);
+		
 		Map<String,List<OrderVO>> orderMap=new HashMap<String,List<OrderVO>>();
 		orderMap.put("orderListDone",orderListDone);
 		orderMap.put("orderListPaid",orderListPaid);
@@ -81,6 +85,23 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public String overlappedO_id(int o_id) {
 		return orderDAO.overlappedO_id(o_id);
+	}
+	
+	@Override
+	public List<OrderVO> OrderResult (int parentNo) {
+		return orderDAO.OrderResult(parentNo);
+	}
+
+	@Override
+	public List<OrderVO> UserboardOrderListPage(HashMap<String, Object> pagingMap) throws Exception {
+		List<OrderVO> listInfo = (List<OrderVO>) orderDAO.UserboardOrderListPage(pagingMap);
+		return listInfo;
+	}
+
+	@Override
+	public List<OrderVO> tabpageorderlist(HashMap<String, Object> infoMap) {
+		List<OrderVO> listInfo = (List<OrderVO>) orderDAO.tabpageorderlist(infoMap);
+		return listInfo;
 	}
 
 }
