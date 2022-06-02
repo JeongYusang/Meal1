@@ -24,4 +24,6 @@ public interface GoodsService {
 	public void updateGoods(HashMap<String, Object> newGoodsMap) throws Exception;
 	public void updateGoodsImg(HashMap<String, Object> newi) throws Exception;
 	public void deleteGoods(GoodsVO goodsInfo) throws Exception;
+	public void goodsSaleEnd(int g_id) throws Exception;
+
 }

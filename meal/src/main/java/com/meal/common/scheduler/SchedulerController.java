@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.meal.goods.dao.GoodsDAO;
+import com.meal.goods.service.GoodsService;
 import com.meal.goods.vo.GoodsVO;
 
 @Component("Scheduler")
@@ -20,7 +21,8 @@ public class SchedulerController {
 
 	@Autowired
 	private GoodsDAO goodsDAO;
-
+	@Autowired
+	private GoodsService goodsService;
 	
 	@Scheduled(cron = "0 15 13 * * ?")
 	public void goodsCateUpdate() {
@@ -105,8 +107,8 @@ public class SchedulerController {
 			// 해당 상품조회는 상품할인기간이 끝난상황의 상품을 검색해줌.
 			List<GoodsVO> newGoodsList = (List<GoodsVO>) goodsDAO.searchGoodsSaleE();
 			for (GoodsVO item : newGoodsList) {
-
-				goodsDAO.goodsSaleEnd(item);
+				int g_id = item.getG_id();
+				goodsService.goodsSaleEnd(g_id);
 				logger.debug("goodsCateUpdate");
 			}
 		} catch (Exception e) {

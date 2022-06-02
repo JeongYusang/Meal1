@@ -85,8 +85,8 @@ public class GoodsDAOImpl implements GoodsDAO {
 		List<GoodsVO> goodsInfo = (List<GoodsVO>)sqlSession.selectList("mapper.goods.searchGoodsSaleE");
 		return goodsInfo;
 	}
-	public void goodsSaleEnd(GoodsVO goodsVO) throws DataAccessException{
-		sqlSession.update("mapper.goods.goodsSaleEnd", goodsVO);
+	public void goodsSaleEnd(int g_id) throws DataAccessException{
+		sqlSession.update("mapper.goods.goodsSaleEnd", g_id);
 	}
 	@Override
 	public GoodsVO goodsG_Info(int g_id) throws DataAccessException {
@@ -109,6 +109,5 @@ public class GoodsDAOImpl implements GoodsDAO {
 		sqlSession.delete("mapper.goods.deleteGoods", goodsInfo);
 	}
 
-	
 	
 }
