@@ -34,11 +34,17 @@
 	</resultMap>
 
 
-	<insert id="insertOrder" parameterType="orderVO">
+	<insert id="insertOrder" parameterType="orderVO" >
+	<selectKey resultType="int" keyProperty="parentNo"
+			order="BEFORE">
+			select max(parentNo)+1 from order_tb
+		</selectKey>
 	    <![CDATA[
 		            insert into order_tb (u_id,
 		            g_id,
+		            s_id,
 		            o_goods_price,
+		            o_goods_qty,
 		            u_name, 
 		            g_name,
 		            receiver_hp,
@@ -54,7 +60,9 @@
 		            parentNo) values
 		            (#{u_id},
 		            #{g_id},
+		            #{s_id},
 		            #{o_goods_price},
+		            #{o_goods_qty},
 		            #{u_name},
 		            #{g_name},
 		            #{receiver_hp},
@@ -67,7 +75,7 @@
 		            #{deliver_method},
 		            #{deliver_message},
 		            #{o_useMile},
-		            #{parentNo})          
+		            #{parentNo})
 		]]>
 	</insert>
 	
@@ -80,6 +88,12 @@
 	<select id="UserboardOrderPage"  parameterType="String" resultMap="orderResult">
    <![CDATA[
 	    select R1.* from (select * from order_tb) R1 where u_id = #{u_id} order by pay_order_time desc limit #{start} , #{end} 
+	   ]]>
+	</select>
+	
+	<select id="UserboardOrderListPage"  parameterType="Map" resultMap="orderResult">
+   <![CDATA[
+	    select R1.* from (select * from order_tb) R1 where u_id = #{u_id} and delivery_state = #{delivery_state} order by pay_order_time desc limit #{start} , #{end} 
 	   ]]>
 	</select>
 	
@@ -105,6 +119,18 @@
 	   select if(count(*), 'true', 'false')
 	   from board_gr where o_id = #{o_id}
 	   ]]>
+	</select>
+	
+	<select id="OrderResult"  parameterType="Integer" resultMap="orderResult">
+   <![CDATA[
+	   select * from order_tb where parentNo = #{parentNo}
+	   ]]>
+	</select>
+	
+	<select id="tabpageorderlist" parameterType="Map" resultMap="orderResult">
+	<![CDATA[
+		   select * from order_tb where u_id=#{u_id} and delivery_state = #{delivery_state} order by pay_order_time desc
+		]]>
 	</select>
 	
 	

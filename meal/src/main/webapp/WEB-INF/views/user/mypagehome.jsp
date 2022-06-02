@@ -3,8 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="result" value="${param.result }" />
 <c:set var="section" value="0" />
+<c:set var="done" value="배송완료" />
 
 
 
@@ -21,7 +21,7 @@
 		}
 
 		function result() {
-			alert("${message}");
+			alert(${message});
 		}
 	</script>
 </c:if>
@@ -234,10 +234,11 @@ tr.orderlist td {
 					<table class="review-table">
 						<thead>
 							<tr id="top-table">
-								<th width="15%">상품이미지</th>
-								<th width="40%">상품이름</th>
-								<th width="15%">갯수/가격</th>
+								<th width="10%">상품이미지</th>
+								<th width="20%">상품이름</th>
+								<th width="10%">갯수/가격</th>
 								<th width="20%">배송상태</th>
+								<th width="20%"></th>
 							</tr>
 						</thead>
 
@@ -251,16 +252,27 @@ tr.orderlist td {
 										<td id="title"><a href="${contextPath }/goods/goodsDetail.do?g_id=${OrderList.g_id}">${OrderList.g_name}</a></td>
 										<td>${OrderList.o_goods_qty}개/${OrderList.o_goods_price}원
 										</td>
-										<td><b id="state">${OrderList.delivery_state}</b><br>
-											<c:if test="${OrderList.delivery_state == '주문완료'}">
-												<a href="#">주문내역 확인</a>
-											</c:if> <c:if test="${OrderList.delivery_state == '배송시작'}">
-												<a href="#">배송 조회하기</a>
-											</c:if> <c:if test="${OrderList.delivery_state == '주문확인중'}">
+										<td><b id="state">${OrderList.delivery_state}</b></td>
+										<td><c:if test="${OrderList.delivery_state == '주문완료'}">
+												<a href="#">주문 환불</a>
+											</c:if>
+											<c:if test="${OrderList.delivery_state == '결제완료'}">
+												<a href="#">주문 수정하기</a><br>
+												<a href="#">주문 환불</a>
+											</c:if>
+											<c:if test="${OrderList.delivery_state == '배송시작'}">
+												<a href="https://tracker.delivery/#/kr.cjlogistics/560067553920">배송 조회하기</a>
+											</c:if> 
+											<c:if test="${OrderList.delivery_state == '주문확인중'}">
 												<a href="${contextPath}/order/deleteOrder.do?o_id=${OrderList.o_id}">주문 취소하기</a>
-											</c:if> <c:if test="${OrderList.delivery_state eq '배송완료'}">
-												<a href="#">후기 작성하기</a>
-											</c:if></td>
+											</c:if> 
+											<c:if test="${OrderList.delivery_state == '배송완료'}">
+											<c:if test="${OrderList.review == 'false'}">
+												<a href="${contextPath}/boardGr/boardGrWrite.do?g_id=${OrderList.g_id}&o_id=${OrderList.o_id}">후기 작성하기</a></c:if>
+											<c:if test="${OrderList.review == 'true'}">
+												<a href="${contextPath}/boardGr/gr_detail.do?b_gr_id=${OrderList.b_gr_id}">후기 보기</a></c:if>
+											</c:if><br>
+											<a href="${contextPath}/order/OrderResult.do?parentNo=${OrderList.parentNo}">주문 상세</a></td>
 									</tr>
 								</c:forEach>
 							</c:when>
@@ -306,10 +318,28 @@ tr.orderlist td {
 							<td><a href="${contextPath}/goods/goodsDetail.do?g_id=${OrderMap.g_id}"> <img src="${contextPath}/download1.do?g_id=${OrderMap.g_id}&cate=main"></a></td>
 							<td id="title"><a href="${contextPath }/goods/goodsDetail.do?g_id=${OrderMap.g_id}">${OrderMap.g_name}</a></td>
 							<td>${OrderMap.o_goods_qty}개/${OrderMap.o_goods_price}원</td>
-							<td><b id="state">${OrderMap.delivery_state}</b><br><a href="${contextPath}/order/deleteOrder.do?o_id=${OrderMap.o_id}">주문 취소하기</a></td>
+							<td><b id="state">${OrderMap.delivery_state}</b><br><a href="${contextPath}/order/deleteOrder.do?o_id=${OrderMap.o_id}">주문 취소하기</a><br>
+							<a href="${contextPath}/order/OrderResult.do?parentNo=${OrderMap.parentNo}">주문 상세</a></td>
 						</tr>
 					</c:forEach>
 					</table>
+					<c:choose>
+						<c:when test="${OrderVO != null}">
+							<c:forEach var="page" begin="1" end="9" step="1">
+								<c:if test="${section >0 && page==1 }">
+									<a
+										href="${contextPath}/order/selectUserOrderList.do?section=${section}-1&pageNum=${(section-1)*10+1 }&delivery_state=결제완료">preview</a>
+								</c:if>
+								<a
+									href="${contextPath}/order/selectUserOrderList.do?section=${section}&pageNum=${page}&delivery_state=결제완료">${(section)*10 +page}
+								</a>
+								<c:if test="${page ==10 }">
+									<a
+										href="${contextPath}/order/selectUserOrderList.do?section=${section}+1&pageNum=${section*10}+1&delivery_state=결제완료">next</a>
+								</c:if>
+							</c:forEach>
+						</c:when>
+					</c:choose>
 				</div>
 
 			</div>
@@ -330,10 +360,28 @@ tr.orderlist td {
 							<td><a href="${contextPath}/goods/goodsDetail.do?g_id=${OrderMap.g_id}"> <img src="${contextPath}/download1.do?g_id=${OrderMap.g_id}&cate=main"></a></td>
 							<td id="title"><a href="${contextPath }/goods/goodsDetail.do?g_id=${OrderMap.g_id}">${OrderMap.g_name}</a></td>
 							<td>${OrderMap.o_goods_qty}개/${OrderMap.o_goods_price}원</td>
-							<td><b id="state">${OrderMap.delivery_state}</b><br><a href="https://tracker.delivery/#/kr.cjlogistics/560067553920" target="_blank">배송 조회하기</a></td>
+							<td><b id="state">${OrderMap.delivery_state}</b><br><a href="https://tracker.delivery/#/kr.cjlogistics/560067553920" target="_blank">배송 조회하기</a><br>
+							<a href="${contextPath}/order/OrderResult.do?parentNo=${OrderMap.parentNo}">주문 상세</a></td>
 						</tr>
 					</c:forEach>
 					</table>
+					<c:choose>
+						<c:when test="${OrderVO != null}">
+								<c:forEach var="page" begin="1" end="9" step="1">
+								<c:if test="${section >0 && page==1 }">
+									<a
+										href="${contextPath}/order/selectUserOrderList.do?section=${section}-1&pageNum=${(section-1)*10+1 }&delivery_state=배송시작">preview</a>
+								</c:if>
+								<a
+									href="${contextPath}/order/selectUserOrderList.do?section=${section}&pageNum=${page}&delivery_state=배송시작">${(section)*10 +page}
+								</a>
+								<c:if test="${page ==10 }">
+									<a
+										href="${contextPath}/order/selectUserOrderList.do?section=${section}+1&pageNum=${section*10}+1&delivery_state=배송시작">next</a>
+								</c:if>
+							</c:forEach>
+						</c:when>
+					</c:choose>
 				</div>
 			</div>
 			<div id="tab-4" class="tab-content">
@@ -357,11 +405,28 @@ tr.orderlist td {
 							<c:if test="${OrderMap.review == 'false'}">
 							<a href="${contextPath}/boardGr/boardGrWrite.do?g_id=${OrderMap.g_id}&o_id=${OrderMap.o_id}">후기 작성하기</a></c:if>
 							<c:if test="${OrderMap.review == 'true'}">
-							<a href="${contextPath}/boardGr/gr_detail.do?b_gr_id=${OrderMap.b_gr_id}">후기 보기</a></c:if></td>
-							
+							<a href="${contextPath}/boardGr/gr_detail.do?b_gr_id=${OrderMap.b_gr_id}">후기 보기</a></c:if><br>
+							<a href="${contextPath}/order/OrderResult.do?parentNo=${OrderMap.parentNo}">주문 상세</a></td>
 						</tr>
 					</c:forEach>
 					</table>
+					<c:choose>
+						<c:when test="${OrderVO != null}">
+							<c:forEach var="page" begin="1" end="9" step="1">
+							<c:if test="${section >0 && page==1 }">
+									<a
+										href="${contextPath}/order/selectUserOrderList.do?section=${section}-1&pageNum=${(section-1)*10+1 }&delivery_state=${done}">preview</a>
+								</c:if>
+								<a
+									href="${contextPath}/order/selectUserOrderList.do?section=${section}&pageNum=${page}&delivery_state=${done}">${(section)*10 +page}
+								</a>
+								<c:if test="${page ==10 }">
+									<a
+										href="${contextPath}/order/selectUserOrderList.do?section=${section}+1&pageNum=${section*10}+1&delivery_state=${done}">next</a>
+								</c:if>
+							</c:forEach>
+						</c:when>
+					</c:choose>
 				</div>
 			</div>
 		</div>

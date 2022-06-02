@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+  <!-- iamport.payment.js -->
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <c:set var="sum" value="${orderVO.sum + orderVO.d_price}" />
 
@@ -65,22 +66,9 @@
 					}
 				}).open();
 	}
+	
+	var date1 = new Date();
 
-	/*   $(function () {
-	 $("#o_useMile").keydown(function () {
-	 // Save old value.
-	 if (!$(this).val() || (parseInt($(this).val()) <= ${memberInfo.u_mile} && parseInt($(this).val()) >= 0))
-	 $(this).data("old", $(this).val());
-	 });
-	 $("#o_useMile").keyup(function () {
-	 // Check correct, else revert back to old value.
-	 if (!$(this).val() || (parseInt($(this).val()) <= ${memberInfo.u_mile} && parseInt($(this).val()) >= 0));
-	 else
-	 $(this).val($(this).data("old"));
-	 alert("보유 마일리지")
-	 });
-	 }); */
-	//var s_name = document.asdfqwre
 	var IMP = window.IMP; // 생략 가능
 	IMP.init('imp53396567');
 	function fn_buyBTN() {
@@ -99,18 +87,17 @@
 						}, function(rsp) {
 						      if ( rsp.success ) {
 							         //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-							         jQuery.ajax({
+							         $.ajax({
 							        	 url : "${contextPath}/order/insertOrder.do", //cross-domain error가 발생하지 않도록 주의해주세요
 							            type: 'POST',
 							            data : {
 											u_id : document.getElementById("u_id").value,
-											g_id : parseInt(document.getElementById("g_id").value),
+											g_id : document.getElementById("g_id").value,
+											s_id : document.getElementById("s_id").value,
 											u_name : rsp.buyer_name,
 											g_name : rsp.name,
-											o_goods_qty : parseInt(document.getElementById("h_order_goods_qty").value),
-											o_goods_price : parseInt(rsp.paid_amount),
-											pay_method : rsp.pay_method,
-											pay_order_time : new Date().getTime(),
+											o_goods_qty : document.getElementById("h_order_goods_qty").value,
+											o_goods_price : document.getElementById("g_price").value,
 											pay_method : rsp.pay_method,
 											card_pay_month : rsp.card_quota,
 											receiver_hp : document.getElementById("receiver_hp").value,
@@ -120,34 +107,31 @@
 											receiver_addr3 : document.getElementById("namujiAddress").value,
 											deliver_message : document.getElementById("deliver_message").value,
 											deliver_method : document.getElementById("deliver_method").value,
-											o_useMile : parseInt(document.getElementById('o_useMile').value),
-											parentNo : parseInt(rsp.merchant_uid)
+											o_useMile : document.getElementById('o_useMile').value,
 										}
 							         }).done(function(data) {
-							            if ( everythings_fine ) {
-							               msg = '결제가 완료되었습니다.';
-							               msg += '\n고유ID : ' + rsp.imp_uid;
-							               msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-							               msg += '\n결제 금액 : ' + rsp.paid_amount;
-							               msg += '카드 승인번호 : ' + rsp.apply_num;
-
-							               alert(msg);
-							            } else {
-							               //[3] 아직 제대로 결제가 되지 않았습니다.
-							               //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-							            }
-							         });
-							         //성공시 이동할 페이지
-							         location.href='${path}/ticket/ticketing/success';
-							      } else {
-							         msg = '결제에 실패하였습니다.';
-							         msg += '에러내용 : ' + rsp.error_msg;
-							         //실패시 이동할 페이지
-							         location.href="${path}/ticket/ticketing/fail";
-							         alert(msg);
-							      }
-							   });
-	}
+								            if ( everythings_fine ) {
+								               msg = '결제가 완료되었습니다.';
+								               msg += '\n고유ID : ' + rsp.imp_uid;
+								               msg += '\n결제 금액 : ' + rsp.paid_amount;
+								               msg += '카드 승인번호 : ' + rsp.apply_num;
+								               alert(msg);
+								            } else {
+								               //[3] 아직 제대로 결제가 되지 않았습니다.
+								               //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+								            }
+								         });
+								         //성공시 이동할 페이지
+							         	location.href="${contextPath}/order/OrderResult.do";
+								      } else {
+								         msg = '결제에 실패하였습니다.';
+								         msg += '에러내용 : ' + rsp.error_msg;
+								         //실패시 이동할 페이지
+								         location.href="${contextPath}/order/OrderForm.do";
+								         alert(msg);
+								      }
+								   });
+		}
 	
 	
 	
@@ -236,9 +220,14 @@
 	border: 1px solid black;
 }
 
-#final_total_Price, #max_mile, #totalPrice, #u_mile  { 
-  border:none; border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;  /* 테두리 없애기 */
-  outline:none; select-dummy: expression(this.hideFocus=true);  /* 링크 점선없애기 */
+#final_total_Price, #max_mile, #totalPrice, #u_mile {
+	border: none;
+	border-right: 0px;
+	border-top: 0px;
+	boder-left: 0px;
+	boder-bottom: 0px; /* 테두리 없애기 */
+	outline: none;
+	select-dummy: expression(this.hideFocus = true); /* 링크 점선없애기 */
 }
 
 //
@@ -267,8 +256,10 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 <body>
 	<div id="main-wrap">
 		<form name="order">
-			<input type="hidden" id="g_name" value="${goodsVO.g_name}"> <input
-				type="hidden" id="g_id" value="${goodsVO.g_id}">
+			<input type="hidden" id="g_name" value="${goodsVO.g_name}"> 
+			<input type="hidden" id="g_id" value="${goodsVO.g_id}">
+			<input type="hidden" id="s_id" value="${goodsVO.s_id}">
+			<input type="hidden" id="g_price" value="${goodsVO.g_price}">
 			<H1>1.주문확인</H1>
 			<table class="goods_info">
 				<thead>
@@ -283,17 +274,16 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 				</thead>
 				<tbody align=center>
 					<tr class="line">
-						<td class="goods_image"><img
-							src="${contextPath}/download1.do?g_id=${goodsVO.g_id}&cate=main"
-							width="50px" height="50px" /> <a
-							href="${contextPath}/goods/goodsDetail.do?g_id=${goodsVO.g_id}"><br>${goodsVO.g_name}</a>
+						<td class="goods_image"><img src="${contextPath}/download1.do?g_id=${goodsVO.g_id}&cate=main" width="50px" height="50px" /> 
+						<a href="${contextPath}/goods/goodsDetail.do?g_id=${goodsVO.g_id}"><br>${goodsVO.g_name}</a>
 						<td>
-							<h4>${orderVO.o_goods_qty}</h4> 
-							<input type="hidden" id="h_order_goods_qty" name="h_order_goods_qty" value="${orderVO.o_goods_qty}" />
+							<h4>${orderVO.o_goods_qty}</h4> <input type="hidden"
+							id="h_order_goods_qty" name="h_order_goods_qty"
+							value="${orderVO.o_goods_qty}" />
 						</td>
 						<td>${goodsVO.g_price}원</td>
 						<td>${orderVO.d_price}원</td>
-						<td>${goodsVO.g_price * 0.1}원</td>
+						<td>${goodsVO.g_price * 0.01}원</td>
 						<td>${sum}원</td>
 					</tr>
 				</tbody>
@@ -390,11 +380,15 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 				<table>
 					<tbody>
 						<tr class="line">
-							<td>보유 마일리지 <input type="text" size = "5" id="max_mile"value="${memberInfo.u_mile}" readonly>원</td>
+							<td>보유 마일리지 <input type="text" size="5" id="max_mile"
+								value="${memberInfo.u_mile}" readonly>원
+							</td>
 						</tr>
 						<tr>
-							<td>마일리지 사용 <input id="o_useMile" size = "5" name="o_useMile" type="number" onChange="calculatePay()" value= "0" />원
-								<button type="button" name="useMile" onClick="maxMile()">모두 사용</button></td>
+							<td>마일리지 사용 <input id="o_useMile" size="5" name="o_useMile"
+								type="number" onChange="calculatePay()" value="0" />원
+								<button type="button" name="useMile" onClick="maxMile()">모두
+									사용</button></td>
 						</tr>
 					</tbody>
 				</table>
@@ -412,8 +406,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 						<td>최종 결제금액</td>
 					</tr>
 					<tr align=center>
-						<td>
-							${orderVO.o_goods_qty}<input id="h_total_order_goods_qty"
+						<td>${orderVO.o_goods_qty}<input id="h_total_order_goods_qty"
 							type="hidden" value="${total_order_goods_qty}" />
 						</td>
 						<td><input id="totalPrice" type="text" value="${orderVO.sum}"
@@ -423,11 +416,10 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 							<p id="p_totalDelivery">${orderVO.d_price}원</p> <input
 							id="h_totalDelivery" type="hidden" value="${orderVO.d_price}" />
 						</td>
-						<td>
-							<input type ="number" id="u_mile" name="u_mile" value = "0">원
+						<td><input type="number" id="u_mile" name="u_mile" value="0">원
 						</td>
 						<td><input id="final_total_Price" type="number"
-name="FinalTotalPrice" size=10 value="${sum}" readonly>원</td>
+							name="FinalTotalPrice" size=10 value="${sum}" readonly>원</td>
 					</tr>
 				</tbody>
 			</table>

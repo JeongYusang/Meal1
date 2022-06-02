@@ -4,29 +4,41 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
 
-	<definition name="/order/selectUserOrders" extends="baseLayout2">
+	<definition name="/order/selectUserOrders"
+		extends="baseLayout2">
 		<put-attribute name="title" value="마이페이지" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/user/mypagehome.jsp" />
 	</definition>
-	
+
 	<definition name="/order/insertOrder" extends="baseLayout">
 		<put-attribute name="title" value="주문완료" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/order/orderresult.jsp" />
 	</definition>
-	
-	<definition name="/order/deleteMyOrder" extends="baseLayout2">
+
+	<definition name="/order/deleteMyOrder"
+		extends="baseLayout2">
 		<put-attribute name="title" value="주문취소" />
-		<put-attribute name="body" value="/WEB-INF/views/user/mypagehome.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/user/mypagehome.jsp" />
 	</definition>
-	
+
 	<definition name="/order/OrderForm" extends="baseLayout2">
 		<put-attribute name="title" value="주문하기" />
-		<put-attribute name="body" value="/WEB-INF/views/order/orderform.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/order/orderform.jsp" />
 	</definition>
-	
-	
-	
-	
+
+	<definition name="/order/OrderResult" extends="baseLayout">
+		<put-attribute name="title" value="주문완료" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/order/orderresult.jsp" />
+	</definition> 
+
+
+
+
+
+
 </tiles-definitions>
