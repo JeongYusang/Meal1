@@ -1,8 +1,9 @@
-
 <%@ page language="java" contentType="text/html; charset=utf-8"
-   pageEncoding="utf-8" isELIgnored="false"%>
+	pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="section" value="0" />
 
 
 
@@ -29,46 +30,6 @@
       })
 
    });
-   /* 별점시스템 사용시 db랑 연동 */
-/*     function clickstar1() {
-       document.getElementById('star1').setAttribute("class", "fa fa-star checked");
-       document.getElementById('star2').setAttribute("class", "fa fa-star");
-       document.getElementById('star3').setAttribute("class", "fa fa-star");
-       document.getElementById('star4').setAttribute("class", "fa fa-star");
-       document.getElementById('star5').setAttribute("class", "fa fa-star");
-    }
-
-    function clickstar2(){
-        document.getElementById('star1').setAttribute("class", "fa fa-star checked");
-        document.getElementById('star2').setAttribute("class", "fa fa-star checked");
-        document.getElementById('star3').setAttribute("class", "fa fa-star");
-        document.getElementById('star4').setAttribute("class", "fa fa-star");
-        document.getElementById('star5').setAttribute("class", "fa fa-star");
-    }
-
-    function clickstar3(){
-        document.getElementById('star1').setAttribute("class", "fa fa-star checked");
-        document.getElementById('star2').setAttribute("class", "fa fa-star checked");
-        document.getElementById('star3').setAttribute("class", "fa fa-star checked");
-        document.getElementById('star4').setAttribute("class", "fa fa-star");
-        document.getElementById('star5').setAttribute("class", "fa fa-star");
-    }
-
-    function clickstar4(){
-        document.getElementById('star1').setAttribute("class", "fa fa-star checked");
-        document.getElementById('star2').setAttribute("class", "fa fa-star checked");
-        document.getElementById('star3').setAttribute("class", "fa fa-star checked");
-        document.getElementById('star4').setAttribute("class", "fa fa-star checked");
-        document.getElementById('star5').setAttribute("class", "fa fa-star");
-    }
-
-    function clickstar5(){
-        document.getElementById('star1').setAttribute("class", "fa fa-star checked");
-        document.getElementById('star2').setAttribute("class", "fa fa-star checked");
-        document.getElementById('star3').setAttribute("class", "fa fa-star checked");
-        document.getElementById('star4').setAttribute("class", "fa fa-star checked");
-        document.getElementById('star5').setAttribute("class", "fa fa-star checked");
-    } */
 
 </script>
 
@@ -95,11 +56,13 @@ ul.tabs {
 ul.tabs li {
    text-align: center;
    display: inline-block;
+   border-radius: 10px;
+   font-size: large;
    color: black;
-   background:#f1f1f1;
+   background: #f1f1f1;
    padding: 10px 15px;
    cursor: pointer;
-   width: 180px;
+   width: 284px;
    height: 30px;
 
 }
@@ -108,7 +71,8 @@ ul.tabs li.current {
 
    font-size: 16px;
    border: 5px solid;
-   background-color: #B1D5FF;
+   border-radius: 10px;
+   background-color: #ffd3dd;
    color: white;
 }
 
@@ -135,8 +99,9 @@ ul.tabs li.current {
 }
 
 .button {
-   background-color: #B1D5FF;
+   background-color: #ffd3dd;
    border: none;
+   border-radius: 4px;
    color: white;
    padding: 15px 30px;
    text-align: center;
@@ -146,11 +111,11 @@ ul.tabs li.current {
    margin: 4px 2px;
    cursor: pointer;
 }
-
+/* 가로로 중앙에 배치 */
 .review-table {
    width: 100%;
-   margin: 0 auto; /* 가로로 중앙에 배치 */
    text-align: center;
+   margin: 0 auto; 
    background-color: white;
    font-size: 24px;
    border-collapse: collapse;
@@ -186,8 +151,46 @@ tr.border-bottom td {
 .checked {
    color: orange;
 }
-</style>
 
+li#slider1-1 {
+    text-align: left;
+    font-size: x-large;
+}
+
+p.pDDAK {
+    font-size: medium;
+}
+
+ul#slider1 {
+    border-bottom: 1px solid #0000ff1c;
+}
+
+.checked {
+   color: #ffc0cb;
+   font-size: 60px;
+}
+
+span.fa.fa-star.checked {
+    float: right;
+    font-size: 40px;
+}
+
+span.fa.fa-star {
+    float: right;
+    font-size: 40px;
+    
+}
+
+img#titleimg {
+    padding-left: 3px;
+}
+
+h6.titleText {
+	text-align:center;
+}
+</style>
+<link rel="stylesheet"
+   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body onload="init();">
    <script language="JavaScript">
@@ -231,34 +234,27 @@ tr.border-bottom td {
    <div id="main-wrap">
       <div class="container">
          <img src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=main" width="500px"
-            height="500px" />
+            height="500px" id="titleimg"/>
          <div style="display: block; vertical-align: top;">
             <br> <br> <br> 
             <b style="font-size: 52px">${goodsInfo.g_name}</b>
 
-            <h1>10000원</h1>
-            <br> <img src="${contextPath}/resources/image/mini1.PNG"
-               width="50px" height="50px" /> <img
-               src="${contextPath}/resources/image/mini2.PNG" width="50px"
-               height="50px" /> <img
-               src="${contextPath}/resources/image/mini3.PNG" width="50px"
-               height="50px" /> <img
-               src="${contextPath}/resources/image/mini4.PNG" width="50px"
-               height="50px" /> <br>
+            <h1>${goodsInfo.g_price }원</h1>
+            <br> 
             <div id="text">
-               <h4>굿즈테스트</h4>
+               <h4>${goodsInfo.g_detail1 }</h4>
                <h4>
-                  <b>유통기한</b> : 수령일 포함 2일 이상 남은 제품을 보내드립니다
+                  <b>유통기한</b> : ${goodsInfo.g_eatDate }
                </h4>
-               <h4>판매단위 : 3~4인분</h4>
-               <h4>알레르기 정보 : 우유,대두,돼지고기,토마토,쇠고기 함유</h4>
+               <h4>판매단위 : ${goodsInfo.g_inbun }</h4>
+               <h4>알레르기 정보 : ${goodsInfo.g_allergy_M }</h4>
             </div>
             <div id="price">
-               <form name="form" method="get">
+               <form name="form" method="get" enctype="multipart/form-data">
 
                   <b>수량 : &nbsp;<input type="button" value=" + "
                      onclick="add();"> <input type=hidden name="sell_price"
-                     value="10000"> <input type="text" name="amount" value="1"
+                     value="${goodsInfo.g_price }"> <input type="text" name="amount" value="1"
                      size="1" onchange="change();"> <input type="button"
                      value=" - " onclick="del();"><br> <br> 금액 : <input
                      type="text" name="sum" size="8"
@@ -266,10 +262,9 @@ tr.border-bottom td {
                   </b>
                </form>
             </div>
-            <br> <a href="./products.jsp" class="button">찜하기</a> <a
-               href="${contextPath}/order/orderform.do" class="button"> 구매하기</a> <a
-               href="${contextPath }/main/cart.do" class="button">장바구니담기</a>
-
+            <br> <a href="./products.jsp" class="button">찜하기</a> 
+            <a href="${contextPath}/order/OrderForm.do?g_id=${goodsInfo.g_id}&o_goods_qty=1" class="button"> 구매하기</a> 
+            <a href="${contextPath }/main/cart.do" class="button">장바구니담기</a>
          </div>
       </div>
       <br>
@@ -282,6 +277,7 @@ tr.border-bottom td {
                <li class="tab-link current" data-tab="tab-1">상품 상세</li>
                <li class="tab-link" data-tab="tab-2">리뷰</li>
                <li class="tab-link" data-tab="tab-3">상품문의</li>
+               <li class="tab-link" data-tab="tab-4">배송정보</li>
             </ul>
          </div>
 
@@ -291,136 +287,139 @@ tr.border-bottom td {
                <iframe width="100%" height="600px;"
                   src="https://www.youtube.com/embed/nWHeZkrQix0?&loop=1">
                </iframe>
-               <img src="${contextPath}/resources/image/detail1.png" width="100%" /><br>
-               <img src="${contextPath}/resources/image/detail2.png" width="100%" /><br>
-               <img src="${contextPath}/resources/image/detail3.png" width="100%" /><br>
-               <img src="${contextPath}/resources/image/detail4.png" width="100%" /><br>
+               
 
             </div>
 
          </div>
          <div id="tab-2" class="tab-content">
             <div class="detail">
-               <div id="write">
-                  <a href="/bbs/writeForm.bbs?pageNum=${pageNum}">글쓰기</a>
-               </div>
                <div id="tabletitle">
-                  <h1>리뷰</h1>
+                  <h6 class="titleText">리뷰</h6>
                </div>
                <table class="review-table">
-                  <thead>
-                     <tr id="top-table">
-                        <th width="15%">별점</th>
-                        <th width="35%">제목</th>
-                        <th width="20%">작성자</th>
-                        <th width="20%">작성일</th>
-                        <th width="10%">조회</th>
+                   <tbody>
+                  <c:choose>
+                  	<c:when test="${empty boardGRInfo }">
+                     <tr class="border-bottom">
+                     	<td colspan=5 class="fixed"><strong>등록된 상품이 없습니다.</strong></td>
                      </tr>
+                    </c:when>
+                    <c:when test="${not empty boardGRInfo }">
+                  <c:forEach var="item" items="${boardGRInfo}" begin="0" end="10">
+                  <div id="box11">
+                  	<c:choose>
+               <c:when test="${item.star == 5}">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+               </c:when>
+               <c:when test="${item.star == 4}">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star"></span>
+               </c:when>
+               <c:when test="${item.star == 3}">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+               </c:when>
+               <c:when test="${item.star == 2}">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star" style="color: grey;"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+               </c:when>
+               <c:otherwise>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+               </c:otherwise>
+            </c:choose>
+                     <ul id="slider1">
+                        <li id="slider1-1">
+                        	<span id="slide1-11">${item.title}                               </span>
 
-                  </thead>
-                  <tbody>
-
-                     <tr class="border-bottom">
-                        <td><span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span> 
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span></td>
-                        <td id="title">
-                           <a href="/bbs/content.bbs?articleNumber=${article.articleNumber}&pageNum=${pageNum}">맛은 있으나 양이 별로네요</a> 
-                        <td>한태상</td>
-                        <td>2022-04-12</td>
-                        <td>20</td>
-                     </tr>
-                     <tr class="border-bottom">
-                        <td><span class="fa fa-star checked"></span>
-                         <span class="fa fa-star checked"></span> 
-                           <span class="fa fa-star checked"></span>
-                           <span class="fa fa-star checked"></span>
-                           <span class="fa fa-star"></span></td>
-                        <td id="title"><c:if test="${article.depth > 0}"> &nbsp;&nbsp; </c:if>
-                           <a
-                           href="/bbs/content.bbs?articleNumber=${article.articleNumber}&pageNum=${pageNum}">가성비가 좋아요</a> 
-                           </td>
-                        <td>한태상</td>
-                        <td>2022-04-12</td>
-                        <td>20</td>
-                     </tr>
-                     <tr class="border-bottom">
-                        <td><span class="fa fa-star checked"></span>
-                         <span class="fa fa-star checked"></span> 
-                           <span class="fa fa-star checked"></span>
-                           <span class="fa fa-star checked"></span>
-                           <span class="fa fa-star checked"></span>
-                        <td id="title"><c:if test="${article.depth > 0}"> &nbsp;&nbsp; </c:if>
-                           <a
-                           href="/bbs/content.bbs?articleNumber=${article.articleNumber}&pageNum=${pageNum}">너무너무
-                              맛있어요</a> <c:if test="${article.hit >= 20}">
-                              <span class="hit">hit!</span>
-                           </c:if></td>
-                        <td>한태상</td>
-                        <td>2022-04-12</td>
-                        <td>20</td>
-                     </tr>
+                        	<p><img src="${contextPath}/thumbnailsBoard.do?b_gr_id=${item.b_gr_id}&fileName=${item.fileName }"/><br>
+                        		${item.content}
+                        	</p>
+                        	<p class="pDDAK">${item.creDate}
+                        	</p>
+                        </li>
+                     </ul>
+                     </div>
+                     </c:forEach>
+                    
+                     </c:when>
+                     </c:choose>
                   </tbody>
                </table>
-
-
-
             </div>
          </div>
          <div id="tab-3" class="tab-content">
             <div class="detail">
-               <div id="write">
-                  <a href="/bbs/writeForm.bbs?pageNum=${pageNum}">글쓰기</a>
-               </div>
                <div id="tabletitle">
-                  <h1>1대1문의</h1>
-            
+                  <h6 class="titleText">상품문의</h6>
                </div>
                <table class="review-table">
-                  <thead>
-                     <tr id="top-table">
-                        <th width="10%">번호</th>
-                        <th width="40%">제목</th>
-                        <th width="20%">작성자</th>
-                        <th width="20%">작성일</th>
-                        <th width="10%">답변완료</th>
-                     </tr>
-
-                  </thead>
                   <tbody>
-
+                    <c:choose>
+                  	<c:when test="${empty board21 }">
                      <tr class="border-bottom">
-                        <td>1</td>
-                        <td id="title">
-                           <a href="/bbs/content.bbs?articleNumber=${article.articleNumber}&pageNum=${pageNum}">택배 얼마나 걸릴까요?</a> </td>
-                        <td>한태상</td>
-                        <td>2022-04-12</td>
-                        <td>답변완료</td>
+                     	<td colspan=5 class="fixed"><strong>등록된 게시물이 없습니다.</strong></td>
                      </tr>
-                     <tr class="border-bottom">
-                        <td>2</td>
-                        <td id="title">
-                           <a href="/bbs/content.bbs?articleNumber=${article.articleNumber}&pageNum=${pageNum}">재입고 문의 드립니다</a></td>
-                        <td>한태상</td>
-                        <td>2022-04-12</td>
-                        <td>답변완료</td>
-                     </tr>
-                     <tr class="border-bottom">
-                        <td>3</td>
-                        <td id="title">주문이 아직 오지 않았습니다</td>
-                        <td>한태상</td>
-                        <td>2022-04-12</td>
-                        <td>미답변</td>
-                     </tr>
+                    </c:when>
+                    <c:when test="${not empty board21 }">
+                    <c:forEach var="item" items="${board21}" begin="0" end="10">
+                     <ul id="slider1">
+                        <li id="slider1-1">
+                        	<span id="slide1-11">${item.title} ${item.u_id} </span>
+                        	<p>${item.content} </p>
+                        	<p class="pDDAK">${item.creDate}
+                        	</p>
+                        </li>
+                     </ul>
+                     </c:forEach>
+                     </c:when>
+                     </c:choose>
                   </tbody>
                </table>
-
             </div>
-
+         </div>
+         <div id="tab-4" class="tab-content">
+            <div class="detail">
+               <table class="review-table">
+                  <tr>
+                  <td>
+                    <img src="${contextPath}/resources/image/delivery.jpg" height="1250px" width="100%">
+                  </td>
+                  </tr>
+               </table>
+            </div>
          </div>
       </div>
    </div>
 </body>
+<script>
+$(document).ready(function(){
+	  $("p p").hide();
+	  // $("ul > li:first-child a").next().show();
+	  $("ul li span").click(function(){
+	    $(this).next().slideToggle(300);
+	    // $(this).next().slideDown(300);
+	    $("ul li span").not(this).next().slideUp(300);
+	    return false;
+	  });
+	  $("ul li span").eq(0).trigger("click");
+	});
+</script>
 </html>
