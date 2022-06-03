@@ -1,9 +1,9 @@
 package com.meal.goods.controller;
 
 import java.io.File;
-import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -28,9 +28,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.meal.board.gq.service.BoardGqService;
+import com.meal.board.gq.vo.BoardGqVO;
 import com.meal.board.gr.service.BoardGrService;
+import com.meal.board.gr.vo.BoardGrVO;
 import com.meal.common.controller.BaseController;
-import com.meal.goods.dao.GoodsDAO;
 import com.meal.goods.service.GoodsService;
 import com.meal.goods.vo.GoodsVO;
 import com.meal.goods.vo.Img_gVO;
@@ -54,6 +56,8 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 	private SellerService sellerService;
 	@Autowired
 	private BoardGrService boardGrService;
+	@Autowired
+	private BoardGqService boardGqService;
 
 
 	//상품등록창
@@ -201,23 +205,34 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 
 
 	   @RequestMapping(value = "/goodsDetail.do", method = RequestMethod.GET)
-	   public ModelAndView goodsDetail(@RequestParam("g_id") int g_id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	   public ModelAndView goodsDetail(@RequestParam("g_id") int g_id, @RequestParam("g_id") int b_gr_id, HttpServletRequest request, HttpServletResponse response) throws Exception {
 	      ModelAndView mav = new ModelAndView();
 
-	      //int _g_id = Integer.parseInt(g_id);
 	      String viewName = (String) request.getAttribute("viewName");
+	      //상품에 관한 정보 및 이미지
 	      GoodsVO goodsInfo = (GoodsVO)goodsService.selectGoodsDetail(g_id);
-	      System.out.println("goodsInfo" + goodsInfo);
 	      List<Img_gVO> imgList = (List<Img_gVO>)goodsService.selectImgList(g_id);
-	      System.out.println("imgList" + imgList);
-	      //굿즈디테일 상품리뷰 탭 부분
-	      //List<BoardGrVO> listGR = (List<BoardGrVO>)boardService.selectBoardGrallList();
-	
-	      mav.setViewName(viewName);
+	      //상품리뷰게시판 리스트 정보
+	      List<BoardGrVO> board2 = (List<BoardGrVO>)boardGrService.selectBoardGrallList();
+	      //상품문의게시판 리스트 정보
+	      List<BoardGqVO> board21 = boardGqService.selectBoardGqallList();
+	      
+	      
+	      logger.info("--------------------------------");
+	      logger.info("goodsInfo" + goodsInfo);
+	      logger.info("--------------------------------");
+	      logger.info("imgList" + imgList);
+	      logger.info("--------------------------------");
+	      logger.info("board2" + board2);
+	      logger.info("--------------------------------");
+	      logger.info("board21" + board21);
+	      logger.info("--------------------------------");
 	      mav.addObject("goodsInfo", goodsInfo);
 	      mav.addObject("ImgList", imgList);
+	      mav.addObject("boardGRInfo",board2);
+	      mav.addObject("board21", board21);
+	      mav.setViewName(viewName);
 
-	      //상품 후기에 관한 게시판 조회또한 등록할 것
 
 	      return mav;
 
@@ -293,7 +308,7 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 				return mav;
 
 			} //else if (adminInfo != null) { 
-				//String viewName = "/goods/updateGoodsForm";
+				//String viewName = "/goods/updateGoodsForm";                           //admin은 추후 추가
 				//mav.setViewName(viewName);
 				//return mav;
 
