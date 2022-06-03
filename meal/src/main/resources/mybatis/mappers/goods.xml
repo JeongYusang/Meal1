@@ -237,7 +237,7 @@ update goods_tb set g_cate1 ='Nomal' where g_cate1 =#{g_cate1} and g_id =#{g_id}
 	<select id="goodsPage" resultMap="goodsResult"
 		parameterType="Map">
    <![CDATA[
-	   select R1.* from (select * from goods_tb order by g_id) R1 where s_id = #{s_id} order by g_creDate DESC limit #{start} , #{end} 
+	   select R1.* from (select * from goods_tb order by g_id) R1 where s_id = #{s_id} order by g_id DESC limit #{start} , #{end} 
 	   ]]>
 	</select>
 
@@ -271,7 +271,7 @@ select * from goods_tb where g_saleDate2 <= now() and g_saleprice != 0
 ]]>
 	</select>
 
-	<update id="goodsSaleEnd" parameterType="GoodsVO">
+	<update id="goodsSaleEnd" parameterType="int">
 <![CDATA[
 update goods_tb set g_saleprice = '0', g_saleDate1= null, g_saleDate2= null , g_saleWon='0', g_salePer ='0' where g_id =#{g_id}
 ]]>

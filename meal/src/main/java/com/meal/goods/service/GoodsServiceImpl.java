@@ -104,5 +104,9 @@ public class GoodsServiceImpl implements GoodsService {
 	public void deleteGoods(GoodsVO goodsInfo) throws Exception {
 		goodsDAO.deleteGoods(goodsInfo);
 	}
+	@Override
+	public void goodsSaleEnd(int g_id) throws Exception{
+		goodsDAO.goodsSaleEnd(g_id);
+	}
 
 }

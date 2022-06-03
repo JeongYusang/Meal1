@@ -49,27 +49,6 @@ $(document).ready(function() {
 function fn_overlapped(){
     var _g_name=$("#_g_name").val();
 
-	 var salePer = document.getElementById("g_salePer").value;
-	 var saleWon = document.getElementById("g_saleWon").value;
-	 var saleDate1 = document.getElementById("g_saleDate1").value;
-	 var saleDate2 = document.getElementById("g_saleDate2").value;
-	 console.log("per 값 "+ salePer);
-	 console.log("won 값 "+saleWon);
-	 console.log("D1 값 "+saleDate1);
-	 console.log("D2 값 "+saleDate2);
-	 console.log("per 무 "+!salePer);
-	 console.log("won 무 "+!saleWon);
-	 console.log("D1 무 "+!saleDate1);
-	 console.log("D2 무 "+!saleDate2);
-	 console.log(" (salePer == null) "+ (salePer == null));
-	 console.log(" (saleWon == null) "+ (saleWon == null));
-	 console.log(" (salePer.equals('')) "+ (salePer == ''));
-	 console.log(" (saleWon.equals('')) "+ (saleWon == ''));
-	 /* 조건에 관한 것  */
-	 console.log(" (!salePer ^ !saleWon) "+ (!salePer ^ !saleWon));
-	 console.log("!(!salePer && !saleWon) " + !(!salePer && !saleWon));
-	 console.log(" !(!saleDate1 || !saleDate2) " +!(!saleDate1 || !saleDate2));
-	 console.log(" (salePer != '' || saleWon !='') " + (salePer != '' || saleWon != ''));
     if(_g_name != null && _g_name != ""){
     $.ajax({
        type:"post",
@@ -105,7 +84,7 @@ function fn_overlapped(){
 	 var saleWon = document.getElementById("g_saleWon").value;
 	 var saleDate1 = document.getElementById("g_saleDate1").value;
 	 var saleDate2 = document.getElementById("g_saleDate2").value;
-	 console.log("per 값 "+ salePer);
+/* 	 console.log("per 값 "+ salePer);
 	 console.log("won 값 "+saleWon);
 	 console.log("D1 값 "+saleDate1);
 	 console.log("D2 값 "+saleDate2);
@@ -117,7 +96,7 @@ function fn_overlapped(){
 	 console.log("!(!salePer && !saleWon) " + !(!salePer && !saleWon));
 	 console.log(" (!salePer ^ !saleWon) "+ (!salePer ^ !saleWon));
 	 console.log(" !(!saleDate1 || !saleDate2) " +!(!saleDate1 || !saleDate2));
-	 console.log(" (salePer != '' || saleWon !='') " + (salePer != '' || saleWon != ''));
+	 console.log(" (salePer != '' || saleWon !='') " + (salePer != '' || saleWon != '')); */
 	 
 	 if(salePer != '' && saleWon != '' ){
 		 alert("할인 적용유형을 한가지만 기입해주세요.");
@@ -142,7 +121,7 @@ function fn_overlapped(){
 	 var g_allergy_M = '';
 	 $('input[type="checkbox"]:checked').each(function (index) {
 	     if (index != 0) {
-	    	 g_allergy_M += '/ ';
+	    	 g_allergy_M += '/';
 	  
 	     }       
 	     g_allergy_M += $(this).val();

@@ -273,14 +273,14 @@ margin: 30px;
 							<c:forEach var="page" begin="1" end="9" step="1">
 								<c:if test="${section >0 && page==1 }">
 									<a
-										href="${contextPath}/seller/selectGoodsPage.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
+										href="${contextPath}/goods/selectGoodsPage.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
 								</c:if>
 								<a
-									href="${contextPath}/seller/selectGoodsPage.do?section=${section}&pageNum=${page}">${(section)*10 +page}
+									href="${contextPath}/goods/selectGoodsPage.do?section=${section}&pageNum=${page}">${(section)*10 +page}
 								</a>
 								<c:if test="${page ==10 }">
 									<a
-										href="${contextPath}/seller/selectGoodsPage.do?section=${section}+1&pageNum=${section*10}+1">next</a>
+										href="${contextPath}/goods/selectGoodsPage.do?section=${section}+1&pageNum=${section*10}+1">next</a>
 								</c:if>
 							</c:forEach>
 						</div>
