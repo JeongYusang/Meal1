@@ -12,17 +12,19 @@
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
 
-var g_cate2 = ${goodsInfo.g_cate2};
-g_cate2 = g_cate2.split('/');
-var arrLen = arr.length;
+window.onload =function(){
+var allergy =document.getElementById("allergyM").value;
+var allergy1 = allergy.split('/');
+var arrLen = allergy1.length;
 
-var chk = $('input:checkbox[name=allergy]');
+var chk = $('input:checkbox[name=g_allergy]');
 
 for (var i = 0; i < arrLen; i++) { // arr
-    var arrVal = arr[i]; // arr의 값 = i : 0, arrVal : 2
-    chk.filter('[value=' + arrVal + ']').prop('checked', true); // arrVal 값 2, 4, 5에 의해 checkbox의 value의 값 2, 4, 5를 checked 처리
-}
-
+    var arrVal = allergy1[i]; // arr의 값 = i : 0, arrVal : 2
+    console.log(arrVal);
+    chk.filter('[value=' + '"'+arrVal+'"' + ']').prop('checked', true); // arrVal 값 2, 4, 5에 의해 checkbox의 value의 값 2, 4, 5를 checked 처리
+};
+} 
 
   var cnt=0;
   function fn_addFile(){
@@ -204,6 +206,7 @@ function check1() {
 			enctype="multipart/form-data" onsubmit="return check1()">
 			<input type="hidden" name="s_id" value="${sellerInfo.s_id}" /> <input
 				type="hidden" name="g_id" value="${goodsInfo.g_id}" />
+				
 			<table class="goodsform">
 				<tr class="box">
 					<th>상품사진*</th>
@@ -318,13 +321,15 @@ function check1() {
 				<tr class="box">
 					<th>알러지 유발 성분*</th>
 					<td colspan="3"><input type="checkbox" name="g_allergy" value="갑각류"
-						id="g_allergy_M1">갑각류 <input type="checkbox" name="g_allergy" value="견과류"
-						id="g_allergy_M2">견과류 <input type="checkbox" name="g_allergy" value="대두"
-						id="g_allergy_M3">대두 <br> <input type="checkbox"
-						value="유제품" name="g_allergy" id="g_allergy_M4">유제품 <input type="checkbox"
-						value="계란류" name="g_allergy" id="g_allergy_M5">계란류 <input type="checkbox"
-						value="밀" name="g_allergy" id="g_allergy_M6">밀 <input type="hidden"
+						id="g_allergy_M1">갑각류<input type="checkbox" name="g_allergy" value="견과류"
+						id="g_allergy_M2">견과류<input type="checkbox" name="g_allergy" value="대두"
+						id="g_allergy_M3">대두<br> <input type="checkbox"
+						value="유제품" name="g_allergy" id="g_allergy_M4">유제품<input type="checkbox"
+						value="계란류" name="g_allergy" id="g_allergy_M5">계란류<input type="checkbox"
+						value="밀" name="g_allergy" id="g_allergy_M6">밀
+						<input type="hidden"
 						id="g_allergy_M" name="g_allergy_M"  value=""></td>
+						<input type ="hidden" name ="allergy" id = "allergyM" value="${goodsInfo.g_allergy_M}">
 				</tr>
 				<tr class="box">
 					<th>알러지 상세항목</th>

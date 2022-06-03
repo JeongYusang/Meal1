@@ -121,7 +121,7 @@ function fn_overlapped(){
 	 var g_allergy_M = '';
 	 $('input[type="checkbox"]:checked').each(function (index) {
 	     if (index != 0) {
-	    	 g_allergy_M += '/ ';
+	    	 g_allergy_M += '/';
 	  
 	     }       
 	     g_allergy_M += $(this).val();
