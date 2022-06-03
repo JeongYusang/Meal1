@@ -57,11 +57,12 @@ ul.tabs li {
    text-align: center;
    display: inline-block;
    border-radius: 10px;
+   font-size: large;
    color: black;
-   background:#f1f1f1;
+   background: #f1f1f1;
    padding: 10px 15px;
    cursor: pointer;
-   width: 180px;
+   width: 284px;
    height: 30px;
 
 }
