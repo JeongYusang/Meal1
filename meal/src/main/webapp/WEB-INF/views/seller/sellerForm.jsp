@@ -110,73 +110,6 @@ function result(){
           });  //end ajax     
    }
     
-    var code = "";
-      $("#emailBTN").click(function() {
-         var _email1 = $("#s_email1").val();
-         var _email2 = $("#s_email2").val();
-         var _email = _email1 + "@" + _email2;
-         console.log("_email : " + _email);
-
-         $.ajax({
-            type : "GET",
-            url : "${contextPath}/Email/emailtest.do",
-            data : {
-               email : _email
-            },
-            success : function(data) {
-               if (data.key == null) {
-                  alert(data.message);
-                  $("#s_email1").attr("autofocus", true);
-                  $(".successEmailChk").text("유효한 이메일 주소를 입력해주세요.");
-                  $(".successEmailChk").css("color", "red");
-                  $(".successEmailChk").css("font-size", "5px");
-
-               } else {
-                  alert(data.message);
-                  $("#s_email1").attr("disabled", false);
-                  $("#s_email2").attr("disabled", false);
-                  $("#emailKeyResult").attr("disabled", false);
-                  $("#emailChk2").css("display", "inline-block");
-                  $(".successEmailChk").text("전송완료.");
-                  $(".successEmailChk").css("font-size", "5px");
-                  $(".successEmailChk").css("color", "green");
-
-                  code = data.key;
-               }
-            }
-         });
-      });
-      // 이메일 키 인증 관련 코드
-      $("#emailKeyResult").click(function() {
-         if ($("#emailKey").val() == code) {
-            $(".KeyInfo").text("인증번호가 일치합니다.");
-            $(".KeyInfo").css("color", "green");
-            $(".KeyInfo").css("font-size", "5px");
-            $("#emailDoubleChk").val("true");
-            $("#emailKey").attr("disabled", true);
-
-         } else {
-            $(".KeyInfo").text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
-            $(".KeyInfo").css("color", "red");
-            $(".KeyInfo").css("font-size", "5px");
-            $("#emailDoubleChk").val("false");
-            $("#emailKey").attr("autofocus", true);
-         }
-      });
-      
-      $(function() {
-         $('#select').change(function() {
-            if ($('#select').val() == 'directly') {
-               $('#s_email2').attr("disabled", false);
-               $('#s_email2').val("");
-               $('#s_email2').focus();
-            } else {
-               $('#s_email2').val($('#select').val());
-            }
-         })
-      });
-    
-    
 /*     function chkPW(){
 
          var pw = $("#pwd").val();
@@ -408,7 +341,7 @@ tr.box {
     text-align: center;
 }
 
-input#emailBTN {
+input#emailBTN1 {
     background-color: rgba(255, 192, 207, 0.7);
     border: 1px solid rgba(255, 192, 207, 1);
     border-radius: 3px;
@@ -421,7 +354,7 @@ input#emailBTN {
     margin-bottom: 1px;
 }
 
-input#emailKeyResult {
+input#emailKeyResult1 {
     background-color: rgba(255, 192, 207, 0.7);
     border: 1px solid rgba(255, 192, 207, 1);
     border-radius: 3px;
@@ -653,20 +586,20 @@ input#emailKeyResult {
                         <option value="hanmir.com">hanmir.com</option>
                         <option value="paran.com">paran.com</option>
 
-                  </select> <br> <span class="successEmailChk"></span></td>
+                  </select> <br> <span class="successEmailChk1"></span></td>
 
                   <td colspan="2" class="righttd"><input type="button"
-                     id="emailBTN" value="인증메일 보내기" /></td>
+                     id="emailBTN1" value="인증메일 보내기" /></td>
 
                </tr>
                
                <tr class="box">
                   <th>이메일 인증하기</th>
-                  <td><input type="text" name="emailKey" id="emailKey"
-                     required="required" /> <br> <span class="KeyInfo"></span></td>
-                  <td class="righttd"><input type="button" id="emailKeyResult"
+                  <td><input type="text" name="emailKey1" id="emailKey1"
+                     required="required" /> <br> <span class="KeyInfo1"></span></td>
+                  <td class="righttd"><input type="button" id="emailKeyResult1"
                      value="인증 하기" disabled /> <input type="hidden"
-                     id="emailDoubleChk" /></td>
+                     id="emailDoubleChk1" /></td>
 
                </tr>
                
@@ -752,4 +685,71 @@ input#emailKeyResult {
 </body>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="${contextPath }/resources/js/sellerForm.js"></script>
+<script>
+var code = "";
+$("#emailBTN1").click(function() {
+   var _email1 = $("#s_email1").val();
+   var _email2 = $("#s_email2").val();
+   var _email = _email1 + "@" + _email2;
+   console.log("_email : " + _email);
+
+   $.ajax({
+      type : "GET",
+      url : "${contextPath}/Email/emailtest.do",
+      data : {
+         email : _email
+      },
+      success : function(data) {
+         if (data.key == null) {
+            alert(data.message);
+            $("#s_email1").attr("autofocus", true);
+            $(".successEmailChk1").text("유효한 이메일 주소를 입력해주세요.");
+            $(".successEmailChk1").css("color", "red");
+            $(".successEmailChk1").css("font-size", "5px");
+
+         } else {
+            alert(data.message);
+            $("#s_email1").attr("disabled", false);
+            $("#s_email2").attr("disabled", false);
+            $("#emailKeyResult1").attr("disabled", false);
+            $("#emailChk2").css("display", "inline-block");
+            $(".successEmailChk1").text("전송완료.");
+            $(".successEmailChk1").css("font-size", "5px");
+            $(".successEmailChk1").css("color", "green");
+
+            code = data.key;
+         }
+      }
+   });
+});
+// 이메일 키 인증 관련 코드
+$("#emailKeyResult1").click(function() {
+   if ($("#emailKey1").val() == code) {
+      $(".KeyInfo1").text("인증번호가 일치합니다.");
+      $(".KeyInfo1").css("color", "green");
+      $(".KeyInfo1").css("font-size", "5px");
+      $("#emailDoubleChk1").val("true");
+      $("#emailKey1").attr("disabled", true);
+
+   } else {
+      $(".KeyInfo1").text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+      $(".KeyInfo1").css("color", "red");
+      $(".KeyInfo1").css("font-size", "5px");
+      $("#emailDoubleChk1").val("false");
+      $("#emailKey1").attr("autofocus", true);
+   }
+});
+
+$(function() {
+   $('#select').change(function() {
+      if ($('#select').val() == 'directly') {
+         $('#s_email2').attr("disabled", false);
+         $('#s_email2').val("");
+         $('#s_email2').focus();
+      } else {
+         $('#s_email2').val($('#select').val());
+      }
+   })
+});
+</script>
 </html>
