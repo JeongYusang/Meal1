@@ -92,10 +92,10 @@
 		,#{g_inbun}
 		,#{g_bang}
 		<if test="g_saleDate1 != null and !(g_saleDate1.equals(''))">
-			,#{g_saleDate3}
+			,#{g_saleDate1}
 		</if>
 		<if test="g_saleDate2 != null and !(g_saleDate2.equals(''))">
-			,#{g_saleDate4}
+			,#{g_saleDate2}
 		</if>
 		<if test="g_saleWon != null and !(g_saleWon.equals(''))">
 			,#{g_saleWon}

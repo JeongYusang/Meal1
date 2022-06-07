@@ -428,8 +428,9 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
             }
          }
          goodsService.updateGoods(newGoodsMap);
+         
          message = "<script>";
-         message += " alert('상품수정이 완료되었습니다..');";
+         message += " alert('상품수정이 완료되었습니다..');";	
          // 컨트롤러 내부를 거쳐서 가는거기 때문에 바인딩해줄 요소가 없음
          message += " location.href='" + multipartRequest.getContextPath() + "/main/main.do';";
          message += " </script>";
