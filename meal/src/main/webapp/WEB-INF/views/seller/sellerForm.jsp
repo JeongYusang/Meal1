@@ -110,73 +110,6 @@ function result(){
 	       });  //end ajax  	
 	}
 	 
-	 var code = "";
-		$("#emailBTN").click(function() {
-			var _email1 = $("#s_email1").val();
-			var _email2 = $("#s_email2").val();
-			var _email = _email1 + "@" + _email2;
-			console.log("_email : " + _email);
-
-			$.ajax({
-				type : "GET",
-				url : "${contextPath}/Email/emailtest.do",
-				data : {
-					email : _email
-				},
-				success : function(data) {
-					if (data.key == null) {
-						alert(data.message);
-						$("#s_email1").attr("autofocus", true);
-						$(".successEmailChk").text("유효한 이메일 주소를 입력해주세요.");
-						$(".successEmailChk").css("color", "red");
-						$(".successEmailChk").css("font-size", "5px");
-
-					} else {
-						alert(data.message);
-						$("#s_email1").attr("disabled", false);
-						$("#s_email2").attr("disabled", false);
-						$("#emailKeyResult").attr("disabled", false);
-						$("#emailChk2").css("display", "inline-block");
-						$(".successEmailChk").text("전송완료.");
-						$(".successEmailChk").css("font-size", "5px");
-						$(".successEmailChk").css("color", "green");
-
-						code = data.key;
-					}
-				}
-			});
-		});
-		// 이메일 키 인증 관련 코드
-		$("#emailKeyResult").click(function() {
-			if ($("#emailKey").val() == code) {
-				$(".KeyInfo").text("인증번호가 일치합니다.");
-				$(".KeyInfo").css("color", "green");
-				$(".KeyInfo").css("font-size", "5px");
-				$("#emailDoubleChk").val("true");
-				$("#emailKey").attr("disabled", true);
-
-			} else {
-				$(".KeyInfo").text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
-				$(".KeyInfo").css("color", "red");
-				$(".KeyInfo").css("font-size", "5px");
-				$("#emailDoubleChk").val("false");
-				$("#emailKey").attr("autofocus", true);
-			}
-		});
-		
-		$(function() {
-			$('#select').change(function() {
-				if ($('#select').val() == 'directly') {
-					$('#s_email2').attr("disabled", false);
-					$('#s_email2').val("");
-					$('#s_email2').focus();
-				} else {
-					$('#s_email2').val($('#select').val());
-				}
-			})
-		});
-	 
-	 
 /* 	 function chkPW(){
 
 			var pw = $("#pwd").val();
@@ -297,10 +230,18 @@ tr.box {
 	color: black;
 	width: 100%;
 	height: 50px;
-	margin-top: 1px;
-    margin-bottom: 1px;
 }
 
+#frmSel input#hp2 {
+	background-color: rgba(255, 192, 207, 0.7);
+	border: 1px solid rgba(255, 192, 207, 1);
+	border-radius: 3px;
+	font-size: 15px;
+	font-weight: bold;
+	color: black;
+	width: 100%;
+	height: 50px;
+}
 
 #frmSel input#hpA1 {
 	background-color: rgba(255, 192, 207, 0.7);
@@ -313,6 +254,11 @@ tr.box {
 	height: 50px;
 }
 
+#frmSel select#email3 {
+	width: 175px;
+	border-radius: 4px;
+	height: 26px;
+}
 
 #frmSel input#zipcode1 {
 	background-color: rgba(255, 192, 207, 0.7);
@@ -323,10 +269,13 @@ tr.box {
 	color: black;
 	width: 100%;
 	height: 50px;
-	margin-top: 1px;
-    margin-bottom: 1px;
 }
 
+#frmSel select#email3 {
+	width: 170px;
+	border-radius: 4px;
+	font-size: smaller;
+}
 
 #frmSel input#addmember {
 	background-color: rgba(255, 192, 207, 0.7);
@@ -359,6 +308,7 @@ tr.box {
 
 #frmSel td.righttd {
 	padding-left: 0;
+	padding-right:
 }
 
 #frmSel td#zipcode22 {
@@ -385,19 +335,7 @@ tr.box {
 	font-size: medium;
 }
 
-#frmSel input#cheche1 {
-	height: 20px;
-}
-
-#frmSel input#cheche2 {
-	height: 20px;
-}
-
-#frmSel input#cheche3 {
-	height: 20px;
-}
-
-#frmSel input#cheche4 {
+#frmSel input.cheche {
 	height: 20px;
 }
 
@@ -405,33 +343,6 @@ tr.box {
     font-size: small;
     color: #6666664d;
     padding-left: 0px;
-    text-align: center;
-}
-
-input#emailBTN {
-    background-color: rgba(255, 192, 207, 0.7);
-    border: 1px solid rgba(255, 192, 207, 1);
-    border-radius: 3px;
-    font-size: 15px;
-    font-weight: bold;
-    color: black;
-    width: 100%;
-    height: 50px;
-    margin-top: 1px;
-    margin-bottom: 1px;
-}
-
-input#emailKeyResult {
-    background-color: rgba(255, 192, 207, 0.7);
-    border: 1px solid rgba(255, 192, 207, 1);
-    border-radius: 3px;
-    font-size: 15px;
-    font-weight: bold;
-    color: black;
-    width: 100%;
-    height: 50px;
-    margin-top: 1px;
-    margin-bottom: 1px;
 }
 
 /* 이용약관에 관한 모달 */
@@ -628,61 +539,42 @@ input#emailKeyResult {
 					</tr>
 					<tr class="box">
 						<th>휴대폰*</th>
-						<td><input type="tel" name="s_hp1" id="hp1" required="required" />
-						</td>
+						<td><input type="tel" name="s_hp1" id="hp1"
+							required="required" /></td>
+						<td colspan="2" class="righttd"><input type="button" id="hp2"
+							value="인증 전송" onclick="sms_auth_popup();" /></td>
 					</tr>
-					
+					<tr class="box">
+						<th>번호확인*</th>
+						<td><input type="text" name="hpA" id="hpA"
+							required="required" /></td>
+						<td colspan="2" class="righttd"><input type="button"
+							id="hpA1" value="인증 확인" /></td>
+					</tr>
 					<tr class="box">
 						<th>email*</th>
-						<td><input type="text" name="s_email1" id="s_email1"
-							style="width: 100px"> @ <input type="text" name="s_email2"
-							id="s_email2" style="width: 100px;" value=""> <select
-							style="width: 100px; margin-right: 10px" title="s_email2"
-							id="select">
-								<option value="" disabled selected>E-Mail 선택</option>
-								<option value="directly" id="s_email2">직접 입력하기</option>
-								<option value="naver.com">naver.com</option>
-								<option value="hanmail.net">hanmail.net</option>
-								<option value="hotmail.com">hotmail.com</option>
-								<option value="nate.com">nate.com</option>
-								<option value="yahoo.co.kr">yahoo.co.kr</option>
-								<option value="empas.com">empas.com</option>
-								<option value="freechal.com">freechal.com</option>
-								<option value="korea.com">korea.com</option>
-								<option value="gmail.com">gmail.com</option>
-								<option value="hanmir.com">hanmir.com</option>
-								<option value="paran.com">paran.com</option>
-
-						</select> <br> <span class="successEmailChk"></span></td>
-
-						<td colspan="2" class="righttd"><input type="button"
-							id="emailBTN" value="인증메일 보내기" /></td>
-
+						<td><input type="text" name="s_email1" id="email"
+							required="required" /></td>
+						<td class="righttd"><select name="s_email2" id="email3"
+							onChange="" title="직접입력">
+								<option value="naver.com">@naver.com</option>
+								<option value="yahoo.co.kr">@yahoo.co.kr</option>
+								<option value="hotmail.com">@hotmail.com</option>
+								<option value="paran.com">@paran.com</option>
+								<option value="nate.com">@nate.com</option>
+								<option value="gmail.com">@gmail.com</option>
+						</select></td>
 					</tr>
-					
-					<tr class="box">
-						<th>이메일 인증하기</th>
-						<td><input type="text" name="emailKey" id="emailKey"
-							required="required" /> <br> <span class="KeyInfo"></span></td>
-						<td class="righttd"><input type="button" id="emailKeyResult"
-							value="인증 하기" disabled /> <input type="hidden"
-							id="emailDoubleChk" /></td>
-
-					</tr>
-					
 					<tr class="box">
 						<th>판매자 기준</th>
-						<td>
-							<label for="cheche3"><input type="radio" id="cheche3" name="s_cate" value="P">개인</label> 
-							<label for="cheche4"><input type="radio" id="cheche4" name="s_cate" value="B">법인</label>
-						</td>
+						<td><input type="radio" class="cheche" name="s_cate"
+							value="P">개인 <input type="radio" class="cheche"
+							name="s_cate" value="B">법인</td>
 					</tr>
 					<tr class="box">
 						<th>인증 내역</th>
-						<td>
-							<label for="cheche1"><input type="checkbox" id="cheche1">HACCP</label>
-							<label for="cheche2"><input type="checkbox" id="cheche2">모범음식점</label>
-						</td>
+						<td><input type="checkbox" class="cheche">HACCP<input
+							type="checkbox" class="cheche">모범음식점</td>
 					</tr>
 					<tr class="box">
 						<th rowspan="3">등록번호*</th>
