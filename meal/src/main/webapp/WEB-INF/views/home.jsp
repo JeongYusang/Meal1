@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="section" value="0" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,115 +15,168 @@
 
 
 <style>
-.maingoodslist{
-width:1280px;
-position:inline-flex
-position:relative;
-text-align: center;
-}
-.maingList{
-width:100%;
-position:inline-flex;	
-}
-#searchDetailWrap{
-width:100%;
-height:50px;
-}
-#searchDetailWrap #searchText{
-width:50%;
-height:30px;
-}
-#searchBTN{
-height : 30px;
+.maingoodslist {
+	width: 1280px;
+	position: relative;
+	text-align: center;
 }
 
-.mangList .ul li a{
-display: inline-block;
+.maingoodslist span {
+	text-align: center;
+	padding-right: 10px;
 }
-.maingList .ul li, .maingoodslist .ol li {
-display: inline-block;
-text-align: center;
+
+.maingList {
+	width: 100%;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
 }
-#main-wrap .img {
+
+#searchDetailWrap {
+	width: 100%;
+	height: 130px	;
+	border-top: 2px solid #5f0080;
+	border-bottom: 1px solid #5f0080;
+	display: flex;
+	align-content: center;
+	align-items: center;
+	justify-content: center;
+}
+
+#searchDetailWrap #searchText {
+	width: 500px;
+	height: 30px;
+	padding-left: 10px;
+	height: 30px;
+}
+
+#searchBTN {
+	height: 30px;
+	margin-left: 20px;
+}
+
+.maingList .ul li a {
+	display: inline-block;
+}
+
+.maingList .ul li, .maingList .ol li {
+	display: inline-block;
+	text-align: center;
+	height: 320px;
+}
+
+#main-wrap1 .img {
 	display: inline-block;
 	margin: 0 10px 0 10px;
-	
 }
 
-
-#main-wrap a:link {
-	text-decoration: none;
+#main-wrap1 a {
 	color: black;
 }
 
-#main-wrap a:visited {
-	text-decoration: none;
-	color: black;
+#main-wrap1 .b {
+	margin-left: 40px;
+	text-align: center;
 }
 
-#main-wrap a:active {
-display:block;
-	text-decoration: none;
-	color: black;
+.main-wrap1 {
+	width: 1280px;
 }
 
-#main-wrap a:hover {
-	text-decoration: none;
-	color: black;
+.w3-bar {
+	margin-left: 50px;
 }
 
-#main-wrap a{
-color: black;
+.goodsPrice {
+	text-decoration: line-through
 }
-
-#main-wrap .b{
-margin-left:40px;
-text-align:center;
-}
-#main-wrap{
-position:relative;
-display:flex;
-justify-content: center;
-align-items: center;
-width:1280px;
-}
-.w3-bar{
-margin-left: 50px;
+#allergyInfo{
+width: 1000px;
+margin-bottom : 20px;
 }
 </style>
 </head>
 <body>
 
-<div id="main-wrap">
+	<div id="main-wrap1">
 
 
-	<div class="maingoodslist">
-	
-	<div id="searchDetailWrap">
-	검색조건 <input type = "text" name="search" id="searchText" placeholder="검색조건을 기입해주세요."> 
-	<input type ="button" id="searchBTN" value="검색하기">
-	</div>
-		<br>
-<div class="w3-bar">
-  <a href="#" class="w3-bar-item">가격낮은순</a>
-  <a href="#" class="w3-bar-item">가격높은순</a>
-  <a href="#" class="w3-bar-item">신상품순</a>
-  <a href="#" class="w3-bar-item">평점높은순</a>
-</div>
-	<div class="maingList">
-		<ul class="ul">
-			<li><a href="${contextPath }/main/goodsDetail.do"><img src="${contextPath}/resources/image/new1.png" width="250px"
-					height="250px"><br>서울식 소불고기 전골<br>19800월</a></li>
-			<li><a href="${contextPath }/main/goodsDetail.do"><img src="${contextPath}/resources/image/new2.png" width="250px"
-					height="250px"><br>볼케이노순두부전골<br>18900원</a></li>
-			<li><a href="${contextPath }/main/goodsDetail.do"><img src="${contextPath}/resources/image/new3.png" width="250px"
-					height="250px"><br>피스타<br>10000원</a></li>
-			<li><a href="${contextPath }/main/goodsDetail.do"><img src="${contextPath}/resources/image/new4.PNG" width="250px"
-					height="250px"><br>포크찹 스테이크<br>30000월</a></li>
-		</ul>
-		
-	</div>
-	</div>
+		<div class="maingoodslist">
+			<h1>검색하신 내용은 ${text }입니다.</h1>
+			<div>	</div>
+			<div id="searchDetailWrap">
+				<form action="${contextPath }/search/SearchGoods.do">
+			<div id="allergyInfo">
+			<span>제외 성분</span>
+			<br>
+					<input type="checkbox" value="갑각류" id="g_allergy_M1" >갑각류
+         	<input type="checkbox" value="견과류" id="g_allergy_M2" >견과류
+         	<input type="checkbox" value="대두" id="g_allergy_M3" >대두
+         	<input type="checkbox" value="유제품" id="g_allergy_M4" >유제품
+         	<input type="checkbox" value="계란류" id="g_allergy_M5" >계란류
+         	<input type="checkbox" value="밀" id="g_allergy_M6" >밀
+         	<input type="hidden" id="g_allergy_M" name="g_allergy_M" value="">
+         	</div>
+         	<div>
+					<span>검색조건 </span> <input type="text" name="text" id="searchText"
+						placeholder="검색조건을 기입해주세요."> <input type="submit"
+						id="searchBTN" value="검색하기">
+						</div>
+				</form>
+			</div>
+			<br>
+			<div class="w3-bar">
+				<a href="#" class="w3-bar-item">가격낮은순</a> <a href="#"
+					class="w3-bar-item">가격높은순</a> <a href="#" class="w3-bar-item">신상품순</a>
+				<a href="#" class="w3-bar-item">평점높은순</a>
+			</div>
+			<div class="maingList">
+				<!--썸네일 메소드를 이용한것  -->
+				<ul class="ul">
+					<c:forEach var="item" items="${searchList }" >
+
+
+						<li>
+						<div>
+						<a
+							href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id }"><img
+								src="${contextPath}/download1.do?g_id=${item.g_id }&cate=main"
+								width="250px" height="250px"></a>
+								 <br>${item.g_name } <br>
+							</div>
+							<div>
+							<c:if
+									test="${empty item.g_saleprice or item.g_saleprice eq 0 }">
+									<br> 
+								가격: ${item.g_price }원
+								</c:if> <c:if
+									test="${not empty item.g_saleprice and item.g_saleprice ne 0}">
+									<span class="goodsPrice">가격 : ${item.g_price }원</span>
+									<br> 할인 가격 : ${item.g_saleprice }원
+								</c:if> 
+							</div></li>
+					</c:forEach>
+				</ul>
+			</div>
+			<center>
+						<div class="" id="pagination">
+							<c:forEach var="page" begin="1" end="9" step="1">
+								<c:if test="${section >0 && page==1 }">
+									<a
+										href="${contextPath}/search/SearchGoods.do?section=${section}-1&pageNum=${(section-1)*10+1 }&text=${text}">preview</a>
+								</c:if>
+								<a
+									href="${contextPath}/search/SearchGoods.do?section=${section}&pageNum=${page}&text=${text}">${(section)*10 +page}
+								</a>
+								<c:if test="${page ==10 }">
+									<a
+										href="${contextPath}/search/SearchGoods.do?section=${section}+1&pageNum=${section*10}+1&text=${text}">next</a>
+								</c:if>
+							</c:forEach>
+						</div>
+					</center>
+		</div>
 	</div>
 
 

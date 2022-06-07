@@ -35,7 +35,7 @@
 
 #searchDetailWrap {
 	width: 100%;
-	height: 80px;
+	height: 130px	;
 	border-top: 2px solid #5f0080;
 	border-bottom: 1px solid #5f0080;
 	display: flex;
@@ -91,6 +91,10 @@
 .goodsPrice {
 	text-decoration: line-through
 }
+#allergyInfo{
+width: 1000px;
+margin-bottom : 20px;
+}
 </style>
 </head>
 <body>
@@ -100,11 +104,25 @@
 
 		<div class="maingoodslist">
 			<h1>검색하신 내용은 ${text }입니다.</h1>
+			<div>	</div>
 			<div id="searchDetailWrap">
 				<form action="${contextPath }/search/SearchGoods.do">
+			<div id="allergyInfo">
+			<span>제외 성분</span>
+			<br>
+					<input type="checkbox" value="갑각류" id="g_allergy_M1" >갑각류
+         	<input type="checkbox" value="견과류" id="g_allergy_M2" >견과류
+         	<input type="checkbox" value="대두" id="g_allergy_M3" >대두
+         	<input type="checkbox" value="유제품" id="g_allergy_M4" >유제품
+         	<input type="checkbox" value="계란류" id="g_allergy_M5" >계란류
+         	<input type="checkbox" value="밀" id="g_allergy_M6" >밀
+         	<input type="hidden" id="g_allergy_M" name="g_allergy_M" value="">
+         	</div>
+         	<div>
 					<span>검색조건 </span> <input type="text" name="text" id="searchText"
 						placeholder="검색조건을 기입해주세요."> <input type="submit"
 						id="searchBTN" value="검색하기">
+						</div>
 				</form>
 			</div>
 			<br>
