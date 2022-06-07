@@ -13,6 +13,14 @@
 <head>
 <meta charset="UTF-8">
 <title>주문완료</title>
+<script>
+window.onload = function() {
+    if(!window.location.hash) {
+        window.location = window.location + '#loaded';
+        window.location.reload();
+    }
+}
+</script>
 <style>
 body {
 	background: white;
@@ -116,7 +124,7 @@ body {
 									src="http://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_list.gif"
 									alt="내역보기" /></a></th>
 							<th scope="col" class="{$total_sale_display|display}">사용
-								마일리지</span>
+								마일리지
 							</th>
 							<th scope="col">총 결제금액</th>
 						</tr>

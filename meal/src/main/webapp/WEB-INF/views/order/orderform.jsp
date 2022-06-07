@@ -67,7 +67,6 @@
 				}).open();
 	}
 	
-	var date1 = new Date();
 
 	var IMP = window.IMP; // 생략 가능
 	IMP.init('imp53396567');
@@ -78,7 +77,7 @@
 							pay_method : 'card',
 							merchant_uid : 'merchant_' + new Date().getTime(),
 							name : document.getElementById("g_name").value,
-							amount : parseInt(document.getElementById("final_total_Price").value), //판매 가격
+							amount : document.getElementById("final_total_Price").value, //판매 가격
 							buyer_email : '${memberInfo.u_email1} + ${memberInfo.u_email2}',
 							buyer_name : '${memberInfo.u_name}',
 							buyer_tel : '${memberInfo.u_hp1}',
@@ -107,7 +106,7 @@
 											receiver_addr3 : document.getElementById("namujiAddress").value,
 											deliver_message : document.getElementById("deliver_message").value,
 											deliver_method : document.getElementById("deliver_method").value,
-											o_useMile : document.getElementById('o_useMile').value,
+											o_useMile : document.getElementById('o_useMile').value
 										}
 							         }).done(function(data) {
 								            if ( everythings_fine ) {
@@ -122,12 +121,12 @@
 								            }
 								         });
 								         //성공시 이동할 페이지
-							         	location.href="${contextPath}/order/OrderResult.do";
+							         	location.replace("${contextPath}/order/OrderResult.do");
 								      } else {
 								         msg = '결제에 실패하였습니다.';
 								         msg += '에러내용 : ' + rsp.error_msg;
 								         //실패시 이동할 페이지
-								         location.href="${contextPath}/order/OrderForm.do";
+								         location.href="${contextPath}/order/OrderForm.do?g_id=${goodsVO.g_id}&o_goods_qty=${orderVO.o_goods_qty}";
 								         alert(msg);
 								      }
 								   });

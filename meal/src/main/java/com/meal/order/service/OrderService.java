@@ -22,10 +22,12 @@ public interface OrderService {
 
 	public String overlappedO_id(int o_id) throws Exception;
 	
-	public List<OrderVO> OrderResult (int parentNo) throws Exception;
+	public List<OrderVO> OrderResult (String parentNo) throws Exception;
 
 	public List<OrderVO> UserboardOrderListPage(HashMap<String, Object> pagingMap)throws Exception;
 
 	public List<OrderVO> tabpageorderlist(HashMap<String, Object> infoMap);
+
+	public String selectMaxParentNO(String u_id)throws Exception;
 
 }

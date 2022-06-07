@@ -88,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public List<OrderVO> OrderResult (int parentNo) {
+	public List<OrderVO> OrderResult (String parentNo) {
 		return orderDAO.OrderResult(parentNo);
 	}
 
@@ -102,6 +102,11 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderVO> tabpageorderlist(HashMap<String, Object> infoMap) {
 		List<OrderVO> listInfo = (List<OrderVO>) orderDAO.tabpageorderlist(infoMap);
 		return listInfo;
+	}
+
+	@Override
+	public String selectMaxParentNO(String u_id) throws Exception {
+		return orderDAO.selectMaxParentNO(u_id);
 	}
 
 }
