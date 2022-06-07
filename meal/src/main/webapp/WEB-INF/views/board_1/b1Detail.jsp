@@ -259,7 +259,8 @@ function fn_review(url,b_1_id){
 
 			<input type=button value="목록"
 				onClick="fn_return('${contextPath}/board1/selectBoard1List.do')" />
-			<input type=button value="답글" onClick="fn_review('${contextPath}/board1/board1Reviewform.do', ${board1Info.b_1_id})" />
+			<input type=button value="답글"
+				onClick="fn_review('${contextPath}/board1/board1Reviewform.do', ${board1Info.b_1_id})" />
 		</div>
 
 		<form name="frmArticle" method="get" action="${contextPath}"
@@ -272,23 +273,30 @@ function fn_review(url,b_1_id){
 							value="${board1Info.b_1_id}" disabled /> <input type="hidden"
 							name="b_1_id" value="${board1Info.b_1_id}" /></td>
 					</tr>
-						<c:choose>
-								<c:when test="${not empty board1Info.u_id }">
-									<tr>
-										<th class="td1">작성자</th>
-										<td class="td2"><input type=text value="${board1Info.u_id}"
-							name="u_id" disabled />
-							</td>
-									</tr>
-								</c:when>
-								<c:when test="${not empty board1Info.s_id }">
-									<tr>
-										<th class="td1">작성자</th>
-										<td class="td2"><input type=text value="${board1Info.s_id}" name="s_id" disabled /></td>
-									</tr>
-								</c:when>
-							</c:choose>
-					
+					<c:choose>
+						<c:when test="${not empty board1Info.u_id }">
+							<tr>
+								<th class="td1">작성자</th>
+								<td class="td2"><input type=text value="${board1Info.u_id}"
+									name="u_id" disabled /></td>
+							</tr>
+						</c:when>
+						<c:when test="${not empty board1Info.s_id }">
+							<tr>
+								<th class="td1">작성자</th>
+								<td class="td2"><input type=text value="${board1Info.s_id}"
+									name="s_id" disabled /></td>
+							</tr>
+						</c:when>
+
+						<c:when test="${not empty board1Info.a_id }">
+							<tr>
+								<th class="td1">작성자</th>
+								<td class="td2"><input type=text value="${board1Info.a_id}"
+									name="a_id" disabled /></td>
+							</tr>
+						</c:when>
+					</c:choose>
 					<tr>
 						<th class="td1">제목</th>
 						<td class="td2"><input type=text value="${board1Info.title}"
@@ -312,20 +320,22 @@ function fn_review(url,b_1_id){
 			<c:when test="${not empty ReviewList }">
 
 				<c:forEach var="review" items="${ReviewList}">
-					<div class="board-r-wrap">
 
-						<h1>답글입니다</h1>
-<input type=button value="수정"
-				onClick="fn_update('${contextPath}/board1/board1Updateform.do',${review.b_1_id })" />
-			<input type=button value="삭제"
-				onClick="fn_remove_board('${contextPath}/board1/board1Delete.do',${review.b_1_id })" />
-
-			<input type=button value="목록"
-				onClick="fn_return('${contextPath}/board1/selectBoard1List.do')" />
-			<input type=button value="답글" onClick="fn_review('${contextPath}/board1/board1Reviewform.do', ${board1Info.b_1_id})" />
-					</div>
 
 					<div class='table-wrap1'>
+						<div class="board-r-wrap">
+
+							<h1>답글입니다</h1>
+							<input type=button value="수정"
+								onClick="fn_update('${contextPath}/board1/board1Updateform.do',${review.b_1_id })" />
+							<input type=button value="삭제"
+								onClick="fn_remove_board('${contextPath}/board1/board1Delete.do',${review.b_1_id })" />
+
+							<input type=button value="목록"
+								onClick="fn_return('${contextPath}/board1/selectBoard1List.do')" />
+							<input type=button value="답글"
+								onClick="fn_review('${contextPath}/board1/board1Reviewform.do', ${board1Info.b_1_id})" />
+						</div>
 						<table>
 
 							<c:choose>
@@ -338,7 +348,7 @@ function fn_review(url,b_1_id){
 								<c:when test="${not empty review.a_id }">
 									<tr>
 										<th class="td1">작성자</th>
-										<td class="td2"><c:out value="${review.u_id }" /></td>
+										<td class="td2"><c:out value="${review.a_id }" /></td>
 									</tr>
 								</c:when>
 							</c:choose>
@@ -358,8 +368,8 @@ function fn_review(url,b_1_id){
 			</c:when>
 		</c:choose>
 	</div>
-<c:if test='${not empty message }'>
-<script>
+	<c:if test='${not empty message }'>
+		<script>
 window.onload=function()
 {
   result();
@@ -369,7 +379,7 @@ function result(){
 	alert('${message}');
 }
 </script>
-</c:if>
+	</c:if>
 </body>
 
 </html>
