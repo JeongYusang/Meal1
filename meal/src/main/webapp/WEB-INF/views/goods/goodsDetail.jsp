@@ -264,7 +264,9 @@ h6.titleText {
             </div>
             <br> <a href="./products.jsp" class="button">찜하기</a> 
             <a href="${contextPath}/order/OrderForm.do?g_id=${goodsInfo.g_id}&o_goods_qty=1" class="button"> 구매하기</a> 
-            <a href="${contextPath }/main/cart.do" class="button">장바구니담기</a>
+            <a
+               href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}"
+               class="button">장바구니담기</a>
          </div>
       </div>
       <br>
