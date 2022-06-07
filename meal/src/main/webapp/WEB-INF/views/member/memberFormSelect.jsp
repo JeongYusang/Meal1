@@ -10,76 +10,55 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-
-	#sect {
-    text-align: -webkit-center;
-	}
-	
 	#select1 button#C{
 	display: block;
-    width: 200px;
-    height: 60px;
-    margin-top: 15px;
-    margin-bottom: 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #96FFFF;
-    font-size: 20px;
-    font-weight: 800;
+	width: 200px;
+	height: 40px;
+	margin-top:15px;
+	margin-bottom: 10px;
+	border: none;
+	border-radius: 4px;
+	background-color: #96FFFF;
+	font-size: 20px;
 	}
-	
 	#select1 button#S{
 	display: block;
-    width: 200px;
-    height: 60px;
-    margin-top: 15px;
-    margin-bottom: 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #96FFFF;
-    font-size: 20px;
-    font-weight: 800;
+	width: 200px;
+	height: 40px;
+	margin-top:10px;
+	margin-bottom: 10px;
+	border: none;
+	border-radius: 4px;
+	background-color: #96FFFF;
+	font-size: 20px;
 	}
-	
 	#select1 button#kakao-login-btn{
 	display: block;
 	width: 200px;
-	height: 60px;
+	height: 40px;
 	margin-top:15px;
 	margin-bottom: 10px;
 	border: none;
 	border-radius: 4px;
 	background: rgb(252,229,30);
 	font-size: 15px;
-	text-align: center;
-	font-weight: bold;
+	text-align: right;
 	}
-	
 	#select1 button#naver-login-btn{
 	display: block;
 	width: 200px;
-	height: 60px;
+	height: 40px;
 	margin-top:10px;
 	border: none;
 	border-radius: 4px;
 	background: rgb(40,209,17);
 	font-size: 15px;
-	text-align: center;
-	font-weight: bold;
+	text-align: right;
 	}
-	
-	p {
-	text-align: center;
-	font-size: medium;
-	}
-	
-	h1 {
-    font-size: xx-large;
-}
 </style>
 </head>
 <body>
-<section id="sect">
+<section>
 	<form id="frmLogin" name="frmLogin" method="post"  action="#">
 		<h1>회원가입</h1>
 		너도요를 이용하시려면 회원가입을 하셔야 합니다.

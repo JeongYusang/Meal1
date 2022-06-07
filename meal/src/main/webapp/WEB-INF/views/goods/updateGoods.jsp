@@ -174,75 +174,28 @@ function check1() {
 
 <style>
 .goodsform textarea {
-	height: 10.25em;
-    width: 20.25em;
-    border: 1px solid;
-    resize: none;
+	height: 6.25em;
+	border: 1px solid;
+	resize: none;
 }
 
-th.boxhead{
-text-align: left;
-font-size: x-large;
- }
- 
- td.boxbody {
-font-size: x-large;
+.goodsform th {
+	text-align: left;
 }
 
-tr.box {
-width: 700px;
+#submit .button {
+	margin: auto;
 }
-
-input {
-font-size: large;
-height: 31px
-}
-
-select {
-height: 31px;
-}
-
-input#btnOverlapped {
-    margin: 10px 0px 10px 0px;
-    background: #ffd3dd;
-    border: 1px solid;
-    border-radius: 4px;
-    color: #666666a3;
-}
-
-input.delDate {
-    margin: 10px 0px 10px 0px;
-    background: #ffd3dd;
-    border: 1px solid;
-    border-radius: 4px;
-    color: #666666a3;
-}
-
 
 #goodsform-container h1 {
-text-align: center;
-background-color: #ffd3dd;
-margin: 0px;
-height: 70px;
-line-height: 65px;
-font-size: xx-large;
-font-weight: 500;
+	text-align: center;
+	background-color: #ffc0cb;
+	margin: 0px;
 }
 
 #goodsform-container {
-border: 1px solid;
-width: 700px;
-height: 100%;
-text-align: -webkit-center;
-margin: 10px 0px 10px 0px;
-}
-
-td.subBtn {
-text-align: -webkit-center;
-}
-
-input.imgex {
-color: white;
+	border: solid 1px;
+	margin: 10px;
 }
 </style>
 <body>
@@ -256,31 +209,31 @@ color: white;
 				
 			<table class="goodsform">
 				<tr class="box">
-					<th class="boxhead">상품사진*</th>
-					<td class="boxbody"><img id="" width="150px" height="150px"
+					<th>상품사진*</th>
+					<td><img id="" width="150px" height="150px"
 						src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=main">${imageList[0].fileName}
-						<br> <input type="file" name="main" class="imgex"/></td>
+						<br> <input type="file" name="main" /></td>
 				</tr>
 				<tr class="box">
-					<th class="boxhead">상품명*</th>
-					<td class="boxbody"><input type="text" name="g_name" id="_g_name"
+					<th>상품명*</th>
+					<td><input type="text" name="g_name" id="_g_name"
 						value="${goodsInfo.g_name }" required="required"> <!--  	<input type="hidden" name="g_name" id="g_name"> -->
 						<input type="button" value="중복확인" onclick="fn_overlapped()"
 						id="btnOverlapped"></td>
 				</tr>
 				<tr class="box">
-					<th class="boxhead">상품가격*</th>
-					<td class="boxbody"><input type="text" name="g_price" id="g_price"
+					<th>상품가격*</th>
+					<td><input type="text" name="g_price" id="g_price"
 						value="${goodsInfo.g_price }" required="required" /></td>
 				</tr>
 				<tr class="box">
-					<th class="boxhead">할인가격</th>
-					<td class="boxbody"><input type="text" name="g_saleWon" id="g_saleWon"
+					<th>할인가격</th>
+					<td><input type="text" name="g_saleWon" id="g_saleWon"
 						value="${goodsInfo.g_saleWon }" required="required"></td>
 				</tr>
 				<tr class="box">
-					<th class="boxhead">할인율</th>
-					<td class="boxbody"><select name="g_salePer" id="g_salePer"
+					<th>할인율</th>
+					<td><select name="g_salePer" id="g_salePer"
 						title="${goodsInfo.g_salePer}">
 							<option value="${goodsInfo.g_salePer }">${goodsInfo.g_salePer }</option>
 							<option value="0">0</option>
@@ -297,29 +250,29 @@ color: white;
 					</select>%</td>
 				</tr>
 				<tr class="box">
-					<th class="boxhead">적용된 할인기간</th>
-					<td class="boxbody"><fmt:formatDate value="${goodsInfo.g_saleDate1 }"
-							type="Date" dateStyle="short" /><fmt:formatDate
+					<th>적용된 할인기간</th>
+					<td><fmt:formatDate value="${goodsInfo.g_saleDate1 }"
+							type="Date" dateStyle="short" /> ~ <fmt:formatDate
 							value="${goodsInfo.g_saleDate2 }" type="Date" dateStyle="short" />
 						<input type="hidden" value="${goodsInfo.g_saleDate1}" /> <input
 						type="hidden" value="${goodsInfo.g_saleDate2}" /> <input
-						type="button" onclick="fn_saleDel()" value="기존 세일 삭제하기." class="delDate">
+						type="button" onclick="fn_saleDel()" value="기존 세일 삭제하기.">
 					</td>
 				</tr>
 				<tr class="box">
-					<th class="boxhead">변경할 할인기간</th>
-					<td class="boxbody"><input name="g_saleDate3" id="g_saleDate3" type="date"
+					<th>변경할 할인기간</th>
+					<td><input name="g_saleDate3" id="g_saleDate3" type="date"
 						value="submit"> ~ <input name="g_saleDate4"
 						id="g_saleDate4" type="date" value="submit"></td>
 				</tr>
 				<tr class="box">
-					<th class="boxhead">수량*</th>
-					<td class="boxbody"><input type="text" name="g_amount" id="g_amount"
+					<th>수량*</th>
+					<td><input type="text" name="g_amount" id="g_amount"
 						value="${goodsInfo.g_amount }" required="required" /></td>
 				</tr>
 				<tr class="box">
-					<th class="boxhead">카테고리 설정*</th>
-					<td class="boxbody"><select name="g_cate2" id="g_cate2"
+					<th>카테고리 설정*</th>
+					<td><select name="g_cate2" id="g_cate2"
 						title="${goodsInfo.g_cate2}">
 							<option value="${goodsInfo.g_cate2 }" selected>${goodsInfo.g_cate2 }</option>
 							<option value="찌개/탕/찜">찌개/탕/찜</option>
@@ -331,8 +284,8 @@ color: white;
 					</select></td>
 				</tr>
 				<tr class="box">
-					<th class="boxhead">난이도*</th>
-					<td class="boxbody"><select name="g_nan" id="g_nan" title="${goodsInfo.g_nan}">
+					<th>난이도*</th>
+					<td><select name="g_nan" id="g_nan" title="${goodsInfo.g_nan}">
 							<option value="${goodsInfo.g_nan}" selected>${goodsInfo.g_nan}</option>
 							<option value="상">상</option>
 							<option value="중">중</option>
@@ -340,14 +293,14 @@ color: white;
 					</select></td>
 				</tr>
 				<tr class="box">
-					<th class="boxhead">조리 시간*</th>
-					<td class="boxbody"><input type="text" name="g_time" id="g_time"
+					<th>조리 시간*</th>
+					<td><input type="text" name="g_time" id="g_time"
 						placeholder="조리시간(분)" value="${goodsInfo.g_time}"
 						required="required" /></td>
 				</tr>
 				<tr class="box">
-					<th class="boxhead">보관방법*</th>
-					<td class="boxbody"><select name="g_bang" id="g_bang"
+					<th>보관방법*</th>
+					<td><select name="g_bang" id="g_bang"
 						title="${goodsInfo.g_bang}">
 							<option value="${goodsInfo.g_bang}" selected>${goodsInfo.g_bang}</option>
 							<option value="냉동">냉동</option>
@@ -356,8 +309,8 @@ color: white;
 					</select></td>
 				</tr>
 				<tr class="box">
-					<th class="boxhead">인분수*</th>
-					<td class="boxbody"><select name="g_inbun" id="g_inbun"
+					<th>인분수*</th>
+					<td><select name="g_inbun" id="g_inbun"
 						title="${goodsInfo.g_inbun}">
 							<option value="${goodsInfo.g_inbun}" selected>${goodsInfo.g_inbun}</option>
 							<option value="1~2인분">1~2인분</option>
@@ -366,8 +319,8 @@ color: white;
 					</select></td>
 				</tr>
 				<tr class="box">
-					<th class="boxhead">알러지 유발 성분*</th>
-					<td class="boxbody" colspan="3"><input type="checkbox" name="g_allergy" value="갑각류"
+					<th>알러지 유발 성분*</th>
+					<td colspan="3"><input type="checkbox" name="g_allergy" value="갑각류"
 						id="g_allergy_M1">갑각류<input type="checkbox" name="g_allergy" value="견과류"
 						id="g_allergy_M2">견과류<input type="checkbox" name="g_allergy" value="대두"
 						id="g_allergy_M3">대두<br> <input type="checkbox"
@@ -379,23 +332,23 @@ color: white;
 						<input type ="hidden" name ="allergy" id = "allergyM" value="${goodsInfo.g_allergy_M}">
 				</tr>
 				<tr class="box">
-					<th class="boxhead">알러지 상세항목</th>
-					<td class="boxbody"><textarea id="test" name="g_allergy_D" cols="30" rows="3">${goodsInfo.g_allergy_D}</textarea></td>
+					<th>알러지 상세항목</th>
+					<td><textarea id="test" name="g_allergy_D" cols="30" rows="3">${goodsInfo.g_allergy_D}</textarea></td>
 				</tr>
 				<tr class="box">
-					<th class="boxhead">상세이미지*</th>
-					<td class="boxbody"><img id="g_image" width="150px" height="150px"
+					<th>상세이미지*</th>
+					<td><img id="g_image" width="150px" height="150px"
 						src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=detail">${imageList[1].fileName}
-						<br> <input type="file" name="detail" class="imgex" /></td>
+						<br> <input type="file" name="detail" /></td>
 				</tr>
 				<tr class="box">
-					<th class="boxhead">상세설명*</th>
-					<td class="boxbody"><textarea id="test" name="g_detail1" cols="30" rows="10">${goodsInfo.g_detail1 }</textarea>
+					<th>상세설명*</th>
+					<td><textarea id="test" name="g_detail1" cols="30" rows="10">${goodsInfo.g_detail1 }</textarea>
 						<div id="test_cnt">(0 / 2000)</div></td>
 				</tr>
 				<tr class="box">
-					<td colspan="2" class="subBtn"><input type="submit" value="수정하기"> <input
-						type="button" id="pageBack" value="뒤로가기" onclick="#" class="subBtn"></td>
+					<td colspan="2"><input type="submit" value="수정하기"> <input
+						type="button" id="pageBack" value="뒤로가기" onclick="#"></td>
 				</tr>
 
 
