@@ -134,25 +134,72 @@ function fn_overlapped(){
 
 <style>
 .goodsform textarea {
-    height: 6.25em;
+    height: 10.25em;
+    width: 20.25em;
     border: 1px solid;
     resize: none;
   }
- .goodsform th{
- text-align: left;
+th.boxhead{
+text-align: left;
+font-size: x-large;
  }
+
+tr.box {
+width: 700px;
+}
+
+td.boxbody {
+font-size: x-large;
+}
+ 
+input {
+font-size: large;
+height: 31px
+}
+
+select {
+height: 31px;
+}
+
 #submit .button {
 margin: auto;
 }
 #goodsform-container h1{
 text-align: center;
-background-color: #ffc0cb;
+background-color: #ffd3dd;
 margin: 0px;
+height: 70px;
+line-height: 65px;
+font-size: xx-large;
+font-weight: 500;
 }
 #goodsform-container {
-border: solid 1px;
-margin: 10px;
+border: 1px solid;
+width: 700px;
+height: 100%;
+text-align: -webkit-center;
+margin: 10px 0px 10px 0px;
 }
+
+input#addgoods {
+    margin: 10px 0px 10px 0px;
+    background: #ffd3dd;
+    border: 1px solid;
+    border-radius: 4px;
+    color: #666666a3;
+}
+
+input#btnOverlapped {
+    margin: 10px 0px 10px 0px;
+    background: #ffd3dd;
+    border: 1px solid;
+    border-radius: 4px;
+    color: #666666a3;
+}
+
+input
+
+
 </style>
 <body>
 <div id="goodsform-container">
@@ -161,33 +208,33 @@ margin: 10px;
 <input type="hidden" name="s_id" value= "${sellerInfo.s_id}"/>
    <table class="goodsform">
       <tr class="box">
-         <th>상품사진*</th>
-         <td><input type="file" name="main"  /></td>
+         <th class="boxhead">상품사진*</th>
+         <td class="boxbody"><input type="file" name="main"  /></td>
          
       </tr>
      <tr class="box">
-         <th>상품명*</th>
-         <td>
+         <th class="boxhead" class="boxhead">상품명*</th>
+         <td class="boxbody">
          	<input type="text" name="g_name" id="_g_name" value="" placeholder="상품명" required="required">
    <!--  	<input type="hidden" name="g_name" id="g_name"> -->
     	 	<input type="button" value="중복확인" onclick="fn_overlapped()" id="btnOverlapped">
          </td>
       </tr>
          <tr class="box">
-         <th>상품가격*</th>
-         <td>
-         	<input type="text" name="g_price" id="g_price" required="required" />
+         <th class="boxhead">상품가격*</th>
+         <td class="boxbody">
+         	<input type="text" name="g_price" id="g_price" required="required" placeholder="ex)10000(원)"/>
          </td>
       </tr>
       <tr class="box">
-         <th>할인가격</th>
-         <td>
-         	<input type="text" name="g_saleWon" id="g_saleWon">
+         <th class="boxhead">할인가격</th>
+         <td class="boxbody">
+         	<input type="text" name="g_saleWon" id="g_saleWon" placeholder="ex)1000(원)">
          </td>
       </tr>
       <tr class="box">
-         <th>할인율</th>
-         <td>
+         <th class="boxhead">할인율</th>
+         <td class="boxbody">
              <select name="g_salePer" id="g_salePer">
                  <option value="" selected>선택하세요</option>
                  <option value="" id="g_salePer" >0</option>
@@ -205,21 +252,21 @@ margin: 10px;
       	</td>
       </tr>
       <tr class="box">
-         <th>할인기간</th>
-         	<td>
+         <th class="boxhead">할인기간</th>
+         	<td class="boxbody">
          		<input name="g_saleDate1" id="g_saleDate1" type="date" value="submit"> ~ 
     			<input name="g_saleDate2" id="g_saleDate2" type="date" value="submit">
             </td>
       </tr>
       <tr class="box">
-         <th>수량*</th>
-         <td>
-         	<input type="text" name="g_amount" id="g_amount" placeholder="재고 수량을 입력해주세요" required="required" />
+         <th class="boxhead">수량*</th>
+         <td class="boxbody">
+         	<input type="text" name="g_amount" id="g_amount" placeholder="ex)10(개)" required="required" />
          </td>
       </tr>
       <tr class="box">
-         <th>카테고리 설정*</th>
-         <td>
+         <th class="boxhead">카테고리 설정*</th>
+         <td class="boxbody">
          <div id = "form-div">
                 <input type="radio" id="g_cate21" name="g_cate2" value="찌개/탕/찜" checked>
                 <label for="g_cate21">찌개/탕/찜</label> 
@@ -240,8 +287,8 @@ margin: 10px;
          </td>
       </tr>
       <tr class="box">
-         <th>난이도*</th>
-         <td><div id = "form-div">
+         <th class="boxhead">난이도*</th>
+         <td class="boxbody"><div id = "form-div">
                <input type="radio" id="g_nan1" name="g_nan" value="상" checked>
                 <label for="g_nan1">상</label> 
                 <input type="radio" id="g_nan2" name="g_nan" value="중" checked>
@@ -253,13 +300,13 @@ margin: 10px;
       </tr>
   
       <tr class="box">
-         <th>조리 시간*</th>
-         <td><input type="text" name="g_time" id="g_time" placeholder="조리시간(분)"
+         <th class="boxhead">조리 시간*</th>
+         <td class="boxbody"><input type="text" name="g_time" id="g_time" placeholder="ex)10(분)"
             required="required" /></td>
       </tr>
       <tr class="box">
-         <th>보관방법*</th>
-         <td><div id = "form-div"> 
+         <th class="boxhead">보관방법*</th>
+         <td class="boxbody"><div id = "form-div"> 
          <input type="radio" id="g_bang1" name="g_bang" value="냉동" checked>
                 <label for="g_bang1">냉동</label> 
                 <input type="radio" id="g_bang2" name="g_bang" value="냉장" checked> 
@@ -270,8 +317,8 @@ margin: 10px;
                 </td>
       </tr>
       <tr class="box">
-         <th>인분수*</th>
-         <td><div id = "form-div"> 
+         <th class="boxhead">인분수*</th>
+         <td class="boxbody"><div id = "form-div"> 
          <input type="radio" id="g_inbun1" name="g_inbun" value="1~2인분" checked>
                 <label for="g_inbun1">1~2인분</label> 
                 <input type="radio" id="g_inbun2" name="g_inbun" value="2~3인분" checked> 
@@ -282,8 +329,8 @@ margin: 10px;
                 </div></td>
       </tr>
       <tr class="box">
-         <th>알러지 유발 성분*</th>
-         <td colspan="3" >
+         <th class="boxhead">알러지 유발 성분*</th>
+         <td class="boxbody" colspan="3" >
          	<input type="checkbox" value="갑각류" id="g_allergy_M1" >갑각류
          	<input type="checkbox" value="견과류" id="g_allergy_M2" >견과류
          	<input type="checkbox" value="대두" id="g_allergy_M3" >대두
@@ -295,16 +342,18 @@ margin: 10px;
          </td>
       </tr>
       <tr class="box">
-         <th>알러지 상세항목</th>
-         <td><textarea id="test" name="g_allergy_D" cols="30" rows="3"></textarea></td>
+         <th class="boxhead">알러지 상세항목</th>
+         <td class="boxbody"><textarea id="test" name="g_allergy_D" cols="30" rows="3" placeholder="ex)대두 - 땅콩, 아몬드, 대두가루, 콩기름"></textarea></td>
       </tr>
       <tr class="box">
-         <th>상세이미지*</th>
-         <td><input type="file" name="detail" /></td>
+         <th class="boxhead">상세이미지*</th>
+         <td class="boxbody"><input type="file" name="detail" />
+         
+         </td>
       </tr>
       <tr class="box">
-         <th>상세설명*</th>
-         <td><textarea id="test" name="g_detail1" cols="30" rows="10"></textarea>
+         <th class="boxhead">상세설명*</th>
+         <td class="boxbody"><textarea id="test" name="g_detail1" cols="30" rows="10"></textarea>
             <div id="test_cnt">(0 / 2000)</div></td>
       </tr>
 
