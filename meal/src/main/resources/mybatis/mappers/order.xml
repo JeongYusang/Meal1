@@ -121,9 +121,15 @@
 	   ]]>
 	</select>
 	
-	<select id="OrderResult"  parameterType="Integer" resultMap="orderResult">
+	<select id="OrderResult"  parameterType="String" resultMap="orderResult">
    <![CDATA[
 	   select * from order_tb where parentNo = #{parentNo}
+	   ]]>
+	</select>
+	
+	<select id="MaxParentNo"  parameterType="String" resultType="String">
+   <![CDATA[
+	   select max(parentNo) from order_tb where u_id = #{u_id}
 	   ]]>
 	</select>
 	

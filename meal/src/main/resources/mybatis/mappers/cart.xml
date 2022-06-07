@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.cart">
+
+	<resultMap id="cartResult" type="CartVO">
+		<result property="c_id" column="c_id" />
+		<result property="cate" column="cate" />
+		<result property="g_name" column="g_name" />
+		<result property="fileName" column="fileName" />
+		<result property="g_id" column="g_id" />
+		<result property="c_qty" column="c_qty" />
+		<result property="u_id" column="u_id" />
+	</resultMap>
+	
+<select id="selectCartList"  parameterType="String"  resultMap="cartResult"   >
+	    <![CDATA[
+		select c.c_id, c.g_id, c.u_id, c.c_qty, g.g_price, g.g_name
+		from cart_tb c
+        left outer join goods_tb g on c.g_id = g.g_id 
+		where u_id= #{u_id}
+		]]>
+	</select>
+
+	<select id="selectCountInCart" resultType="String" parameterType="cartVO">
+	    <![CDATA[
+		    select if(count(*), 'true', 'false') from cart_tb
+			where g_id=#{g_id}
+			  and u_id=#{u_id} 
+
+    	]]>
+	</select>
+
+	<insert id="insertGoodsInCart" parameterType="cartVO">
+	    <![CDATA[
+		    	insert into cart_tb(c_id,
+		    							cate,
+		    	                        g_id,
+		    	                        u_id)
+		        				 values(#{c_id},
+		        				 		#{cate},
+    							        #{g_id},
+    							        #{u_id})
+    	]]>
+	</insert>
+
+	<update id="updateCartGoodsQty" parameterType="cartVO">
+	    <![CDATA[
+			update cart_tb
+			       set c_qty=#{c_qty}
+		 	       where u_id=#{u_id}
+			        and g_id=#{g_id}
+    	]]>
+	</update>
+	<delete id="deleteCartGoods" parameterType="int">
+	    <![CDATA[
+	      delete from cart_tb
+	      where c_id=#{c_id}
+    	]]>
+	</delete>
+	
+	<select id="selectMaxCartId" resultType="int">
+	    <![CDATA[
+			select ifnull(max(c_id), 0) + 1 from cart_tb 
+    	]]>
+	</select>
+	
+	</mapper>

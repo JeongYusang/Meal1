@@ -263,9 +263,6 @@ function fn_review(url,b_gr_id){
 	height: 300px;
 }
 
-/* .board_main {
-	border: 1px solid black;
-} */
 #content {
 	margin-left: 30px;
 	font-size: 16px;

@@ -19,6 +19,7 @@
 		<typeAlias type="com.meal.goods.vo.GoodsVO" alias="GoodsVO" />
 		<typeAlias type="com.meal.goods.vo.Img_gVO" alias="Img_gVO" />
 		<typeAlias type="com.meal.admin.vo.ReasonVO" alias="ReasonVO" />
+		<typeAlias type="com.meal.cart.vo.CartVO" alias="CartVO" />
 	</typeAliases>
 </configuration>
 

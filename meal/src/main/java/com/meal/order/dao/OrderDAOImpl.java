@@ -55,7 +55,7 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public List<OrderVO> OrderResult(int parentNo) throws DataAccessException {
+	public List<OrderVO> OrderResult(String parentNo) throws DataAccessException {
 		List<OrderVO> orderList = (List<OrderVO>) sqlSession.selectList("mapper.order.OrderResult", parentNo);
 		return orderList;
 	}
@@ -70,5 +70,11 @@ public class OrderDAOImpl implements OrderDAO {
 	public List<OrderVO> tabpageorderlist(HashMap<String, Object> infoMap) throws DataAccessException {
 		List<OrderVO> listInfo = (List<OrderVO>) sqlSession.selectList("mapper.order.tabpageorderlist", infoMap);
 		return listInfo;
+	}
+
+	@Override
+	public String selectMaxParentNO(String u_id) throws DataAccessException {
+		return (String) sqlSession.selectOne("mapper.order.MaxParentNo", u_id);
+		
 	}
 }

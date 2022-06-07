@@ -284,7 +284,7 @@
                <li class="side-list">
                   <h2>MY활동</h2>
                   <ul class="sidebar-content">
-                     <li><a href="${contextPath}/main/cart.do">장바구니</a></li>
+                     <li><a href="${contextPath}/cart/myCartList.do">장바구니</a></li>
                      <li><a href="${contextPath}/user/wishlist.do">찜한 상품</a></li>
                      <li><a href="${contextPath}/user/mymileage.do">마일리지</a></li>
                      <li><a href="${contextPath}/board1/selectallBoard1.do">나의

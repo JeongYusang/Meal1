@@ -9,31 +9,13 @@
 <meta charset="utf-8">
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+
+<c:forEach var="CartList" items="${CartList}">
+	<c:set var="total"
+		value="${total + (CartList.c_qty * CartList.g_price)}" />
+</c:forEach>
+
 <script>
-
-function init() {
-    sell_price = document.form.sell_price.value;
-    amount = document.form.amount.value;
-    document.form.sum.value = sell_price;
-    change();
- }
-
- function add() {
-    hm = document.form.amount;
-    sum = document.form.sum;
-    hm.value++;
-
-    sum.value = parseInt(hm.value) * sell_price;
- }
-
- function del() {
-    hm = document.form.amount;
-    sum = document.form.sum;
-    if (hm.value > 1) {
-       hm.value--;
-       sum.value = parseInt(hm.value) * sell_price;
-    }
- }
 
  function change() {
     hm = document.form.amount;
@@ -73,45 +55,31 @@ function init() {
 </script>
 
 <style>
-
 #main {
 	margin-top: 30px;
+}
 
-    }
-    
 .cart-wrap {
-	width:100%;
-    height: auto;
-    margin-left: 60px;
-
-	
-	font-family: 'Roboto', sans-serif;
-
+	height: auto;
+	margin-left: 60px;
 }
 
 .container1 {
-position:static;
-width:100%;
-float: left;
-
+	float: left;
 }
 
 .shopping-cart {
-
-    width: 750px;
-    height: 800px;
-    margin: auto;
-    margin-left: 30px;
-    background: #FFFFFF;
-    box-shadow: 1px 2px 3px 0px rgb(0 0 0 / 10%);
-    border-radius: 6px;
-    display: flex;
-    position: relative;
-    flex-direction: column;
-
-	
+	width: 750px;
+	height: 800px;
+	margin: auto;
+	margin-left: 30px;
+	background: #FFFFFF;
+	box-shadow: 1px 2px 3px 0px rgb(0 0 0/ 10%);
+	border-radius: 6px;
+	display: flex;
+	position: relative;
+	flex-direction: column;
 }
-
 
 .title {
 	height: 30px;
@@ -121,53 +89,46 @@ float: left;
 	font-size: 18px;
 	font-weight: 400;
 	color: black;
-	
 }
 
-.item-wrap{
-width:100%;
-display:flex;
-align-items: center;
-/* overflow: hidden; */
+.item-wrap {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	/* overflow: hidden; */
 }
+
 .item {
-width: 100%;
-    padding: 5px 5px;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-/*     overflow: hidden; */
- justify-content: space-between
+	width: 100%;
+	padding: 5px 5px;
+	height: 70px;
+	display: flex;
+	align-items: center;
+	flex-wrap: nowrap;
+	/*     overflow: hidden; */
+	justify-content: space-between
 }
 
 .item:nth-child(3) {
-   border-top: 1px solid #E1E8EE;
-   border-bottom: 1px solid #E1E8EE;
+	border-top: 1px solid #E1E8EE;
+	border-bottom: 1px solid #E1E8EE;
 }
 
 .buttons {
 	position: relative;
-
-
 }
-
 
 .imagegoods {
-
-   height:70px;
-   width:70px;
-} 
-
-
-
-.description-wrap{
-
+	height: 70px;
+	width: 70px;
 }
+
+.description-wrap {
+	
+}
+
 .description {
-
-
-   width:350px;
+	width: 350px;
 }
 
 .description span {
@@ -193,7 +154,7 @@ width: 100%;
 	width: 200px;
 }
 
-.quantity input{
+.quantity input {
 	-webkit-appearance: none;
 	display: inline-block;
 	border: none;
@@ -225,8 +186,6 @@ width: 100%;
 	font-weight: 300;
 }
 
-
-
 .summary {
 	background-color: #eee;
 	border: 1px solid #aaa;
@@ -247,7 +206,7 @@ width: 100%;
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
 	clear: both;
- 	overflow: hidden; 
+	overflow: hidden;
 	padding: 0.5rem 0;
 }
 
@@ -314,135 +273,143 @@ width: 100%;
 	background-color: white;
 }
 
-.favorite{
-width: 80px;
-display: block; 
-vertical-align: top;
-float: right;
+.favorite {
+	width: 80px;
+	display: block;
+	vertical-align: top;
+	float: right;
 }
 
-.cartlogo{
-margin-top: 5px;
- width: 40px;
- height: 40px;
- float: left;
-
+.cartlogo {
+	margin-top: 5px;
+	width: 40px;
+	height: 40px;
+	float: left;
 }
-.cart-count{
-display: inline-block;
-    position: fixed;
-    top: 20%;
-    right: 21%;
-}
-.select{
-display:inline-block; 
 
+.cart-count {
+	display: inline-block;
+	
+}
+
+.select {
+	display: inline-block;
+}
+#delbtn {
+width: 50px;
+}
+.delete{
+width: 83px;
+	padding-top: 27px;
+	text-align: center;
+	font-size: 16px;
+	color: #43484D;
+	font-weight: 300;
 }
 </style>
 </head>
 
 <body>
-<div id="cart-wrap">
-	<div class="container1">
+	<div id="cart-wrap">
+		<div class="container1">
 
-		<div style="display: inline-block;">
+			<div style="display: inline-block;">
 				<div class="shopping-cart">
-				<div class="container2">
-					<img class="cartlogo" src="${contextPath}/resources/image/cart.png" />
-					<div class="title">장바구니</div>
+					<div class="container2">
+						<img class="cartlogo"
+							src="${contextPath}/resources/image/cart.png" />
+						<div class="title">장바구니</div>
 					</div>
-					<div class= "container3">
-					
-					<div class=select>
-						<input type='checkbox' name='animal' value='selectall'
-							onclick='selectAll(this)' /> <b>전체선택</b>
-							</div>
-				
-				<button class="favorite">선택 삭제</button>
-				<button class="favorite">선택 주문</button>
-				</div>
-				
-				<!-- Product #1 -->
-				<div class="item-wrap">
-				<div class="item">
-					<div class="buttons">
-						<input
-							type="checkbox"name='animal'>
-					</div>
+					<div class="container3">
 
-					<div class="image-wrap">
-						<img class="imagegoods" src="${contextPath}/resources/image/new1.png" />
-					</div>
-
-					<div class="description-wrap">
-						<div class="description">
-							<br> <span><a href="${contextPath}/main/goodsDetail.do">포크찹 스테이크</a></span> <span>수량 2개</span>
+						<div class=select>
+							<input type='checkbox' name='animal' value='selectall'
+								onclick='selectAll(this)' /> <b>전체선택</b>
 						</div>
+						<button class="favorite">선택 삭제</button>
+						<button class="favorite">선택 주문</button>
 					</div>
+					<form name = cart>
+					<c:choose>
+						<c:when test="${CartList != null}">
+							<c:forEach var="CartList" items="${CartList}">
 
-					<div class="quantity">
-						<input type="button" onclick="incrementValue()" value="+" /> 
-						<input type="text" name="quantity" value="1" maxlength="2" max="10"
-							size="1" id="number" />
-						<input type="button" onclick="decrementValue()" value="-" />
-					</div>
+								<!-- Product #1 -->
+								<div class="item-wrap">
+									<div class="item">
+										<div class="buttons">
+											<input type="checkbox" name='animal' value="${CartList.g_price}"  onclick="chksum()">
+										</div>
 
-					<div class="total-price">20000원</div>
-				</div>
-</div>
-				<!-- Product #2 -->
-				<div class="item-wrap">
-					<div class="item">
-						<div class="buttons">
-							<input type="checkbox"name='animal'>
-						</div>
+										<div class="image-wrap">
+											<img class="imagegoods"
+												src="${contextPath}/download1.do?g_id=${CartList.g_id}&cate=main" />
+										</div>
 
-						<div class="image-wrap">
-							<img class="imagegoods" src="${contextPath}/resources/image/new1.png" />
-						</div>
-							<div class="description-wrap">
-								<div class="description">
-								<br> <span>볼케이노순두부전골</span> <span>수량 1개</span>
+										<div class="description-wrap">
+											<div class="description">
+												<br> <span><a
+													href="${contextPath}/goods/goodsDetail.do?g_id=${CartList.g_id}">${CartList.g_name}</a></span>
+												<span>${CartList.c_qty}개</span>
+											</div>
+										</div>
+										<div class="quantity">
+											<!-- <input type="button" onclick="incrementValue()" value="+" />
+											<input type="text" name="quantity" value="1" maxlength="2"
+												max="10" size="1" id="number" /> <input type="button"
+												onclick="decrementValue()" value="-" /> -->
+										</div>
+										<div class="total-price">${CartList.g_price}원</div>
+										<div class="delete"><a href="${contextPath}/cart/removeCartGoods.do?c_id=${CartList.c_id}" class="button" id="delbtn"> X</a> </div>
+									</div>
 								</div>
-							</div>
 
-						<div class="quantity">
-							<form name="form" method="get">
-								<input type="button" value=" + " onclick="add();"> <input
-									type=hidden name="sell_price" value="10000"> <input
-									type="text" name="amount" value="1" size="3"
-									onchange="change();"> <input type="button" value=" - "
-									onclick="del();">
-									</form>
-						</div>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<td>주문 내역이 없습니다.</td>
+						</c:otherwise>
+					</c:choose>
+					</form>
 
-						<div class="total-price">20000원</div>
-					</div>
+
+
 				</div>
 			</div>
 		</div>
-</div>
 		<div class="cart-count">
 			<div class="summary">
 				<div class="summary-total-items">
 					<span class="total-items"></span> 총 3개
 				</div>
 				<div class="summary-subtotal">
+					<div class="promo-title">총 금액</div>
+					<div class="subtotal-value final-value" id="basket-subtotal">${total}원</div>
 					<div class="promo-title">총 배송비</div>
-					<div class="subtotal-value final-value" id="basket-subtotal">30000원</div>
-					<div class="promo-title">총 배송비</div>
+					<c:if test="${total >= 30000}">
+					<div class="promo-value final-value" id="basket-promo">0원</div>
+					</c:if>
+					<c:if test="${total < 30000}">
 					<div class="promo-value final-value" id="basket-promo">3000원</div>
+					</c:if>
 				</div>
 				<div class="summary-total">
 					<div class="total-title">총액</div>
-					<div class="total-value final-value" id="basket-total">33000원</div>
+					<c:if test="${total < 30000}">
+					<div class="total-value final-value" id="basket-total">${total + 3000}원</div>
+					</c:if>
+					<c:if test="${total >= 30000}">
+					<div class="total-value final-value" id="basket-total">${total}원</div>
+					</c:if>
 				</div>
 				<div class="summary-checkout">
-					<button class="checkout-btn" onclick="document.location.href='./order1.do'">주문하기</button>
+					<button class="checkout-btn"
+						onclick="document.location.href='./order1.do'">주문하기</button>
+						
 				</div>
 			</div>
 		</div>
-</div>
+	</div>
 
 
 

@@ -53,7 +53,6 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 		ModelAndView mav = new ModelAndView();
 		String viewName = (String) request.getAttribute("viewName");
 		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
-		logger.info("뷰네임 :" + viewName);
 		OrderVO orderVO = new OrderVO();
 		orderVO.setO_goods_qty(o_goods_qty);
 		if (memberInfo != null) {
@@ -84,6 +83,28 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 
 	}
 
+	/*
+	 * @Override
+	 * 
+	 * @RequestMapping(value = "/CartOrderForm.do", method = { RequestMethod.POST,
+	 * RequestMethod.GET }) public ModelAndView CartOrderForm(@RequestParam("g_id")
+	 * int g_id, @RequestParam("o_goods_qty") int o_goods_qty, HttpServletRequest
+	 * request, HttpServletResponse response) throws Exception { HttpSession session
+	 * = request.getSession(); ModelAndView mav = new ModelAndView(); String
+	 * viewName = (String) request.getAttribute("viewName"); MemberVO memberInfo =
+	 * (MemberVO) session.getAttribute("memberInfo"); List<OrderVO> orderList=
+	 * (List<OrderVO>) goodsService.selectGoodsDetail(g_id); int i = 0; for
+	 * (i=0;i<orderList.size();i++) { OrderVO orderVO = orderList.get(i);
+	 * 
+	 * }
+	 * 
+	 * 
+	 * 
+	 * return mav;
+	 * 
+	 * }
+	 */
+
 	@Override
 	@RequestMapping(value = "/insertOrder.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView insertOrder(@ModelAttribute("orderVO") OrderVO _orderVO, HttpServletRequest request,
@@ -92,12 +113,20 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 		HttpSession session = request.getSession();
 		try {
 			int parentNo = orderService.insertOrder(_orderVO);
-			String viewName = (String) session.getAttribute("viewName");
-			String message = "주문완료 되었습니다.";
-			session.setAttribute("parentNo", parentNo);
-			mav.addObject(message);
-			mav.setViewName(viewName);
-			return mav;
+			if (parentNo != 0) {
+				String viewName = (String) session.getAttribute("viewName");
+				String message = "주문완료 되었습니다.";
+				mav.addObject(message);
+				mav.setViewName(viewName);
+				return mav;
+			} else {
+				parentNo = 1;
+				String viewName = (String) session.getAttribute("viewName");
+				String message = "주문완료 되었습니다.";
+				mav.addObject(message);
+				mav.setViewName(viewName);
+				return mav;
+			}
 		} catch (Exception e) {
 			String viewName1 = "redirect:/order/orderform.do";
 			mav.setViewName(viewName1);
@@ -106,36 +135,32 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			return mav;
 		}
 	}
+
 	@Override
 	@RequestMapping(value = "/OrderResult.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView OrderResult(@RequestParam(value = "parentNo", required = false)String parentNo,HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView OrderResult(@RequestParam(value = "parentNo", required = false) String parentNo,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
-		String viewName = (String) request.getAttribute("viewName");
+		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+
 		if (parentNo == null) {
-		try {
-			int _parentNo = (Integer) session.getAttribute("parentNo");
+			String u_id = memberInfo.getU_id();
+			String _parentNo = orderService.selectMaxParentNO(u_id);
 			List<OrderVO> OrderList = orderService.OrderResult(_parentNo);
+			String viewName = (String) request.getAttribute("viewName");
 			mav.addObject("OrderList", OrderList);
 			mav.setViewName(viewName);
-			session.removeAttribute("parentNo");
 			return mav;
-		} catch (Exception e) {
-			String message = "세션이 완료 되었습니다 주문 상세 내역은 마이페이지 주문에서 확인 해주시길 바랍니다";
-			mav.addObject(message);
-			String viewName1 = "";
-			mav.setViewName(viewName1);
+		} else {
+			String viewName = (String) request.getAttribute("viewName");
+			List<OrderVO> OrderList = orderService.OrderResult(parentNo);
+			mav.addObject("OrderList", OrderList);
+			mav.setViewName(viewName);
+			return mav;
 		}
-		
-		return mav;
-	}else {
-		Integer parentNo1 = Integer.parseInt(parentNo);
-		List<OrderVO> OrderList = orderService.OrderResult(parentNo1);
-		mav.addObject("OrderList", OrderList);
-		mav.setViewName(viewName);
 	}
-		return mav;
-	}
+
 	@Override
 	@RequestMapping(value = "/selectUserOrders.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView selectUserOrders(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
@@ -156,8 +181,8 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			pagingMap.put("u_id", u_id);
 			List<OrderVO> OrderVO = orderService.UserboardOrderPage(pagingMap);
 			List<OrderVO> OrderList = orderService.selectUserOrders(u_id);
-			for(OrderVO item : OrderList){
-				int o_id =  item.getO_id();
+			for (OrderVO item : OrderList) {
+				int o_id = item.getO_id();
 				String review = orderdao.overlappedO_id(o_id);
 				item.setReview(review);
 			}
@@ -176,13 +201,14 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 		}
 		return mav;
 	}
-	
+
 	@Override
 	@RequestMapping(value = "/selectUserOrderList.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView selectUserOrderList(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+	public ModelAndView selectUserOrderList(
+			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum,
-			@RequestParam(value = "delivery_state") String delivery_state,HttpServletRequest request,
+			@RequestParam(value = "delivery_state") String delivery_state, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		String viewName = (String) request.getAttribute("viewName");

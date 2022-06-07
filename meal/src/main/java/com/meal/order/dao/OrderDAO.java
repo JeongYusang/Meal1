@@ -22,11 +22,13 @@ public interface OrderDAO {
 
 	public String overlappedO_id(int o_id) throws DataAccessException;
 
-	public List<OrderVO> OrderResult(int parentNo) throws DataAccessException;
+	public List<OrderVO> OrderResult(String parentNo) throws DataAccessException;
 
 	public List<OrderVO> UserboardOrderListPage(HashMap<String, Object> pagingMap)throws DataAccessException;
 
 	public List<OrderVO> tabpageorderlist(HashMap<String, Object> infoMap)throws DataAccessException;
+
+	public String selectMaxParentNO(String u_id)throws DataAccessException;
 
 
 }
