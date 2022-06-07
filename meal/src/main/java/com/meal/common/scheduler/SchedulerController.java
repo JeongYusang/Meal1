@@ -31,15 +31,13 @@ public class SchedulerController {
 		String batchResult = "성공";
 		try {
 			// 해당 상품조회는 상품등록후 24시간이 지난상황의상품을 검색해줌.
-			List<GoodsVO> newGoodsList = (List<GoodsVO>) goodsDAO.selectNew_Goods();
+			List<GoodsVO> newGoodsList = (List<GoodsVO>) goodsService.selectNew_Goods();
 			for (GoodsVO item : newGoodsList) {
-				goodsDAO.updateNomalGoods(item);
+				goodsService.updateNomalGoods(item);
 				System.out.println(item.getG_name());
 				logger.debug("goodsCateUpdate");
 			}
-		} catch (
-
-		Exception e) {
+		} catch (Exception e) {
 			batchResult = "실패";
 		}
 		Calendar calendar = Calendar.getInstance();
@@ -67,8 +65,8 @@ public class SchedulerController {
 
 				if (goodsSaleP != 0) {
 					// 퍼센트 할인일경우
-					goodsSaleP = (100 - goodsSaleW) % 100;
-					salePrice = goodsPrice * goodsSaleP;
+					goodsSaleP = 100 - goodsSaleP;
+					salePrice = goodsPrice * goodsSaleP / 100 ;
 					item.setG_saleprice(salePrice);
 					logger.info("goodsPrice: " + goodsPrice);
 					logger.info("goodsSaleP: " +goodsSaleP);

@@ -58,7 +58,7 @@ public class BaseController {
 	public ModelAndView main(@RequestParam(value = "message", required = false) String message,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
-		// 메인창에 띄워줄 상품 정보를 저장 추후 쿼리를 바꿔줄 예정이긴함
+		// 메인창에 띄워줄 상품 정보를 저장 추후 인기상품에 대한 쿼리는 스케줄러로 추가예정
 		Map<String, List<GoodsVO>> goodsMap = (Map<String, List<GoodsVO>>) goodsService.selectAllGoods();
 		System.out.println("베이스컨트롤러 메인 메소드");
 		ModelAndView mav = new ModelAndView();
