@@ -140,6 +140,7 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 	@Override
 	@RequestMapping(value = "/selectBoard1List.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView selectBoard1List(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+			@RequestParam(value = "message", required = false) String message,
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -148,7 +149,7 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 		HttpSession session = request.getSession();
 		MemberVO memberVO = (MemberVO) session.getAttribute("memberInfo");
 		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
-		String message = (String) request.getAttribute("message");
+		
 		if(message != null) {
 		mav.addObject("message",message);
 		}
@@ -173,6 +174,7 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 				}
 			}
 		}
+		mav.addObject("message", message);
 		mav.addObject("board1", board1);
 		return mav;
 	}
@@ -205,7 +207,7 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 		HttpSession session = request.getSession();
 		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 		SellerVO sellerInfo = (SellerVO) session.getAttribute("sellerInfo");
-		AdminVO adminInfo = (AdminVO) session.getAttribute("AdminVO");
+		AdminVO adminInfo = (AdminVO) session.getAttribute("AdminInfo");
 		System.out.println("member :" + memberInfo + "  seller :" + sellerInfo + "  admin : " + adminInfo);
 		if (memberInfo == null && sellerInfo == null && adminInfo == null) {
 			String viewName1 = "redirect:/board1/selectBoard1List.do";
@@ -221,37 +223,6 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 
 	}
 
-	@RequestMapping(value = "/board1reviewForm.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView reviewForm(@ModelAttribute("b_1_id") Integer b_1_id, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		ModelAndView mav = new ModelAndView();
-
-		HttpSession session = request.getSession();
-		// MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo"); 멤버의 권한은
-		// 받지않음
-		SellerVO sellerInfo = (SellerVO) session.getAttribute("sellerInfo");
-		AdminVO adminInfo = (AdminVO) session.getAttribute("AdminVO");
-
-		// if (memberInfo == null && sellerInfo == null && adminInfo == null) { 멤버의 권한은
-		// 받지 않음
-		if (sellerInfo == null && adminInfo == null) { // 로그인이 아닐경우 창으로 반송
-			String viewName = "/board1/board1ReviewForm";
-			Board1VO board1VO1 = board1Service.board1View(b_1_id);
-			// 여기작성중 답글창에 해당게시글 내용 기재할예정
-			mav.addObject("board1Info", board1VO1);
-
-			mav.setViewName(viewName);
-			return mav;
-		} else { // 로그인하고 어드민일경우
-
-			String viewName1 = "redirect:/board1/selectBoard1List.do";
-			String message = "로그인을 해주세요.";
-			mav.addObject("message", message);
-			mav.setViewName(viewName1);
-			return mav;
-		}
-
-	}
 
 	@Override
 	@RequestMapping(value = "/board1Reviewform.do", method = { RequestMethod.POST, RequestMethod.GET })

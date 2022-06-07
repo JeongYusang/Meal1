@@ -152,7 +152,7 @@ function result(){
 							</div></td>
 					</tr>
 					</c:when>
-					<c:when test="${not empty sellerInfo }">
+					<c:when test="${not empty sellerInfo.s_id }">
 					<tr>
 						<th class="td1">작성자 아이디</th>
 						<td class="td3">
@@ -161,6 +161,21 @@ function result(){
 							name="_s_id"  disabled/>
 							<input type="hidden" value="${sellerInfo.s_id }" name="s_id">
 							<input type="hidden" value="seller" name="reg_id">
+							<div class="secret-wrap"><input class="B_Uid1" type="checkbox"  name = "secret" value= "Y" onclick="#">비밀글입니다.</input>
+							</div></td>
+					</tr>
+					</c:when>
+					</c:choose>
+					<c:choose>
+							<c:when test="${not empty adminInfo.a_id }">
+					<tr>
+						<th class="td1">작성자 아이디</th>
+						<td class="td3">
+						
+						<input class="B_Uid" type=text value="${adminInfo.a_id }"
+							name="_a_id"  disabled/>
+							<input type="hidden" value="${adminInfo.a_id }" name="a_id">
+							<input type="hidden" value="admin" name="reg_id">
 							<div class="secret-wrap"><input class="B_Uid1" type="checkbox"  name = "secret" value= "Y" onclick="#">비밀글입니다.</input>
 							</div></td>
 					</tr>

@@ -170,7 +170,6 @@ public class BaseController {
 					memberService.lastLog(u_id);
 					session.setAttribute("isLogOn", true);
 					session.setAttribute("memberInfo", memberInfo);
-					session.setAttribute("side_menu", "user_mode");
 					String viewName = "redirect:/main/main.do";
 					mav.setViewName(viewName);
 					return mav;
@@ -187,7 +186,6 @@ public class BaseController {
 					sellerService.lastLog(u_id);
 					session.setAttribute("isLogOn", true);
 					session.setAttribute("sellerInfo", sellerInfo);
-					session.setAttribute("side_menu", "seller_mode");
 					System.out.println(sellerVO);
 					String viewName = "redirect:/main/main.do";
 					mav.setViewName(viewName);
@@ -204,7 +202,6 @@ public class BaseController {
 					session.setAttribute("isLogOn", true);
 					session.setAttribute("adminInfo", adminInfo);
 					System.out.println(u_pw);
-					session.setAttribute("side_menu", "admin_mode");
 					System.out.println(adminVO);
 					String viewName = "redirect:/main/main.do";
 					mav.setViewName(viewName);

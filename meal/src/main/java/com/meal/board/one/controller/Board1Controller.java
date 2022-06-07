@@ -23,6 +23,7 @@ public interface Board1Controller {
 			HttpServletResponse response) throws Exception;
 
 	public ModelAndView selectBoard1List(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+			@RequestParam(value = "message", required = false) String message,
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
 			HttpServletResponse response) throws Exception ;
