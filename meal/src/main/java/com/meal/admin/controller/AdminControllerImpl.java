@@ -64,12 +64,12 @@ public class AdminControllerImpl extends BaseController implements AdminControll
 	public ModelAndView addAdmin(@ModelAttribute("adminVO") AdminVO _adminVO, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		String a_id = _adminVO.getU_id();
-		String a_pw = _adminVO.getU_pw();
-		String a_name = _adminVO.getU_name();
-		String a_hp = _adminVO.getU_hp1();
-		String a_email1 = _adminVO.getU_email1();
-		String a_email2 = _adminVO.getU_email2();
+		String a_id = _adminVO.getA_id();
+		String a_pw = _adminVO.getA_pw();
+		String a_name = _adminVO.getA_name();
+		String a_hp = _adminVO.getA_hp();
+		String a_email1 = _adminVO.getA_email1();
+		String a_email2 = _adminVO.getA_email2();
 		String encodeu_pw = passwordEncode.encode(a_pw);
 		_adminVO.setA_id(a_id);
 		_adminVO.setA_pw(encodeu_pw);

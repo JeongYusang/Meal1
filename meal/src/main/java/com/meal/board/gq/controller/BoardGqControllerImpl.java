@@ -28,6 +28,7 @@ import com.meal.board.gq.vo.Img_gqVO;
 import com.meal.common.controller.BaseController;
 import com.meal.goods.service.GoodsService;
 import com.meal.goods.vo.GoodsVO;
+import com.meal.goods.vo.Img_gVO;
 import com.meal.member.vo.MemberVO;
 import com.meal.seller.vo.SellerVO;
 
@@ -69,14 +70,13 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		boardGqService.boardGqWrite(newboardGqMap);
 
 		List<HashMap<String, Object>> imageFileList = (List<HashMap<String, Object>>) upload(multipartRequest);
-		
-		//auto로 배정되는 b_gq_id 찾기
-		BoardGqVO boardInfo = (BoardGqVO)boardGqService.findb_gq_id();
+
+		// auto로 배정되는 b_gq_id 찾기
+		BoardGqVO boardInfo = (BoardGqVO) boardGqService.findb_gq_id();
 		int b_gq_id = (Integer) boardInfo.getB_gq_id();
 		int g_id = (Integer) boardInfo.getG_id();
 		MemberVO memberVO = (MemberVO) session.getAttribute("memberInfo");
 		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
-		
 
 		// 이미지 이동을 위한 메소드
 		try {
@@ -86,12 +86,12 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 					item.put("b_gq_id", b_gq_id);
 					if (memberVO != null) {
 						String reg_id = memberVO.getU_id();
-					item.put("reg_id", reg_id);
-					}else {
+						item.put("reg_id", reg_id);
+					} else {
 						String reg_id = sellerVO.getS_id();
-						item.put("reg_id", reg_id);	
+						item.put("reg_id", reg_id);
 					}
-					
+
 					// 이미지 파일네임을통해 파일경로 설정
 					imageFileName = (String) item.get("fileName");
 					if (!(imageFileName.equals("") || imageFileName == null)) {
@@ -100,13 +100,14 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 						// temp에 있는 이미지파일경로 설정
 						File srcFile = new File(CURR_IMAGE_UPLOAD_PATH + "\\" + "temp" + "\\" + imageFileName);
 						// 이동하고자 하는 이미지 파일경로 설정
-						File destDir = new File(CURR_IMAGE_UPLOAD_PATH  + "\\" +"goods"+ "\\" + g_id + "\\" + "Gq" + "\\" + b_gq_id);
+						File destDir = new File(
+								CURR_IMAGE_UPLOAD_PATH + "\\" + "goods" + "\\" + g_id + "\\" + "Gq" + "\\" + b_gq_id);
 						// 이동
 						FileUtils.moveFileToDirectory(srcFile, destDir, true);
 					}
 				}
 			}
-			
+
 			// 결과창에 출력해주기 위해 판매자 정보를 저장해줌
 			MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			mav.addObject("memberInfo", memberInfo);
@@ -122,12 +123,12 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 					imageFileName = (String) item.get("fileName");
 					File srcFile = new File(CURR_IMAGE_UPLOAD_PATH + "\\" + "temp" + "\\" + imageFileName);
 					srcFile.delete();
-					String viewName1 = "redirect:/boardGq/selectBoardGqList.do";
+					String viewName1 = "redirect:/goods/goodsDetail.do?g_id=" + g_id;
 					mav.setViewName(viewName1);
 					return mav;
 				}
 			}
-				return mav;
+			return mav;
 		}
 	}
 
@@ -138,30 +139,39 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		ModelAndView mav = new ModelAndView();
 		String viewName = request.getParameter("viewName");
 		Map boardGqMap = boardGqService.boardGqView(b_gq_id);
-		BoardGqVO boardGqVO = (BoardGqVO)boardGqMap.get("boardGqVO");
+		BoardGqVO boardGqVO = (BoardGqVO) boardGqMap.get("boardGqVO");
 		List<Img_gqVO> imageList = (List<Img_gqVO>) boardGqMap.get("imageList");
 		HttpSession session = request.getSession();
 		MemberVO memberVO = (MemberVO) session.getAttribute("memberInfo");
 		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
 		try {
-			if(memberVO != null)
-			if (memberVO.getU_id().equals(boardGqVO.getU_id())) {
+			if (memberVO != null) {
+				if (memberVO.getU_id().equals(boardGqVO.getU_id())) {
+					mav.addObject("boardGqVO", boardGqVO);
+					mav.addObject("imageList", imageList);
+					mav.setViewName(viewName);
+					return mav;
+				} else {
+					String message = "회원정보가 일치하지 않습니다.";
+					mav.addObject("message", message);
+					mav.addObject("b_gq_id", b_gq_id);
+					viewName = "redirect:/boardGq/gq_detail.do";
+					mav.setViewName(viewName);
+					return mav;
+				}
+			} else if (adminVO != null) {
 				mav.addObject("boardGqVO", boardGqVO);
 				mav.addObject("imageList", imageList);
 				mav.setViewName(viewName);
-			}else if (adminVO != null) {
-				mav.addObject("boardGqVO", boardGqVO);
-				mav.addObject("imageList", imageList);
-				mav.setViewName(viewName);
-			}else {
+				return mav;
+			} else {
 				String message = "회원정보가 일치하지 않습니다.";
 				mav.addObject("message", message);
 				mav.addObject("b_gq_id", b_gq_id);
 				viewName = "redirect:/boardGq/gq_detail.do";
 				mav.setViewName(viewName);
-
+				return mav;
 			}
-			return mav;
 		} catch (Exception e) {
 			mav.addObject("boardGqVO", boardGqVO);
 			String message = "회원정보가 일치하지 않습니다.";
@@ -182,16 +192,16 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		try {
 			boardGqService.boardGqUpdate(boardGqVO);
 			if (boardGqVO.getParentNo() == 0) {
-			viewName = "redirect:/boardGq/gq_detail.do";
-			int b_gq_id = boardGqVO.getB_gq_id();
-			mav.addObject("b_gq_id", b_gq_id);
-			mav.setViewName(viewName);
+				viewName = "redirect:/boardGq/gq_detail.do";
+				int b_gq_id = boardGqVO.getB_gq_id();
+				mav.addObject("b_gq_id", b_gq_id);
+				mav.setViewName(viewName);
 			} else {
 				viewName = "redirect:/boardGq/gq_detail.do";
 				int ParentNO = boardGqVO.getParentNo();
 				mav.addObject("b_gq_id", ParentNO);
 				mav.setViewName(viewName);
-				
+
 			}
 		} catch (Exception e) {
 			int b_gq_id = (Integer) boardGqVO.getB_gq_id();
@@ -204,7 +214,8 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 
 	@Override
 	@RequestMapping(value = "/selectBoardGqList.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView selectBoardGqList(
+	public ModelAndView selectBoardGqList(@RequestParam(value = "message", required = false) String message,
+
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
@@ -214,7 +225,7 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		HttpSession session = request.getSession();
 		MemberVO memberVO = (MemberVO) session.getAttribute("memberInfo");
 		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
-		String message = (String) request.getAttribute("message");
+
 		if (message != null) {
 			mav.addObject("message", message);
 		}
@@ -242,7 +253,7 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		mav.addObject("boardGq", boardGq);
 		return mav;
 	}
-	
+
 	@Override
 	@RequestMapping(value = "/selectMyBoardGqList.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView selectMyBoardGqList(
@@ -259,17 +270,17 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		if (message != null) {
 			mav.addObject("message", message);
 		}
-		
+
 		HashMap<String, Object> Map = new HashMap<String, Object>();
 		Map.put("pageNum", pageNum);
 		Map.put("section", section);
-		HashMap<String, Object> pagingMap =(HashMap<String, Object>) paging(Map);
+		HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(Map);
 		pagingMap.put("u_id", u_id);
-		
+
 		List<BoardGqVO> boardGq = boardGqService.selectMyBoardGqList(pagingMap);
 		List<BoardGqVO> board2 = boardGqService.selectMyBoardGqallList(u_id);
-		
-		for(BoardGqVO item : boardGq){
+
+		for (BoardGqVO item : boardGq) {
 			int g_id = item.getG_id();
 			GoodsVO goodsVO = goodsService.selectGoodsDetail(g_id);
 			String g_name = goodsVO.getG_name();
@@ -293,7 +304,7 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		mav.addObject("boardGq", boardGq);
 		return mav;
 	}
-	
+
 	@Override
 	@RequestMapping(value = "/selectSellerBoardGqList.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView selectSMyBoardGqList(
@@ -313,21 +324,19 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		HashMap<String, Object> Map = new HashMap<String, Object>();
 		Map.put("pageNum", pageNum);
 		Map.put("section", section);
-		HashMap<String, Object> pagingMap =(HashMap<String, Object>) paging(Map);
+		HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(Map);
 		pagingMap.put("s_id", s_id);
 
 		List<BoardGqVO> boardGq = boardGqService.selectSellerBoardGqList(pagingMap);
 		List<BoardGqVO> board2 = boardGqService.selectSellerBoardGqallList(s_id);
 
-		for(BoardGqVO item : boardGq){
+		for (BoardGqVO item : boardGq) {
 			int g_id = item.getG_id();
 			GoodsVO goodsVO = goodsService.selectGoodsDetail(g_id);
 			String g_name = goodsVO.getG_name();
 			item.setG_name(g_name);
 		}
-		
-		
-		
+
 		for (BoardGqVO item : boardGq) {
 			for (BoardGqVO j : board2) {
 				if (!((int) item.getB_gq_id() == (int) j.getParentNo())) {
@@ -345,9 +354,8 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		mav.addObject("sellerVO", sellerVO);
 		System.out.println("뷰네임" + viewName);
 		return mav;
-		
-	}
 
+	}
 
 	@Override
 	@RequestMapping(value = "gq_detail.do", method = { RequestMethod.POST, RequestMethod.GET })
@@ -374,12 +382,11 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 
 		return mav;
 	}
-	
-
 
 	@Override
 	@RequestMapping(value = "/boardGqWrite.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView writeCheck(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView writeCheck(@RequestParam(value = "g_id", required = false) int g_id, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 
 		HttpSession session = request.getSession();
@@ -388,7 +395,8 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		AdminVO adminInfo = (AdminVO) session.getAttribute("AdminVO");
 		System.out.println("member :" + memberInfo + "  seller :" + sellerInfo + "  admin : " + adminInfo);
 		if (memberInfo == null && sellerInfo == null && adminInfo == null) {
-			String viewName1 = "redirect:/boardGq/selectBoardGqList.do";
+// g_detail로 viewName 변경
+			String viewName1 = "redirect:/goods/goodsDetail.do?g_id=" + g_id;
 			String message = "로그인을 해주세요.";
 			mav.addObject("message", message);
 			mav.setViewName(viewName1);
@@ -396,6 +404,10 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		} else {
 			String viewName = "/boardGq/boardGqWrite";
 			mav.setViewName(viewName);
+			List<Img_gVO> imageList = (List<Img_gVO>) goodsService.selectImgList(g_id);
+			mav.addObject("imageList", imageList);
+			GoodsVO goodsInfo = (GoodsVO) goodsService.selectGoodsDetail(g_id);
+			mav.addObject("goodsInfo", goodsInfo);
 			return mav;
 		}
 
@@ -441,7 +453,7 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 			return mav;
 		}
 	}
-	
+
 	@Override
 	@RequestMapping(value = "/boardGqReviewUpdateform.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView boardGqReviewUpdateForm(@RequestParam(value = "b_gq_id", required = false) Integer b_gq_id,
@@ -456,12 +468,21 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		AdminVO adminVO = (AdminVO) session.getAttribute("adminInfo");
 		try {
 			if (sellerVO != null) {
-				mav.addObject("sellerVO", sellerVO);
-				mav.addObject("boardGqVO", boardGqVO);
-				mav.addObject("imageList", imageList);
-				mav.setViewName(viewName);
+				if (sellerVO.getS_id().equals(boardGqVO.getS_id())) {
+					//mav.addObject("sellerVO", sellerVO);
+					mav.addObject("boardGqVO", boardGqVO);
+					mav.addObject("imageList", imageList);
+					mav.setViewName(viewName);
+				} else {
+					String message = "리뷰에 대한 권한이없습니다.";
+					mav.addObject("message", message);
+					mav.addObject("b_gq_id", b_gq_id);
+					viewName = "redirect:/boardGq/gq_detail.do";
+					mav.setViewName(viewName);
+				}
+
 			} else if (adminVO != null) {
-				mav.addObject("boardGqInfo", boardGqVO);
+				mav.addObject("boardGqVO", boardGqVO);
 				mav.addObject("imageList", imageList);
 				mav.setViewName(viewName);
 			} else {
@@ -470,7 +491,6 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 				mav.addObject("b_gq_id", b_gq_id);
 				viewName = "redirect:/boardGq/gq_detail.do";
 				mav.setViewName(viewName);
-
 			}
 			return mav;
 		} catch (Exception e) {
@@ -513,24 +533,30 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 			} else if (sellerVO != null) {
 				if (sellerVO.getS_id().equals(boardGqVO.getS_id())) {
 					boardGqService.boardGqDelete(b_gq_id);
+					String message = "게시글이 삭제 되었습니다";
+					redirectAttributes.addAttribute("message", message);
 					String viewName1 = "redirect:/boardGq/selectSellerBoardGqList.do";
 					mav.setViewName(viewName1);
 					return mav;
 				}
 
 			} else if (adminVO != null) {
+				boardGqService.boardGqDelete(b_gq_id);
 				mav.addObject("boardGqVO", boardGqVO);
+				String message = "게시글이 삭제 되었습니다";
+				redirectAttributes.addAttribute("message", message);
 				String viewName1 = "redirect:/boardGq/selectBoardGqList.do";
 				mav.setViewName(viewName1);
 				return mav;
-			}
+			}else {
 			String message = "게시물 작성자가 아닙니다.";
 			redirectAttributes.addAttribute("message", message);
 			redirectAttributes.addAttribute("b_gq_id", b_gq_id);
 			viewName = "redirect:/boardGq/gq_detail.do";
 			mav.setViewName(viewName);
 			return mav;
-
+			}
+			return mav;
 		} catch (Exception e) {
 			mav.addObject("boardGqVO", boardGqVO);
 			String message = "회원정보가 일치하지 않습니다.";
@@ -544,5 +570,3 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 	}
 
 }
-
-

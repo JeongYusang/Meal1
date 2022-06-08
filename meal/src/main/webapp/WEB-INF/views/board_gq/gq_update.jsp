@@ -147,7 +147,7 @@ request.setCharacterEncoding("UTF-8");
 	</c:if>
 	<div class='board-wrap'>
 		<div class='board-title'>
-			<h1>리뷰 수정</h1>
+			<h1>상품 문의 수정</h1>
 		</div>
 		<form name="frmArticle" method="post"
 			action="${contextPath}/boardGq/boardGqUpdate.do"

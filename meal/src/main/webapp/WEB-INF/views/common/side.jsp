@@ -253,6 +253,9 @@
 							<li><a href="${contextPath }/admin/selectAlladmins.do">관리자 조회</a></li>
 							<li><a href="${contextPath}/admin/selectAllMembers.do">회원관리</a></li>
 							<li><a href="${contextPath}/admin/selectAllSellers.do">판매자관리</a></li>
+							   <li><a href="${contextPath}/boardGq/selectBoardGqList.do">상품문의관리</a></li>
+							   <li><a href="${contextPath}/boardGr/selectBoardGrList.do">상품리뷰관리</a></li>
+							   
 							<li><a href="${contextPath}/admin/member/adminMemberMain.do">회원관리</a></li>
 							<li><a href="#">배송관리</a></li>
 							<li><a href="#">게시판관리</a></li>

@@ -355,6 +355,19 @@ function fn_review(url,b_gq_id){
 						onClick="fn_return('${contextPath}/boardGq/selectBoardGqList.do')" />
 
 				</c:when>
+				
+				<c:when test="${not empty adminInfo}">
+				<input type=button value="수정"
+						onClick="fn_update('${contextPath}/boardGq/boardGqUpdateform.do',${boardGqInfo.b_gq_id })" />
+					<input type=button value="삭제"
+						onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${boardGqInfo.b_gq_id })" />
+					<input type=button value="답글"
+						onClick="fn_review('${contextPath}/boardGq/boardGqReviewform.do', ${boardGqInfo.b_gq_id})" />
+					<input type=button value="목록"
+						onClick="fn_return('${contextPath}/boardGq/selectBoardGqList.do')" />
+
+				</c:when>
+				
 				<c:otherwise>
 					<input type=button value="목록"
 						onClick="fn_return('${contextPath}/boardGq/selectBoardGqList.do')" />
@@ -376,7 +389,7 @@ function fn_review(url,b_gq_id){
 			<div id="content">
 				<c:forEach var="imageList" items="${imageList}">
 					<img id="g_image" width="300px" height="300px"
-						src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${imageList.b_gq_id}&${imageList.fileName}">
+						src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${imageList.b_gq_id}">
 				</c:forEach>
 				<br> ${boardGqInfo.content}
 			</div>
@@ -395,6 +408,12 @@ function fn_review(url,b_gq_id){
 								onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${review.b_gq_id })" />
 						</c:if>
 
+						<c:if test="${not empty adminInfo}">
+							<input type=button value="수정"
+								onClick="fn_update('${contextPath}/boardGq/boardGqReviewUpdateform.do',${review.b_gq_id})" />
+							<input type=button value="삭제"
+								onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${review.b_gq_id })" />
+						</c:if>
 
 					</div>
 					<div id="gqHead">
@@ -408,7 +427,7 @@ function fn_review(url,b_gq_id){
 							<c:if test="${imageList != null}">
 								<c:forEach var="imageList" items="${imageList}">
 									<img id="g_image" width="300px" height="300px"
-										src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${review.b_gq_id}&${imageList.fileName}">
+										src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${imageList.b_gq_id}">
 								</c:forEach>
 							</c:if>
 							<br> ${review.content}
