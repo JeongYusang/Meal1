@@ -14,8 +14,9 @@
 		<result property="c_qty" column="c_qty" />
 		<result property="u_id" column="u_id" />
 	</resultMap>
-	
-<select id="selectCartList"  parameterType="String"  resultMap="cartResult"   >
+
+	<select id="selectCartList" parameterType="String"
+		resultMap="cartResult">
 	    <![CDATA[
 		select c.c_id, c.g_id, c.u_id, c.c_qty, g.g_price, g.g_name
 		from cart_tb c
@@ -24,7 +25,8 @@
 		]]>
 	</select>
 
-	<select id="selectCountInCart" resultType="String" parameterType="cartVO">
+	<select id="selectCountInCart" resultType="String"
+		parameterType="cartVO">
 	    <![CDATA[
 		    select if(count(*), 'true', 'false') from cart_tb
 			where g_id=#{g_id}
@@ -54,17 +56,36 @@
 			        and g_id=#{g_id}
     	]]>
 	</update>
+	
 	<delete id="deleteCartGoods" parameterType="int">
 	    <![CDATA[
 	      delete from cart_tb
 	      where c_id=#{c_id}
     	]]>
 	</delete>
-	
+
 	<select id="selectMaxCartId" resultType="int">
 	    <![CDATA[
 			select ifnull(max(c_id), 0) + 1 from cart_tb 
     	]]>
 	</select>
+
+	<update id="minusCartGoods" parameterType="int">
+		 <![CDATA[
+			UPDATE cart_tb SET c_qty = c_qty - 1 WHERE c_id = #{c_id}
+    	]]>
+	</update>
 	
-	</mapper>
+	<update id="plusCartGoods" parameterType="int">
+	    <![CDATA[
+			UPDATE cart_tb SET c_qty = c_qty +1 WHERE c_id = #{c_id}
+    	]]>
+	</update>
+	
+	<select id="CartQty" parameterType="int" resultType = "int">
+	    <![CDATA[
+			select c_qty from cart_tb where c_id = #{c_id}
+    	]]>
+	</select>
+	
+</mapper>

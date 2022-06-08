@@ -51,6 +51,54 @@
 	     checkbox.checked = selectAll.checked;
 	   })
 	 }
+ 
+ <script type="text/javascript">
+
+ 
+
+ function submit() {
+
+    var form = document.createElement("form");
+
+    form.setAttribute("charset", "UTF-8");
+
+    form.setAttribute("method", "Post");  //Post 방식
+
+    form.setAttribute("action", "/order/CartOrderForm.do"); //요청 보낼 주소
+
+
+
+    var hiddenField = document.createElement("input");
+
+    hiddenField.setAttribute("type", "hidden");
+
+    hiddenField.setAttribute("name", "g_id");
+
+    hiddenField.setAttribute("value", ${g_id});
+
+    form.appendChild(hiddenField);
+
+
+
+    hiddenField = document.createElement("input");
+
+    hiddenField.setAttribute("type", "hidden");
+
+    hiddenField.setAttribute("name", "mEmail");
+
+    hiddenField.setAttribute("value", mEmail);
+
+    form.appendChild(hiddenField);
+
+
+
+    document.body.appendChild(form);
+
+    form.submit();
+
+ }
+
+</script>
 	
 </script>
 
@@ -329,48 +377,45 @@ width: 83px;
 						<button class="favorite">선택 삭제</button>
 						<button class="favorite">선택 주문</button>
 					</div>
-					<form name = cart>
 					<c:choose>
 						<c:when test="${CartList != null}">
 							<c:forEach var="CartList" items="${CartList}">
-
-								<!-- Product #1 -->
+							<form name = cart action = "/order/CartOrderForm.do">
 								<div class="item-wrap">
 									<div class="item">
 										<div class="buttons">
-											<input type="checkbox" name='animal' value="${CartList.g_price}"  onclick="chksum()">
+											<input type="checkbox" id = "" name='animal' value="${CartList.g_price}"  onclick="chksum()">
 										</div>
 
 										<div class="image-wrap">
-											<img class="imagegoods"
-												src="${contextPath}/download1.do?g_id=${CartList.g_id}&cate=main" />
+											<img class="imagegoods" src="${contextPath}/download1.do?g_id=${CartList.g_id}&cate=main" />
 										</div>
 
 										<div class="description-wrap">
 											<div class="description">
-												<br> <span><a
-													href="${contextPath}/goods/goodsDetail.do?g_id=${CartList.g_id}">${CartList.g_name}</a></span>
+												<br> <span><a href="${contextPath}/goods/goodsDetail.do?g_id=${CartList.g_id}">${CartList.g_name}</a></span>
+												<input type = "hidden" id = "g_id" value = "${CartList.g_id}">
 												<span>${CartList.c_qty}개</span>
 											</div>
 										</div>
 										<div class="quantity">
-											<!-- <input type="button" onclick="incrementValue()" value="+" />
-											<input type="text" name="quantity" value="1" maxlength="2"
-												max="10" size="1" id="number" /> <input type="button"
-												onclick="decrementValue()" value="-" /> -->
+											<button type= "button" onclick="location.href='${contextPath}/cart/plusCartGoods.do?c_id=${CartList.c_id}'"id="addbtn">
+											+</button>&nbsp;<input type = "text" id = "o_goods_qty" value = "${CartList.c_qty}" readonly>개&nbsp;
+											<button type= "button" onclick="location.href='${contextPath}/cart/minusCartGoods.do?c_id=${CartList.c_id}'" class="button" id="btn">-
+											</button>
 										</div>
 										<div class="total-price">${CartList.g_price}원</div>
 										<div class="delete"><a href="${contextPath}/cart/removeCartGoods.do?c_id=${CartList.c_id}" class="button" id="delbtn"> X</a> </div>
 									</div>
 								</div>
-
+</form>
 							</c:forEach>
 						</c:when>
 						<c:otherwise>
 							<td>주문 내역이 없습니다.</td>
 						</c:otherwise>
 					</c:choose>
-					</form>
+	
 
 
 

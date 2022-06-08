@@ -119,10 +119,7 @@ body {
 					<caption>결제금액</caption>
 					<thead>
 						<tr>
-							<th scope="col"><span>총 주문 금액</span><a href="#none"
-								onclick="{$total_order_layer_on}" class="more"><img
-									src="http://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_list.gif"
-									alt="내역보기" /></a></th>
+							<th scope="col"><span>총 주문 금액</span></th>
 							<th scope="col" class="{$total_sale_display|display}">사용
 								마일리지
 							</th>
@@ -201,7 +198,7 @@ body {
 					src="http://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_order_ing.gif"
 					alt="쇼핑계속하기" /></a> <a href="${contextPath}/order/selectUserOrders.do"><img
 					src="http://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_order_check.gif"
-					alt="주문확인하기" /></a>
+					alt="주문목록확인하기" /></a>
 			</span>
 		</div>
 		<!-- 이용안내 -->

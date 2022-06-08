@@ -1,5 +1,6 @@
 package com.meal.order.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,9 @@ public interface OrderController {
 			@RequestParam(value = "pageNum", required = false) String pageNum,
 			@RequestParam(value = "delivery_state", required = false) String delivery_state,HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
+
+	public ModelAndView CartOrderForm(List<OrderVO> CartList, HttpServletRequest request, HttpServletResponse response)
+			throws Exception;
 		
 	
 }

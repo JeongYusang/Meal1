@@ -48,7 +48,7 @@ public class BoardGrControllerImpl extends BaseController implements BoardGrCont
 	private GoodsService goodsService;
 	@Autowired
 	private OrderService orderService;
-	
+
 	@Autowired
 	private BoardGrVO boardGrVO;
 	@Autowired
@@ -60,8 +60,8 @@ public class BoardGrControllerImpl extends BaseController implements BoardGrCont
 
 	@Override
 	@RequestMapping(value = "/boardGrinsert.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView writeBoardGr(MultipartHttpServletRequest multipartRequest, HttpServletResponse response)
-			throws Exception {
+	public ModelAndView writeBoardGr(@RequestParam("o_id") int o_id, MultipartHttpServletRequest multipartRequest,
+			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		String imageFileName = null;
 		HttpSession session = multipartRequest.getSession();
@@ -120,7 +120,7 @@ public class BoardGrControllerImpl extends BaseController implements BoardGrCont
 			 * mav.addObject("memberInfo", memberInfo);
 			 */
 			if (memberVO != null) {
-				String viewName = "redirect:/boardGr/selectBoardGrList.do";
+				String viewName = "redirect:/order/selectUserOrders.do";
 				mav.setViewName(viewName);
 			} else if (sellerVO != null) {
 				String viewName = "redirect:/boardGr/selectSellerBoardGrList.do";
@@ -146,7 +146,7 @@ public class BoardGrControllerImpl extends BaseController implements BoardGrCont
 
 	@Override
 	@RequestMapping(value = "/boardGrUpdateform.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView boardGrUpdateform(@ModelAttribute("b_gr_id") Integer b_gr_id, HttpServletRequest request,
+	public ModelAndView boardGrUpdateform(@RequestParam("b_gr_id") Integer b_gr_id, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		String viewName = request.getParameter("viewName");
@@ -281,8 +281,8 @@ public class BoardGrControllerImpl extends BaseController implements BoardGrCont
 
 		List<BoardGrVO> boardGr = boardGrService.selectMyBoardGrList(pagingMap);
 		List<BoardGrVO> board2 = boardGrService.selectMyBoardGrallList(u_id);
-		
-		for(BoardGrVO item : boardGr){
+
+		for (BoardGrVO item : boardGr) {
 			int g_id = item.getG_id();
 			GoodsVO goodsVO = goodsService.selectGoodsDetail(g_id);
 			String g_name = goodsVO.getG_name();
@@ -333,13 +333,12 @@ public class BoardGrControllerImpl extends BaseController implements BoardGrCont
 
 		List<BoardGrVO> boardGr = boardGrService.selectSellerBoardGrList(pagingMap);
 		List<BoardGrVO> board2 = boardGrService.selectSellerBoardGrallList(s_id);
-		for(BoardGrVO item : boardGr){
+		for (BoardGrVO item : boardGr) {
 			int g_id = item.getG_id();
 			GoodsVO goodsVO = goodsService.selectGoodsDetail(g_id);
 			String g_name = goodsVO.getG_name();
 			item.setG_name(g_name);
 		}
-
 
 		for (BoardGrVO item : boardGr) {
 			for (BoardGrVO j : board2) {
@@ -388,7 +387,8 @@ public class BoardGrControllerImpl extends BaseController implements BoardGrCont
 
 	@Override
 	@RequestMapping(value = "/boardGrWrite.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView boardGrWrite(@RequestParam("g_id")int g_id,@RequestParam("o_id")int o_id,HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView boardGrWrite(@RequestParam("g_id") int g_id, @RequestParam("o_id") int o_id,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
@@ -396,27 +396,35 @@ public class BoardGrControllerImpl extends BaseController implements BoardGrCont
 		AdminVO adminInfo = (AdminVO) session.getAttribute("AdminVO");
 		String _o_id = orderService.overlappedO_id(o_id);
 		logger.info("member :" + memberInfo + "  seller :" + sellerInfo + "  admin : " + adminInfo);
-		
-		if (memberInfo == null && sellerInfo == null && adminInfo == null) {
-			String viewName1 = "redirect:/order/selectUserOrders.do";
-			String message = "로그인을 해주세요.";
-			mav.addObject("message", message);
-			mav.setViewName(viewName1);
-			return mav;
-		} else {
-			if(_o_id.equals("false")) {
-			GoodsVO goodsVO = goodsService.selectGoodsDetail(g_id);
-			String viewName = "/boardGr/boardGrWrite";
-			mav.setViewName(viewName);
-			mav.addObject("goodsVO", goodsVO);
-			mav.addObject("o_id", o_id);
-			return mav;
-			}else if (_o_id.equals("true")) {
-				String viewName1 = "redirect:/order/selectUserOrders.do";
-				String message = "이미 후기를 작성하셨습니다";
+		if (goodsService.goodsG_Info(g_id) != null) {
+			if (memberInfo == null && sellerInfo == null && adminInfo == null) {
+				String viewName = "redirect:/order/selectUserOrders.do";
+				String message = "로그인을 해주세요.";
 				mav.addObject("message", message);
-				mav.setViewName(viewName1);
+				mav.setViewName(viewName);
+				return mav;
+			} else {
+				if (_o_id.equals("false")) {
+					GoodsVO goodsVO = goodsService.selectGoodsDetail(g_id);
+					String viewName = "/boardGr/boardGrWrite";
+					mav.setViewName(viewName);
+					mav.addObject("goodsVO", goodsVO);
+					mav.addObject("o_id", o_id);
+					return mav;
+				} else if (_o_id.equals("true")) {
+					String viewName = "redirect:/order/selectUserOrders.do";
+					String message = "이미 후기를 작성하셨습니다";
+					mav.addObject("message", message);
+					mav.setViewName(viewName);
+					return mav;
+				}
 			}
+
+		} else {
+			String viewName2 = "redirect:/order/selectUserOrders.do";
+			String message = "삭제된 상품입니다.";
+			mav.addObject("message", message);
+			mav.setViewName(viewName2);
 		}
 		return mav;
 

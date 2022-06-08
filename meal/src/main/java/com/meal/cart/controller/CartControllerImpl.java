@@ -1,12 +1,13 @@
 package com.meal.cart.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.meal.cart.service.CartService;
@@ -26,6 +26,10 @@ import com.meal.member.vo.MemberVO;
 @Controller("cartController")
 @RequestMapping(value="/cart")
 public class CartControllerImpl extends BaseController implements CartController{
+	
+	private static final Logger logger = LoggerFactory.getLogger(CartControllerImpl.class);
+	
+	
 	@Autowired
 	private CartService cartService;
 	@Autowired
@@ -41,7 +45,6 @@ public class CartControllerImpl extends BaseController implements CartController
 		MemberVO memberInfo=(MemberVO)session.getAttribute("memberInfo");
 		String u_id=memberInfo.getU_id();
 		List <CartVO> CartList=cartService.myCartList(u_id);
-		System.out.println(CartList);
 		mav.addObject("CartList", CartList);
 		return mav;
 	}
@@ -90,25 +93,6 @@ public class CartControllerImpl extends BaseController implements CartController
 		return resEntity;
 	}
 	
-	@RequestMapping(value="/modifyCartQty.do" ,method = RequestMethod.POST)
-	public @ResponseBody String  modifyCartQty(@RequestParam("goods_id") int goods_id,
-			                                   @RequestParam("cart_goods_qty") int c_qty,
-			                                    HttpServletRequest request, HttpServletResponse response)  throws Exception{
-		HttpSession session=request.getSession();
-		memberVO=(MemberVO)session.getAttribute("memberInfo");
-		String member_id=memberVO.getU_id();
-		cartVO.setG_id(goods_id);
-		cartVO.setU_id(member_id);
-		cartVO.setC_qty(c_qty);
-		boolean result=cartService.modifyCartQty(cartVO);
-		
-		if(result==true){
-		   return "modify_success";
-		}else{
-			  return "modify_failed";	
-		}
-		
-	}
 	/*
 	@RequestMapping(value="/addGoodsInCart.do" ,method = RequestMethod.POST,produces = "application/text; charset=utf8")
 	public  @ResponseBody String addGoodsInCart(@RequestParam("g_id") int g_id,
@@ -140,4 +124,36 @@ public class CartControllerImpl extends BaseController implements CartController
 		mav.setViewName(viewName);
 		return mav;
 	}
+	
+	@RequestMapping(value="/plusCartGoods.do" ,method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView plusCartGoods(@RequestParam("c_id") int c_id,HttpServletRequest request, HttpServletResponse response)  throws Exception{
+		ModelAndView mav=new ModelAndView();
+		cartService.plusCartGoods(c_id);
+		String viewName = "redirect:/cart/myCartList.do";
+		mav.setViewName(viewName);
+		return mav;
+	}
+	
+	@RequestMapping(value="/minusCartGoods.do" ,method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView minusCartGoods(@RequestParam("c_id") int c_id,HttpServletRequest request, HttpServletResponse response)  throws Exception{
+		ModelAndView mav=new ModelAndView();
+		int c_qty = cartService.CartQty(c_id);
+		logger.info("=======================");		
+		logger.info(c_qty + "문자열");
+		logger.info("=======================");
+		if (c_qty <= 1) {
+			String viewName = "redirect:/cart/myCartList.do";
+			String message = "수량 최소 1개 이상 선택해주시길 바랍니다";
+			mav.setViewName(viewName);
+			mav.addObject(message);
+			return mav;
+		}else {
+			cartService.minusCartGoods(c_id);
+			String viewName = "redirect:/cart/myCartList.do";
+			mav.setViewName(viewName);
+			return mav;
+		}
+		
+	}
+	
 }
