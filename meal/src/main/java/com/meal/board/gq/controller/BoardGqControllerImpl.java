@@ -123,7 +123,7 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 					imageFileName = (String) item.get("fileName");
 					File srcFile = new File(CURR_IMAGE_UPLOAD_PATH + "\\" + "temp" + "\\" + imageFileName);
 					srcFile.delete();
-					String viewName1 = "redirect:/boardGq/selectBoardGqList.do";
+					String viewName1 = "redirect:/goods/goodsDetail.do?g_id="+g_id;
 					mav.setViewName(viewName1);
 					return mav;
 				}
@@ -206,6 +206,8 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 	@Override
 	@RequestMapping(value = "/selectBoardGqList.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView selectBoardGqList(
+			@RequestParam(value = "message", required = false) String message,
+			
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
@@ -215,7 +217,7 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		HttpSession session = request.getSession();
 		MemberVO memberVO = (MemberVO) session.getAttribute("memberInfo");
 		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
-		String message = (String) request.getAttribute("message");
+	
 		if (message != null) {
 			mav.addObject("message", message);
 		}
@@ -380,7 +382,7 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 
 	@Override
 	@RequestMapping(value = "/boardGqWrite.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView writeCheck(@RequestParam ("g_id") int g_id,HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView writeCheck(@RequestParam (value ="g_id" ,required = false) int g_id,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
 
@@ -391,8 +393,7 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		System.out.println("member :" + memberInfo + "  seller :" + sellerInfo + "  admin : " + adminInfo);
 		if (memberInfo == null && sellerInfo == null && adminInfo == null) {
 // g_detail로 viewName 변경
-			String viewName1 = "redirect:/boardGq/selectBoardGqList.do";
-			
+			String viewName1 = "redirect:/goods/goodsDetail.do?g_id="+g_id;
 			String message = "로그인을 해주세요.";
 			mav.addObject("message", message);
 			mav.setViewName(viewName1);

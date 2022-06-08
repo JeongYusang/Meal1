@@ -235,7 +235,7 @@ tr.border-bottom td {
 		<hr>
 		<br>
 		<div class="write">
-			<a href="${contextPath }/boardGq/boardGqWrite.do">글쓰기</a>
+			<a href="${contextPath }/boardGq/boardGqWrite.do?g_id=${g_id}">글쓰기</a>
 		</div>
 	</div>
 

@@ -24,7 +24,9 @@ public interface BoardGqController {
 	public ModelAndView boardGqUpdateform(@ModelAttribute("b_gq_id") Integer b_gq_id, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 
-	public ModelAndView selectBoardGqList(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+	public ModelAndView selectBoardGqList(
+			@RequestParam(value = "message", required = false) String message,
+			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;

@@ -176,7 +176,7 @@ font-size:15px;
 	</c:if>
 	<div class='board-wrap'>
 		<div class='board-title'>
-			<h1>리뷰 작성</h1>
+			<h1>상품문의 작성</h1>
 		</div>
 		<form name="frmArticle" id="myform" method="post"
 			action="${contextPath}/boardGq/boardGqinsert.do"
