@@ -153,6 +153,13 @@
 #myform input[type=radio]:checked ~ label {
 	text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
+.inline{
+display:inline-block;
+font-size: 25px;
+}
+.span1{
+font-size:15px;
+}
 </style>
 </head>
 <body>
@@ -178,18 +185,15 @@
 				<table>
 					<tr>
 						<th class="td1">상품</th>
-						<td><input type="hidden" name="g_id" value="6" /> <input
-							type="hidden" name="s_id" value="2323" /><input type="hidden"
-							name="g_id" value="6" /> <input type="hidden" name="s_id"
-							value="2323" />
-							<div id="goods-info">
-								<br> <img
-									class="${contextPath}/thumbnailsBoardGq.do?g_id=${boardGqInfo.g_id}" />
-								<div id="goodstext">
-									<h3>${boardGqInfo.s_id}</h3>
-									<h3>${boardGqInfo.g_name}</h3>
-								</div>
-							</div></td>
+						<td>
+					<img
+									src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=main"
+									width="80px;" height="50px" alt = "상품이미지"><div class = "inline">
+							<span class="span1">상품</span><br><span class="span2">${goodsInfo.g_name }</span></div>
+							<input type="hidden" name="g_id" value="${goodsInfo.g_id}" /> 
+							<input type="hidden" name="s_id" value="${goodsInfo.s_id}" />
+
+						</td>
 					</tr>
 					<tr>
 						<th class="td1">작성자 아이디</th>

@@ -117,7 +117,7 @@ tr.border-bottom td {
 	border-bottom: 1px black;
 }
 
-#write a {
+.write a {
 	float: right;
 	text-align: center;
 	background-color: #ffc0cb;
@@ -234,7 +234,7 @@ tr.border-bottom td {
 		</center>
 		<hr>
 		<br>
-		<div id="write">
+		<div class="write">
 			<a href="${contextPath }/boardGq/boardGqWrite.do">글쓰기</a>
 		</div>
 	</div>

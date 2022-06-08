@@ -54,8 +54,7 @@ public interface BoardGqController {
 			HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes)
 			throws Exception;
 
-	public ModelAndView writeCheck(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	
+	public ModelAndView writeCheck(@RequestParam ("g_id") int g_id,HttpServletRequest request, HttpServletResponse response) throws Exception ;
 	public ModelAndView boardGqReviewUpdateForm(@RequestParam(value = "b_gq_id", required = false) Integer b_gq_id,
 			HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

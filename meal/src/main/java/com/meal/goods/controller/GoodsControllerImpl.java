@@ -209,9 +209,9 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
         GoodsVO goodsInfo = (GoodsVO)goodsService.selectGoodsDetail(g_id);
         List<Img_gVO> imgList = (List<Img_gVO>)goodsService.selectImgList(g_id);
         //상품리뷰게시판 리스트 정보
-        List<BoardGrVO> board2 = (List<BoardGrVO>)boardGrService.selectBoardGrallList();
+        List<BoardGrVO> boardGrList = (List<BoardGrVO>)boardGrService.selectBoardGrallList();
         //상품문의게시판 리스트 정보
-        List<BoardGqVO> board21 = boardGqService.selectBoardGqallList();
+        List<BoardGqVO> boardGqList = boardGqService.selectBoardGqallList();
         
         
         logger.info("--------------------------------");
@@ -219,14 +219,14 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
         logger.info("--------------------------------");
         logger.info("imgList" + imgList);
         logger.info("--------------------------------");
-        logger.info("board2" + board2);
+        logger.info("boardGrList" + boardGrList);
         logger.info("--------------------------------");
-        logger.info("board21" + board21);
+        logger.info("boardGqList" + boardGqList);
         logger.info("--------------------------------");
         mav.addObject("goodsInfo", goodsInfo);
         mav.addObject("ImgList", imgList);
-        mav.addObject("boardGRInfo",board2);
-        mav.addObject("board21", board21);
+        mav.addObject("boardGrList",boardGrList);
+        mav.addObject("boardGqList", boardGqList);
         mav.setViewName(viewName);
 
 

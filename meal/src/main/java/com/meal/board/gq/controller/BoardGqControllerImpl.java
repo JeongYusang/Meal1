@@ -28,6 +28,7 @@ import com.meal.board.gq.vo.Img_gqVO;
 import com.meal.common.controller.BaseController;
 import com.meal.goods.service.GoodsService;
 import com.meal.goods.vo.GoodsVO;
+import com.meal.goods.vo.Img_gVO;
 import com.meal.member.vo.MemberVO;
 import com.meal.seller.vo.SellerVO;
 
@@ -379,8 +380,9 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 
 	@Override
 	@RequestMapping(value = "/boardGqWrite.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView writeCheck(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView writeCheck(@RequestParam ("g_id") int g_id,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
+		
 
 		HttpSession session = request.getSession();
 		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
@@ -388,7 +390,9 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		AdminVO adminInfo = (AdminVO) session.getAttribute("AdminVO");
 		System.out.println("member :" + memberInfo + "  seller :" + sellerInfo + "  admin : " + adminInfo);
 		if (memberInfo == null && sellerInfo == null && adminInfo == null) {
+// g_detail로 viewName 변경
 			String viewName1 = "redirect:/boardGq/selectBoardGqList.do";
+			
 			String message = "로그인을 해주세요.";
 			mav.addObject("message", message);
 			mav.setViewName(viewName1);
@@ -396,6 +400,10 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		} else {
 			String viewName = "/boardGq/boardGqWrite";
 			mav.setViewName(viewName);
+			List<Img_gVO> imageList = (List<Img_gVO>) goodsService.selectImgList(g_id);
+			mav.addObject("imageList", imageList);
+			GoodsVO goodsInfo = (GoodsVO) goodsService.selectGoodsDetail(g_id);
+			mav.addObject("goodsInfo",goodsInfo);
 			return mav;
 		}
 
