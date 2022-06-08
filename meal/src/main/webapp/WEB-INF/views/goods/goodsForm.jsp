@@ -348,8 +348,9 @@ input
       </tr>
       <tr class="box">
          <th class="boxhead">상세이미지*</th>
-         <td class="boxbody"><input type="file" name="detail" />
-         
+         <td class="boxbody">
+         	<input type="file" name="detail" accept="img/*"/>
+         	<input type="file" name="detail" accept="img/*"/>
          </td>
       </tr>
       <tr class="box">
