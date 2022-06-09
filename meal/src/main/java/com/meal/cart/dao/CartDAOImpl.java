@@ -48,19 +48,22 @@ public class CartDAOImpl  implements  CartDAO{
 	@Override
 	public void plusCartGoods(int c_id) throws DataAccessException {
 		sqlSession.update("mapper.cart.plusCartGoods", c_id);
-		
 	}
 
 	@Override
 	public void minusCartGoods(int c_id) throws DataAccessException {
 		sqlSession.update("mapper.cart.minusCartGoods", c_id);
-		
 	}
 
 	@Override
 	public int CartQty(int c_id) throws DataAccessException {
 		int cart_qty = (Integer) sqlSession.selectOne("mapper.cart.CartQty", c_id);
 		return cart_qty;
+	}
+	@Override
+	public List<CartVO> selectZzimList(String u_id) throws DataAccessException {
+		List<CartVO> cartList =(List)sqlSession.selectList("mapper.cart.selectZzimList",u_id);
+		return cartList;
 	}
 
 }

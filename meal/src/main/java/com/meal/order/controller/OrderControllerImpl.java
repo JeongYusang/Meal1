@@ -85,14 +85,14 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 	@Override
 
 	@RequestMapping(value = "/CartOrderForm.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView CartOrderForm(@RequestParam("CartList") List<OrderVO> CartList,
+	public ModelAndView CartOrderForm(@RequestParam("cartlist") List<OrderVO> CartList,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		ModelAndView mav = new ModelAndView();
 		String viewName = (String) request.getAttribute("viewName");
 		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 		mav.addObject("CartList",CartList);
-		
+		mav.addObject("memberInfo",memberInfo);
 		return mav;
 
 	}
@@ -248,7 +248,6 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 				String viewName = "redirect:/order/selectUserOrders.do";
 				mav.addObject(message);
 				mav.setViewName(viewName);
-				logger.info("뷰네임" + viewName);
 				return mav;
 
 			} else {

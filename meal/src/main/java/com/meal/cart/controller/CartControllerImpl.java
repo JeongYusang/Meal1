@@ -37,6 +37,7 @@ public class CartControllerImpl extends BaseController implements CartController
 	@Autowired
 	private MemberVO memberVO;
 	
+	@Override
 	@RequestMapping(value="/myCartList.do" ,method = RequestMethod.GET)
 	public ModelAndView myCartMain(HttpServletRequest request, HttpServletResponse response)  throws Exception {
 		String viewName=(String)request.getAttribute("viewName");
@@ -50,8 +51,21 @@ public class CartControllerImpl extends BaseController implements CartController
 	}
 	
 	@Override
+	@RequestMapping(value="/myZzimList.do" ,method = RequestMethod.GET)
+	public ModelAndView myZzim(HttpServletRequest request, HttpServletResponse response)  throws Exception {
+		String viewName=(String)request.getAttribute("viewName");
+		ModelAndView mav = new ModelAndView(viewName);
+		HttpSession session=request.getSession();
+		MemberVO memberInfo=(MemberVO)session.getAttribute("memberInfo");
+		String u_id=memberInfo.getU_id();
+		List <CartVO> ZzimList=cartService.myZzimList(u_id);
+		mav.addObject("ZzimList", ZzimList);
+		return mav;
+	}
+	
+	@Override
 	@RequestMapping(value="/addGoodsInCart.do" ,method = { RequestMethod.POST, RequestMethod.GET })
-	public ResponseEntity addGoodsInCart(@RequestParam("g_id") int g_id,
+	public ResponseEntity addGoodsInCart(@RequestParam("g_id") int g_id, String cate,
             HttpServletRequest request, HttpServletResponse response)  throws Exception{
 		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("utf-8");
@@ -66,21 +80,34 @@ public class CartControllerImpl extends BaseController implements CartController
 			String member_id=memberVO.getU_id();
 			cartVO.setU_id(member_id);
 			cartVO.setG_id(g_id);
-			cartVO.setCate("cart");
+			cartVO.setCate(cate);
 			boolean isAreadyExisted=cartService.findCartGoods(cartVO);
-			System.out.println("isAreadyExisted:"+isAreadyExisted);
 			if(isAreadyExisted==true){
+				if(cate.equals("cart")) {
 				message = "<script>";
-				message += " alert('이미 등록된 상품입니다.');";
+				message += " alert('이미 장바구니에 등록된 상품입니다.');";
 				message += " location.href='" + request.getContextPath() + "/goods/goodsDetail.do?g_id=" + g_id +"';";
 				message += " </script>";
-				
+				}else {
+					message = "<script>";
+					message += " alert('이미 찜된 상품입니다.');";
+					message += " location.href='" + request.getContextPath() + "/goods/goodsDetail.do?g_id=" + g_id +"';";
+					message += " </script>";
+				}
 			}else{
+				if(cate.equals("cart")) {
 				cartService.addGoodsInCart(cartVO);
 				message = "<script>";
 				message += " confirm('장바구니에 추가 되었습니다. 장바구니를 확인 하시겠습니까?');";
 				message += " location.href='" + request.getContextPath() + "/cart/myCartList.do';";
 				message += " </script>";
+				}else {
+					cartService.addGoodsInCart(cartVO);
+					message = "<script>";
+					message += " alert('찜되었습니다.');";
+					message += " location.href='" + request.getContextPath() + "/goods/goodsDetail.do?g_id=" + g_id +"';";
+					message += " </script>";
+				}
 			}
 
 		} catch (Exception e) {
@@ -92,35 +119,23 @@ public class CartControllerImpl extends BaseController implements CartController
 		resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
 		return resEntity;
 	}
-	
-	/*
-	@RequestMapping(value="/addGoodsInCart.do" ,method = RequestMethod.POST,produces = "application/text; charset=utf8")
-	public  @ResponseBody String addGoodsInCart(@RequestParam("g_id") int g_id,
-			                    HttpServletRequest request, HttpServletResponse response)  throws Exception{
-		HttpSession session=request.getSession();
-		memberVO=(MemberVO)session.getAttribute("memberInfo");
-		String U_id=memberVO.getU_id();
-		
-		cartVO.setU_id(U_id);
-		//īƮ ������� �̹� ��ϵ� ��ǰ���� �Ǻ��Ѵ�.
-		cartVO.setG_id(g_id);
-		cartVO.setU_id(U_id);
-		boolean isAreadyExisted=cartService.findCartGoods(cartVO);
-		System.out.println("isAreadyExisted:"+isAreadyExisted);
-		if(isAreadyExisted==true){
-			return "already_existed";
-		}else{
-			cartService.addGoodsInCart(cartVO);
-			return "add_success";
-		}
-	}
-	*/
+
+	@Override
 	@RequestMapping(value="/removeCartGoods.do" ,method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView removeCartGoods(@RequestParam("c_id") int c_id,
 			                          HttpServletRequest request, HttpServletResponse response)  throws Exception{
 		ModelAndView mav=new ModelAndView();
 		cartService.removeCartGoods(c_id);
 		String viewName = "redirect:/cart/myCartList.do";
+		mav.setViewName(viewName);
+		return mav;
+	}
+	@Override
+	@RequestMapping(value="/removeZzimGoods.do" ,method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView removeZzimGoods(@RequestParam("c_id") int c_id,HttpServletRequest request, HttpServletResponse response)  throws Exception{
+		ModelAndView mav=new ModelAndView();
+		cartService.removeCartGoods(c_id);
+		String viewName = "redirect:/cart/myZzimList.do";
 		mav.setViewName(viewName);
 		return mav;
 	}

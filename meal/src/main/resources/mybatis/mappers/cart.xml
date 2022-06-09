@@ -22,15 +22,30 @@
 		from cart_tb c
         left outer join goods_tb g on c.g_id = g.g_id 
 		where u_id= #{u_id}
+		and cate='cart'
 		]]>
 	</select>
+	
+	<select id="selectZzimList" parameterType="String"
+		resultMap="cartResult">
+	    <![CDATA[
+		select c.c_id, c.g_id, c.u_id, g.g_price, g.g_name
+		from cart_tb c
+        left outer join goods_tb g on c.g_id = g.g_id 
+		where u_id= #{u_id}
+		and cate='zzim'
+		]]>
+	</select>
+	
+	
 
 	<select id="selectCountInCart" resultType="String"
 		parameterType="cartVO">
 	    <![CDATA[
 		    select if(count(*), 'true', 'false') from cart_tb
 			where g_id=#{g_id}
-			  and u_id=#{u_id} 
+			  and u_id=#{u_id}
+			  and cate=#{cate}
 
     	]]>
 	</select>

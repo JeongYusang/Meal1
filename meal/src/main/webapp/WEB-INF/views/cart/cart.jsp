@@ -52,56 +52,32 @@
 	   })
 	 }
  
- <script type="text/javascript">
+ function order() {
+		
+		var form_contents ='';
+		var orderNumber = 0;
+		
+		$(".cart_info_td").each(function(index, element){
+			
+				var g_id = $(element).find(".g_id").val();
+				var c_qty = $(element).find(".c_qty").val();
+				
+				var g_id_input = "<input name='orders[" + orderNumber + "].g_id' type='hidden' value='" + g_id + "'>";
+				form_contents += g_id_input;
+				
+				var c_qty_input = "<input name='orders[" + orderNumber + "].c_qty' type='hidden' value='" + c_qty + "'>";
+				form_contents += c_qty_input;
+				
+				orderNumber += 1;
+			
+		});	
+		$(".order_form").html(form_contents);
+		$(".order_form").submit();
+		
+	}
 
+ </script>
  
-
- function submit() {
-
-    var form = document.createElement("form");
-
-    form.setAttribute("charset", "UTF-8");
-
-    form.setAttribute("method", "Post");  //Post 방식
-
-    form.setAttribute("action", "/order/CartOrderForm.do"); //요청 보낼 주소
-
-
-
-    var hiddenField = document.createElement("input");
-
-    hiddenField.setAttribute("type", "hidden");
-
-    hiddenField.setAttribute("name", "g_id");
-
-    hiddenField.setAttribute("value", ${g_id});
-
-    form.appendChild(hiddenField);
-
-
-
-    hiddenField = document.createElement("input");
-
-    hiddenField.setAttribute("type", "hidden");
-
-    hiddenField.setAttribute("name", "mEmail");
-
-    hiddenField.setAttribute("value", mEmail);
-
-    form.appendChild(hiddenField);
-
-
-
-    document.body.appendChild(form);
-
-    form.submit();
-
- }
-
-</script>
-	
-</script>
-
 <style>
 #main {
 	margin-top: 30px;
@@ -347,6 +323,7 @@
 width: 50px;
 }
 .delete{
+
 width: 83px;
 	padding-top: 27px;
 	text-align: center;
@@ -355,6 +332,8 @@ width: 83px;
 	font-weight: 300;
 }
 </style>
+
+
 </head>
 
 <body>
@@ -449,7 +428,7 @@ width: 83px;
 				</div>
 				<div class="summary-checkout">
 					<button class="checkout-btn"
-						onclick="document.location.href='./order1.do'">주문하기</button>
+						onclick="order()">주문하기</button>
 						
 				</div>
 			</div>
