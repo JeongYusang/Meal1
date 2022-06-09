@@ -286,11 +286,16 @@ h6.titleText {
          <div id="tab-1" class="tab-content current">
             <h1>상품상세정보</h1>
             <div class="detail">
-               <iframe width="100%" height="600px;"
-                  src="https://www.youtube.com/embed/nWHeZkrQix0?&loop=1">
-               </iframe>
-               
-
+                <c:forEach var="item" items="${ImgList }">
+               <p>
+               		<%-- <c:if test="cate != main"> --%>
+               		<img src="${contextPath}/goodsdown.do?g_id=${item.g_id}&cate=detail&ig_id=${item.ig_id}" width="100%" height="100%"/><br>
+               		<%-- </c:if> --%>
+               		<%-- <c:if test="cate == main"> --%>
+               		잘못된 이미지여
+               		<%-- </c:if> --%>
+               </p>
+            </c:forEach>
             </div>
 
          </div>
