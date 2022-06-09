@@ -10,18 +10,6 @@
 </head>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
-  var cnt=0;
-  function fn_addFile(){
-     if(cnt == 0){
-        $("#d_file").append("<br>"+"<input  type='file' name='main_image' id='f_main_image' />");     
-     }else{
-        $("#d_file").append("<br>"+"<input  type='file' name='detail_image"+cnt+"' />");
-     }
-     
-     cnt++;
-  }
-  
-  
   function fn_add_new_goods(obj){
        fileName = $('#f_main_image').val();
        if(fileName != null && fileName != undefined){
@@ -150,6 +138,19 @@ width: 700px;
 }
 
 td.boxbody {
+font-size: x-large;
+}
+
+th.fileboxhead{
+text-align: left;
+font-size: x-large;
+ }
+
+tr.filebox {
+width: 700px;
+}
+
+td.fileboxbody {
 font-size: x-large;
 }
  
@@ -299,7 +300,6 @@ input
             </div>
             </td>
       </tr>
-  
       <tr class="box">
          <th class="boxhead">조리 시간*</th>
          <td class="boxbody"><input type="text" name="g_time" id="g_time" placeholder="ex)10(분)"
@@ -346,10 +346,18 @@ input
          <th class="boxhead">알러지 상세항목</th>
          <td class="boxbody"><textarea id="test" name="g_allergy_D" cols="30" rows="3" placeholder="ex)대두 - 땅콩, 아몬드, 대두가루, 콩기름"></textarea></td>
       </tr>
+      <tr class="filebox">
+         <th class="fileboxhead">상세이미지*</th>
+         <td class="fileboxbody">
+         	<input type="file" name="detail" /><a href="#this" id="delete" class="btn" name="delete">삭제</a>
+         </td>
+         <td>
+         	<a href="#this" id="addFile" class="btn">사진추가</a>
       <tr class="box">
          <th class="boxhead">상세이미지*</th>
-         <td class="boxbody"><input type="file" name="detail" />
-         
+         <td class="boxbody">
+         	<input type="file" name="detail" accept="img/*"/>
+         	<input type="file" name="detail" accept="img/*"/>
          </td>
       </tr>
       <tr class="box">
@@ -365,4 +373,31 @@ input
 
    </form>
    </div>
+   <script>
+   var gfv_count = 1;
+   $(document).ready(function() {
+   $("#addFile").on("click", function(e){ //파일 추가 버튼
+		e.preventDefault();
+		fn_addFile();
+	});
+	
+	$("a[name='delete']").on("click", function(e){ //삭제 버튼
+		e.preventDefault();
+		fn_deleteFile($(this));
+	});
+});
+
+function fn_addFile(){
+	var str = "<p><input type='file' name='detail"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
+	$(".fileboxbody").append(str);
+	$("a[name='delete']").on("click", function(e){ //삭제 버튼
+		e.preventDefault();
+		fn_deleteFile($(this));
+	});
+}
+
+function fn_deleteFile(obj){
+	obj.parent().remove();
+}
+   </script>
 </html>
