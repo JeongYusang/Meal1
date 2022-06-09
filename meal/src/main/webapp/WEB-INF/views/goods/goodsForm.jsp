@@ -300,7 +300,6 @@ input
             </div>
             </td>
       </tr>
-  
       <tr class="box">
          <th class="boxhead">조리 시간*</th>
          <td class="boxbody"><input type="text" name="g_time" id="g_time" placeholder="ex)10(분)"
@@ -354,6 +353,11 @@ input
          </td>
          <td>
          	<a href="#this" id="addFile" class="btn">사진추가</a>
+      <tr class="box">
+         <th class="boxhead">상세이미지*</th>
+         <td class="boxbody">
+         	<input type="file" name="detail" accept="img/*"/>
+         	<input type="file" name="detail" accept="img/*"/>
          </td>
       </tr>
       <tr class="box">
