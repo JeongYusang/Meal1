@@ -65,7 +65,7 @@ public class CartControllerImpl extends BaseController implements CartController
 	
 	@Override
 	@RequestMapping(value="/addGoodsInCart.do" ,method = { RequestMethod.POST, RequestMethod.GET })
-	public ResponseEntity addGoodsInCart(@RequestParam("g_id") int g_id, String cate,
+	public ResponseEntity addGoodsInCart(@RequestParam("g_id") int g_id,@RequestParam("cate") String cate,
             HttpServletRequest request, HttpServletResponse response)  throws Exception{
 		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("utf-8");
