@@ -109,5 +109,11 @@ public class GoodsDAOImpl implements GoodsDAO {
 		sqlSession.delete("mapper.goods.deleteGoods", goodsInfo);
 	}
 
+	@Override
+	public Img_gVO selectImgOne(int ig_id) throws DataAccessException {
+		Img_gVO goodsImg = (Img_gVO)sqlSession.selectOne("mapper.goods.selectGoodsImg1", ig_id);
+		return goodsImg;
+	}
+
 	
 }

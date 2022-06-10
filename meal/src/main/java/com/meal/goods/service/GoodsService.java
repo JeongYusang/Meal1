@@ -27,5 +27,5 @@ public interface GoodsService {
 	public void goodsSaleEnd(int g_id) throws Exception;
 	public void updateNomalGoods(GoodsVO newGoods) throws Exception;
 	public List<GoodsVO> selectNew_Goods() throws Exception;
-		
+	public Img_gVO selectImgOne(int ig_id)throws Exception;
 }

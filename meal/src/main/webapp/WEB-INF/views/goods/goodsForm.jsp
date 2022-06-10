@@ -353,20 +353,12 @@ input
          </td>
          <td>
          	<a href="#this" id="addFile" class="btn">사진추가</a>
-      <tr class="box">
-         <th class="boxhead">상세이미지*</th>
-         <td class="boxbody">
-         	<input type="file" name="detail" accept="img/*"/>
-         	<input type="file" name="detail" accept="img/*"/>
          </td>
-      </tr>
       <tr class="box">
          <th class="boxhead">상세설명*</th>
          <td class="boxbody"><textarea id="test" name="g_detail1" cols="30" rows="10"></textarea>
             <div id="test_cnt">(0 / 2000)</div></td>
       </tr>
-
-
    </table>
 
    <input type="submit" id="addgoods"  value="상품등록" >

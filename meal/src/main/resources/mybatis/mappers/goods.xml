@@ -145,6 +145,12 @@
 		resultMap="img_GResult">
 		select * from img_g where g_id = #{g_id}
 	</select>
+	
+	<!--굿즈디테일만을 위한 이미지 출력 -->
+	<select id="selectGoodsImg1" parameterType="int"
+		resultType="img_gVO">
+		select * from img_g where ig_id = #{ig_id}
+	</select>
 
 	<select id="selectOneImg" parameterType="Map"
 		resultType="img_gVO">
