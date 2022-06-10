@@ -1,6 +1,7 @@
 package com.meal.seller.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,4 +27,8 @@ public interface SellerController {
 			HttpServletResponse response) throws Exception ;
 	public ModelAndView sellerDetail(@RequestParam("id") String id, HttpServletRequest request,
 			HttpServletResponse response) throws Exception ;
+	public ModelAndView sellerMypage(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+	         @RequestParam(value = "section1", required = false) String section,
+	         @RequestParam(value = "pgNum", required = false) String pgNum, HttpServletRequest request,
+	         HttpServletResponse response) throws Exception;
 	}
