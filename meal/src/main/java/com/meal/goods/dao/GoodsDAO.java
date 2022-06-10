@@ -50,4 +50,6 @@ public interface GoodsDAO {
 	public void updateGoods(HashMap<String, Object> newGoodsMap) throws DataAccessException;
 
 	public void deleteGoods(GoodsVO goodsInfo) throws DataAccessException;
+	
+	public Img_gVO selectImgOne(int ig_id)throws DataAccessException;
 }

@@ -3,6 +3,7 @@ package com.meal.goods.controller;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -213,6 +214,7 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
         //상품문의게시판 리스트 정보
         List<BoardGqVO> boardGqList = boardGqService.selectBoardGqallList();
         
+        HttpSession session = request.getSession();
         
         logger.info("--------------------------------");
         logger.info("goodsInfo" + goodsInfo);
@@ -228,6 +230,8 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
         mav.addObject("boardGrList",boardGrList);
         mav.addObject("boardGqList", boardGqList);
         mav.setViewName(viewName);
+        
+        addGoodsInQuick(g_id,goodsInfo,session);
 
 
         return mav;
@@ -491,5 +495,35 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
       return message;
    }
    }
+   
+ //메소드 추가
+   private void addGoodsInQuick(int g_id,GoodsVO goodsInfo,HttpSession session){
+   		boolean already_existed=false;
+   		List<GoodsVO> quickGoodsList;
+   		quickGoodsList=(ArrayList<GoodsVO>)session.getAttribute("quickGoodsList");
+   		
+   		if(quickGoodsList!=null){
+   			if(quickGoodsList.size() < 4){ 
+   				for(int i=0; i<quickGoodsList.size();i++){
+   					GoodsVO _goodsBean=(GoodsVO)quickGoodsList.get(i);
+   					if(g_id == _goodsBean.getG_id()){
+   						already_existed=true;
+   						break;
+   					}
+   				}
+   				if(already_existed==false){
+   					quickGoodsList.add(goodsInfo);
+   				}
+   			}
+   			
+   		}else{
+   			quickGoodsList =new ArrayList<GoodsVO>();
+   			quickGoodsList.add(goodsInfo);
+   			
+   		}
+   		session.setAttribute("quickGoodsList",quickGoodsList);
+   		session.setAttribute("quickGoodsListNum", quickGoodsList.size());
+   	}
+
 
 }

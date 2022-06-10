@@ -111,4 +111,10 @@ public class GoodsServiceImpl implements GoodsService {
 	public List<GoodsVO> selectNew_Goods() throws Exception{
 		return (List<GoodsVO>)goodsDAO.selectNew_Goods();
 	}
+	@Override
+	public Img_gVO selectImgOne(int ig_id)throws Exception{
+		Img_gVO goodsImg = (Img_gVO)goodsDAO.selectImgOne(ig_id);
+		return goodsImg;
+		
+	}
 }

@@ -105,6 +105,15 @@ ul.tabs li.current {
 	display: inline-block;
 }
 
+div .detail1tag {
+	font-size: 60px;
+}
+
+div .InfoTop {
+	display: block;
+    margin-left: auto;
+}
+
 .button {
 	background-color: #ffd3dd;
 	border: none;
@@ -151,6 +160,11 @@ tr.border-bottom td {
 
 #main-wrap {
 	color: black;
+}
+
+#mainImg {
+	width: 600px;
+	height: 600px;
 }
 
 .checked {
@@ -215,6 +229,20 @@ h6.titleText {
     BORDER-TOP: 1PX SOLID BLACK;
     PADDING-TOP: 9PX;
     }
+    
+    .ultra {
+    	list-style:none;
+    }
+    
+    .litra {
+    	float: left;
+    	margin-right: 30px;
+    	display: inline-block;
+    }
+    
+    div #icon {
+    margin-bottom: 120px;
+    }
 </style>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -260,14 +288,19 @@ h6.titleText {
 	</script>
 	<div id="main-wrap">
 		<div class="container">
-			<img src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=main"	width="500px" height="500px" style="margin-top: 70px;">
-			<div style="display: block; vertical-align: top;">
+			<img src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=main" id="mainImg">
+			<div class="InfoTop">
             <br> <br> <br> 
             <b style="font-size: 52px">${goodsInfo.g_name}</b>
             <p style="font-size: 45px; font-weight:600; margin-top: 0;">${goodsInfo.g_price }원</p>
-            <br> 
-            <div id="text">
-               <h3>${goodsInfo.g_detail1 }</h3>
+            <div id="icon">
+            <ul class="ultra">
+            	<li class="litra"><img src="${contextPath}/resources/image/BANG.png" width="40px" height="40px">${goodsInfo.g_bang }</li>
+            	<li class="litra"><img src="${contextPath}/resources/image/INBUN.jpg" width="40px" height="40px">${goodsInfo.g_inbun }</li>
+            	<li class="litra"><img src="${contextPath}/resources/image/time.png" width="40px" height="40px">${goodsInfo.g_time }분</li>
+            </ul>
+            </div>
+            <div class="text">
 			   <h3>남은수량 : ${goodsInfo.g_amount }개</h3>
                <h3>유통기한 : ${goodsInfo.g_eatDate }</h3>
                <h3>단위(인분) : ${goodsInfo.g_inbun }</h3>
@@ -289,11 +322,10 @@ h6.titleText {
 						</b>
 					</form>
 				</div>
-				<br> <a href="./products.jsp" class="button">찜하기</a> <a
-					href="${contextPath}/order/OrderForm.do?g_id=${goodsInfo.g_id}&o_goods_qty=1"
-					class="button"> 구매하기</a> <a
-					href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}"
-					class="button">장바구니담기</a>
+				<br> 
+					 <a href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=zzim" class="button">찜하기</a>
+            		 <a href="${contextPath}/order/OrderForm.do?g_id=${goodsInfo.g_id}&o_goods_qty=1" class="button"> 구매하기</a>
+            		 <a href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=cart" class="button">장바구니담기</a>
 			</div>
 		</div>
 		<br>
@@ -308,28 +340,20 @@ h6.titleText {
 			</div>
 
          <div id="tab-1" class="tab-content current">
-            <h1>상품상세정보</h1>
             <div class="detail">
-                <c:forEach var="item" items="${ImgList }">
+            	<div class="detail1tag">
+            		${goodsInfo.g_detail1 }
+            	</div>
+             <c:forEach var="item" items="${ImgList }"> 
+				<c:if test="${item.cate != 'main' }">
                <p>
-               		<%-- <c:if test="cate != main"> --%>
-               		<img src="${contextPath}/goodsdown.do?g_id=${item.g_id}&cate=detail&ig_id=${item.ig_id}" width="100%" height="100%"/><br>
-               		<%-- </c:if> --%>
-               		<%-- <c:if test="cate == main"> --%>
-               		잘못된 이미지여
-               		<%-- </c:if> --%>
+               		 <img src="${contextPath}/goodsdown.do?ig_id=${item.ig_id}" width="100%" height="100%"/><br>
+               		 
                </p>
+               </c:if>
             </c:forEach>
             </div>
-			<div id="tab-1" class="tab-content current">
-				<h1>상품상세정보</h1>
-				<div class="detail">
-					<iframe width="100%" height="600px;"
-						src="https://www.youtube.com/embed/nWHeZkrQix0?&loop=1">
-					</iframe>
-					<img src="${contextPath }/download1.do?g_id=${goodsInfo.g_id}&cate=detail" width="100%" height="100%">
-				</div>
-			</div>
+            </div>
 			<div id="tab-2" class="tab-content">
 				<div class="detail">
 					<div id="tabletitle">

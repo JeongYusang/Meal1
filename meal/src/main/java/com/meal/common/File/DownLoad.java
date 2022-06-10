@@ -162,5 +162,33 @@ public class DownLoad {
 		out.write(buffer);
 		out.close();
 	}
-
+	
+	//굿즈디테일 상세 이미지 다운로드
+	@RequestMapping("/goodsdown.do")
+	protected void goodsdown(@RequestParam("ig_id") int ig_id, HttpServletResponse response) throws Exception {
+		OutputStream out = response.getOutputStream();
+		//ig_id 는 메인페이지에서 g_vo로 들고옴 
+		// 그것을 통해서 img_g꺼내주는것이 목적(이미지 이름때문임)
+		Img_gVO goodsImg = (Img_gVO) goodsService.selectImgOne(ig_id);
+		System.out.println(goodsImg);
+		if (goodsImg.getIg_id() == ig_id) {
+			//상품 이미지 폴더 지정
+			String filePath = CURR_IMAGE_PATH + "\\" + "goods" + "\\" + goodsImg.getG_id() + "\\" + goodsImg.getCate() + "\\" + goodsImg.getFileName();
+			System.out.println(filePath);
+			File image = new File(filePath);
+			response.setHeader("Cache-Control", "no-cache");
+			response.addHeader("Content-disposition", "attachment; fileName=" + goodsImg.getFileName());
+			FileInputStream in = new FileInputStream(image);
+			byte[] buffer = new byte[1024*8];
+			while (true) {
+				int count = in.read(buffer);
+				if (count == -1)
+					break;
+				out.write(buffer,0,count);
+			}
+			in.close();
+			out.close();
+		}
+	}
+	
 }
