@@ -25,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.meal.admin.service.AdminService;
 import com.meal.admin.vo.AdminVO;
+import com.meal.cart.service.CartService;
+import com.meal.cart.vo.CartVO;
 import com.meal.goods.service.GoodsService;
 import com.meal.goods.vo.GoodsVO;
 import com.meal.member.service.MemberService;
@@ -46,11 +48,15 @@ public class BaseController {
 	@Autowired
 	private GoodsService goodsService;
 	@Autowired
+	private CartService cartService;
+	@Autowired
 	private MemberVO memberVO;
 	@Autowired
 	private SellerVO sellerVO;
 	@Autowired
 	private AdminVO adminVO;
+	@Autowired
+	private CartVO cartVO;
 	@Autowired
 	BCryptPasswordEncoder passwordEncode;
 
@@ -171,6 +177,7 @@ public class BaseController {
 					session.setAttribute("isLogOn", true);
 					session.setAttribute("memberInfo", memberInfo);
 					String viewName = "redirect:/main/main.do";
+					addGoodsInQuick(session);
 					mav.setViewName(viewName);
 					return mav;
 				} else {
@@ -395,5 +402,14 @@ public class BaseController {
 		}
 		return pagingMap;
 	}
+	
+	public void addGoodsInQuick(HttpSession session) throws Exception{
+		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+		String u_id = memberInfo.getU_id();
+		List<CartVO> quickZzimList = cartService.myZzimList(u_id);
+		session.setAttribute("quickZzimList",quickZzimList);
+		session.setAttribute("quickZzimListNum", quickZzimList.size());
+	}
+
 
 }

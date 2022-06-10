@@ -77,8 +77,9 @@ public class CartControllerImpl extends BaseController implements CartController
 
 			HttpSession session=request.getSession();
 			memberVO=(MemberVO)session.getAttribute("memberInfo");
-			String member_id=memberVO.getU_id();
-			cartVO.setU_id(member_id);
+			String u_id=memberVO.getU_id();
+			CartVO cartVO = new CartVO();
+			cartVO.setU_id(u_id);
 			cartVO.setG_id(g_id);
 			cartVO.setCate(cate);
 			boolean isAreadyExisted=cartService.findCartGoods(cartVO);
@@ -103,6 +104,9 @@ public class CartControllerImpl extends BaseController implements CartController
 				message += " </script>";
 				}else {
 					cartService.addGoodsInCart(cartVO);
+					List<CartVO> quickZzimList = cartService.myZzimList(u_id);
+					session.setAttribute("quickZzimList",quickZzimList);
+					session.setAttribute("quickZzimListNum", quickZzimList.size());
 					message = "<script>";
 					message += " alert('찜되었습니다.');";
 					message += " location.href='" + request.getContextPath() + "/goods/goodsDetail.do?g_id=" + g_id +"';";
@@ -125,9 +129,17 @@ public class CartControllerImpl extends BaseController implements CartController
 	public ModelAndView removeCartGoods(@RequestParam("c_id") int c_id,
 			                          HttpServletRequest request, HttpServletResponse response)  throws Exception{
 		ModelAndView mav=new ModelAndView();
+		HttpSession session=request.getSession();
 		cartService.removeCartGoods(c_id);
+		session.removeAttribute("quickZzimList");
+		session.removeAttribute("quickZzimListNum");
+		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+		String u_id = memberInfo.getU_id();
+		List <CartVO> quickZzimList=cartService.myZzimList(u_id);
 		String viewName = "redirect:/cart/myCartList.do";
 		mav.setViewName(viewName);
+		session.setAttribute("quickZzimList",quickZzimList);
+		session.setAttribute("quickZzimListNum", quickZzimList.size());
 		return mav;
 	}
 	@Override

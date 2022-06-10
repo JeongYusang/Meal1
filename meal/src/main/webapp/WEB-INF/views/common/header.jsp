@@ -365,7 +365,7 @@
 					<li class="dropdown"><a href="javascript:void(0)"
 						class="dropbtn1">고객센터▼</a>
 						<div class="dropdown-content">
-							<a href="${contextPath }/main/cart.do">장바구니</a> <a
+							<a href="${contextPath }/cart/myCartList.do">장바구니</a> <a
 								href="${contextPath}/board1/selectBoard1List.do">1대1문의게시판</a> <a
 								href="#">카테고리4</a>
 						</div></li>
