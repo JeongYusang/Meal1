@@ -80,30 +80,23 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			mav.addObject(message);
 		}
 		return mav;
+	}
+
+	@Override
+
+	@RequestMapping(value = "/CartOrderForm.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView CartOrderForm(@RequestParam("cartlist") List<OrderVO> CartList,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession();
+		ModelAndView mav = new ModelAndView();
+		String viewName = (String) request.getAttribute("viewName");
+		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+		mav.addObject("CartList",CartList);
+		mav.addObject("memberInfo",memberInfo);
+		return mav;
 
 	}
 
-	/*
-	 * @Override
-	 * 
-	 * @RequestMapping(value = "/CartOrderForm.do", method = { RequestMethod.POST,
-	 * RequestMethod.GET }) public ModelAndView CartOrderForm(@RequestParam("g_id")
-	 * int g_id, @RequestParam("o_goods_qty") int o_goods_qty, HttpServletRequest
-	 * request, HttpServletResponse response) throws Exception { HttpSession session
-	 * = request.getSession(); ModelAndView mav = new ModelAndView(); String
-	 * viewName = (String) request.getAttribute("viewName"); MemberVO memberInfo =
-	 * (MemberVO) session.getAttribute("memberInfo"); List<OrderVO> orderList=
-	 * (List<OrderVO>) goodsService.selectGoodsDetail(g_id); int i = 0; for
-	 * (i=0;i<orderList.size();i++) { OrderVO orderVO = orderList.get(i);
-	 * 
-	 * }
-	 * 
-	 * 
-	 * 
-	 * return mav;
-	 * 
-	 * }
-	 */
 
 	@Override
 	@RequestMapping(value = "/insertOrder.do", method = { RequestMethod.POST, RequestMethod.GET })
@@ -255,7 +248,6 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 				String viewName = "redirect:/order/selectUserOrders.do";
 				mav.addObject(message);
 				mav.setViewName(viewName);
-				logger.info("뷰네임" + viewName);
 				return mav;
 
 			} else {

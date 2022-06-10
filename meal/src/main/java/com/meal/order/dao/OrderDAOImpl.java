@@ -45,8 +45,7 @@ public class OrderDAOImpl implements OrderDAO {
 
 	@Override
 	public void deleteOrder(int o_id) throws DataAccessException {
-		 sqlSession.delete("mapper.order.deleteOrder", o_id);
-		
+		 sqlSession.update("mapper.order.deleteOrder", o_id);
 	}
 
 	@Override

@@ -81,25 +81,37 @@
 	
 	<select id="selectUserOrders" parameterType="String" resultMap="orderResult">
 	<![CDATA[
-		   select * from order_tb where u_id=#{u_id} order by pay_order_time desc
+		   select * from order_tb where u_id=#{u_id} and good_cancel = 'N' order by pay_order_time desc
 		]]>
 	</select>
 	
 	<select id="UserboardOrderPage"  parameterType="String" resultMap="orderResult">
    <![CDATA[
-	    select R1.* from (select * from order_tb) R1 where u_id = #{u_id} order by pay_order_time desc limit #{start} , #{end} 
+	    select R1.* from (select * from order_tb) R1 where u_id = #{u_id} and good_cancel = 'N' order by pay_order_time desc limit #{start} , #{end} 
+	   ]]>
+	</select>
+	
+	<select id="CanceledUserOrders" parameterType="String" resultMap="orderResult">
+	<![CDATA[
+		   select * from order_tb where u_id=#{u_id} and good_cancel = 'Y' order by pay_order_time desc
+		]]>
+	</select>
+	
+	<select id="CanceledUserOrderPage"  parameterType="String" resultMap="orderResult">
+   <![CDATA[
+	    select R1.* from (select * from order_tb) R1 where u_id = #{u_id} and good_cancel = 'Y' order by pay_order_time desc limit #{start} , #{end} 
 	   ]]>
 	</select>
 	
 	<select id="UserboardOrderListPage"  parameterType="Map" resultMap="orderResult">
    <![CDATA[
-	    select R1.* from (select * from order_tb) R1 where u_id = #{u_id} and delivery_state = #{delivery_state} order by pay_order_time desc limit #{start} , #{end} 
+	    select R1.* from (select * from order_tb) R1 where u_id = #{u_id} and delivery_state = #{delivery_state} and good_cancel = 'N' order by pay_order_time desc limit #{start} , #{end} 
 	   ]]>
 	</select>
 	
 	<select id="selectOrderList"  parameterType="String" resultMap="orderResult">
    <![CDATA[
-	   select o.*, gr.b_gr_id from order_tb o left outer join board_gr gr on o.o_id = gr.o_id where o.delivery_state = #{delivery_state} and o.u_id = #{u_id};
+	   select o.*, gr.b_gr_id from order_tb o left outer join board_gr gr on o.o_id = gr.o_id where o.delivery_state = #{delivery_state} and o.u_id = #{u_id} and good_cancel = 'N' order by pay_order_time desc;
 	   ]]>
 	</select>
 	
@@ -108,11 +120,11 @@
 	    select u_id from order_tb where o_id = #{o_id}
 	   ]]>
 	</select>
-	<delete id="deleteOrder" parameterType="Integer">
+	<update id="deleteOrder" parameterType="Integer">
 	<![CDATA[
-	delete from order_tb where o_id=#{o_id}
+	update order_tb set good_cancel = 'Y', pay_order_time = CURRENT_TIMESTAMP where o_id=#{o_id}
 	]]>
-	</delete>
+	</update>
 	
 	<select id="overlappedO_id"  parameterType="Integer" resultType="String">
    <![CDATA[
@@ -135,7 +147,7 @@
 	
 	<select id="tabpageorderlist" parameterType="Map" resultMap="orderResult">
 	<![CDATA[
-		   select * from order_tb where u_id=#{u_id} and delivery_state = #{delivery_state} order by pay_order_time desc
+		   select * from order_tb where u_id=#{u_id} and delivery_state = #{delivery_state} and good_cancel = 'N' order by pay_order_time desc
 		]]>
 	</select>
 	

@@ -14,14 +14,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <title>상품 상세 정보</title>
-<c:if test='${not empty message }'>
+<c:if test='${ not empty message}'>
 	<script>
 		window.onload = function() {
 			result();
 		}
 
 		function result() {
-			alert(${message});
+			alert("${message}");
 		}
 	</script>
 </c:if>
