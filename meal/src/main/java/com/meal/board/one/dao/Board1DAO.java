@@ -9,7 +9,7 @@ import org.springframework.dao.DataAccessException;
 import com.meal.board.one.vo.Board1VO;
 
 public interface Board1DAO {
-	public List<Board1VO> listBoard1(Board1VO board1VO) throws DataAccessException;
+	public List<Board1VO> listBoard1(String u_id) throws DataAccessException;
 
 	public void board1Write(Board1VO board1VO) throws DataAccessException;
 
@@ -26,5 +26,9 @@ public interface Board1DAO {
 	public void board1Delete1(int b_1_id) throws DataAccessException;
 
 	public void board1Delete2(int b_1_id) throws DataAccessException;
+
+	public List<Board1VO> selectMyBoard1List(HashMap<String, Object> map) throws DataAccessException;
+
+	
 
 }

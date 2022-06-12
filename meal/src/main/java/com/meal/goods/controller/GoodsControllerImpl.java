@@ -200,9 +200,13 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
       resEntity = new ResponseEntity(result, HttpStatus.OK);
       return resEntity;
    }
-
-    @RequestMapping(value = "/goodsDetail.do", method = RequestMethod.GET)
-     public ModelAndView goodsDetail(@RequestParam("g_id") int g_id, @RequestParam("g_id") int b_gr_id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+   @Override
+   @RequestMapping(value = "/goodsDetail.do", method = RequestMethod.GET)
+	public ModelAndView goodsDetail(@RequestParam("g_id") int g_id, @RequestParam("g_id") int b_gr_id,
+			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+			@RequestParam(value = "section", required = false) String section,
+			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
         ModelAndView mav = new ModelAndView();
 
         String viewName = (String) request.getAttribute("viewName");
@@ -210,9 +214,46 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
         GoodsVO goodsInfo = (GoodsVO)goodsService.selectGoodsDetail(g_id);
         List<Img_gVO> imgList = (List<Img_gVO>)goodsService.selectImgList(g_id);
         //상품리뷰게시판 리스트 정보
-        List<BoardGrVO> boardGrList = (List<BoardGrVO>)boardGrService.selectBoardGrallList();
+        HashMap<String, Object> Map = new HashMap<String, Object>();
+		Map.put("pageNum", pageNum);
+		Map.put("section", section);
+		HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(Map);
+		pagingMap.put("g_id", g_id);
+
+		List<BoardGrVO> boardGrList = boardGrService.selectGoodsBoardGrList(pagingMap);
+		List<BoardGrVO> boardGr = boardGrService.selectGoodsBoardGrallList(g_id);
+
+		for (BoardGrVO item : boardGr) {
+			for (BoardGrVO j : boardGrList) {
+				if (!((int) item.getB_gr_id() == (int) j.getParentNo())) {
+					String compare = "N";
+					item.setCompare(compare);
+				} else {
+					String compare = "Y";
+					item.setCompare(compare);
+					System.out.println("BoardCompare" + item.getB_gr_id());
+
+					break;
+				}
+			}
+		}
         //상품문의게시판 리스트 정보
-        List<BoardGqVO> boardGqList = boardGqService.selectBoardGqallList();
+		List<BoardGqVO> boardGq = boardGqService.selectGoodsBoardGqList(pagingMap);
+		List<BoardGqVO> boardGqList = boardGqService.selectGoodsBoardGqallList(g_id);
+
+		for (BoardGqVO item : boardGq) {
+			for (BoardGqVO j : boardGqList) {
+				if (!((int) item.getB_gq_id() == (int) j.getParentNo())) {
+					String compare = "N";
+					item.setCompare(compare);
+				} else {
+					String compare = "Y";
+					item.setCompare(compare);
+					System.out.println("BoardCompare" + item.getB_gq_id());
+					break;
+				}
+			}
+		}
         
         HttpSession session = request.getSession();
         

@@ -75,6 +75,13 @@ update board_gq set title = #{title}, content = #{content}, secret = #{secret} w
 	    select R1.* from (select * from board_gq) R1 where parentNo = 0 and s_id = #{s_id} order by b_gq_id desc limit #{start} , #{end} 
 	   ]]>
 	</select>
+	
+	<select id="GoodsboardGqPage" resultMap="BoardGqResult"
+		parameterType="Map">
+   <![CDATA[
+	    select R1.* from (select * from board_gq) R1 where parentNo = 0 and g_id = #{g_id} order by b_gq_id desc limit #{start} , #{end} 
+	   ]]>
+	</select>
 
 
 	<select id="selectBoardGqallList" resultMap="BoardGqResult">
@@ -92,6 +99,12 @@ update board_gq set title = #{title}, content = #{content}, secret = #{secret} w
 		<select id="selectSellerBoardGqallList" resultMap="BoardGqResult" parameterType="String">
        <![CDATA[
            select gq.*, g.g_name from board_gq gq LEFT OUTER JOIN goods_tb g on g.g_id = gq.g_id where gq.s_id = #{s_id}
+             ]]>
+	</select>
+	
+		<select id="selectGoodsBoardGqallList" resultMap="BoardGqResult" parameterType="int">
+       <![CDATA[
+           select gq.*, g.g_name from board_gq gq LEFT OUTER JOIN goods_tb g on g.g_id = gq.g_id where gq.g_id = #{g_id}
              ]]>
 	</select>
 

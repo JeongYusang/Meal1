@@ -215,7 +215,6 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 	@Override
 	@RequestMapping(value = "/selectBoardGqList.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView selectBoardGqList(@RequestParam(value = "message", required = false) String message,
-
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,

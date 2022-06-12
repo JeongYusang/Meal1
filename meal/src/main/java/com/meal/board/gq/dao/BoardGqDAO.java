@@ -10,13 +10,31 @@ import com.meal.board.gq.vo.Img_gqVO;
 
 public interface BoardGqDAO {
 
-	public void boardGqWrite(HashMap<String, Object> newboardGqMap) throws DataAccessException;
-
+	/* 페이징 */
+	
 	public List<BoardGqVO> selectBoardGqList(HashMap<String, Object> map) throws DataAccessException;
+	
+	public List<BoardGqVO> selectSellerBoardGqList(HashMap<String, Object> map)throws DataAccessException;
+
+	public List<BoardGqVO> selectGoodsBoardGqList(HashMap<String, Object> map)throws DataAccessException;
+
+	public List<BoardGqVO> selectMyBoardGqList(HashMap<String, Object> Map)throws DataAccessException;
+	
+	/* 리스트 조회 */
+	
+	public List<BoardGqVO> selectBoardGqallList() throws DataAccessException;
+
+	public List<BoardGqVO> selectMyBoardGqallList(String u_id)throws DataAccessException;
+
+	public List<BoardGqVO> selectGoodsBoardGqallList(int g_id)throws DataAccessException;
+	
+	public List<BoardGqVO> selectSellerBoardGqallList(String s_id) throws DataAccessException;
 	
 	public List<Img_gqVO> selectBoardGqDetailImage(int b_gq_id) throws DataAccessException;
 
-	public List<BoardGqVO> selectBoardGqallList() throws DataAccessException;
+	/* 게시글 쓰기/ 상세 / 답글쓰기 / 수정 / 삭제 1,2 / 이미지추가 */
+	
+	public void boardGqWrite(HashMap<String, Object> newboardGqMap) throws DataAccessException;
 	
 	public BoardGqVO selectBoardGqDetail(int b_gq_id) throws DataAccessException;
 
@@ -32,14 +50,16 @@ public interface BoardGqDAO {
 
 	public BoardGqVO findb_gq_id()throws DataAccessException;
 	
-	public List<BoardGqVO> selectMyBoardGqallList(String u_id)throws DataAccessException;
-
-	public List<BoardGqVO> selectMyBoardGqList(HashMap<String, Object> Map)throws DataAccessException;
+	
 
 	public BoardGqVO gqdownload(int b_gq_id)throws DataAccessException;
 
-	public List<BoardGqVO> selectSellerBoardGqallList(String s_id)throws DataAccessException;
+	
 
-	public List<BoardGqVO> selectSellerBoardGqList(HashMap<String, Object> map)throws DataAccessException;
+	
+	
+	
+
+	
 
 }

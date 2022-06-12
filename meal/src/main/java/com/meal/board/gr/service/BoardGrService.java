@@ -32,10 +32,14 @@ public interface BoardGrService {
 
 	public List<BoardGrVO> selectMyBoardGrList(HashMap<String, Object> Map) throws Exception;
 
-	public BoardGrVO grdownload(int b_gr_id);
+	public BoardGrVO grdownload(int b_gr_id)throws Exception;
 
-	public List<BoardGrVO> selectSellerBoardGrallList(String s_id);
+	public List<BoardGrVO> selectSellerBoardGrallList(String s_id)throws Exception;
 
-	public List<BoardGrVO> selectSellerBoardGrList(HashMap<String, Object> pagingMap);
+	public List<BoardGrVO> selectSellerBoardGrList(HashMap<String, Object> pagingMap)throws Exception;
+
+	public List<BoardGrVO> selectGoodsBoardGrList(HashMap<String, Object> pagingMap)throws Exception;
+
+	public List<BoardGrVO> selectGoodsBoardGrallList(int g_id)throws Exception;
 
 }

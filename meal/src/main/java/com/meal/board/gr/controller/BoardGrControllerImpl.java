@@ -215,7 +215,7 @@ public class BoardGrControllerImpl extends BaseController implements BoardGrCont
 		}
 		return mav;
 	}
-
+	
 	@Override
 	@RequestMapping(value = "/selectBoardGrList.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView selectBoardGrList(
@@ -356,7 +356,6 @@ public class BoardGrControllerImpl extends BaseController implements BoardGrCont
 		mav.addObject("boardGr", boardGr);
 		mav.addObject("sellerVO", sellerVO);
 		return mav;
-
 	}
 
 	@Override

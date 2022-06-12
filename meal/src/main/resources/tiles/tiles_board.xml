@@ -7,11 +7,18 @@
 
 
 <!-- 1대1 보드테이블 -->
+	<definition name="/board1/selectMyBoard1" extends="baseLayout2">
+		<put-attribute name="title" value="1대1게시판 메인" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/board_1/1on1search.jsp" />
+	</definition>
+	
 	<definition name="/board1/selectBoard1List" extends="baseLayout2">
 		<put-attribute name="title" value="1대1게시판 메인" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/board_1/1on1search.jsp" />
 	</definition>
+	
   <definition name="/board1/b1Detail" extends="baseLayout2">
       <put-attribute name="title" value="보드디테일" />
       <put-attribute name="body" value="/WEB-INF/views/board_1/b1Detail.jsp" />
@@ -21,10 +28,12 @@
       <put-attribute name="title" value="1대1게시판 작성" />
       <put-attribute name="body" value="/WEB-INF/views/board_1/1on1write.jsp" />
    </definition>
+   
    <definition name="board1/board1Updateform" extends="baseLayout2">
       <put-attribute name="title" value="1대1게시판 수정" />
       <put-attribute name="body" value="/WEB-INF/views/board_1/1on1update.jsp" />
    </definition>
+   
       <definition name="board1/board1Reviewform" extends="baseLayout2">
       <put-attribute name="title" value="1대1게시판 답글" />
       <put-attribute name="body" value="/WEB-INF/views/board_1/1on1Review.jsp" />
@@ -57,20 +66,27 @@
 	<put-attribute name="body" value="/WEB-INF/views/board_gr/gr_review.jsp" />
 	</definition>
 	
-		<definition name="/boardGr/selectMyBoardGrList" extends="baseLayout2">
-	<put-attribute name="title" value="내 리뷰 보기" />
-	<put-attribute name="body" value="/WEB-INF/views/board_gr/gr_my_search.jsp" />
+	<definition name="/boardGr/selectMyBoardGrList" extends="baseLayout2">
+		<put-attribute name="title" value="내 리뷰 보기" />
+		<put-attribute name="body" value="/WEB-INF/views/board_gr/gr_my_search.jsp" />
 	</definition>
 	
-		<definition name="/boardGr/selectSellerBoardGrList" extends="baseLayout2">
-	<put-attribute name="title" value="내 상품 리뷰 보기" />
-	<put-attribute name="body" value="/WEB-INF/views/board_gr/gr_my_search.jsp" />
+	<definition name="/boardGr/selectSellerBoardGrList" extends="baseLayout2">
+		<put-attribute name="title" value="내 상품 리뷰 보기" />
+		<put-attribute name="body" value="/WEB-INF/views/board_gr/gr_my_search.jsp" />
 	</definition>
 	
-		<definition name="boardGr/boardGrReviewUpdateform" extends="baseLayout2">
-	<put-attribute name="title" value="리뷰 답글 수정" />
-	<put-attribute name="body" value="/WEB-INF/views/board_gr/gr_review_update.jsp" />
+	<definition name="boardGr/boardGrReviewUpdateform" extends="baseLayout2">
+		<put-attribute name="title" value="리뷰 답글 수정" />
+		<put-attribute name="body" value="/WEB-INF/views/board_gr/gr_review_update.jsp" />
 	</definition>
+	
+	<definition name="/boardGr/selectGoodsBoardGrList" extends="baseLayout2">
+		<put-attribute name="title" value="상품 상세" />
+		<put-attribute name="body" value="/WEB-INF/views/goods/goodsDetail.jsp" />
+	</definition>
+	
+	
 	
 	<!-- 상품문의 보드테이블 -->
 	

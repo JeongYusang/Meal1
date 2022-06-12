@@ -18,8 +18,8 @@ public class Board1ServiceImpl implements Board1Service {
 	private Board1DAO board1DAO;
 
 	@Override
-	public List<Board1VO> listBoard1(Board1VO board1VO) throws Exception {
-		return board1DAO.listBoard1(board1VO);
+	public List<Board1VO> listBoard1(String u_id) throws Exception {
+		return board1DAO.listBoard1(u_id);
 	}
 
 	@Override
@@ -58,6 +58,12 @@ public class Board1ServiceImpl implements Board1Service {
 	public void board1Delete(int b_1_id) throws Exception {
 		board1DAO.board1Delete1(b_1_id);
 		board1DAO.board1Delete2(b_1_id);
+	}
+
+	@Override
+	public List<Board1VO> selectMyBoard1List(HashMap<String, Object> map) throws Exception {
+		List<Board1VO> listInfo = (List<Board1VO>) board1DAO.selectMyBoard1List(map);
+		return listInfo;
 	}
 
 }
