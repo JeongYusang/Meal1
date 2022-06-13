@@ -140,9 +140,41 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 		return mav;
 	}
 
+	//한개 주문시 ! 
 	@Override
 	@RequestMapping(value = "/insertOrder.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView insertOrder(@ModelAttribute("orderVO") OrderVO _orderVO, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		try {
+			int parentNo = orderService.insertOrder(_orderVO);
+			if (parentNo != 0) {
+				String viewName = (String) session.getAttribute("viewName");
+				String message = "주문완료 되었습니다.";
+				mav.addObject(message);
+				mav.setViewName(viewName);
+				return mav;
+			} else {
+				parentNo = 1;
+				String viewName = (String) session.getAttribute("viewName");
+				String message = "주문완료 되었습니다.";
+				mav.addObject(message);
+				mav.setViewName(viewName);
+				return mav;
+			}
+		} catch (Exception e) {
+			String viewName1 = "redirect:/order/orderform.do";
+			mav.setViewName(viewName1);
+			String message = "주문중 오류가 발생 하였습니다. 다시 주문해주시길 바랍니다";
+			mav.addObject(message);
+			return mav;
+		}
+	}
+	
+	@Override
+	@RequestMapping(value = "/insertCartOrder.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView insertCartOrder(@ModelAttribute("orderVO") OrderVO _orderVO, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();

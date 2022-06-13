@@ -320,10 +320,10 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 							<tr class="line">
 								<td class="fixed_join">주소</td>
 								<td><input type="text" id="zipcode" name="zipcode" size="5"
-									value="${orderer.zipcode }"> <a
+									"> <a
 									href="javascript:execDaumPostcode()">우편번호검색</a> <br> 도로명
 									주소:<br> <input type="text" id="roadAddress"
-									name="roadAddress" size="50" value="${orderer.roadAddress }" />
+									name="roadAddress" size="50"  />
 
 									<br> <br> 나머지 주소: <input type="text"
 									id="namujiAddress" name="namujiAddress" size="50" value="" />

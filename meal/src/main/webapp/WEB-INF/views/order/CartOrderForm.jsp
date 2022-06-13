@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-  <!-- iamport.payment.js -->
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<!-- iamport.payment.js -->
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <c:set var="sum" value="${orderVO.sum + orderVO.d_price}" />
 
@@ -255,33 +256,44 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 <body>
 	<div id="main-wrap">
 		<form name="order">
-		
-			<input type="hidden" id="g_id" value="${CartList.g_id}">
+			<c:forEach var="cartVO" items="${CartList}">
+				<input type="hidden" id="g_id" value="${cartVO.g_id}">
+			</c:forEach>
 			<H1>1.주문확인</H1>
 			<table class="goods_info">
 				<thead>
 					<tr class="line">
 						<td width="130px">주문상품명</td>
 						<td width="100x">수량</td>
-						<td width="100px">주문금액</td>
+						<td width="100px">상품금액</td>
 						<td width="100px">배송비</td>
-						<td width="100px">예상적립금</td>
 						<td width="100px">주문금액합계</td>
+						<td width="100px">예상적립금</td>
 					</tr>
 				</thead>
 				<tbody align=center>
-					<tr class="line">
-					<c:forEach var="CartList" items="${CartList}">
-						<td class="goods_image"><img src="${contextPath}/download1.do?g_id=${goodsVO.g_id}&cate=main" width="50px" height="50px" /> 
-						<a href="${contextPath}/goods/goodsDetail.do?g_id=${goodsVO.g_id}"><br>${goodsVO.g_name}</a>
-						<td>
-							<h4>${CartList.c_qty}</h4> 
-							<input type="hidden" id="h_order_goods_qty" name="h_order_goods_qty"
-							value="${CartList.c_qty}" />
-						</td>
-						<td>${sum}원</td>
-								</c:forEach>
-					</tr>
+					<c:forEach var="goodsVO" items="${GoodsList}" varStatus="g_index">
+						<c:forEach var="cartVO" items="${CartList }" varStatus="c_index">
+							<c:if test="${g_index.index == c_index.index }">
+								<tr class="line">
+
+									<td class="goods_image"><img
+										src="${contextPath}/download1.do?g_id=${goodsVO.g_id}&cate=main"
+										width="50px" height="50px" /> <a
+										href="${contextPath}/goods/goodsDetail.do?g_id=${goodsVO.g_id}"><br>${goodsVO.g_name}</a>
+									<td>
+										<h4>${cartVO.c_qty}</h4> <input type="hidden"
+										id="h_order_goods_qty" name="h_order_goods_qty"
+										value="${cartVO.c_qty}" />
+									</td>
+									<td>${goodsVO.g_price*cartVO.c_qty}원</td>
+									<td>${cartVO.c_deleP }원</td>
+									<td>${cartVO.c_sum}원</td>
+									<td>${goodsVO.g_price * 0.01}원</td>
+								</tr>
+							</c:if>
+						</c:forEach>
+					</c:forEach>
 				</tbody>
 			</table>
 			<H1>2.배송지 정보</H1>
@@ -392,7 +404,8 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 			<div class="clear"></div>
 
 			<br>
-			<%-- <table class="list_view">
+			<!--추후변경  -->
+			 <table class="list_view">
 				<tbody>
 					<tr align=center class="fixed">
 						<td class="fixed">총 상품수</td>
@@ -418,7 +431,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 							name="FinalTotalPrice" size=10 value="${sum}" readonly>원</td>
 					</tr>
 				</tbody>
-			</table> --%>
+			</table> 	
 			<br> <br> <br>
 		</form>
 

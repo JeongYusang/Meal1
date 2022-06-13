@@ -66,7 +66,7 @@
 	    });
 		document.getElementById("OrderToCart").value = OrderToCart;
 		console.log(OrderToCart);
-	    return false;
+	    return true;
 	}
 
  </script>
@@ -353,16 +353,16 @@
 						<c:when test="${CartList != null}">
 							<c:forEach var="CartList" items="${CartList}">
 								
-								<form name="cart" id = "cartForm" action="#" onsubmit="return order()">
-								<%-- <form name="cart" id = "cartForm" action="${contextPath}/order/CartOrderForm.do" onsubmit="return order()">
-								 --%>
+								<!-- <form name="cart" id = "cartForm" action="#" onsubmit="return order()"> -->
+								<form name="cart" id = "cartForm" action="${contextPath}/order/CartOrderForm.do" onsubmit="return order()">
+								
 								
 								
 									<div class="item-wrap">
 										<div class="item">
 											<div class="buttons">
 												<input type="checkbox" class="checked_cart" name='checked_cart'
-													value="${CartList.c_id}" >
+													value="${CartList.c_id}" checked>
 											</div>
 
 											<div class="image-wrap">
