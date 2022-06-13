@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +26,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.meal.admin.service.AdminService;
 import com.meal.admin.vo.AdminVO;
 import com.meal.common.controller.BaseController;
+import com.meal.goods.service.GoodsService;
+import com.meal.goods.vo.GoodsVO;
 import com.meal.seller.service.SellerService;
 import com.meal.seller.vo.Img_sVO;
 import com.meal.seller.vo.SellerVO;
@@ -40,6 +43,8 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 	private AdminService adminService;
 	@Autowired
 	private SellerVO sellerVO;
+	@Autowired
+	private GoodsService goodsService;
 
 	@Autowired
 	private Img_sVO img_sVO;
@@ -300,8 +305,43 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 			mav.setViewName("redirect:/main/main.do");
 			return mav;			
 		}
+	}
+
+	@Override
+	@RequestMapping(value="/sellerMypage.do", method= {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView sellerMypage(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+	         @RequestParam(value = "section1", required = false) String section,
+	         @RequestParam(value = "pgNum", required = false) String pgNum, HttpServletRequest request,
+	         HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+	    SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
 		
-		
-	
+	     if (sellerVO == null) {
+	         String message ="잘못된 접근방법입니다.";
+	         mav.addObject("message", message);
+	         String viewName1 = "redirect:/main/main.do";
+	         mav.setViewName(viewName1);
+	         return mav;
+	      }
+	      String s_id = sellerVO.getS_id();
+	      String viewName = (String) request.getAttribute("viewName");
+	      mav.setViewName(viewName);
+	     
+		HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
+	      pagingInfo.put("section", section);
+	      pagingInfo.put("pageNum", pgNum);
+	      
+	      HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
+	      
+	      pagingMap.put("s_id", s_id);
+	      List<GoodsVO> goodsList = goodsService.selectGoodsPage(pagingMap);
+	      System.out.println("---------------------------");
+	      System.out.println("goodsList : " + goodsList);
+	      System.out.println("---------------------------");
+	      
+	      mav.addObject("goodsList", goodsList);
+	      mav.addObject("sellerVO", sellerVO);
+	      return mav;
 	}
 }
