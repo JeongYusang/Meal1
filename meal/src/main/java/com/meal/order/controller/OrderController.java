@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,6 +37,9 @@ public interface OrderController {
 
 	public ModelAndView CartOrderForm(@RequestParam("OrderToCart") String OrderToCart,
 			HttpServletRequest request, HttpServletResponse response) throws Exception ;
+	@RequestMapping(value = "/insertCartOrder.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView insertCartOrder(@ModelAttribute("orderVO") OrderVO _orderVO, HttpServletRequest request,
+			HttpServletResponse response) throws Exception ;
 	
 	
 }

@@ -66,4 +66,12 @@ public class CartDAOImpl  implements  CartDAO{
 		return cartList;
 	}
 
+	
+	//6-13 c_id>cartVO추출구문
+	@Override
+	public CartVO selectCartInfo(int c_id) throws DataAccessException{
+		CartVO cartInfo= (CartVO)sqlSession.selectOne("mapper.cart.cartInfo",c_id);
+		return cartInfo;
+		
+	}
 }

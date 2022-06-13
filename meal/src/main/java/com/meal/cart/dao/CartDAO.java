@@ -18,4 +18,6 @@ public interface CartDAO {
 	public int selectMaxCartId() throws DataAccessException;
 	public int CartQty(int c_id) throws DataAccessException;
 	public List<CartVO> selectZzimList(String u_id)throws DataAccessException;
+	public CartVO selectCartInfo(int c_id) throws DataAccessException;
+	
 }

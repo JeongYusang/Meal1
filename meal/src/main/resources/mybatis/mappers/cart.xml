@@ -13,6 +13,7 @@
 		<result property="g_id" column="g_id" />
 		<result property="c_qty" column="c_qty" />
 		<result property="u_id" column="u_id" />
+		<result property="c_sum" column="c_sum" />
 	</resultMap>
 
 	<select id="selectCartList" parameterType="String"
@@ -100,6 +101,12 @@
 	<select id="CartQty" parameterType="int" resultType = "int">
 	    <![CDATA[
 			select c_qty from cart_tb where c_id = #{c_id}
+    	]]>
+	</select>
+	
+		<select id="cartInfo" parameterType="int" resultType = "CartVO">
+	    <![CDATA[
+			select * from cart_tb where c_id = #{c_id}
     	]]>
 	</select>
 	

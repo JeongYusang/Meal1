@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 
+import com.meal.cart.vo.CartVO;
 import com.meal.order.vo.OrderVO;
 
 public interface OrderDAO {
@@ -30,5 +31,5 @@ public interface OrderDAO {
 
 	public String selectMaxParentNO(String u_id)throws DataAccessException;
 
-
+		
 }
