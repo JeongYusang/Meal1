@@ -1,5 +1,6 @@
 package com.meal.order.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,12 +19,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.meal.cart.service.CartService;
+import com.meal.cart.vo.CartVO;
 import com.meal.common.controller.BaseController;
-import com.meal.goods.dao.GoodsDAO;
 import com.meal.goods.service.GoodsService;
 import com.meal.goods.vo.GoodsVO;
 import com.meal.member.vo.MemberVO;
-import com.meal.order.dao.OrderDAO;
 import com.meal.order.service.OrderService;
 import com.meal.order.vo.OrderVO;
 
@@ -36,15 +37,14 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 	@Autowired
 	OrderService orderService;
 
-	@Autowired
-	OrderDAO orderdao;
 
 	@Autowired
 	GoodsService goodsService;
 
-	@Autowired
-	GoodsDAO goodsdao;
 
+	@Autowired
+	CartService cartService;
+	
 	@Override
 	@RequestMapping(value = "/OrderForm.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView OrderForm(@RequestParam("g_id") int g_id, @RequestParam("o_goods_qty") int o_goods_qty,
@@ -82,31 +82,63 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 		return mav;
 	}
 
-
-	//6-10 수정중   replace 메소드를 사용해서 split할 length 추출 고민중   // split("/").length 에 대한 int값 추출해볼것
+	// 6-10 수정중 replace 메소드를 사용해서 split할 length 추출 고민중 // split("/").length 에 대한
+	// int값 추출해볼것 (완료)
+	// 해당값을 JSP전해줄것 (진행중) 6-13 
 	@Override
-
 	@RequestMapping(value = "/CartOrderForm.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView CartOrderForm(@RequestParam("OrderToCart") String OrderToCart,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView CartOrderForm(@RequestParam("OrderToCart") String OrderToCart, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		ModelAndView mav = new ModelAndView();
 		String viewName = (String) request.getAttribute("viewName");
 
-		// @로 들어간 email 쪼개주기
-		String[] cartList = OrderToCart.split("/");
-		String cart1 = cartList[0];
-		String cart2 = cartList[1];
+		// 쪼개기 선작업
+		List<CartVO> cartList = new ArrayList<CartVO>();
+		List<GoodsVO> goodsList= new ArrayList<GoodsVO>();
+ 		String[] cartList1 = OrderToCart.split("/");
+
+		// 반복문으로 쪼갠후 바인딩을 할예정
+		for (int i = 0; i < OrderToCart.split("/").length; i++) {
+			String c_id = cartList1[i];
+			System.out.println("==============================");
+			System.out.println("cartInfo : " + c_id);
+			System.out.println("==============================");
+
+			//selectall	체크박스 누를시 값을 가져오므로 이부분에 대하여 제외하기위한 조건
+			if (c_id.equals("selectall")) {
+				continue;
+			}
+			int c_id1 = Integer.parseInt(c_id);
+			CartVO cartInfo = cartService.selectCartInfo(c_id1);
+			int g_id = cartInfo.g_id;
+			GoodsVO goodsinfo = goodsService.selectGoodsDetail(g_id);
+
+			//배송비관련 구문
+			int G_price = goodsinfo.getG_price();
+			int c_qty = cartInfo.getC_qty();
+			if(G_price * c_qty >30000) {
+				int c_sum = G_price * c_qty;
+				int c_deleP = 0;
+				cartInfo.setC_sum(c_sum);
+				cartInfo.setC_deleP(c_deleP);
+			}else {
+				int c_deleP = 3000;
+				int c_sum = G_price * c_qty + c_deleP;
+				
+				cartInfo.setC_sum(c_sum);
+				cartInfo.setC_deleP(c_deleP);
+			}
+			cartList.add(cartInfo);
+			goodsList.add(goodsinfo);
+		}
 
 
-		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
-
-		mav.addObject("CartList",OrderToCart);
-		mav.addObject("memberInfo",memberInfo);
+		mav.addObject("CartList", cartList);
+		mav.addObject("GoodsList", goodsList);
+		mav.setViewName(viewName);
 		return mav;
 	}
-
-
 
 	@Override
 	@RequestMapping(value = "/insertOrder.do", method = { RequestMethod.POST, RequestMethod.GET })
@@ -186,7 +218,7 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			List<OrderVO> OrderList = orderService.selectUserOrders(u_id);
 			for (OrderVO item : OrderList) {
 				int o_id = item.getO_id();
-				String review = orderdao.overlappedO_id(o_id);
+				String review = orderService.overlappedO_id(o_id);
 				item.setReview(review);
 			}
 			Map<String, List<OrderVO>> orderMap = orderService.orderlist(u_id);

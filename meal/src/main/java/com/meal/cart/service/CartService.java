@@ -13,4 +13,6 @@ public interface CartService {
 	public void minusCartGoods(int c_id)throws Exception;
 	public int CartQty(int c_id) throws Exception;
 	public List<CartVO> myZzimList(String u_id)throws Exception;
+	public CartVO selectCartInfo(int c_id) throws Exception;
+		
 }

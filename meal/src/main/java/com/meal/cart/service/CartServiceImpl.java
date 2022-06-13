@@ -4,6 +4,7 @@ package com.meal.cart.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,4 +65,10 @@ public class CartServiceImpl implements CartService {
 		return myZzimList;
 	}
 
+	@Override
+	public CartVO selectCartInfo(int c_id) throws Exception{
+		CartVO cartInfo= (CartVO)cartDAO.selectCartInfo(c_id);
+		return cartInfo;
+		
+	}
 }
