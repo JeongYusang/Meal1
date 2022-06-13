@@ -17,7 +17,7 @@
 
 <script>
 
- function change() {
+ /* function change() {
     hm = document.form.amount;
     sum = document.form.sum;
 
@@ -42,42 +42,35 @@
        document.getElementById('number').value = value;
     }
 
- }
+ } */
  function selectAll(selectAll)  {
 	   const checkboxes 
-	        = document.getElementsByName('animal');
+	        = document.getElementsByName('checked_cart');
 	   
 	   checkboxes.forEach((checkbox) => {
 	     checkbox.checked = selectAll.checked;
 	   })
 	 }
  
+ /*주문건들던 그거  */
  function order() {
-		
-		var form_contents ='';
-		var orderNumber = 0;
-		
-		$(".cart_info_td").each(function(index, element){
-			
-				var g_id = $(element).find(".g_id").val();
-				var c_qty = $(element).find(".c_qty").val();
-				
-				var g_id_input = "<input name='orders[" + orderNumber + "].g_id' type='hidden' value='" + g_id + "'>";
-				form_contents += g_id_input;
-				
-				var c_qty_input = "<input name='orders[" + orderNumber + "].c_qty' type='hidden' value='" + c_qty + "'>";
-				form_contents += c_qty_input;
-				
-				orderNumber += 1;
-			
-		});	
-		$(".order_form").html(form_contents);
-		$(".order_form").submit();
-		
+		var OrderToCart = '';
+	    
+	    $('input[type="checkbox"]:checked').each(function (index) {
+	        if (index != 0) {
+	        	OrderToCart += '/';
+	     
+	        }       
+	        OrderToCart += $(this).val();
+	       
+	    });
+		document.getElementById("OrderToCart").value = OrderToCart;
+		console.log(OrderToCart);
+	    return false;
 	}
 
  </script>
- 
+
 <style>
 #main {
 	margin-top: 30px;
@@ -313,18 +306,18 @@
 
 .cart-count {
 	display: inline-block;
-	
 }
 
 .select {
 	display: inline-block;
 }
-#delbtn {
-width: 50px;
-}
-.delete{
 
-width: 83px;
+#delbtn {
+	width: 50px;
+}
+
+.delete {
+	width: 83px;
 	padding-top: 27px;
 	text-align: center;
 	font-size: 16px;
@@ -350,7 +343,7 @@ width: 83px;
 					<div class="container3">
 
 						<div class=select>
-							<input type='checkbox' name='animal' value='selectall'
+							<input type='checkbox' name='checked_cart' value='selectall'
 								onclick='selectAll(this)' /> <b>전체선택</b>
 						</div>
 						<button class="favorite">선택 삭제</button>
@@ -359,42 +352,59 @@ width: 83px;
 					<c:choose>
 						<c:when test="${CartList != null}">
 							<c:forEach var="CartList" items="${CartList}">
-							<form name = cart action = "/order/CartOrderForm.do">
-								<div class="item-wrap">
-									<div class="item">
-										<div class="buttons">
-											<input type="checkbox" id = "" name='animal' value="${CartList.g_price}"  onclick="chksum()">
-										</div>
+								
+								<form name="cart" id = "cartForm" action="#" onsubmit="return order()">
+								<%-- <form name="cart" id = "cartForm" action="${contextPath}/order/CartOrderForm.do" onsubmit="return order()">
+								 --%>
+								
+								
+									<div class="item-wrap">
+										<div class="item">
+											<div class="buttons">
+												<input type="checkbox" class="checked_cart" name='checked_cart'
+													value="${CartList.c_id}" >
+											</div>
 
-										<div class="image-wrap">
-											<img class="imagegoods" src="${contextPath}/download1.do?g_id=${CartList.g_id}&cate=main" />
-										</div>
+											<div class="image-wrap">
+												<img class="imagegoods"
+													src="${contextPath}/download1.do?g_id=${CartList.g_id}&cate=main" />
+											</div>
 
-										<div class="description-wrap">
-											<div class="description">
-												<br> <span><a href="${contextPath}/goods/goodsDetail.do?g_id=${CartList.g_id}">${CartList.g_name}</a></span>
-												<input type = "hidden" id = "g_id" value = "${CartList.g_id}">
-												<span>${CartList.c_qty}개</span>
+											<div class="description-wrap">
+												<div class="description">
+													<br> <span><a
+														href="${contextPath}/goods/goodsDetail.do?g_id=${CartList.g_id}">${CartList.g_name}</a></span>
+													<input type="hidden" id="g_id" value="${CartList.g_id}">
+													<span>${CartList.c_qty}개</span>
+												</div>
+											</div>
+											<div class="quantity">
+												<button type="button"
+													onclick="location.href='${contextPath}/cart/plusCartGoods.do?c_id=${CartList.c_id}'"
+													id="addbtn">+</button>
+												&nbsp;<input type="text" id="o_goods_qty"
+													value="${CartList.c_qty}" readonly>개&nbsp;
+												<button type="button"
+													onclick="location.href='${contextPath}/cart/minusCartGoods.do?c_id=${CartList.c_id}'"
+													class="button" id="btn">-</button>
+											</div>
+											<div class="total-price">${CartList.g_price}원</div>
+											<div class="delete">
+												<a
+													href="${contextPath}/cart/removeCartGoods.do?c_id=${CartList.c_id}"
+													class="button" id="delbtn"> X</a>
 											</div>
 										</div>
-										<div class="quantity">
-											<button type= "button" onclick="location.href='${contextPath}/cart/plusCartGoods.do?c_id=${CartList.c_id}'"id="addbtn">
-											+</button>&nbsp;<input type = "text" id = "o_goods_qty" value = "${CartList.c_qty}" readonly>개&nbsp;
-											<button type= "button" onclick="location.href='${contextPath}/cart/minusCartGoods.do?c_id=${CartList.c_id}'" class="button" id="btn">-
-											</button>
-										</div>
-										<div class="total-price">${CartList.g_price}원</div>
-										<div class="delete"><a href="${contextPath}/cart/removeCartGoods.do?c_id=${CartList.c_id}" class="button" id="delbtn"> X</a> </div>
 									</div>
-								</div>
-</form>
+									<input type="hidden" id="OrderToCart" name = "OrderToCart" value="">
+								</form>
 							</c:forEach>
 						</c:when>
 						<c:otherwise>
 							<td>주문 내역이 없습니다.</td>
 						</c:otherwise>
 					</c:choose>
-	
+
 
 
 
@@ -411,25 +421,24 @@ width: 83px;
 					<div class="subtotal-value final-value" id="basket-subtotal">${total}원</div>
 					<div class="promo-title">총 배송비</div>
 					<c:if test="${total >= 30000}">
-					<div class="promo-value final-value" id="basket-promo">0원</div>
+						<div class="promo-value final-value" id="basket-promo">0원</div>
 					</c:if>
 					<c:if test="${total < 30000}">
-					<div class="promo-value final-value" id="basket-promo">3000원</div>
+						<div class="promo-value final-value" id="basket-promo">3000원</div>
 					</c:if>
 				</div>
 				<div class="summary-total">
 					<div class="total-title">총액</div>
 					<c:if test="${total < 30000}">
-					<div class="total-value final-value" id="basket-total">${total + 3000}원</div>
+						<div class="total-value final-value" id="basket-total">${total + 3000}원</div>
 					</c:if>
 					<c:if test="${total >= 30000}">
-					<div class="total-value final-value" id="basket-total">${total}원</div>
+						<div class="total-value final-value" id="basket-total">${total}원</div>
 					</c:if>
 				</div>
 				<div class="summary-checkout">
-					<button class="checkout-btn"
-						onclick="order()">주문하기</button>
-						
+					<button class="checkout-btn" type = "submit" form="cartForm">주문하기</button>
+
 				</div>
 			</div>
 		</div>

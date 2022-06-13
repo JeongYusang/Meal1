@@ -98,14 +98,17 @@ function fn_overlapped(){
        }
     }
    
-    if(saleDate1 == '' || saleDate2 == '' ) {
-       
-       if(salePer == '' && saleWon == '')  {
-       alert ("할인 기간에 따른 할인율 또는 할인가격을 적어주세요.")
+    if(saleDate1 != '' || saleDate2 != '' ) {
+        
+        if(salePer == '' && saleWon == '')  {
+        alert ("할인 기간에 따른 할인율 또는 할인가격을 적어주세요.")
          return false;
        } 
     }
     
+
+
+       
     var g_allergy_M = '';
     $('input[type="checkbox"]:checked').each(function (index) {
         if (index != 0) {
