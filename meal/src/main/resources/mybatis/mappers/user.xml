@@ -32,6 +32,7 @@
 		<result property="timestamp" column="timestamp" />
 		<result property="u_id" column="u_id" />
 		<result property="o_id" column="o_id" />
+		<result property="g_id" column="g_id" />
 	</resultMap>
 
 	<select id="decode" resultType="memberVO" parameterType="java.util.Map">
@@ -138,7 +139,7 @@ select * from user_tb where u_email1 = #{email1} and u_email2 = #{email2} and u_
 	
 	<select id="myMileage" resultType="MileageVO" parameterType="String">
 	    <![CDATA[
-			select * from  mileage where u_id=#{u_id}
+			select m.*, o.g_name, o.pay_order_time, o.g_id from  mileage m left outer join order_tb o on o.o_id = m.o_id where m.u_id = #{u_id};
 		]]>
 	</select>
 	
