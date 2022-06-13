@@ -82,20 +82,30 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 		return mav;
 	}
 
+
+	//6-10 수정중   replace 메소드를 사용해서 split할 length 추출 고민중   // split("/").length 에 대한 int값 추출해볼것
 	@Override
 
 	@RequestMapping(value = "/CartOrderForm.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView CartOrderForm(@RequestParam("cartlist") List<OrderVO> CartList,
+	public ModelAndView CartOrderForm(@RequestParam("OrderToCart") String OrderToCart,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		ModelAndView mav = new ModelAndView();
 		String viewName = (String) request.getAttribute("viewName");
+
+		// @로 들어간 email 쪼개주기
+		String[] cartList = OrderToCart.split("/");
+		String cart1 = cartList[0];
+		String cart2 = cartList[1];
+
+
 		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
-		mav.addObject("CartList",CartList);
+
+		mav.addObject("CartList",OrderToCart);
 		mav.addObject("memberInfo",memberInfo);
 		return mav;
-
 	}
+
 
 
 	@Override

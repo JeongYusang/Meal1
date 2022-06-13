@@ -33,8 +33,8 @@ public interface OrderController {
 			@RequestParam(value = "delivery_state", required = false) String delivery_state,HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 
-	public ModelAndView CartOrderForm(List<OrderVO> CartList, HttpServletRequest request, HttpServletResponse response)
-			throws Exception;
-		
+	public ModelAndView CartOrderForm(@RequestParam("OrderToCart") String OrderToCart,
+			HttpServletRequest request, HttpServletResponse response) throws Exception ;
+	
 	
 }
