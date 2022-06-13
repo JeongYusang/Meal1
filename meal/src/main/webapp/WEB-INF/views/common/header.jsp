@@ -346,7 +346,7 @@
 							<li><a href="${contextPath }/goods/goodsForm.do">상품등록 |</a></li>
 							<li><a href="${contextPath }/goods/selectGoodsPage.do">상품관리 |</a></li>
 							<li><a href="${contextPath }/seller/logout.do">로그아웃 |</a></li>
-							<li><a href="${contextPath }/user/mypagehome.do">마이페이지 |
+							<li><a href="${contextPath }/seller/sellerMypage.do">마이페이지 |
 							</a></li>
 						</c:when>
 							<c:when test="${isLogOn==true and not empty adminInfo }">
