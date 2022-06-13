@@ -1,7 +1,7 @@
 package com.meal.member.controller;
 
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +26,7 @@ import com.meal.admin.vo.AdminVO;
 import com.meal.common.controller.BaseController;
 import com.meal.member.service.MemberService;
 import com.meal.member.vo.MemberVO;
+import com.meal.member.vo.MileageVO;
 import com.meal.seller.service.SellerService;
 import com.meal.seller.vo.SellerVO;
 
@@ -48,6 +49,9 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 	@Autowired
 	private AdminVO adminVO;
 	@Autowired
+	private MileageVO mileageVO;
+
+	@Autowired
 	BCryptPasswordEncoder passwordEncode;
 
 	@Override
@@ -55,8 +59,6 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
-		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
-		String u_id = memberInfo.getU_id();
 		session.setAttribute("isLogOn", false);
 		session.removeAttribute("memberInfo");
 		session.removeAttribute("quickZzimList");
@@ -87,8 +89,8 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 		} catch (Exception e) {
 			String message = "다시 가입해주세요";
 			mav.addObject("message", message);
-			String viewName1 = "/main/memberForm";
-			mav.setViewName(viewName1);
+			String viewName = "/main/memberForm";
+			mav.setViewName(viewName);
 			return mav;
 		}
 	}
@@ -209,8 +211,6 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 		return mav;
 	}
 
-
-
 	// hp 인증
 	@RequestMapping(value = "/FindIDResult2.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView FindIDEmail(@RequestParam HashMap<String, Object> map, HttpServletRequest request,
@@ -221,14 +221,14 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 		try {
 			String name = (String) map.get("name");
 			String hp1 = (String) map.get("hp1");
-			if (hp1 == null || hp1 == "" ||name == null || name=="") {
+			if (hp1 == null || hp1 == "" || name == null || name == "") {
 				String message = "번호를 입력해주세요.";
 				mav.addObject("message", message);
 				mav.setViewName("/member/FindID");
 				return mav;
 
-			} 
-			
+			}
+
 			logger.info("==========================");
 			logger.info("name = " + name);
 			logger.info("hp1 = " + hp1);
@@ -246,6 +246,32 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 			mav.setViewName("/member/FindID");
 			return mav;
 		}
+
+	}
+
+	// 회원 마일리지 조회
+	@Override
+	@RequestMapping(value = "/myMileage.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView myMileage(@RequestParam(value = "message", required = false) String message,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		try {
+			MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+			String u_id = memberInfo.getU_id();
+			int u_mile = memberInfo.getU_mile();
+			String viewName = (String) request.getAttribute("viewName");
+			List<MileageVO> mileage = (List<MileageVO>) memberService.myMileage(u_id);
+			mav.addObject("mileage", mileage);
+			mav.addObject("u_mile", u_mile);
+			mav.setViewName(viewName);
+		} catch (Exception e) {
+			message = "로그인을 해주시길 바랍니다.";
+			String viewName = "redirect:/main/main.do";
+			mav.setViewName(viewName);
+			mav.addObject(message);
+		}
+		return mav;
 
 	}
 }

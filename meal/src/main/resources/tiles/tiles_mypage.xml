@@ -42,8 +42,8 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/user/mypagecancel.jsp"/>
 	</definition>
-		<definition name="/user/mymileage" extends="baseLayout2">
-		<put-attribute name="title" value="회원 마일리지" />
+	<definition name="/member/myMileage" extends="baseLayout2">
+		<put-attribute name="title" value="내 마일리지" />
 		<put-attribute name="body" value="/WEB-INF/views/user/mileage.jsp" />
 	</definition>
 	<definition name="/user/myreview" extends="baseLayout2">

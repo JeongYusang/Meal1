@@ -30,7 +30,12 @@ public interface MemberController {
 
 	public ResponseEntity deleteMember(@RequestParam("map") HashMap<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
+
 	public ModelAndView memberDetail(@RequestParam("id") String id, HttpServletRequest request,
-			HttpServletResponse response) throws Exception ;
+			HttpServletResponse response) throws Exception;
+
+	public ModelAndView myMileage(@RequestParam(value = "message", required = false) String message,HttpServletRequest request,
+			HttpServletResponse response) throws Exception;
+
 
 }

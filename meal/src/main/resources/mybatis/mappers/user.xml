@@ -25,6 +25,14 @@
 		<result property="u_count" column="u_count" />
 		<result property="u_delDate" column="u_delDate" />
 	</resultMap>
+	
+	<resultMap id="mileResult" type="MileageVO">
+		<result property="m_id" column="m_id" />
+		<result property="m_point" column="m_point" />
+		<result property="timestamp" column="timestamp" />
+		<result property="u_id" column="u_id" />
+		<result property="o_id" column="o_id" />
+	</resultMap>
 
 	<select id="decode" resultType="memberVO"
 		parameterType="java.util.Map">
@@ -133,6 +141,12 @@ select * from user_tb where u_email1 = #{email1} and u_email2 = #{email2} and u_
 		update user_tb set u_lastlog = current_timestamp() where u_id = #{u_id};
 			]]>
 	</update>
+	
+		<select id="myMileage" resultType="MileageVO" parameterType="String">
+	    <![CDATA[
+			select * from  mileage where u_id=#{u_id}
+		]]>
+	</select>
 
 
 </mapper>

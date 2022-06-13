@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 @Component("memberVO")
 
 public class MemberVO {
+	
 	private String u_id;
 	private String u_pw;
 	private String u_name;
@@ -17,14 +18,12 @@ public class MemberVO {
 	private String u_sex;
 	private String u_birth;
 	private String u_creDate;
-	private String u_mile;
+	private int u_mile;
 	private String u_del;
 	private String u_rank; 
-	private String u_count; 
+	private int u_count;
 	private String u_delDate;
 	private String u_lastlog;
-	
-	
 	
 	public String getU_lastlog() {
 		return u_lastlog;
@@ -110,10 +109,10 @@ public class MemberVO {
 	public void setU_creDate(String u_creDate) {
 		this.u_creDate = u_creDate;
 	}
-	public String getU_mile() {
+	public int getU_mile() {
 		return u_mile;
 	}
-	public void setU_mile(String u_mile) {
+	public void setU_mile(int u_mile) {
 		this.u_mile = u_mile;
 	}
 	public String getU_del() {
@@ -128,10 +127,10 @@ public class MemberVO {
 	public void setU_rank(String u_rank) {
 		this.u_rank = u_rank;
 	}
-	public String getU_count() {
+	public int getU_count() {
 		return u_count;
 	}
-	public void setU_count(String u_count) {
+	public void setU_count(int u_count) {
 		this.u_count = u_count;
 	}
 	public String getU_delDate() {
@@ -140,8 +139,5 @@ public class MemberVO {
 	public void setU_delDate(String u_delDate) {
 		this.u_delDate = u_delDate;
 	}
-	
-	
-
 }
 
