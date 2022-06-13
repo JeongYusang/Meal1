@@ -54,6 +54,12 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/seller/sellerDetail.jsp" />
 	</definition>
+	<!-- 판매자 마이페이지 -->
+	<definition name="/seller/sellerMypage" extends="baseLayout2">
+		<put-attribute name="title" value="판매자 마이페이지" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/seller/sellerMypage.jsp" />
+	</definition>
 
 
 	<!--아이디/비밀번호찾기 -->
@@ -85,21 +91,27 @@
 			value="/WEB-INF/views/member/FindPWChange.jsp" />
 	</definition>
 	
-
 	<definition name="/main/FindPWResult" extends="baseLayout">
 		<put-attribute name="title" value="비밀번호찾기결과창" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/member/Find_PW_Result.jsp" />
 	</definition>
 	
-	
-		<definition name="/user/userUpdate" extends="baseLayout2">
+	<definition name="/user/userUpdate" extends="baseLayout2">
 		<put-attribute name="title" value="회원정보관리" />
 		<put-attribute name="body" value="/WEB-INF/views/user/userUpdateForm.jsp" />
 	</definition>
+	
 	<definition name="/member/memberDetail" extends="baseLayout2">
 		<put-attribute name="title" value="회원상세정보" />
 		<put-attribute name="body" value="/WEB-INF/views/user/memberDetail.jsp" />
 	</definition>
+	
+	<definition name="/member/myMileage" extends="baseLayout2">
+		<put-attribute name="title" value="내 마일리지" />
+		<put-attribute name="body" value="/WEB-INF/views/user/mileage.jsp" />
+	</definition>
+	
+	
 	
 </tiles-definitions>
