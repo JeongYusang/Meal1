@@ -89,6 +89,14 @@ update board_gr set title = #{title}, content = #{content}, secret = #{secret} w
 	    select R1.* from (select * from board_gr) R1 where parentNo = 0 and s_id = #{s_id} order by b_gr_id desc limit #{start} , #{end} 
 	   ]]>
 	</select>
+	
+	
+	<select id="GoodsboardGrPage" resultMap="boardGrResult"
+		parameterType="Map">
+   <![CDATA[
+	    select R1.* from (select * from board_gr) R1 where parentNo = 0 and g_id = #{g_id} order by b_gr_id desc limit #{start} , #{end} 
+	   ]]>
+	</select>
 
 
 	<select id="selectBoardGrallList" resultMap="boardGrResult">
@@ -106,6 +114,12 @@ update board_gr set title = #{title}, content = #{content}, secret = #{secret} w
 		<select id="selectSellerBoardGrallList" resultMap="boardGrResult" parameterType="String">
        <![CDATA[
             select gr.*, g.g_name from board_gr gr LEFT OUTER JOIN goods_tb g on g.g_id = gr.g_id where gr.s_id = #{s_id}
+             ]]>
+	</select>
+	
+	<select id="selectGoodsBoardGrallList" resultMap="boardGrResult" parameterType="String">
+       <![CDATA[
+           select gr.*, g.g_name from board_gr gr LEFT OUTER JOIN goods_tb g on g.g_id = gr.g_id where gr.g_id = #{g_id}
              ]]>
 	</select>
 
@@ -165,6 +179,8 @@ update board_gr set title = #{title}, content = #{content}, secret = #{secret} w
 		    		where i.b_gr_id=#{b_gr_id}
     	]]>
 	</select>
+	
+	
 	
 	
 

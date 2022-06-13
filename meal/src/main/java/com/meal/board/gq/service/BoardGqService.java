@@ -30,10 +30,14 @@ public interface BoardGqService {
 
 	public List<BoardGqVO> selectMyBoardGqList(HashMap<String, Object> Map) throws Exception;
 
-	public BoardGqVO gqdownload(int b_gq_id);
+	public BoardGqVO gqdownload(int b_gq_id)throws Exception;
 
-	public List<BoardGqVO> selectSellerBoardGqallList(String s_id);
+	public List<BoardGqVO> selectSellerBoardGqallList(String s_id)throws Exception;
 
-	public List<BoardGqVO> selectSellerBoardGqList(HashMap<String, Object> pagingMap);
+	public List<BoardGqVO> selectSellerBoardGqList(HashMap<String, Object> pagingMap)throws Exception;
+
+	public List<BoardGqVO> selectGoodsBoardGqallList(int g_id)throws Exception;
+
+	public List<BoardGqVO> selectGoodsBoardGqList(HashMap<String, Object> pagingMap)throws Exception;
 
 }

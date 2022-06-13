@@ -24,7 +24,7 @@
 		}
 	}
 	function backToList(obj) {
-		obj.action = "${contextPath}/board/listArticles.do";
+		obj.action = "${contextPath}goods/goodsDetail.do?g_id=${goodsInfo.g_id}";
 		obj.submit();
 	}
 </script>

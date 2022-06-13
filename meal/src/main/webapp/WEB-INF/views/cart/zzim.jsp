@@ -26,9 +26,7 @@ margin-bottom: 0px;
 }
 .imagegoods{
 width: 200px;
-height: 200px;
-}
-.imagegoods {
+height: 200px; 
 postiion : relative;
 }
 .Zzimdelbtn {

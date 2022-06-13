@@ -36,6 +36,12 @@ public class BoardGqDAOImpl implements BoardGqDAO {
 		List<BoardGqVO> boardInfo = (List<BoardGqVO>) sqlSession.selectList("mapper.boardGq.SellerboardGqPage", map);
 		return boardInfo;
 	}
+	
+	@Override
+	public List<BoardGqVO> selectGoodsBoardGqList(HashMap<String, Object> map) throws DataAccessException {
+		List<BoardGqVO> boardInfo = (List<BoardGqVO>) sqlSession.selectList("mapper.boardGq.GoodsboardGqPage", map);
+		return boardInfo;
+	}
 
 
 	/* 목록 조회 */
@@ -50,13 +56,23 @@ public class BoardGqDAOImpl implements BoardGqDAO {
 		List<BoardGqVO> boardInfo = (List<BoardGqVO>) sqlSession.selectList("mapper.boardGq.selectMyBoardGqallList",u_id);
 		return boardInfo;
 	}
+	
 	@Override
 	public List<BoardGqVO> selectSellerBoardGqallList(String s_id) {
 		List<BoardGqVO> boardInfo = (List<BoardGqVO>) sqlSession.selectList("mapper.boardGq.selectSellerBoardGqallList",s_id);
 		return boardInfo;
 	}
 	
-
+	@Override
+	public List<BoardGqVO> selectGoodsBoardGqallList(int g_id) throws DataAccessException {
+		List<BoardGqVO> boardInfo = (List<BoardGqVO>) sqlSession.selectList("mapper.boardGq.selectGoodsBoardGqallList",g_id);
+		return boardInfo;
+	}
+	
+	@Override
+	public void boardGqWrite(HashMap<String, Object> newboardGqMap) throws DataAccessException {
+		sqlSession.insert("mapper.boardGq.boardGqWrite",newboardGqMap);		
+	}
 	
 	@Override
 	public BoardGqVO selectBoardGqDetail(int b_gq_id) throws DataAccessException{
@@ -70,10 +86,6 @@ public class BoardGqDAOImpl implements BoardGqDAO {
 		return imageList;
 	}
 	
-	@Override
-	public void boardGqWrite(HashMap<String, Object> newboardGqMap) throws DataAccessException {
-		sqlSession.insert("mapper.boardGq.boardGqWrite",newboardGqMap);		
-	}
 
 	@Override
 	public void addImg(HashMap<String, Object> item) throws DataAccessException {
@@ -101,7 +113,6 @@ public class BoardGqDAOImpl implements BoardGqDAO {
 		return sqlSession.selectList("mapper.boardGq.boardGqViewReview", b_gq_id);
 	}
 	
-	
 	@Override
 	public BoardGqVO findb_gq_id() throws DataAccessException {
 		return (BoardGqVO) sqlSession.selectOne("mapper.boardGq.findb_gq_id");
@@ -111,5 +122,7 @@ public class BoardGqDAOImpl implements BoardGqDAO {
 	public BoardGqVO gqdownload(int b_gq_id) {
 		return (BoardGqVO) sqlSession.selectOne("mapper.boardGq.boardgq_download",b_gq_id);
 	}
+
+	
 
 }

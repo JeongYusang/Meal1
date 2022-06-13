@@ -207,13 +207,11 @@ margin: 0px;
 							</form>
 						</c:otherwise>
 					</c:choose>
-
-
 				</ul>
 
 			</div>
 				<div class="quickInfo">
-				<strong>찜 목록</strong>
+				<strong><a href="${contextPath}/cart/myZzimList.do">찜 목록</a></strong>
 				<ul>
 					<!--   상품이 없습니다. -->
 

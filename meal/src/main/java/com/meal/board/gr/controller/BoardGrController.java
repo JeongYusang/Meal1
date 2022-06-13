@@ -42,7 +42,6 @@ public interface BoardGrController {
 			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 
-
 	public ModelAndView boardGrView(@RequestParam("b_gr_id") int b_gr_id, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 

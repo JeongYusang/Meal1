@@ -36,6 +36,11 @@ public class BoardGrDAOImpl implements BoardGrDAO {
 		List<BoardGrVO> boardInfo = (List<BoardGrVO>) sqlSession.selectList("mapper.boardGr.SellerboardGrPage", map);
 		return boardInfo;
 	}
+	@Override
+	public List<BoardGrVO> selectGoodsBoardGrList(HashMap<String, Object> map) throws DataAccessException {
+		List<BoardGrVO> boardInfo = (List<BoardGrVO>) sqlSession.selectList("mapper.boardGr.GoodsboardGrPage", map);
+		return boardInfo;
+	}
 
 
 	/* 목록 조회 */
@@ -50,9 +55,16 @@ public class BoardGrDAOImpl implements BoardGrDAO {
 		List<BoardGrVO> boardInfo = (List<BoardGrVO>) sqlSession.selectList("mapper.boardGr.selectMyBoardGrallList",u_id);
 		return boardInfo;
 	}
+	
 	@Override
 	public List<BoardGrVO> selectSellerBoardGrallList(String s_id) {
 		List<BoardGrVO> boardInfo = (List<BoardGrVO>) sqlSession.selectList("mapper.boardGr.selectSellerBoardGrallList",s_id);
+		return boardInfo;
+	}
+	
+	@Override
+	public List<BoardGrVO> selectGoodsBoardGrallList(int g_id) throws DataAccessException {
+		List<BoardGrVO> boardInfo = (List<BoardGrVO>) sqlSession.selectList("mapper.boardGr.selectGoodsBoardGrallList",g_id);
 		return boardInfo;
 	}
 	
@@ -69,22 +81,26 @@ public class BoardGrDAOImpl implements BoardGrDAO {
 		List<Img_grVO> imageList=(ArrayList)sqlSession.selectList("mapper.boardGr.selectBoardGrDetailImage",b_gr_id);
 		return imageList;
 	}
-	
-	@Override
-	public void boardGrWrite(HashMap<String, Object> newboardGrMap) throws DataAccessException {
-		sqlSession.insert("mapper.boardGr.boardGrWrite",newboardGrMap);		
-	}
-
 	@Override
 	public void addImg(HashMap<String, Object> item) throws DataAccessException {
 		sqlSession.insert("mapper.boardGr.addImg",item);	
 	}
 	
 	@Override
+	public void boardGrWrite(HashMap<String, Object> newboardGrMap) throws DataAccessException {
+		sqlSession.insert("mapper.boardGr.boardGrWrite",newboardGrMap);		
+	}
+	/* 답글쓰기 */
+	@Override
+	public List<BoardGrVO> boardGrViewReview(int b_gr_id) throws DataAccessException {
+		return sqlSession.selectList("mapper.boardGr.boardGrViewReview", b_gr_id);
+	}
+	
+	@Override
 	public void boardGrUpdate(BoardGrVO boardGrVO) throws DataAccessException {
 		sqlSession.update("mapper.boardGr.boardGrUpdate", boardGrVO);
 	}
-
+	/* 삭제하기 */
 	@Override
 	public void boardGrDelete1(int b_gr_id) throws DataAccessException {
 		sqlSession.delete("mapper.boardGr.boardGrDelete1", b_gr_id);
@@ -95,11 +111,7 @@ public class BoardGrDAOImpl implements BoardGrDAO {
 		sqlSession.delete("mapper.boardGr.boardGrDelete2", b_gr_id);
 	}
 	
-	/* 답글쓰기 */
-	@Override
-	public List<BoardGrVO> boardGrViewReview(int b_gr_id) throws DataAccessException {
-		return sqlSession.selectList("mapper.boardGr.boardGrViewReview", b_gr_id);
-	}
+	
 	
 	
 	@Override

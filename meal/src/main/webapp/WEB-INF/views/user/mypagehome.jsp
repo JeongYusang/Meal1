@@ -148,7 +148,7 @@ ul.tabs li.current {
 
 .texts {
 	color: white;
-	font-size: 40px;
+	font-size: 34px;
 	line-height: 150px;
 	background: #B1D5FF;
 }
@@ -204,6 +204,10 @@ ul.tabs li.current {
 tr.orderlist td {
 	border-bottom: 1px solid gray;
 }
+.texts b{
+text-transform: capitalize;
+font-size: 40px;
+}
 </style>
 
 </head>
@@ -212,10 +216,17 @@ tr.orderlist td {
 		<br> <br>
 		<div id="myinfo-wrap">
 			<div>
-				<img src="${contextPath}/resources/image/new4.PNG" />
+				<c:if test = "${memberInfo.u_rank == 'gold'}">
+				<img src="${contextPath}/resources/image/gold-medal.png" />
+				</c:if>
+				<c:if test = "${memberInfo.u_rank == 'silver'}">
+				<img src="${contextPath}/resources/image/silver-medal.png" />
+				</c:if>
+				<c:if test = "${memberInfo.u_rank == 'bronze'}">
+				<img src="${contextPath}/resources/image/bronze-medal.png" />
+				</c:if>
 				<ul class="texts">
-					<li class="name">&nbsp;${memberInfo.u_name}<span
-						class="milage"> 마일리지:${memberInfo.u_mile}&nbsp;</span></li>
+					<li class="name">&nbsp;<b>[${memberInfo.u_rank}]</b>&nbsp;${memberInfo.u_name}<span class="milage"> 마일리지:${memberInfo.u_mile}&nbsp;</span></li>
 				</ul>
 			</div>
 		</div>

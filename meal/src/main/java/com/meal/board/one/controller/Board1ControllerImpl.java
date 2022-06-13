@@ -41,17 +41,86 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 	// 회원이 쓴 문의게시글 조회
 	@Override
 	@RequestMapping(value = "/selectMyBoard1.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView selectMyBoard1(@RequestParam(defaultValue = "1") int curPage, HttpServletRequest request,
+	public ModelAndView selectMyBoard1List(
+			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+			@RequestParam(value = "message", required = false) String message,
+			@RequestParam(value = "section", required = false) String section,
+			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
-		ModelAndView mav = new ModelAndView(viewName);
+		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
-		MemberVO memberVO = (MemberVO) session.getAttribute("memberInfo");
-		String u_id = memberVO.getU_id();
-		board1VO.setU_id(u_id);
-		List<Board1VO> board1 = (List<Board1VO>) board1Service.listBoard1(board1VO);
-		mav.addObject("board1", board1);
+		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+		SellerVO sellerInfo = (SellerVO) session.getAttribute("sellerInfo");
+		if (memberInfo != null) {
 
+			String u_id = memberInfo.getU_id();
+
+			if (message != null) {
+				mav.addObject("message", message);
+			}
+			HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
+			pagingInfo.put("section", section);
+			pagingInfo.put("pageNum", pageNum);
+			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
+			pagingMap.put("u_id", u_id);
+
+			List<Board1VO> boardPage = board1Service.selectMyBoard1List(pagingMap);
+			List<Board1VO> board1 = (List<Board1VO>) board1Service.listBoard1(u_id);
+
+			for (Board1VO item : boardPage) {
+				for (Board1VO j : board1) {
+					if (!((int) item.getB_1_id() == (int) j.getParentNo())) {
+						String compare = "N";
+						item.setCompare(compare);
+					} else {
+						String compare = "Y";
+						item.setCompare(compare);
+						System.out.println("BoardCompare" + item.getB_1_id());
+						break;
+					}
+				}
+			}
+			mav.addObject("message", message);
+			mav.addObject("board1", boardPage);
+			mav.setViewName(viewName);
+		} else if (sellerInfo != null) {
+			String s_id = sellerInfo.getS_id();
+			if (message != null) {
+				mav.addObject("message", message);
+			}
+			HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
+			pagingInfo.put("section", section);
+			pagingInfo.put("pageNum", pageNum);
+			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
+			pagingMap.put("s_id", s_id);
+
+			List<Board1VO> boardPage = board1Service.selectMyBoard1List(pagingMap);
+			List<Board1VO> board1 = (List<Board1VO>) board1Service.listBoard1(s_id);
+
+			for (Board1VO item : boardPage) {
+				for (Board1VO j : board1) {
+					if (!((int) item.getB_1_id() == (int) j.getParentNo())) {
+						String compare = "N";
+						item.setCompare(compare);
+					} else {
+						String compare = "Y";
+						item.setCompare(compare);
+						System.out.println("BoardCompare" + item.getB_1_id());
+						break;
+					}
+				}
+			}
+			mav.addObject("message", message);
+			mav.addObject("board1", boardPage);
+			mav.setViewName(viewName);
+
+		} else {
+			message = "로그인 해주시길 바랍니다";
+			mav.addObject("message", message);
+			String viewName1 = "redirect:/main/main.do";
+			mav.setViewName(viewName1);
+		}
 		return mav;
 	}
 
@@ -87,7 +156,6 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 		AdminVO adminVO = (AdminVO) session.getAttribute("adminInfo");
 		try {
 			if (memberVO.getU_id().equals(board1VO.getU_id())) {
-
 				mav.addObject("board1VO", board1VO);
 				mav.setViewName(viewName);
 			} else if (sellerVO.getS_id().equals(board1VO.getS_id())) {
@@ -149,9 +217,9 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 		HttpSession session = request.getSession();
 		MemberVO memberVO = (MemberVO) session.getAttribute("memberInfo");
 		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
-		
-		if(message != null) {
-		mav.addObject("message",message);
+
+		if (message != null) {
+			mav.addObject("message", message);
 		}
 		HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
 		pagingInfo.put("section", section);
@@ -186,8 +254,8 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 		ModelAndView mav = new ModelAndView();
 		String viewName = (String) request.getAttribute("viewName");
 		String message = (String) request.getAttribute("message");
-		if(message != null) {
-		mav.addObject("message",message);
+		if (message != null) {
+			mav.addObject("message", message);
 		}
 		mav.setViewName(viewName);
 		Board1VO board1VO = board1Service.board1View(b_1_id);
@@ -222,7 +290,6 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 		}
 
 	}
-
 
 	@Override
 	@RequestMapping(value = "/board1Reviewform.do", method = { RequestMethod.POST, RequestMethod.GET })
@@ -265,7 +332,8 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 	@Override
 	@RequestMapping(value = "/board1Delete.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView board1Delete(@RequestParam(value = "b_1_id", required = false) Integer b_1_id,
-			HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) throws Exception {
+			HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes)
+			throws Exception {
 		ModelAndView mav = new ModelAndView();
 		String viewName = request.getParameter("viewName");
 		Board1VO board1VO = board1Service.board1View(b_1_id);

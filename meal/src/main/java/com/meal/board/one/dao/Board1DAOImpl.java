@@ -18,8 +18,8 @@ public class Board1DAOImpl implements Board1DAO {
 	private SqlSession sqlSession;
 
 	@Override
-	public List<Board1VO> listBoard1(Board1VO board1VO) throws DataAccessException {
-		return sqlSession.selectList("mapper.board1.listBoard1", board1VO);
+	public List<Board1VO> listBoard1(String u_id) throws DataAccessException {
+		return sqlSession.selectList("mapper.board1.listBoard1", u_id);
 	}
 
 	@Override
@@ -60,6 +60,12 @@ public class Board1DAOImpl implements Board1DAO {
 	@Override
 	public void board1Delete2(int b_1_id) throws DataAccessException {
 		sqlSession.delete("mapper.board1.board1Delete2", b_1_id);
+	}
+
+	@Override
+	public List<Board1VO> selectMyBoard1List(HashMap<String, Object> map) throws DataAccessException {
+		List<Board1VO> boardInfo = (List<Board1VO>) sqlSession.selectList("mapper.board1.boardMy1Page", map);
+		return boardInfo;
 	}
 
 }

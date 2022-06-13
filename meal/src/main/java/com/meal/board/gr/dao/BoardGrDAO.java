@@ -42,4 +42,8 @@ public interface BoardGrDAO {
 
 	public List<BoardGrVO> selectSellerBoardGrList(HashMap<String, Object> map)throws DataAccessException;
 
+	public List<BoardGrVO> selectGoodsBoardGrList(HashMap<String, Object> pagingMap)throws DataAccessException;
+
+	public List<BoardGrVO> selectGoodsBoardGrallList(int g_id)throws DataAccessException;
+
 }

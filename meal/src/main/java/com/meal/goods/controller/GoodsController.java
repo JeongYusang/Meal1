@@ -1,6 +1,7 @@
 package com.meal.goods.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,9 +13,24 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 public interface GoodsController {
-	public ModelAndView addNewGoods(MultipartHttpServletRequest multipartRequest, HttpServletResponse response)  throws Exception;
-	public ResponseEntity goodsoverlapped(@RequestParam("g_name") String g_name, HttpServletRequest request,HttpServletResponse response) throws Exception;
-	public ModelAndView updateGoodsForm(@RequestParam("g_id") int g_id, HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ResponseEntity updateGoods(int g_id, MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception;
-	public ModelAndView deleteGoods(@RequestParam HashMap<String, Object> map, @RequestParam("g_id") int g_id, HttpServletRequest request, HttpServletResponse repsponse) throws Exception;
+	public ModelAndView addNewGoods(MultipartHttpServletRequest multipartRequest, HttpServletResponse response)
+			throws Exception;
+
+	public ResponseEntity goodsoverlapped(@RequestParam("g_name") String g_name, HttpServletRequest request,
+			HttpServletResponse response) throws Exception;
+
+	public ModelAndView updateGoodsForm(@RequestParam("g_id") int g_id, HttpServletRequest request,
+			HttpServletResponse response) throws Exception;
+
+	public ResponseEntity updateGoods(int g_id, MultipartHttpServletRequest multipartRequest,
+			HttpServletResponse response) throws Exception;
+
+	public ModelAndView deleteGoods(@RequestParam HashMap<String, Object> map, @RequestParam("g_id") int g_id,
+			HttpServletRequest request, HttpServletResponse repsponse) throws Exception;
+
+	public ModelAndView goodsDetail(@RequestParam("g_id") int g_id, @RequestParam("g_id") int b_gr_id,
+			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+			@RequestParam(value = "section", required = false) String section,
+			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
+			HttpServletResponse response) throws Exception;
 }

@@ -69,6 +69,7 @@
 #main-wrap .img {
 	display: inline-block;
 	margin: 0 10px 0 10px;
+	position: absolute;
 }
 
 #main-wrap .b {
@@ -116,6 +117,14 @@
 .goodsPriceStyle {
 	text-decoration: line-through
 }
+
+.x_img {
+    height: 30px;
+    width: 30px;
+    position: relative;
+    left: 250px;
+    bottom: 5px;
+}
 </style>
 
 </head>
@@ -144,11 +153,12 @@
 					<!-- 다운로드 메소드를 통해서 한것 -->
 					<c:forEach var="item" items="${goodsMap.NewG}" begin="0" end="3">
 						<ul class="ul">
-
-							<li><a
-								href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}"><img
-									src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
-									width="250px" height="250px"> <br>${item.g_name } <br>
+							<li>
+							<a href="${contextPath}/cart/addGoodsInCart.do?g_id=${item.g_id}&cate=zzim">
+							<img class = "x_img" src="${contextPath}/resources/image/heart.png"></a>
+							<a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}">
+							<img src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main" width="250px" height="250px">
+							<br>${item.g_name } <br>
 									<c:if
 										test="${empty item.g_saleprice or item.g_saleprice eq 0 }">
 										<br> 
@@ -160,6 +170,7 @@
 								</c:if> </a></li>
 						</ul>
 					</c:forEach>
+					
 
 				</div>
 				<b class="b" style="font-size: 32px">일반상품</b>
@@ -168,8 +179,10 @@
 					<c:forEach var="item" items="${goodsMap.NomalG}" begin="0" end="3">
 						<ul class="ul">
 
-							<li><a
-								href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}""><img
+							<li>
+							<a href="${contextPath}/cart/addGoodsInCart.do?g_id=${item.g_id}&cate=zzim">
+							<img class = "x_img" src="${contextPath}/resources/image/heart.png"></a>
+							<a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}""><img
 									src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
 									width="250px" height="250px"> <br>${item.g_name } <br>
 									<c:if
@@ -188,8 +201,9 @@
 				<div class="maingList">
 					<c:forEach var="item" items="${goodsMap.bestG}" begin="0" end="3">
 						<ul class="ul">
-							<li><a
-								href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}""><img
+							<li><a href="${contextPath}/cart/addGoodsInCart.do?g_id=${item.g_id}&cate=zzim">
+							<img class = "x_img" src="${contextPath}/resources/image/heart.png"></a>
+							<a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}""><img
 									src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
 									width="250px" height="250px"> <br>${item.g_name } <br>
 									<c:if
