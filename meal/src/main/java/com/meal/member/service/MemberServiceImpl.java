@@ -1,6 +1,7 @@
 package com.meal.member.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.meal.admin.dao.AdminDAO;
 import com.meal.member.dao.MemberDAO;
 import com.meal.member.vo.MemberVO;
+import com.meal.member.vo.MileageVO;
 import com.meal.seller.dao.SellerDAO;
 
 @Service("memberService")
@@ -72,6 +74,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberVO FindPW(HashMap<String, Object> map) throws Exception {
 		return (MemberVO) memberDAO.FindPW(map);
+	}
+
+	@Override
+	public List<MileageVO> myMileage(String u_id) throws Exception {
+		List<MileageVO> mileList = (List<MileageVO>) memberDAO.myMileage(u_id);
+		return mileList;
 	}
 
 }

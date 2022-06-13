@@ -2,11 +2,9 @@ package com.meal.member.service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.springframework.dao.DataAccessException;
 
 import com.meal.member.vo.MemberVO;
+import com.meal.member.vo.MileageVO;
 
 public interface MemberService {
 
@@ -25,4 +23,6 @@ public interface MemberService {
 	public MemberVO FindPW(HashMap<String,Object> map) throws Exception;
 
 	public String FindId(HashMap<String , Object> map) throws Exception;
+
+	public List<MileageVO> myMileage(String u_id) throws Exception;
 }

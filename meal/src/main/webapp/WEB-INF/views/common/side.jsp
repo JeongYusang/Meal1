@@ -289,7 +289,7 @@
                   <ul class="sidebar-content">
                      <li><a href="${contextPath}/cart/myCartList.do">장바구니</a></li>
                      <li><a href="${contextPath}/cart/myZzimList.do">찜한 상품</a></li>
-                     <li><a href="${contextPath}/user/mymileage.do">마일리지</a></li>
+                     <li><a href="${contextPath}/member/myMileage.do">마일리지</a></li>
                      <li><a href="${contextPath}/board1/selectMyBoard1.do">나의 1대1 문의</a></li>
                      <li><a href="${contextPath}/boardGq/selectMyBoardGqList.do">나의 상품 문의</a></li>
                      <li><a href="${contextPath}/boardGr/selectMyBoardGrList.do">나의 상품 후기</a></li>

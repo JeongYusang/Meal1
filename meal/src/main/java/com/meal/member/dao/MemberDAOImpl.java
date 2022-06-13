@@ -1,6 +1,7 @@
 package com.meal.member.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,19 +9,18 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import com.meal.member.vo.MemberVO;
+import com.meal.member.vo.MileageVO;
 
 @Repository("memberDAO")
 public class MemberDAOImpl  implements MemberDAO{
 	@Autowired
 	private SqlSession sqlSession;	
 	
-	
 	@Override
 	public MemberVO decode(String u_id) throws DataAccessException{
 		return (MemberVO)sqlSession.selectOne("mapper.user.decode",u_id);
 	}
 
-	
 	@Override
 	public void insertNewMember(MemberVO memberVO) throws DataAccessException{
 		sqlSession.insert("mapper.user.insertNewMember",memberVO);
@@ -31,11 +31,13 @@ public class MemberDAOImpl  implements MemberDAO{
 		String result =  (String)sqlSession.selectOne("mapper.user.selectOverlappedID",id);
 		return result;
 	}
+	
 	@Override
 	public MemberVO selectall(MemberVO memberVO) throws DataAccessException {
 		MemberVO member =(MemberVO)sqlSession.selectList("mapper.user.selectall",memberVO);
 		return member;
 	}
+	
 	@Override
 	public void updateMember(MemberVO memberVO) throws DataAccessException{
 	sqlSession.update("mapper.user.updateMember",memberVO);
@@ -47,22 +49,26 @@ public class MemberDAOImpl  implements MemberDAO{
 	sqlSession.delete("mapper.user.deleteMember",memberVO);
 	}
 	
-
-	
 	@Override
 	public void lastLog(String u_id) throws DataAccessException {
 		sqlSession.update("mapper.user.lastLog",u_id);
 	}
+	
 	@Override
 	public String FindId(HashMap<String , Object> map) throws DataAccessException{
 		return  (String)sqlSession.selectOne("mapper.user.FindId",map);
-		
 	}
 
 	@Override
 	public MemberVO FindPW(HashMap<String,Object> map) throws DataAccessException{
 		MemberVO memberVO = (MemberVO)sqlSession.selectOne("mapper.user.FindPW", map);
 		return memberVO;
+	}
+
+	@Override
+	public List<MileageVO> myMileage(String u_id) throws DataAccessException {
+		List<MileageVO> mileList = (List<MileageVO>)sqlSession.selectList("mapper.user.myMileage",u_id);
+		return mileList;
 	}
 }
 

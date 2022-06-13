@@ -163,7 +163,7 @@ margin: 0px;
 			<hr>
 		 <br><h3>현재 적립금</h3>
 		<div id="sub-title">
-			 1,000원<br> <br>
+			 ${u_mile}<br> <br>
 		</div>
 	
 		<div style="margin: 10px 0 0 0;">
@@ -188,12 +188,20 @@ margin: 0px;
 								<th width="300px">날짜</th>
 							</tr>
 						</thead>
-						<tr class="orderlist">
-							<td>적립</td>
-							<td>${m_point}+300</td>
+						<c:forEach var="mileage" items="${mileage}" varStatus="status">
+						<tr class="border-bottom">
+						<c:if test = "${mileage.m_point > 0 }">
+							<td id="earn">적립</td>
+							</c:if>
+							<c:if test = "${mileage.m_point < 0 }">
+							<td id="earn">사용</td>
+							</c:if>
+							<td id="earn">${mileage.m_point}</td>
 							<td><a href="#">서울식 불고기 전골</a></td>
-							<td>${o_id}1000100</td>
+							<td>${mileage.o_id}</td>
 							<td>2022-04-17</td>
+						</tr>
+						</c:forEach>
 					</table>
 				</div>
 			</div>
@@ -209,27 +217,20 @@ margin: 0px;
 								<th width="300px">날짜</th>
 							</tr>
 						</thead>
+						<c:forEach var="mileage" items="${mileage}" varStatus="status">
 						<tr class="border-bottom">
+						<c:if test = "${mileage.m_point > 0 }">
 							<td id="earn">적립</td>
-							<td id="earn">${m_point}+300</td>
+							</c:if>
+							<c:if test = "${mileage.m_point < 0 }">
+							<td id="earn">사용</td>
+							</c:if>
+							<td id="earn">${mileage.m_point}</td>
 							<td><a href="#">서울식 불고기 전골</a></td>
-							<td>${o_id}1000100</td>
+							<td>${mileage.o_id}</td>
 							<td>2022-04-17</td>
 						</tr>
-						<tr class="border-bottom">
-							<td id="earn">적립</td>
-							<td id="earn">${m_point}+300</td>
-							<td><a href="#">서울식 불고기 전골</a></td>
-							<td>${o_id}1000100</td>
-							<td>2022-04-17</td>
-						</tr>
-						<tr class="border-bottom">
-							<td id="earn">적립</td>
-							<td id="earn">${m_point}+300</td>
-							<td><a href="#">서울식 불고기 전골</a></td>
-							<td>${o_id}1000100</td>
-							<td>2022-04-17</td>
-						</tr>
+						</c:forEach>
 					</table>
 				</div>
 			</div>

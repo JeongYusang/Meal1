@@ -118,7 +118,7 @@
 	text-decoration: line-through
 }
 
-.x_img {
+.heart {
     height: 30px;
     width: 30px;
     position: relative;
@@ -155,7 +155,7 @@
 						<ul class="ul">
 							<li>
 							<a href="${contextPath}/cart/addGoodsInCart.do?g_id=${item.g_id}&cate=zzim">
-							<img class = "x_img" src="${contextPath}/resources/image/heart.png"></a>
+							<img class = "heart" src="${contextPath}/resources/image/heart.png"></a>
 							<a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}">
 							<img src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main" width="250px" height="250px">
 							<br>${item.g_name } <br>
@@ -181,7 +181,7 @@
 
 							<li>
 							<a href="${contextPath}/cart/addGoodsInCart.do?g_id=${item.g_id}&cate=zzim">
-							<img class = "x_img" src="${contextPath}/resources/image/heart.png"></a>
+							<img class = "heart" src="${contextPath}/resources/image/heart.png"></a>
 							<a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}""><img
 									src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
 									width="250px" height="250px"> <br>${item.g_name } <br>
@@ -202,7 +202,7 @@
 					<c:forEach var="item" items="${goodsMap.bestG}" begin="0" end="3">
 						<ul class="ul">
 							<li><a href="${contextPath}/cart/addGoodsInCart.do?g_id=${item.g_id}&cate=zzim">
-							<img class = "x_img" src="${contextPath}/resources/image/heart.png"></a>
+							<img class = "heart" src="${contextPath}/resources/image/heart.png"></a>
 							<a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}""><img
 									src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
 									width="250px" height="250px"> <br>${item.g_name } <br>
