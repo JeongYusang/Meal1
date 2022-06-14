@@ -162,13 +162,22 @@
 		]]>
 	</select>
 
-	<!-- 판매자가 주문리스트를 받기위해 사용 -->
-	<select id="selectSOrderList" parameterType="String"
-		resultMap="orderResult">
+	<!-- 판매자가 주문리스트를 받기위해 사용 0614 -->
+	<select id="orderSellerList"  parameterType="Map" resultMap="orderResult">
    <![CDATA[
-	   select o.*, gr.b_gr_id from order_tb o left outer join board_gr gr on o.o_id = gr.o_id where o.delivery_state = #{delivery_state} and o.s_id = #{s_id} and good_cancel = 'N' order by pay_order_time desc;
+	   select * from meal.order_tb where s_id = 'seller' order by pay_order_time desc;
 	   ]]>
 	</select>
+	
+	<!-- 판매자가 배송상태 변경을 위해 사용 0614 -->
+	<update id="delivUpdate" parameterType="java.util.Map">
+		update order_tb
+			set
+				<if test="delivery_state != '' and delivery_state != null">
+					delivery_state = #{delivery_state}
+				</if>
+		where o_id = #{o_id}
+	</update>
 
 			<insert id="insertCartOrder" parameterType="orderVO" >
 

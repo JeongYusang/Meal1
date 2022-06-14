@@ -109,36 +109,12 @@ public class OrderServiceImpl implements OrderService {
 		return orderDAO.selectMaxParentNO(u_id);
 	}
 	
-	//판매자 마이페이지 내 오더리스트 불러오기위해 만듬
-		@Override
-		public Map<String, List<OrderVO>> orderSellerList(String s_id) throws Exception {
-			HashMap<String, String> FindMap = new HashMap<String, String>();
-			FindMap.put("s_id", s_id);
-			FindMap.put("delivery_state", "배송완료");
-			List<OrderVO> orderListDone = orderDAO.selectSorderList(FindMap);
-			
-			HashMap<String, String> FindMap2 = new HashMap<String, String>();
-			FindMap2.put("s_id", s_id);
-			FindMap2.put("delivery_state", "배송시작");
-			List<OrderVO> orderListDstart = orderDAO.selectSorderList(FindMap2);
-			
-			HashMap<String, String> FindMap3 = new HashMap<String, String>();
-			FindMap3.put("s_id", s_id);
-			FindMap3.put("delivery_state", "결제완료");
-			List<OrderVO> orderListPaid = orderDAO.selectSorderList(FindMap3);
-			
-			HashMap<String, String> FindMap4 = new HashMap<String, String>();
-			FindMap4.put("s_id", s_id);
-			FindMap4.put("delivery_state", "주문확인중");
-			List<OrderVO> orderListConfirm = orderDAO.selectSorderList(FindMap4);
-			
-			Map<String,List<OrderVO>> orderMap=new HashMap<String,List<OrderVO>>();
-			orderMap.put("orderListDone",orderListDone);
-			orderMap.put("orderListPaid",orderListPaid);
-			orderMap.put("orderListDstart",orderListDstart);
-			orderMap.put("orderListConfirm",orderListConfirm);
-			return orderMap;
-		}
+	//판매자 마이페이지 내 오더리스트 불러오기위해 만듬 0614
+			@Override
+			public List<OrderVO> orderSellerList(String s_id) throws Exception {
+				List<OrderVO> orderList = (List<OrderVO>)orderDAO.orderSellerList(s_id);
+				return orderList;
+			}
 
 		//카트 주문parentNo가져올예정
 		@Override

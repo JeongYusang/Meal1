@@ -77,10 +77,11 @@ public class OrderDAOImpl implements OrderDAO {
 		
 	}
 	
+	//판매자 주문내역 확인위해 사용 0614
 	@Override
-	public List<OrderVO> selectSorderList(HashMap<String, String> OrderState) throws DataAccessException {
-		List<OrderVO> SorderList = (List<OrderVO>) sqlSession.selectList("mapper.order.selectSOrderList", OrderState);
-		return SorderList;
+	public List<OrderVO> orderSellerList(String s_id) throws DataAccessException {
+		List<OrderVO> orderList = (List<OrderVO>) sqlSession.selectList("mapper.order.orderSellerList", s_id);
+		return orderList;
 	}
 	//카트부분 6.14
 	@Override

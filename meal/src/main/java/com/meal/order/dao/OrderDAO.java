@@ -31,7 +31,8 @@ public interface OrderDAO {
 
 	public String selectMaxParentNO(String u_id)throws DataAccessException;
 	
-	public List<OrderVO> selectSorderList(HashMap<String, String> findMap) throws DataAccessException;
+	//판매자 주문내역 출력을 위해 사용 0614
+	public List<OrderVO> orderSellerList(String s_id) throws DataAccessException;
 
 	//6.14카트오더 추가
 	public int MaxOrderNum() throws DataAccessException;
