@@ -12,7 +12,28 @@ public class MileageVO {
 	public Date timestamp;
 	public String u_id;
 	public int o_id;
+	public String g_name;
+	public String pay_order_time;
+	public int g_id;
 	
+	public int getG_id() {
+		return g_id;
+	}
+	public void setG_id(int g_id) {
+		this.g_id = g_id;
+	}
+	public String getG_name() {
+		return g_name;
+	}
+	public void setG_name(String g_name) {
+		this.g_name = g_name;
+	}
+	public String getPay_order_time() {
+		return pay_order_time;
+	}
+	public void setPay_order_time(String pay_order_time) {
+		this.pay_order_time = pay_order_time;
+	}
 	public int getM_id() {
 		return m_id;
 	}

@@ -125,6 +125,13 @@
     left: 250px;
     bottom: 5px;
 }
+.heart2 {
+	height: 30px;
+	width: 30px;
+	position: relative;
+	left: 110px;
+	bottom: -250px;
+}
 </style>
 
 </head>
@@ -153,12 +160,14 @@
 					<!-- 다운로드 메소드를 통해서 한것 -->
 					<c:forEach var="item" items="${goodsMap.NewG}" begin="0" end="3">
 						<ul class="ul">
-							<li>
-							<a href="${contextPath}/cart/addGoodsInCart.do?g_id=${item.g_id}&cate=zzim">
-							<img class = "heart" src="${contextPath}/resources/image/heart.png"></a>
-							<a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}">
-							<img src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main" width="250px" height="250px">
-							<br>${item.g_name } <br>
+							<li><a
+								href="${contextPath}/cart/addGoodsInCart.do?g_id=${item.g_id}&cate=zzim">
+									<img class="heart"
+									src="${contextPath}/resources/image/heart.png">
+							</a> <a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}">
+									<img
+									src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
+									width="250px" height="250px"> <br>${item.g_name } <br>
 									<c:if
 										test="${empty item.g_saleprice or item.g_saleprice eq 0 }">
 										<br> 
@@ -167,10 +176,11 @@
 										test="${not empty item.g_saleprice and item.g_saleprice ne 0}">
 										<span class="goodsPriceStyle">가격 : ${item.g_price }원</span>
 										<br> 할인 가격 : ${item.g_saleprice }원
-								</c:if> </a></li>
+								</c:if>
+							</a></li>
 						</ul>
 					</c:forEach>
-					
+
 
 				</div>
 				<b class="b" style="font-size: 32px">일반상품</b>
@@ -179,10 +189,11 @@
 					<c:forEach var="item" items="${goodsMap.NomalG}" begin="0" end="3">
 						<ul class="ul">
 
-							<li>
-							<a href="${contextPath}/cart/addGoodsInCart.do?g_id=${item.g_id}&cate=zzim">
-							<img class = "heart" src="${contextPath}/resources/image/heart.png"></a>
-							<a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}""><img
+							<li><a
+								href="${contextPath}/cart/addGoodsInCart.do?g_id=${item.g_id}&cate=zzim">
+									<img class="heart2"
+									src="${contextPath}/resources/image/heart.png">
+							</a> <a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}""><img
 									src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
 									width="250px" height="250px"> <br>${item.g_name } <br>
 									<c:if
@@ -201,9 +212,11 @@
 				<div class="maingList">
 					<c:forEach var="item" items="${goodsMap.bestG}" begin="0" end="3">
 						<ul class="ul">
-							<li><a href="${contextPath}/cart/addGoodsInCart.do?g_id=${item.g_id}&cate=zzim">
-							<img class = "heart" src="${contextPath}/resources/image/heart.png"></a>
-							<a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}""><img
+							<li><a
+								href="${contextPath}/cart/addGoodsInCart.do?g_id=${item.g_id}&cate=zzim">
+									<img class="heart"
+									src="${contextPath}/resources/image/heart.png">
+							</a> <a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}""><img
 									src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
 									width="250px" height="250px"> <br>${item.g_name } <br>
 									<c:if

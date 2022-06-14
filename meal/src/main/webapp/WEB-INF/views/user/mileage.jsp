@@ -137,21 +137,24 @@ tr.border-bottom td {
 	font-size: 24px;
 	font-weight: bold;
 	color: black;
-
 }
-#main-title h1{
+
+#main-title h1 {
 	margin: 10px 0 0 0;
 }
+
 #sub-title {
 	font-size: 30px;
 	font-weight: bold;
 	color: black;
 }
-hr{
-background-color: black;
+
+hr {
+	background-color: black;
 }
+
 #main-container1 h3 {
-margin: 0px;
+	margin: 0px;
 }
 </style>
 </head>
@@ -160,12 +163,13 @@ margin: 0px;
 		<div id="main-title">
 			<h1>마일리지</h1>
 		</div>
-			<hr>
-		 <br><h3>현재 적립금</h3>
+		<hr>
+		<br>
+		<h3>현재 적립금</h3>
 		<div id="sub-title">
-			 ${u_mile}<br> <br>
+			${u_mile}<br> <br>
 		</div>
-	
+
 		<div style="margin: 10px 0 0 0;">
 			<div class="tab-container">
 				<ul class="tabs">
@@ -181,26 +185,32 @@ margin: 0px;
 					<table class="mileage-table">
 						<thead>
 							<tr id="top-table">
-								<th width="50px">상태</th>
+								<th width="100px">주문번호</th>
+								<th width="100px">상태</th>
 								<th width="100px">적립금</th>
 								<th width="300px">적립내용</th>
-								<th width="300px">주문번호</th>
 								<th width="300px">날짜</th>
 							</tr>
 						</thead>
 						<c:forEach var="mileage" items="${mileage}" varStatus="status">
-						<tr class="border-bottom">
-						<c:if test = "${mileage.m_point > 0 }">
-							<td id="earn">적립</td>
-							</c:if>
-							<c:if test = "${mileage.m_point < 0 }">
-							<td id="earn">사용</td>
-							</c:if>
-							<td id="earn">${mileage.m_point}</td>
-							<td><a href="#">서울식 불고기 전골</a></td>
-							<td>${mileage.o_id}</td>
-							<td>2022-04-17</td>
-						</tr>
+							<tr class="border-bottom">
+								<td>${mileage.o_id}</td>
+								<c:if test="${mileage.m_point > 0 }">
+									<td id="earn">적립</td>
+								</c:if>
+								<c:if test="${mileage.m_point < 0 }">
+									<td id="use">사용</td>
+								</c:if>
+								<c:if test="${mileage.m_point > 0 }">
+									<td id="earn">${mileage.m_point}</td>
+								</c:if>
+								<c:if test="${mileage.m_point < 0 }">
+									<td id="use">${mileage.m_point}</td>
+								</c:if>
+								
+								<td><a href="${contextPath }/goods/goodsDetail.do?g_id=${mileage.g_id}">${mileage.g_name}</a></td>
+								<td>${mileage.pay_order_time}</td>
+							</tr>
 						</c:forEach>
 					</table>
 				</div>
@@ -210,26 +220,25 @@ margin: 0px;
 					<table class="mileage-table">
 						<thead>
 							<tr id="top-table">
-								<th width="50px">상태</th>
+								<th width="100px">주문번호</th>
+								<th width="100px">상태</th>
 								<th width="100px">적립금</th>
 								<th width="300px">적립내용</th>
-								<th width="300px">주문번호</th>
 								<th width="300px">날짜</th>
 							</tr>
 						</thead>
 						<c:forEach var="mileage" items="${mileage}" varStatus="status">
-						<tr class="border-bottom">
-						<c:if test = "${mileage.m_point > 0 }">
-							<td id="earn">적립</td>
-							</c:if>
-							<c:if test = "${mileage.m_point < 0 }">
-							<td id="earn">사용</td>
-							</c:if>
-							<td id="earn">${mileage.m_point}</td>
-							<td><a href="#">서울식 불고기 전골</a></td>
-							<td>${mileage.o_id}</td>
-							<td>2022-04-17</td>
-						</tr>
+							<c:choose>
+								<c:when test="${mileage.m_point > 0 }">
+									<tr>
+										<td>${mileage.o_id}</td>
+										<td id="earn">적립</td>
+										<td id="earn">${mileage.m_point}</td>
+										<td><a href="${contextPath }/goods/goodsDetail.do?g_id=${mileage.g_id}">${mileage.g_name}</a></td>
+										<td>${mileage.pay_order_time}</td>
+									</tr>
+								</c:when>
+							</c:choose>
 						</c:forEach>
 					</table>
 				</div>
@@ -239,45 +248,26 @@ margin: 0px;
 					<table class="mileage-table">
 						<thead>
 							<tr id="top-table">
-								<th width="50px">상태</th>
+								<th width="100px">주문번호</th>
+								<th width="100px">상태</th>
 								<th width="100px">적립금</th>
 								<th width="300px">적립내용</th>
-								<th width="300px">주문번호</th>
 								<th width="300px">날짜</th>
 							</tr>
 						</thead>
-						<tr class="border-bottom">
-							<td id="use">사용</td>
-							<td id="use">${m_point}-300</td>
-							<td><a href="#">서울식 불고기 전골</a></td>
-							<td>${o_id}1000100</td>
-							<td>2022-04-17</td>
-						</tr>
-
-						<tr class="border-bottom">
-							<td id="use">사용</td>
-							<td id="use">${m_point}-300</td>
-							<td><a href="#">서울식 불고기 전골</a></td>
-							<td>${o_id}1000100</td>
-							<td>2022-04-17</td>
-						</tr>
-
-						<tr class="border-bottom">
-							<td id="use">사용</td>
-							<td id="use">${m_point}-300</td>
-							<td><a href="#">서울식 불고기 전골</a></td>
-							<td>${o_id}1000100</td>
-							<td>2022-04-17</td>
-						</tr>
-
-						<tr class="border-bottom">
-							<td id="use">사용</td>
-							<td id="use">${m_point}-300</td>
-							<td><a href="#">서울식 불고기 전골</a></td>
-							<td>${o_id}1000100</td>
-							<td>2022-04-17</td>
-						</tr>
-
+						<c:forEach var="mileage" items="${mileage}" varStatus="status">
+							<c:choose>
+								<c:when test="${mileage.m_point < 0 }">
+									<tr>
+										<td>${mileage.o_id}</td>
+										<td id="use">사용</td>
+										<td id="use">${mileage.m_point}</td>
+										<td><a href="${contextPath }/goods/goodsDetail.do?g_id=${mileage.g_id}">${mileage.g_name}</a></td>
+										<td>${mileage.pay_order_time}</td>
+									</tr>
+								</c:when>
+							</c:choose>
+						</c:forEach>
 
 					</table>
 				</div>

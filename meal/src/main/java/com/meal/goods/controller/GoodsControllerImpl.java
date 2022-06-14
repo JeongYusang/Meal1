@@ -266,15 +266,20 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
         logger.info("--------------------------------");
         logger.info("boardGqList" + boardGqList);
         logger.info("--------------------------------");
+        if (g_id == 0) {
+        	String message = "삭제된 상품입니다.";
+        	mav.addObject("message", message);
+        	String viewName1 = "redirect:/main/main.do";
+        	mav.setViewName(viewName1);
+        } else {
         mav.addObject("goodsInfo", goodsInfo);
         mav.addObject("ImgList", imgList);
         mav.addObject("boardGrList",boardGrList);
         mav.addObject("boardGqList", boardGqList);
         mav.setViewName(viewName);
-        
         addGoodsInQuick(g_id,goodsInfo,session);
-
-
+        }
+    
         return mav;
 
      }
