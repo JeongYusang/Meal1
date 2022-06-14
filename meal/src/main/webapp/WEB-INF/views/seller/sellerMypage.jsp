@@ -153,6 +153,10 @@ td {
 .footer-wrap {
     margin-top: 10px;
 }
+
+td.fixed {
+	text-align: center;
+}
 </style>
 </head>
 <body>
@@ -246,11 +250,11 @@ td {
 			</div>
 						</div></li>
 					<li id="tab2" class="btnCon"><input type="radio"
-						name="tabmenu" id="tabmenu2"> <label for="tabmenu2">N<br>주문정보//
+						name="tabmenu" id="tabmenu2"> <label for="tabmenu2">N<br>주문정보
 					</label>
 						<div class="tabCon">
 						<div class="main-container">
-				//<div class="table-container">
+				<div class="table-container">
 					<table id="stable-striped">
 						<thead id="tap-head">
 							<tr id="top-table">
@@ -265,30 +269,53 @@ td {
 							</tr>
 						</thead>
 						<c:choose>
-							<c:when test="${empty goodsList}">
+							<c:when test="${empty OrderMap}">
 								<tr>
-									<td colspan=5 class="fixed"><strong>등록된 상품이 없습니다.</strong></td>
+									<td colspan=8 class="fixed"><strong>등록된 주문내역이 없습니다.</strong></td>
 								</tr>
 							</c:when>
-							<c:when test="${not empty goodsList}">
-								
-								<c:forEach var="item" items="${goodsList}" begin="0" end="15">
+							<c:when test="${not empty OrderMap}">
+								<c:forEach var="OrderMap" items="${OrderMap.orderListConfirm}" begin="0" end="15">
 									<tr class="border-bottom">
-										<td>${item.g_id}</td>
-										<td>${item.g_name}</td>
-										<td>${item.g_price}</td>
-										<td>${item.g_amount}</td>
-										<td>${item.g_name}</td>
+										<td>${OrderMap.g_id}</td>
+										<td>${OrderMap.g_name}</td>
+										<td>${OrderMap.o_goods_price}</td>
+										<td>${OrderMap.o_goods_qty}</td>
+										<td>${OrderMap.u_name}</td>
 										<!-- 추후 표기방식 변경 예정 -->
-										<%-- <td>${item.receiver_addr1}, ${item.receiver_addr2}, {item.receiver_addr3}</td>
-										<td>${item.deliver_state}</td> --%>
-										<td>${item.g_bang}</td>
-										<td>
-											<a href="${contextPath}/goods/updateGoodsForm.do?g_id=${item.g_id}">수정하기</a>
-											<br>
-											<br>
-											<a href="${contextPath}/goods/deleteGoods.do?g_id=${item.g_id}" onClick="delOk()">삭제하기</a>
-										</td>
+										<td>${OrderMap.receiver_addr1}, ${OrderMap.receiver_addr2}, ${OrderMap.receiver_addr3}</td>
+										<td>${OrderMap.delivery_state}</td>
+										<%-- <td>
+											<select name="s_delivery_state${i.index }"  id="s_delivery_state${i.index }">
+				 <c:choose>
+				   <c:when test="${OrderMap.delivery_state=='결제완료' }">
+				     <option  value="결제완료" selected>결제완료</option>
+				     <option  value="배송중">배송중</option>
+				     <option  value="배송완료">배송완료</option>
+				     <option  value="주문확인중">주문확인중</option>
+				   </c:when>
+				    <c:when test="${OrderMap.delivery_state=='배송중' }">
+				     <option  value="결제완료">결제완료</option>
+				     <option  value="배송중" selected>배송중</option>
+				     <option  value="배송완료">배송완료</option>
+				     <option  value="주문확인중">주문확인중</option>
+				   </c:when>
+				   <c:when test="${OrderMap.delivery_state=='배송완료' }">
+				    <option  value="결제완료">결제완료</option>
+				     <option  value="배송중">배송중</option>
+				     <option  value="배송완료" selected>배송완료</option>
+				     <option  value="주문확인중">주문확인중</option>
+				   </c:when>
+				   <c:when test="${OrderMap.delivery_state=='주문확인중' }">
+				   <option  value="결제완료">결제완료</option>
+				     <option  value="배송중">배송중</option>
+				     <option  value="배송완료">배송완료</option>
+				     <option  value="주문확인중" selected>주문확인중</option>
+				   </c:when>
+				   </c:choose>
+				 </select> 
+			     <input  type="button" value="배송수정"  onClick="fn_modify_order_state('${item.order_id}','s_delivery_state${i.index}')"/>
+			     </td> --%>
 									</tr>
 								</c:forEach>
 							</c:when>

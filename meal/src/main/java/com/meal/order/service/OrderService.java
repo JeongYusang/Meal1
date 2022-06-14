@@ -29,5 +29,7 @@ public interface OrderService {
 	public List<OrderVO> tabpageorderlist(HashMap<String, Object> infoMap);
 
 	public String selectMaxParentNO(String u_id)throws Exception;
+	
+	public Map<String, List<OrderVO>> orderSellerList(String s_id) throws Exception;
 
 }

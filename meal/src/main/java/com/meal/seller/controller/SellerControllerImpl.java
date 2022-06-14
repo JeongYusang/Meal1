@@ -28,6 +28,9 @@ import com.meal.admin.vo.AdminVO;
 import com.meal.common.controller.BaseController;
 import com.meal.goods.service.GoodsService;
 import com.meal.goods.vo.GoodsVO;
+import com.meal.order.dao.OrderDAO;
+import com.meal.order.service.OrderService;
+import com.meal.order.vo.OrderVO;
 import com.meal.seller.service.SellerService;
 import com.meal.seller.vo.Img_sVO;
 import com.meal.seller.vo.SellerVO;
@@ -45,6 +48,10 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 	private SellerVO sellerVO;
 	@Autowired
 	private GoodsService goodsService;
+	@Autowired
+	private OrderService orderService;
+	@Autowired
+	private OrderDAO orderDAO;
 
 	@Autowired
 	private Img_sVO img_sVO;
@@ -317,31 +324,36 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 		HttpSession session = request.getSession();
 	    SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
 		
-	     if (sellerVO == null) {
-	         String message ="잘못된 접근방법입니다.";
-	         mav.addObject("message", message);
-	         String viewName1 = "redirect:/main/main.do";
-	         mav.setViewName(viewName1);
-	         return mav;
-	      }
-	      String s_id = sellerVO.getS_id();
-	      String viewName = (String) request.getAttribute("viewName");
-	      mav.setViewName(viewName);
-	     
-		HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
-	      pagingInfo.put("section", section);
-	      pagingInfo.put("pageNum", pgNum);
-	      
-	      HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
-	      
-	      pagingMap.put("s_id", s_id);
-	      List<GoodsVO> goodsList = goodsService.selectGoodsPage(pagingMap);
-	      System.out.println("---------------------------");
-	      System.out.println("goodsList : " + goodsList);
-	      System.out.println("---------------------------");
-	      
-	      mav.addObject("goodsList", goodsList);
-	      mav.addObject("sellerVO", sellerVO);
-	      return mav;
+	    if (sellerVO != null) {
+		      String s_id = sellerVO.getS_id();
+		      String viewName = (String) request.getAttribute("viewName");
+		      mav.setViewName(viewName);
+		      
+			HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
+		      pagingInfo.put("section", section);
+		      pagingInfo.put("pgNum", pgNum);
+		      
+		      HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
+		      
+		      pagingMap.put("s_id", s_id);
+		      //굿즈리스트 호출을 위해 사용
+		      List<GoodsVO> goodsList = goodsService.selectGoodsPage(pagingMap);
+			  System.out.println("---------------------------");
+		      System.out.println("goodsList : " + goodsList);
+		      System.out.println("---------------------------");
+			  //주문내역 확인
+				Map<String, List<OrderVO>> OrderMap = orderService.orderSellerList(s_id);
+				mav.addObject("OrderMap", OrderMap);
+				mav.addObject("goodsList", goodsList);
+				mav.setViewName(viewName);
+				
+				return mav;
+		     } 
+		     	String message ="잘못된 접근방법입니다.";
+				mav.addObject("message", message);
+				String viewName1 = "redirect:/main/main.do";
+				mav.setViewName(viewName1);
+				return mav;
+		      
+		}
 	}
-}

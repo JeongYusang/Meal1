@@ -30,6 +30,8 @@ public interface OrderDAO {
 	public List<OrderVO> tabpageorderlist(HashMap<String, Object> infoMap)throws DataAccessException;
 
 	public String selectMaxParentNO(String u_id)throws DataAccessException;
+	
+	public List<OrderVO> selectSorderList(HashMap<String, String> findMap) throws DataAccessException;
 
 		
 }

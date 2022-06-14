@@ -151,7 +151,12 @@
 		]]>
 	</select>
 	
-	
+	<!-- 판매자가 주문리스트를 받기위해 사용 -->
+	<select id="selectSOrderList"  parameterType="String" resultMap="orderResult">
+   <![CDATA[
+	   select o.*, gr.b_gr_id from order_tb o left outer join board_gr gr on o.o_id = gr.o_id where o.delivery_state = #{delivery_state} and o.s_id = #{s_id} and good_cancel = 'N' order by pay_order_time desc;
+	   ]]>
+	</select>
 	
 	
 	
