@@ -76,4 +76,10 @@ public class OrderDAOImpl implements OrderDAO {
 		return (String) sqlSession.selectOne("mapper.order.MaxParentNo", u_id);
 		
 	}
+	
+	@Override
+	public List<OrderVO> selectSorderList(HashMap<String, String> OrderState) throws DataAccessException {
+		List<OrderVO> SorderList = (List<OrderVO>) sqlSession.selectList("mapper.order.selectSOrderList", OrderState);
+		return SorderList;
+	}
 }
