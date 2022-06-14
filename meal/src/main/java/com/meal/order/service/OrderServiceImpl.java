@@ -140,6 +140,16 @@ public class OrderServiceImpl implements OrderService {
 			return orderMap;
 		}
 
+		//카트 주문parentNo가져올예정
+		@Override
+		public int MaxOrderNum() throws Exception{
+			return orderDAO.MaxOrderNum();
+		
+		}
+		@Override
+		public void insertCartOrder(OrderVO orderVO) throws Exception{
+			orderDAO.insertCartOrder(orderVO);
+		}
 }
 
 

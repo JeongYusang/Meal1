@@ -82,4 +82,13 @@ public class OrderDAOImpl implements OrderDAO {
 		List<OrderVO> SorderList = (List<OrderVO>) sqlSession.selectList("mapper.order.selectSOrderList", OrderState);
 		return SorderList;
 	}
+	//카트부분 6.14
+	@Override
+	public int MaxOrderNum() throws DataAccessException{
+		return (Integer) sqlSession.selectOne("mapper.order.MaxOrderNum");		
+	}
+	@Override
+	public void insertCartOrder(OrderVO orderVO) throws DataAccessException{
+		sqlSession.insert("mapper.order.insertCartOrder",orderVO);
+	}
 }

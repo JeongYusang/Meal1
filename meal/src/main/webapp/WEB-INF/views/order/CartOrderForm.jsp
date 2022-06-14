@@ -8,12 +8,36 @@
 <c:set var="sum" value="${orderVO.sum + orderVO.d_price}" />
 
 
-
 <head>
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
+	/* 하단부를 위한 값대입 */
+	window.onload = function() {
+		var length = document.getElementsByName("g_name").length;
+		var totalprice = 0;
+		var Ototalprice = 0;
+		var totaldele = 0;
+		console.log(document.getElementsByName("g_name")[0].value + " 포함"
+				+ length + "개");
+		for (var i = 0; i < length; i++) {
+			totaldele += parseInt(document.getElementsByName("dele")[i].value);
+
+			Ototalprice += parseInt(document.getElementsByName("OriginPrice")[i].value);
+			totalprice += parseInt(document.getElementsByName("sum")[i].value);
+		}
+		console.log("totalprice : " + totalprice);
+		/* 총상품액 */
+		document.getElementById("final_total_Price").value = parseInt(totalprice);
+		/* 최종상품액 */
+		document.getElementById("h_totalPrice").value = Ototalprice;
+		
+		document.getElementById("totalPrice").value = Ototalprice;
+		document.getElementById("h_total_order_goods_qty").value = length;
+		document.getElementById("h_totalDelivery").value = totaldele;
+	}
+
 	function execDaumPostcode() {
 		new daum.Postcode(
 				{
@@ -67,98 +91,127 @@
 					}
 				}).open();
 	}
-	
 
 	var IMP = window.IMP; // 생략 가능
 	IMP.init('imp53396567');
 	function fn_buyBTN() {
 
-		IMP.request_pay({
+		var length = document.getElementsByName("g_name").length;
+		var Gname = document.getElementsByName("g_name")[0].value + " 포함 "
+				+ length + " 종";
+
+		IMP
+				.request_pay(
+						{
 							pg : 'html5_inicis', // version 1.1.0부터 지원.
 							pay_method : 'card',
 							merchant_uid : 'merchant_' + new Date().getTime(),
-							name : document.getElementById("g_name").value,
-							amount : document.getElementById("final_total_Price").value, //판매 가격
+							name : Gname,
+							amount : document
+									.getElementById("final_total_Price").value, //판매 가격
 							buyer_email : '${memberInfo.u_email1} + ${memberInfo.u_email2}',
 							buyer_name : '${memberInfo.u_name}',
 							buyer_tel : '${memberInfo.u_hp1}',
 							buyer_addr : '${memberInfo.u_addr2} + ${memberInfo.u_addr3}',
 							buyer_postcode : '${memberInfo.u_addr1}'
-						}, function(rsp) {
-						      if ( rsp.success ) {
-							         //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-							         $.ajax({
-							        	 url : "${contextPath}/order/insertOrder.do", //cross-domain error가 발생하지 않도록 주의해주세요
-							            type: 'POST',
-							            data : {
-											u_id : document.getElementById("u_id").value,
-											g_id : document.getElementById("g_id").value,
-											s_id : document.getElementById("s_id").value,
-											u_name : rsp.buyer_name,
-											g_name : rsp.name,
-											o_goods_qty : document.getElementById("h_order_goods_qty").value,
-											o_goods_price : document.getElementById("g_price").value,
-											pay_method : rsp.pay_method,
-											card_pay_month : rsp.card_quota,
-											receiver_hp : document.getElementById("receiver_hp").value,
-											receiver_name : document.getElementById("receiver_name").value,
-											receiver_addr1 : document.getElementById("zipcode").value,
-											receiver_addr2 : document.getElementById("roadAddress").value,
-											receiver_addr3 : document.getElementById("namujiAddress").value,
-											deliver_message : document.getElementById("deliver_message").value,
-											deliver_method : document.getElementById("deliver_method").value,
-											o_useMile : document.getElementById('o_useMile').value
-										}
-							         }).done(function(data) {
-								            if ( everythings_fine ) {
-								               msg = '결제가 완료되었습니다.';
-								               msg += '\n고유ID : ' + rsp.imp_uid;
-								               msg += '\n결제 금액 : ' + rsp.paid_amount;
-								               msg += '카드 승인번호 : ' + rsp.apply_num;
-								               alert(msg);
-								            } else {
-								               //[3] 아직 제대로 결제가 되지 않았습니다.
-								               //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-								            }
-								         });
-								         //성공시 이동할 페이지
-							         	location.replace("${contextPath}/order/OrderResult.do");
-								      } else {
-								         msg = '결제에 실패하였습니다.';
-								         msg += '에러내용 : ' + rsp.error_msg;
-								         //실패시 이동할 페이지
-								         location.href="${contextPath}/order/OrderForm.do?g_id=${goodsVO.g_id}&o_goods_qty=${orderVO.o_goods_qty}";
-								         alert(msg);
-								      }
-								   });
-		}
-	
-	
-	
+						},
+						function(rsp) {
+							if (rsp.success) {
+								//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+								$
+										.ajax(
+												{
+													url : "${contextPath}/order/insertCartOrder.do", //cross-domain error가 발생하지 않도록 주의해주세요
+													type : 'POST',
+													data : {
+														u_id : document
+																.getElementById("u_id").value,
+														u_name : rsp.buyer_name,
+														o_goods_qty : document
+																.getElementById("h_order_goods_qty").value,
+										
+														pay_method : rsp.pay_method,
+														card_pay_month : rsp.card_quota,
+														receiver_hp : document
+																.getElementById("receiver_hp").value,
+														receiver_name : document
+																.getElementById("receiver_name").value,
+														receiver_addr1 : document
+																.getElementById("zipcode").value,
+														receiver_addr2 : document
+																.getElementById("roadAddress").value,
+														receiver_addr3 : document
+																.getElementById("namujiAddress").value,
+														deliver_message : document
+																.getElementById("deliver_message").value,
+														deliver_method : document
+																.getElementById("deliver_method").value,
+														o_useMile : document
+																.getElementById('o_useMile').value
+													}
+												})
+										.done(
+												function(data) {
+													if (everythings_fine) {
+														msg = '결제가 완료되었습니다.';
+														msg += '\n고유ID : '
+																+ rsp.imp_uid;
+														msg += '\n결제 금액 : '
+																+ rsp.paid_amount;
+														msg += '카드 승인번호 : '
+																+ rsp.apply_num;
+														alert(msg);
+													} else {
+														//[3] 아직 제대로 결제가 되지 않았습니다.
+														//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+													}
+												});
+								//성공시 이동할 페이지
+								location
+										.replace("${contextPath}/order/OrderResult.do");
+							} else {
+								msg = '결제에 실패하였습니다.';
+								msg += '에러내용 : ' + rsp.error_msg;
+								//실패시 이동할 페이지
+								location.href = "${contextPath}/order/OrderForm.do?g_id=${goodsVO.g_id}&o_goods_qty=${orderVO.o_goods_qty}";
+								alert(msg);
+							}
+						});
+	}
 
 	function calculatePay() {
 		var price1 = document.getElementById("totalPrice").value;
 		var price2 = document.getElementById("o_useMile").value;
-		document.order.FinalTotalPrice.value = parseInt(price1) + ${orderVO.d_price} - parseInt(price2);
+		var tDele = document.getElementById("h_totalDelivery").value;
+		document.order.FinalTotalPrice.value = parseInt(price1) + parseInt(tDele)-parseInt(price2);
 		document.order.u_mile.value = price2;
+		if(parseInt(price1) - parseInt(price2) <100){
+			alert("최대 마일리지 사용금액을 초과 하였습니다.");	
+		}
 	}
 
+ 	 	function maxMile(){
+	 var price1 = document.getElementById("totalPrice").value;
+	 var price2 = document.getElementById("o_useMile").value;
+	 var Fprice = document.getElementById("final_total_Price").value;
+		var tDele = document.getElementById("h_totalDelivery").value;
+		console.log("maxMile진입");
+		console.log(tDele);
+	      if(${memberInfo.u_mile} > price1) {
+	 document.getElementById("o_useMile").value = Fprice;
+	var useMile = parseInt(price1)-100;
+	// 총할인금액에 관하여 수정해줘야함.
+	 document.order.FinalTotalPrice.value = parseInt(price1)  - parseInt(useMile);
+	 document.order.u_mile.value = useMile;
+	 }else {
+		 var useMile = ${memberInfo.u_mile};
+		 document.order.FinalTotalPrice.value = parseInt(price1) - parseInt(useMile);
+	 document.getElementById("o_useMile").value = useMile;
+	 document.order.u_mile.value = useMile;
+	 }
+	 document.getElementById("useMileBTN").disabled = true;
 
-
-	function maxMile(){
-		var price1 = document.getElementById("totalPrice").value;
-		     if(${memberInfo.u_mile} > ${orderVO.sum}) {
-			document.getElementById("o_useMile").value = ${orderVO.sum};
-			var price2 = document.getElementById("o_useMile").value;
-			document.order.FinalTotalPrice.value = parseInt(price1) + ${orderVO.d_price} - parseInt(price2);
-			document.order.u_mile.value = price2;
-		}else {
-				document.getElementById("o_useMile").value = ${memberInfo.u_mile};
-				var price2 = document.getElementById("o_useMile").value;
-				document.order.FinalTotalPrice.value = parseInt(price1) + ${orderVO.d_price} - parseInt(price2);
-				document.order.u_mile.value = price2;
-			}
-		}
+	 }  
 </script>
 
 <style type="text/css">
@@ -220,7 +273,8 @@
 	border: 1px solid black;
 }
 
-#final_total_Price, #max_mile, #totalPrice, #u_mile {
+#final_total_Price, #max_mile, #totalPrice, #u_mile,
+	#h_total_order_goods_qty, #h_totalDelivery {
 	border: none;
 	border-right: 0px;
 	border-top: 0px;
@@ -281,14 +335,25 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 										src="${contextPath}/download1.do?g_id=${goodsVO.g_id}&cate=main"
 										width="50px" height="50px" /> <a
 										href="${contextPath}/goods/goodsDetail.do?g_id=${goodsVO.g_id}"><br>${goodsVO.g_name}</a>
+										<input type="hidden" name="g_name" value="${goodsVO.g_name}">
 									<td>
 										<h4>${cartVO.c_qty}</h4> <input type="hidden"
 										id="h_order_goods_qty" name="h_order_goods_qty"
 										value="${cartVO.c_qty}" />
 									</td>
-									<td>${goodsVO.g_price*cartVO.c_qty}원</td>
-									<td>${cartVO.c_deleP }원</td>
-									<td>${cartVO.c_sum}원</td>
+									<td>${goodsVO.g_price*cartVO.c_qty}원<input type="hidden"
+										name="OriginPrice" value="${goodsVO.g_price*cartVO.c_qty}">
+
+									</td>
+
+									<td>${cartVO.c_deleP }원<input type="hidden" name="dele"
+										value="${cartVO.c_deleP }">
+
+									</td>
+
+									<td>${cartVO.c_sum}원<input type="hidden" name="sum"
+										value="${cartVO.c_sum }">
+									</td>
 									<td>${goodsVO.g_price * 0.01}원</td>
 								</tr>
 							</c:if>
@@ -395,7 +460,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 						<tr>
 							<td>마일리지 사용 <input id="o_useMile" size="5" name="o_useMile"
 								type="number" onChange="calculatePay()" value="0" />원
-								<button type="button" name="useMile" onClick="maxMile()">모두
+								<button type="button" name="useMile" id="useMileBTN" onClick="maxMile()">모두
 									사용</button></td>
 						</tr>
 					</tbody>
@@ -405,7 +470,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 
 			<br>
 			<!--추후변경  -->
-			 <table class="list_view">
+			<table class="list_view">
 				<tbody>
 					<tr align=center class="fixed">
 						<td class="fixed">총 상품수</td>
@@ -415,23 +480,20 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 						<td>최종 결제금액</td>
 					</tr>
 					<tr align=center>
-						<td>${orderVO.o_goods_qty}<input id="h_total_order_goods_qty"
-							type="hidden" value="${total_order_goods_qty}" />
-						</td>
-						<td><input id="totalPrice" type="text" value="${orderVO.sum}"
-							size="10" onChange="calculatePay()" />원 <input id="h_totalPrice"
-							type="hidden" value="${orderVO.sum}" /></td>
-						<td>
-							<p id="p_totalDelivery">${orderVO.d_price}원</p> <input
-							id="h_totalDelivery" type="hidden" value="${orderVO.d_price}" />
-						</td>
+						<td><input id="h_total_order_goods_qty" name="count"
+							type="number" readonly /></td>
+						<td><input id="totalPrice" type="text" size="10"
+							onChange="calculatePay()" />원 <input id="h_totalPrice"
+							type="hidden" /></td>
+						<td><input id="h_totalDelivery" type="number"
+							name="totalDele" /></td>
 						<td><input type="number" id="u_mile" name="u_mile" value="0">원
 						</td>
 						<td><input id="final_total_Price" type="number"
-							name="FinalTotalPrice" size=10 value="${sum}" readonly>원</td>
+							name="FinalTotalPrice" size=10 readonly>원</td>
 					</tr>
 				</tbody>
-			</table> 	
+			</table>
 			<br> <br> <br>
 		</form>
 
