@@ -149,11 +149,13 @@
 		     if(${memberInfo.u_mile} > ${orderVO.sum}) {
 			document.getElementById("o_useMile").value = ${orderVO.sum};
 			var price2 = document.getElementById("o_useMile").value;
+			var useMile = parseInt(price1) + ${orderVO.d_price} - 100;
 			document.order.FinalTotalPrice.value = parseInt(price1) + ${orderVO.d_price} - parseInt(price2);
-			document.order.u_mile.value = price2;
+			document.order.u_mile.value = useMile;
 		}else {
 				document.getElementById("o_useMile").value = ${memberInfo.u_mile};
 				var price2 = document.getElementById("o_useMile").value;
+		
 				document.order.FinalTotalPrice.value = parseInt(price1) + ${orderVO.d_price} - parseInt(price2);
 				document.order.u_mile.value = price2;
 			}
@@ -386,7 +388,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 						<tr>
 							<td>마일리지 사용 <input id="o_useMile" size="5" name="o_useMile"
 								type="number" onChange="calculatePay()" value="0" />원
-								<button type="button" name="useMile" onClick="maxMile()">모두
+								<button type="button" name="useMile" id="useMile" onClick="maxMile()">모두
 									사용</button></td>
 						</tr>
 					</tbody>

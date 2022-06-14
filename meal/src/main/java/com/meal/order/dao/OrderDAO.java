@@ -33,5 +33,8 @@ public interface OrderDAO {
 	
 	public List<OrderVO> selectSorderList(HashMap<String, String> findMap) throws DataAccessException;
 
+	//6.14카트오더 추가
+	public int MaxOrderNum() throws DataAccessException;
 		
+	public void insertCartOrder(OrderVO orderVO) throws DataAccessException;
 }

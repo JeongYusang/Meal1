@@ -6,7 +6,7 @@
 	<c:set var="total"
 		value="${total + (OrderList.o_goods_qty * OrderList.o_goods_price)}" />
 </c:forEach>
-<c:set var= "dprice" value = "0"></c:set>
+<c:set var="dprice" value="0"></c:set>
 
 <!DOCTYPE html>
 <html>
@@ -14,12 +14,12 @@
 <meta charset="UTF-8">
 <title>주문완료</title>
 <script>
-window.onload = function() {
-    if(!window.location.hash) {
-        window.location = window.location + '#loaded';
-        window.location.reload();
-    }
-}
+	window.onload = function() {
+		if (!window.location.hash) {
+			window.location = window.location + '#loaded';
+			window.location.reload();
+		}
+	}
 </script>
 <style>
 body {
@@ -35,7 +35,7 @@ body {
 <body>
 	<div id="main-wrap">
 		<div class="orderInfo">
-		<h1>주문 완료</h1>
+			<h1>주문 완료</h1>
 			<p>
 				<strong>고객님의 주문이 완료 되었습니다.</strong> 주문내역 및 배송에 관한 안내는 <a
 					href="/myshop/order/list.html">주문조회</a> 를 통하여 확인 가능합니다.
@@ -120,19 +120,22 @@ body {
 					<thead>
 						<tr>
 							<th scope="col"><span>총 주문 금액</span></th>
-							<th scope="col" class="{$total_sale_display|display}">사용
-								마일리지
-							</th>
+							<th scope="col">사용 마일리지</th>
 							<th scope="col">총 결제금액</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td><div class="box">주문 총액: ${total} + <c:if test="${total>= 30000}">배송비: ${dprice}원</c:if><c:if test="${total < 30000}"><c:set var= "dprice" value = "3000"></c:set>배송비: ${dprice}원</c:if>
-									=${total - dprice}원</div></td>
+							<td><div class="box">
+									주문 총액: ${total} +
+									<c:if test="${total>= 30000}">배송비: ${dprice}원</c:if>
+									<c:if test="${total < 30000}">
+										<c:set var="dprice" value="3000"></c:set>배송비: ${dprice}원</c:if>
+									=${total - dprice}원
+								</div></td>
 							<td><div class="box">${OrderList[0].o_useMile}포인트</div></td>
-							<td class="total"><div class="box">주문 총액: ${total + dprice}원 -
-									${OrderList[0].o_useMile}포인트 = ${total + dprice - OrderList[0].o_useMile}원</div></td>
+							<td class="total"><div class="box">주문 총액: ${total + dprice}원
+									- ${OrderList[0].o_useMile}포인트 = ${total + dprice - OrderList[0].o_useMile}원</div></td>
 						</tr>
 					</tbody>
 				</table>
@@ -169,7 +172,7 @@ body {
 						</tr>
 						<tr>
 							<th scope="row">주소</th>
-							<td>${OrderList[0].receiver_addr2 + OrderList[0].receiver_addr3}</td>
+							<td>${OrderList[0].receiver_addr2} ${OrderList[0].receiver_addr3}</td>
 						</tr>
 						<tr>
 							<th scope="row">휴대전화</th>

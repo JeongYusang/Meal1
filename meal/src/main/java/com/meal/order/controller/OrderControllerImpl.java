@@ -45,6 +45,7 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 	@Autowired
 	CartService cartService;
 	
+
 	@Override
 	@RequestMapping(value = "/OrderForm.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView OrderForm(@RequestParam("g_id") int g_id, @RequestParam("o_goods_qty") int o_goods_qty,
@@ -84,7 +85,7 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 
 	// 6-10 수정중 replace 메소드를 사용해서 split할 length 추출 고민중 // split("/").length 에 대한
 	// int값 추출해볼것 (완료)
-	// 해당값을 JSP전해줄것 (진행중) 6-13 
+	// 해당값을 JSP전해줄것 (진행중) 6-13
 	@Override
 	@RequestMapping(value = "/CartOrderForm.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView CartOrderForm(@RequestParam("OrderToCart") String OrderToCart, HttpServletRequest request,
@@ -95,8 +96,8 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 
 		// 쪼개기 선작업
 		List<CartVO> cartList = new ArrayList<CartVO>();
-		List<GoodsVO> goodsList= new ArrayList<GoodsVO>();
- 		String[] cartList1 = OrderToCart.split("/");
+		List<GoodsVO> goodsList = new ArrayList<GoodsVO>();
+		String[] cartList1 = OrderToCart.split("/");
 
 		// 반복문으로 쪼갠후 바인딩을 할예정
 		for (int i = 0; i < OrderToCart.split("/").length; i++) {
@@ -105,7 +106,7 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			System.out.println("cartInfo : " + c_id);
 			System.out.println("==============================");
 
-			//selectall	체크박스 누를시 값을 가져오므로 이부분에 대하여 제외하기위한 조건
+			// selectall 체크박스 누를시 값을 가져오므로 이부분에 대하여 제외하기위한 조건
 			if (c_id.equals("selectall")) {
 				continue;
 			}
@@ -113,19 +114,20 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			CartVO cartInfo = cartService.selectCartInfo(c_id1);
 			int g_id = cartInfo.g_id;
 			GoodsVO goodsinfo = goodsService.selectGoodsDetail(g_id);
-
-			//배송비관련 구문
+			String g_name =goodsinfo.getG_name();
+			cartInfo.setG_name(g_name);
+			// 배송비관련 구문
 			int G_price = goodsinfo.getG_price();
 			int c_qty = cartInfo.getC_qty();
-			if(G_price * c_qty >30000) {
+			if (G_price * c_qty > 30000) {
 				int c_sum = G_price * c_qty;
 				int c_deleP = 0;
 				cartInfo.setC_sum(c_sum);
 				cartInfo.setC_deleP(c_deleP);
-			}else {
+			} else {
 				int c_deleP = 3000;
 				int c_sum = G_price * c_qty + c_deleP;
-				
+
 				cartInfo.setC_sum(c_sum);
 				cartInfo.setC_deleP(c_deleP);
 			}
@@ -133,14 +135,14 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			goodsList.add(goodsinfo);
 		}
 
-
-		mav.addObject("CartList", cartList);
+		// mav.addObject("CartList", cartList);
+		session.setAttribute("CartList", cartList);
 		mav.addObject("GoodsList", goodsList);
 		mav.setViewName(viewName);
 		return mav;
 	}
 
-	//한개 주문시 ! 
+	// 한개 주문시 !
 	@Override
 	@RequestMapping(value = "/insertOrder.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView insertOrder(@ModelAttribute("orderVO") OrderVO _orderVO, HttpServletRequest request,
@@ -171,31 +173,40 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			return mav;
 		}
 	}
-	
+	//6-14
 	@Override
 	@RequestMapping(value = "/insertCartOrder.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView insertCartOrder(@ModelAttribute("orderVO") OrderVO _orderVO, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
+		List<CartVO> cartList = (List<CartVO>) session.getAttribute("CartList");
 		try {
-			int parentNo = orderService.insertOrder(_orderVO);
-			if (parentNo != 0) {
-				String viewName = (String) session.getAttribute("viewName");
-				String message = "주문완료 되었습니다.";
-				mav.addObject(message);
-				mav.setViewName(viewName);
-				return mav;
-			} else {
-				parentNo = 1;
-				String viewName = (String) session.getAttribute("viewName");
-				String message = "주문완료 되었습니다.";
-				mav.addObject(message);
-				mav.setViewName(viewName);
-				return mav;
+			// parentNo설정 동일할경우 같은 주문임.
+			int parentNo = (Integer) orderService.MaxOrderNum();
+			_orderVO.setParentNo(parentNo);
+
+			for (CartVO item : cartList) {
+				int qty = item.getC_qty();
+				_orderVO.setO_goods_qty(qty);
+				String g_name = item.getG_name();
+				_orderVO.setG_name(g_name);
+				int g_id = item.getG_id();
+				_orderVO.setG_id(g_id);
+				GoodsVO goodsInfo = (GoodsVO) goodsService.selectGoodsDetail(g_id);
+				String s_id = goodsInfo.getS_id();
+				_orderVO.setS_id(s_id);
+				int price = goodsInfo.getG_price();
+				_orderVO.setO_goods_price(price);
+				orderService.insertCartOrder(_orderVO);
+				// 마일리지 관련하여 추후 생각을 해야함.
 			}
+
+			String viewName1 = "redirect:/order/CartOrderForm.do";
+			mav.setViewName(viewName1);
+			return mav;
 		} catch (Exception e) {
-			String viewName1 = "redirect:/order/orderform.do";
+			String viewName1 = "redirect:/order/CartOrderForm.do";
 			mav.setViewName(viewName1);
 			String message = "주문중 오류가 발생 하였습니다. 다시 주문해주시길 바랍니다";
 			mav.addObject(message);
@@ -227,6 +238,7 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			return mav;
 		}
 	}
+
 
 	@Override
 	@RequestMapping(value = "/selectUserOrders.do", method = { RequestMethod.POST, RequestMethod.GET })

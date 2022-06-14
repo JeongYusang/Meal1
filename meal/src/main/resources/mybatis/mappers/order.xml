@@ -34,8 +34,8 @@
 	</resultMap>
 
 
-	<insert id="insertOrder" parameterType="orderVO" >
-	<selectKey resultType="int" keyProperty="parentNo"
+	<insert id="insertOrder" parameterType="orderVO">
+		<selectKey resultType="int" keyProperty="parentNo"
 			order="BEFORE">
 			select max(parentNo)+1 from order_tb
 		</selectKey>
@@ -78,44 +78,51 @@
 		            #{parentNo})
 		]]>
 	</insert>
-	
-	<select id="selectUserOrders" parameterType="String" resultMap="orderResult">
+
+	<select id="selectUserOrders" parameterType="String"
+		resultMap="orderResult">
 	<![CDATA[
 		   select * from order_tb where u_id=#{u_id} and good_cancel = 'N' order by pay_order_time desc
 		]]>
 	</select>
-	
-	<select id="UserboardOrderPage"  parameterType="String" resultMap="orderResult">
+
+	<select id="UserboardOrderPage" parameterType="String"
+		resultMap="orderResult">
    <![CDATA[
 	    select R1.* from (select * from order_tb) R1 where u_id = #{u_id} and good_cancel = 'N' order by pay_order_time desc limit #{start} , #{end} 
 	   ]]>
 	</select>
-	
-	<select id="CanceledUserOrders" parameterType="String" resultMap="orderResult">
+
+	<select id="CanceledUserOrders" parameterType="String"
+		resultMap="orderResult">
 	<![CDATA[
 		   select * from order_tb where u_id=#{u_id} and good_cancel = 'Y' order by pay_order_time desc
 		]]>
 	</select>
-	
-	<select id="CanceledUserOrderPage"  parameterType="String" resultMap="orderResult">
+
+	<select id="CanceledUserOrderPage" parameterType="String"
+		resultMap="orderResult">
    <![CDATA[
 	    select R1.* from (select * from order_tb) R1 where u_id = #{u_id} and good_cancel = 'Y' order by pay_order_time desc limit #{start} , #{end} 
 	   ]]>
 	</select>
-	
-	<select id="UserboardOrderListPage"  parameterType="Map" resultMap="orderResult">
+
+	<select id="UserboardOrderListPage" parameterType="Map"
+		resultMap="orderResult">
    <![CDATA[
 	    select R1.* from (select * from order_tb) R1 where u_id = #{u_id} and delivery_state = #{delivery_state} and good_cancel = 'N' order by pay_order_time desc limit #{start} , #{end} 
 	   ]]>
 	</select>
-	
-	<select id="selectOrderList"  parameterType="String" resultMap="orderResult">
+
+	<select id="selectOrderList" parameterType="String"
+		resultMap="orderResult">
    <![CDATA[
 	   select o.*, gr.b_gr_id from order_tb o left outer join board_gr gr on o.o_id = gr.o_id where o.delivery_state = #{delivery_state} and o.u_id = #{u_id} and good_cancel = 'N' order by pay_order_time desc;
 	   ]]>
 	</select>
-	
-	<select id="findU_id"  parameterType="Integer" resultType="String">
+
+	<select id="findU_id" parameterType="Integer"
+		resultType="String">
    <![CDATA[
 	    select u_id from order_tb where o_id = #{o_id}
 	   ]]>
@@ -125,39 +132,89 @@
 	update order_tb set good_cancel = 'Y', pay_order_time = CURRENT_TIMESTAMP where o_id=#{o_id}
 	]]>
 	</update>
-	
-	<select id="overlappedO_id"  parameterType="Integer" resultType="String">
+
+	<select id="overlappedO_id" parameterType="Integer"
+		resultType="String">
    <![CDATA[
 	   select if(count(*), 'true', 'false')
 	   from board_gr where o_id = #{o_id}
 	   ]]>
 	</select>
-	
-	<select id="OrderResult"  parameterType="String" resultMap="orderResult">
+
+	<select id="OrderResult" parameterType="String"
+		resultMap="orderResult">
    <![CDATA[
 	   select * from order_tb where parentNo = #{parentNo}
 	   ]]>
 	</select>
-	
-	<select id="MaxParentNo"  parameterType="String" resultType="String">
+
+	<select id="MaxParentNo" parameterType="String"
+		resultType="String">
    <![CDATA[
 	   select max(parentNo) from order_tb where u_id = #{u_id}
 	   ]]>
 	</select>
-	
-	<select id="tabpageorderlist" parameterType="Map" resultMap="orderResult">
+
+	<select id="tabpageorderlist" parameterType="Map"
+		resultMap="orderResult">
 	<![CDATA[
 		   select * from order_tb where u_id=#{u_id} and delivery_state = #{delivery_state} and good_cancel = 'N' order by pay_order_time desc
 		]]>
 	</select>
-	
+
 	<!-- 판매자가 주문리스트를 받기위해 사용 -->
-	<select id="selectSOrderList"  parameterType="String" resultMap="orderResult">
+	<select id="selectSOrderList" parameterType="String"
+		resultMap="orderResult">
    <![CDATA[
 	   select o.*, gr.b_gr_id from order_tb o left outer join board_gr gr on o.o_id = gr.o_id where o.delivery_state = #{delivery_state} and o.s_id = #{s_id} and good_cancel = 'N' order by pay_order_time desc;
 	   ]]>
 	</select>
+
+			<insert id="insertCartOrder" parameterType="orderVO" >
+
+	    <![CDATA[
+		            insert into order_tb (u_id,
+		            g_id,
+		            s_id,
+		            o_goods_price,
+		            o_goods_qty,
+		            u_name, 
+		            g_name,
+		            receiver_hp,
+		            receiver_addr1,
+		            receiver_addr2,
+		            receiver_addr3,
+		            receiver_name,
+		            pay_method,
+		            card_pay_month,
+		            deliver_method,
+		            deliver_message,
+		            o_useMile,
+		            parentNo) values
+		            (#{u_id},
+		            #{g_id},
+		            #{s_id},
+		            #{o_goods_price},
+		            #{o_goods_qty},
+		            #{u_name},
+		            #{g_name},
+		            #{receiver_hp},
+		            #{receiver_addr1},
+		            #{receiver_addr2},
+		            #{receiver_addr3},
+		            #{receiver_name},
+		            #{pay_method},
+		            #{card_pay_month},
+		            #{deliver_method},
+		            #{deliver_message},
+		            #{o_useMile},
+		            #{parentNo})
+		]]>
+	</insert>
 	
-	
-	
+	<select id="MaxOrderNum" resultType="int">
+	<![CDATA[
+		select max(parentNO)+1 from order_tb 
+	 ]]>	
+	</select>
 </mapper>
