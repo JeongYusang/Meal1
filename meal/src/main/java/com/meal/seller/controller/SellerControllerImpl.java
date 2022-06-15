@@ -317,7 +317,7 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 	//판매자 마이페이지 내부 주문내역 및 상품내역을 출력하기위해 사용 0614
 		@Override
 		@RequestMapping(value="/sellerMypage.do", method= {RequestMethod.POST, RequestMethod.GET})
-		public ModelAndView sellerMypage(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+		public ModelAndView sellerMypage(@RequestParam(value = "s_id", required = false) String s_id, @RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 		         @RequestParam(value = "section1", required = false) String section,
 		         @RequestParam(value = "pgNum", required = false) String pgNum, HttpServletRequest request,
 		         HttpServletResponse response) throws Exception {
@@ -325,8 +325,9 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 			HttpSession session = request.getSession();
 		    SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
 			
+		    //추후 admin도 추가할 예정(s_id)
 		    if (sellerVO != null) {
-			      String s_id = sellerVO.getS_id();
+			      String s_id1 = sellerVO.getS_id();
 			      String viewName = (String) request.getAttribute("viewName");
 			      mav.setViewName(viewName);
 			      
@@ -336,16 +337,33 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 			      
 			      HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
 			      
-			      pagingMap.put("s_id", s_id);
+			      pagingMap.put("s_id", s_id1);
 			      //굿즈리스트 호출을 위해 사용
 			      List<GoodsVO> goodsList = goodsService.selectGoodsPage(pagingMap);
 				  
 			      //주문내역 확인
-				  List<OrderVO> orderList = orderService.orderSellerList(s_id);
+				  List<OrderVO> orderList = orderService.orderSellerList(s_id1);
 
 				  //상품문의 내역 확인 0615
-				  List<BoardGqVO> boardGqList = boardGqService.boardGqSellerList(s_id);
-					
+				  List<BoardGqVO> boardGqList = boardGqService.boardGqSellerList(s_id1);
+				  //compare사용위해 추가 0615
+				  List<BoardGqVO> boardGqAllList = boardGqService.selectBoardGqallList();
+				  
+				  for (BoardGqVO item : boardGqList) {
+					  for (BoardGqVO a : boardGqAllList) {
+						  if (!((int) item.getB_gq_id() == (int) a.getParentNo())) {
+							  String compare = "N";
+							  item.setCompare(compare);
+						  } else {
+							  String compare = "Y";
+							  item.setCompare(compare);
+							  System.out.println("---------------------------");
+							  System.out.println("BoardCompare" + item.getB_gq_id());
+							  System.out.println("---------------------------");
+							  break;
+						  }
+					  }
+				  }
 					System.out.println("---------------------------");
 				    System.out.println("goodsList : " + goodsList);
 					System.out.println("---------------------------");

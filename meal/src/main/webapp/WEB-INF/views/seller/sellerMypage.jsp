@@ -270,7 +270,7 @@ td.fixed {
 			<div class="tabmenu">
 				<ul>
 					<li id="tab1" class="btnCon"><input type="radio" checked
-						name="tabmenu" id="tabmenu1"> <label for="tabmenu1">N<br>등록된 상품
+						name="tabmenu" id="tabmenu1"> <label for="tabmenu1"><br>등록된 상품
 					</label>
 						<div class="tabCon">
 						<div class="main-container">
@@ -376,7 +376,7 @@ td.fixed {
 													</tr>
 												</c:when>
 												<c:when test="${not empty orderList}">
-												<c:forEach var="item" items="${orderList }" begin="0" end="15">
+												<c:forEach var="item" items="${orderList }" begin="1" end="10">
 														<tr class="border-bottom">
 															<td>${item.g_id}</td>
 															<td>${item.g_name}</td>
@@ -443,7 +443,7 @@ td.fixed {
 								</div>
 							</div></li>
 					<li id="tab3" class="btnCon"><input type="radio"
-						name="tabmenu" id="tabmenu3"> <label for="tabmenu3"><br>문의 및 후기
+						name="tabmenu" id="tabmenu3"> <label for="tabmenu3"><br>상품문의
 					</label>
 						<div class="tabCon">
 						<div class="main-container">
@@ -467,11 +467,11 @@ td.fixed {
 								</tr>
 							</c:when>
 							<c:when test="${not empty boardGqList}">
-								<c:forEach var="item" items="${boardGqList}" begin="0" end="15">
+								<c:forEach var="item" items="${boardGqList}" begin="1" end="10">
 									<tr class="border-bottom">
 										<td>${item.b_gq_id}</td>
 										<td>${item.u_id}</td>
-										<td>${item.title}</td>
+										<td><a href="${contextPath}/boardGq/gq_detail.do?b_gq_id=${item.b_gq_id}">${item.title}</a></td>
 										<td>${item.creDate}</td>
 										<c:if test="${item.secret == null}">
 										<td>N</td>
@@ -480,7 +480,12 @@ td.fixed {
 										<td>${item.secret}</td>
 										</c:if>
 										<td>${item.g_name}</td>
-										<td></td>
+										<c:if test="${item.compare == 'N' }">
+										<td><a href="${contextPath}/boardGq/boardGqReviewform.do?b_gq_id=${item.b_gq_id}">답글작성</a></td>
+										</c:if>
+										<c:if test="${item.compare == 'Y' }">
+										<td><p>답변완료</p></td>
+										</c:if>
 									</tr>
 								</c:forEach>
 							</c:when>

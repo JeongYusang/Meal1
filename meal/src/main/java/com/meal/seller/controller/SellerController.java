@@ -27,7 +27,7 @@ public interface SellerController {
 			HttpServletResponse response) throws Exception ;
 	public ModelAndView sellerDetail(@RequestParam("id") String id, HttpServletRequest request,
 			HttpServletResponse response) throws Exception ;
-	public ModelAndView sellerMypage(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+	public ModelAndView sellerMypage(@RequestParam(value = "s_id", required = false) String s_id, @RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 	         @RequestParam(value = "section1", required = false) String section,
 	         @RequestParam(value = "pgNum", required = false) String pgNum, HttpServletRequest request,
 	         HttpServletResponse response) throws Exception;

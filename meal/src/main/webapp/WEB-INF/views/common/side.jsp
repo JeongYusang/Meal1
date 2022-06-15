@@ -193,9 +193,9 @@
 					<li class="side-list">
 						<H2>판매정보</H2> <br>
 						<ul class="sidebar-content">
-							<li><a href="${contextPath}/admin/goods/adminGoodsMain.do">판매내역</a></li>
-							<li><a href="${contextPath}/admin/order/adminOrderMain.do">배송중인상품</a></li>
-							<li><a href="${contextPath}/admin/member/adminMemberMain.do">취소/반품/교환내역</a></li>
+							<li><a href="${contextPath }/seller/sellerMypage.do">판매내역</a></li>
+							<li><a href="${contextPath }/seller/sellerMypage.do">배송중인상품</a></li>
+							<li><a href="${contextPath }/seller/sellerMypage.do">취소/반품/교환내역</a></li>
 						</ul>
 					</li>
 					<li class="side-list">
@@ -203,28 +203,18 @@
 						<ul class="sidebar-content">
 							<li><a href="${contextPath }/goods/goodsForm.do">상품등록</a></li>
 							<li><a href="${contextPath }/goods/selectGoodsPage.do">상품관리</a></li>
-							<li><a href="#">상품삭제</a></li>
 						</ul>
 					</li>
 					<li class="side-list">
-						<h2>매출정보</h2> <br>
+						<h2>게시판 활동</h2> <br>
 						<ul class="sidebar-content">
-							<li><a href="${contextPath}/mypage/myDetailInfo.do">총매출내역</a></li>
-							<li><a href="#">상품별매출내역</a></li>
-							<li><a href="#">구매자별 매출내역</a></li>
-
+							<li><a href="${contextPath}/boardGr/selectSellerBoardGrList.do">상품 리뷰</a></li>
+                            <li><a href="${contextPath}/boardGq/selectSellerBoardGqList.do">상품 문의</a></li>
+                            <li><a href="${contextPath}/board1/selectMyBoard1.do">1대1 문의</a></li>
 						</ul>
 					</li>
 					<li class="side-list">
-						<h2>나의활동</h2> <br>
-						<ul class="sidebar-content">
-							<li><a href="${contextPath}/boardGr/selectSellerBoardGrList.do">리뷰답글</a></li>
-                            <li><a href="${contextPath}/boardGq/selectSellerBoardGqList.do">문의답변</a></li>
-
-						</ul>
-					</li>
-					<li class="side-list">
-						<h2>나의활동</h2> <br>
+						<h2>판매자 정보</h2> <br>
 						<ul class="sidebar-content">
 							<li><button type="button" class="checkpw">회원수정</button></li>
 							<li><button type="button" class="checkpw1">회원탈퇴</button></li>
