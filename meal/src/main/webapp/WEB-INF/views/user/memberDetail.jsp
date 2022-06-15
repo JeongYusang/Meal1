@@ -213,7 +213,23 @@ ul.tabs li.current {
 .tab-content.current {
 	display: inherit;
 }
+
+tr.border-bottom td {
+	border-bottom: 1px black solid;
+}
+
+.checked {
+	color: #ffc0cb;
+	font-size: 60px;
+}
+
+.stable-striped{
+font-size: 20px;
+}
 </style>
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -280,32 +296,24 @@ ul.tabs li.current {
 												<th width="200px"></th>
 											</tr>
 										</thead>
-
-
 										<c:choose>
 											<c:when test="${empty OrderList}">
 												<tr>
-													<td colspan=5 class="fixed"><strong>주문 내역이
-															없습니다.</strong></td>
+													<td colspan=5 class="fixed"><strong>주문 내역이 없습니다.</strong></td>
 												</tr>
 											</c:when>
 											<c:otherwise>
 												<c:forEach var="OrderList" items="${OrderList}">
 													<tr class="orderlist">
-														<td><a
-															href="${contextPath}/goods/goodsDetail.do?g_id=${OrderList.g_id}">
-																<img
-																src="${contextPath}/download1.do?g_id=${OrderList.g_id}&cate=main"
+														<td><a href="${contextPath}/goods/goodsDetail.do?g_id=${OrderList.g_id}">
+																<img src="${contextPath}/download1.do?g_id=${OrderList.g_id}&cate=main"
 																onerror="this.src='${contextPath}/resources/image/not for sale.jpg'">
 														</a></td>
-														<td id="title"><a
-															href="${contextPath}/goods/goodsDetail.do?g_id=${OrderList.g_id}">${OrderList.g_name}</a></td>
-														<td>${OrderList.o_goods_qty}개/<c:if
-																test="${OrderList.o_goods_price >= 30000}">${OrderList.o_goods_price - OrderList.o_useMile}원</c:if>
+														<td id="title"><a href="${contextPath}/goods/goodsDetail.do?g_id=${OrderList.g_id}">${OrderList.g_name}</a></td>
+														<td>${OrderList.o_goods_qty}개/<c:if test="${OrderList.o_goods_price >= 30000}">${OrderList.o_goods_price - OrderList.o_useMile}원</c:if>
 															<c:if test="${OrderList.o_goods_price < 30000}">${OrderList.o_goods_price + 3000 - OrderList.o_useMile}원</c:if></td>
 														<td><b id="state">${OrderList.delivery_state}</b></td>
-														<td><c:if
-																test="${OrderList.delivery_state == '주문완료'}">
+														<td><c:if test="${OrderList.delivery_state == '주문완료'}">
 																<a href="#">주문 환불</a>
 															</c:if> <c:if test="${OrderList.delivery_state == '결제완료'}">
 																<a href="#">주문 수정하기</a>
@@ -402,8 +410,8 @@ ul.tabs li.current {
 									</c:otherwise>
 								</c:choose>
 								<tr>
-									<td colspan=8 class="fixed"><c:forEach var="page"
-											begin="1" end="9" step="1">
+									<td colspan=8 class="fixed">
+									<c:forEach var="page" begin="1" end="9" step="1">
 											<c:if test="${section >0 && page==1 }">
 												<a
 													href="${contextPath}/member/memberDetail.do?section=${section}-1&pageNum=${(section-1)*10+1 }&u_id=${memberInfo.u_id}">preview</a>
@@ -428,13 +436,13 @@ ul.tabs li.current {
 							<div style="margin: 10px 0 0 0;">
 								<div class="container1">
 									<ul class="tabs">
-										<li class="tab-link current" data-tab="tab-1">1대1 문의</li>
+										<li class="tab-link current" data-tab="tab-1">상품문의</li>
 										<li class="tab-link" data-tab="tab-2">리뷰</li>
-										<li class="tab-link" data-tab="tab-3">상품문의</li>
+										<li class="tab-link" data-tab="tab-3">1대1 문의</li>
 									</ul>
 								</div>
 							</div>
-							<div id="tab-1" class="tab-content">
+							<div id="tab-1" class="tab-content current">
 								<div class="detail">
 									<div id="tabletitle">
 										<h6 class="titleText">상품문의</h6>
@@ -451,11 +459,10 @@ ul.tabs li.current {
 										</thead>
 										<tbody>
 											<c:forEach var="item" items="${BoardGqList}">
-												<label for="border-bottom"></label>
 												<tr class="border-bottom">
-													<td>${item.b_1_id}</td>
+													<td>${item.b_gq_id}</td>
 													<td>${item.u_id}</td>
-													<td><a href="${contextPath}/board1/b1Detail.do?b_1_id=${item.b_1_id}">${item.title}</a></td>
+													<td><a href="${contextPath}/boardGq/gq_detail.do?b_gq_id=${item.b_gq_id}">${item.title}</a></td>
 													<td>${item.creDate}</td>
 													<td>${item.compare}</td>
 												</tr>
@@ -464,7 +471,76 @@ ul.tabs li.current {
 									</table>
 								</div>
 							</div>
-							<div id="tab-2" class="tab-content"></div>
+							<div id="tab-2" class="tab-content">
+								<table id="stable-striped">
+									<thead>
+										<tr class="stable-striped">
+											<th width="50px">번호</th>
+											<th width="150px">별점</th>
+											<th width="300px">제목</th>
+											<th width="100px">작성자</th>
+											<th width="150px">날짜</th>
+											<th width="150px">답변여부</th>
+										</tr>
+									</thead>
+									<c:choose>
+										<c:when test="${empty BoardGrList}">
+											<tr>
+												<td colspan=5 class="fixed"><strong>작성된 글이
+														없습니다.</strong></td>
+											</tr>
+										</c:when>
+										<c:otherwise>
+											<c:forEach var="item" items="${BoardGrList}">
+												<tr class="item">
+													<td>${item.b_gr_id }</td>
+													<td><c:choose>
+															<c:when test="${item.star == 5}">
+																<span class="fa fa-star checked"></span>
+																<span class="fa fa-star checked"></span>
+																<span class="fa fa-star checked"></span>
+																<span class="fa fa-star checked"></span>
+																<span class="fa fa-star checked"></span>
+															</c:when>
+															<c:when test="${item.star == 4}">
+																<span class="fa fa-star checked"></span>
+																<span class="fa fa-star checked"></span>
+																<span class="fa fa-star checked"></span>
+																<span class="fa fa-star checked"></span>
+																<span class="fa fa-star"></span>
+															</c:when>
+															<c:when test="${item.star == 3}">
+																<span class="fa fa-star checked"></span>
+																<span class="fa fa-star checked"></span>
+																<span class="fa fa-star checked"></span>
+																<span class="fa fa-star"></span>
+																<span class="fa fa-star"></span>
+															</c:when>
+															<c:when test="${item.star == 2}">
+																<span class="fa fa-star checked"></span>
+																<span class="fa fa-star checked"></span>
+																<span class="fa fa-star"></span>
+																<span class="fa fa-star"></span>
+																<span class="fa fa-star"></span>
+															</c:when>
+															<c:otherwise>
+																<span class="fa fa-star checked"></span>
+																<span class="fa fa-star"></span>
+																<span class="fa fa-star"></span>
+																<span class="fa fa-star"></span>
+																<span class="fa fa-star"></span>
+															</c:otherwise>
+														</c:choose></td>
+													<td><a href="${contextPath}/boardGr/gr_detail.do?b_gr_id=${item.b_gr_id}">${item.title}</a></td>
+													<td>${item.u_id}</td>
+													<td>${item.creDate}</td>
+													<td>${item.compare}</td>
+												</tr>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
+									</table>
+							</div>
 							<div id="tab-3" class="tab-content">
 								<div class="detail">
 									<div id="tabletitle">
@@ -482,7 +558,6 @@ ul.tabs li.current {
 										</thead>
 										<tbody>
 											<c:forEach var="item" items="${Board1List}">
-												<label for="border-bottom"></label>
 												<tr class="border-bottom">
 													<td>${item.b_1_id}</td>
 													<td>${item.u_id}</td>
