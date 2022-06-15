@@ -2,6 +2,7 @@ package com.meal.admin.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -48,5 +49,11 @@ public class AdminServiceImpl implements AdminService {
 	public List<AdminVO> selectAllAdmins(HashMap<String,Object> pagingMap) throws DataAccessException{
 	List<AdminVO> adminList = (List<AdminVO>)adminDAO.selectAllAdmins(pagingMap);
 	return adminList;
+	}
+
+	//판매자 상품배송 상태 변경을 위해 생성 0615
+	@Override
+	public void delivUpdate(Map<String, String> delivMap) throws Exception {
+		adminDAO.delivUpdate(delivMap);
 	}	
 }

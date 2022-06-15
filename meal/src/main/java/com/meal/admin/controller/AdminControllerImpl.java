@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -180,5 +183,19 @@ public class AdminControllerImpl extends BaseController implements AdminControll
 			mav.setViewName(viewName);
 			return mav;
 		}
+	}
+	
+	//판매자 상품배송 상태 변경을 위해 생성 0615
+	@RequestMapping(value="/delivUpdate.do", method= {RequestMethod.POST, RequestMethod.GET})
+	public ResponseEntity delivUpdate(@RequestParam Map<String, String> delivMap,
+											  HttpServletRequest request, HttpServletResponse response) throws Exception {
+		adminService.delivUpdate(delivMap);
+		
+		String message = null;
+		ResponseEntity resEntity = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		message = "mod_success";
+		resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
+		return resEntity;
 	}
 }

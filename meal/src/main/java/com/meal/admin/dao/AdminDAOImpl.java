@@ -2,6 +2,7 @@ package com.meal.admin.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,12 @@ public class AdminDAOImpl implements AdminDAO {
 		public List<AdminVO> selectAllAdmins(HashMap<String,Object> pagingMap) throws DataAccessException{
 			List<AdminVO> adminList = (List<AdminVO>)sqlSession.selectList("mapper.admin.selectAllAdmin", pagingMap);
 			return adminList;
+		}
+
+		//판매자 상품배송 상태 변경을 위해 생성 0615
+		@Override
+		public void delivUpdate(Map<String, String> delivMap) throws DataAccessException {
+			sqlSession.update("mapper.order.delivUpdate", delivMap);
 		}
 
 }

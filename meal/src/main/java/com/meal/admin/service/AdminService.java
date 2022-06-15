@@ -3,6 +3,7 @@ package com.meal.admin.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
 
@@ -18,5 +19,7 @@ public interface AdminService {
 	public List<SellerVO> selectAllSellers(HashMap<String, Object> pagingMap) throws Exception;
 	public void insertReason(HashMap<String, Object> map) throws Exception;
 	public List<AdminVO> selectAllAdmins(HashMap<String,Object> pagingMap) throws Exception;
-		
+	
+	//판매자 상품배송 상태 변경을 위해 생성 0615
+	public void delivUpdate(Map<String, String> delivMap) throws Exception;
 }
