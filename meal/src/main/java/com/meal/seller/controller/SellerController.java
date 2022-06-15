@@ -31,4 +31,9 @@ public interface SellerController {
 	         @RequestParam(value = "section1", required = false) String section,
 	         @RequestParam(value = "pgNum", required = false) String pgNum, HttpServletRequest request,
 	         HttpServletResponse response) throws Exception;
+	//판매자기준 게시판 전체조회 0615
+	public ModelAndView sellerBoardMypage(@RequestParam(value = "s_id", required = false) String s_id, @RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+	         @RequestParam(value = "section1", required = false) String section,
+	         @RequestParam(value = "pgNum", required = false) String pgNum, HttpServletRequest request,
+	         HttpServletResponse response) throws Exception;
 	}

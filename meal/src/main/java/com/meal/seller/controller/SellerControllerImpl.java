@@ -27,6 +27,8 @@ import com.meal.admin.service.AdminService;
 import com.meal.admin.vo.AdminVO;
 import com.meal.board.gq.service.BoardGqService;
 import com.meal.board.gq.vo.BoardGqVO;
+import com.meal.board.one.service.Board1Service;
+import com.meal.board.one.vo.Board1VO;
 import com.meal.common.controller.BaseController;
 import com.meal.goods.service.GoodsService;
 import com.meal.goods.vo.GoodsVO;
@@ -53,6 +55,8 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 	private OrderService orderService;
 	@Autowired
 	private BoardGqService boardGqService;
+	@Autowired
+	private Board1Service board1Service;
 
 	@Autowired
 	private Img_sVO img_sVO;
@@ -344,26 +348,6 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 			      //주문내역 확인
 				  List<OrderVO> orderList = orderService.orderSellerList(s_id1);
 
-				  //상품문의 내역 확인 0615
-				  List<BoardGqVO> boardGqList = boardGqService.boardGqSellerList(s_id1);
-				  //compare사용위해 추가 0615
-				  List<BoardGqVO> boardGqAllList = boardGqService.selectBoardGqallList();
-				  
-				  for (BoardGqVO item : boardGqList) {
-					  for (BoardGqVO a : boardGqAllList) {
-						  if (!((int) item.getB_gq_id() == (int) a.getParentNo())) {
-							  String compare = "N";
-							  item.setCompare(compare);
-						  } else {
-							  String compare = "Y";
-							  item.setCompare(compare);
-							  System.out.println("---------------------------");
-							  System.out.println("BoardCompare" + item.getB_gq_id());
-							  System.out.println("---------------------------");
-							  break;
-						  }
-					  }
-				  }
 					System.out.println("---------------------------");
 				    System.out.println("goodsList : " + goodsList);
 					System.out.println("---------------------------");
@@ -371,14 +355,7 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 				    System.out.println("---------------------------");
 					System.out.println("orderList : " + orderList);
 				    System.out.println("---------------------------");
-				    System.out.println("boardGqList : " + boardGqList);
-				    System.out.println("---------------------------");
-					/*
-					 * System.out.println("orderList : " + orderList);
-					 * System.out.println("---------------------------");
-					 */
-				    
-				    mav.addObject("boardGqList", boardGqList);
+
 				    mav.addObject("sellerVO", sellerVO);
 					mav.addObject("orderList", orderList);
 					mav.addObject("goodsList", goodsList);
@@ -393,4 +370,89 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 					return mav;
 			      
 			}
+		
+		@Override
+		@RequestMapping(value="/sellerBoardMypage.do", method= {RequestMethod.GET, RequestMethod.POST})
+		public ModelAndView sellerBoardMypage(@RequestParam(value = "s_id", required = false) String s_id, @RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+		         @RequestParam(value = "section1", required = false) String section,
+		         @RequestParam(value = "pgNum", required = false) String pgNum, HttpServletRequest request,
+		         HttpServletResponse response) throws Exception {
+			ModelAndView mav = new ModelAndView();
+			HttpSession session = request.getSession();
+		    SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
+			
+		    if (sellerVO != null) {
+			    String s_id1 = sellerVO.getS_id();
+			    String viewName = (String) request.getAttribute("viewName");
+			    mav.setViewName(viewName);
+			      
+				HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
+			    pagingInfo.put("section", section);
+			    pagingInfo.put("pgNum", pgNum);
+			    
+			    HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
+			    
+			    pagingMap.put("s_id", s_id1);
+			    //굿즈리스트 호출을 위해 사용
+				
+				//1대1문의 내역 확인위해 사용 0615
+				List<Board1VO> board1List = board1Service.selectMyBoard1List(pagingMap);
+				//Board1 답변여부 확인을 위해 추가 0615
+				List<Board1VO> board1 = board1Service.listBoard1(s_id);
+				//상품문의 내역 확인 0615
+				List<BoardGqVO> boardGqList = boardGqService.boardGqSellerList(s_id1);
+				//BoardGq 답변여부 확인을 위해 추가 0615
+				List<BoardGqVO> boardGqAllList = boardGqService.selectBoardGqallList();
+				  
+				for (Board1VO item : board1List) {
+					for (Board1VO a : board1) {
+						if (!((int) item.getB_1_id() == (int) a.getParentNo())) {
+							String compare = "N";
+							item.setCompare(compare);
+						} else {
+							String compare = "Y";
+							item.setCompare(compare);
+							System.out.println("---------------------------");
+							System.out.println("Board1Compare" + item.getB_1_id());
+							System.out.println("---------------------------");
+							break;
+						}
+					}
+				}
+				
+				for (BoardGqVO item : boardGqList) {
+					for (BoardGqVO a : boardGqAllList) {
+						if (!((int) item.getB_gq_id() == (int) a.getParentNo())) {
+							String compare = "N";
+							item.setCompare(compare);
+						} else {
+							String compare = "Y";
+							item.setCompare(compare);
+							System.out.println("---------------------------");
+							System.out.println("BoardCompare" + item.getB_gq_id());
+							System.out.println("---------------------------");
+							break;
+						}
+					}
+				}
+					System.out.println("---------------------------");
+					System.out.println("sellerVO : " + sellerVO);
+				    System.out.println("---------------------------");
+				    System.out.println("boardGqList : " + boardGqList);
+				    System.out.println("---------------------------");
+				    System.out.println("board1List : " + board1List);
+				    System.out.println("---------------------------");
+				    
+				    mav.addObject("boardGqList", boardGqList);
+				    mav.addObject("sellerVO", sellerVO);
+					mav.setViewName(viewName);
+					
+					return mav;
+			     } 
+			     	String message ="잘못된 접근방법입니다.";
+					mav.addObject("message", message);
+					String viewName1 = "redirect:/main/main.do";
+					mav.setViewName(viewName1);
+					return mav;
+		}
 	}

@@ -10,39 +10,6 @@
 <meta charset="UTF-8">
 <title>상품 조회하기</title>
 <script>
-	function fn_delivUpdate(o_id,select_id) {
-		var s_delivery_state = document.getElementById(select_id);
-		var index = s_delivery_state.selectedIndex;
-		var value = s_delivery_state[index].value;
-		//console.log("value: "+value );
-
-		$.ajax({
-			type : "post",
-			async : false,
-			url : "${contextPath}/admin/delivUpdate.do",
-			data : {
-				o_id : o_id,
-				"delivery_state" : value
-			},
-			success : function(data, textStatus) {
-				if (data.trim() == 'mod_success') {
-					alert("배송 정보를 수정했습니다.");
-					location.href = "${contextPath}/seller/sellerMypage.do";
-				} else if (data.trim() == 'failed') {
-					alert("다시 시도해 주세요.");
-				}
-
-			},
-			error : function(data, textStatus) {
-				alert("에러가 발생했습니다." + data);
-			},
-			complete : function(data, textStatus) {
-				//alert("작업을완료 했습니다");
-
-			}
-		}); //end ajax		
-	}
-	
 	function sortTable(n) {
 		var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
 		table = document.getElementById("stable-striped");
@@ -269,8 +236,8 @@ td.fixed {
 		<div class="div4">
 			<div class="tabmenu">
 				<ul>
-					<li id="tab1" class="btnCon"><input type="radio" checked
-						name="tabmenu" id="tabmenu1"> <label for="tabmenu1"><br>등록된 상품
+					<li id="tab1" class="btnCon"><input type="radio"
+						name="tabmenu" id="tabmenu1"> <label for="tabmenu1"><br>상품문의
 					</label>
 						<div class="tabCon">
 						<div class="main-container">
@@ -278,51 +245,41 @@ td.fixed {
 					<table id="stable-striped">
 						<thead id="tap-head">
 							<tr id="top-table">
-								<th onclick="sortTable(0)" class="header" width="70px">상품ID</th>
-								<th onclick="sortTable(1)" class="header" width="70px">상품명</th>
-								<th onclick="sortTable(2)" class="header" width="50px">카테고리</th>
-								<th onclick="sortTable(3)" class="header" width="60px">수량</th>
-								<th onclick="sortTable(4)" class="header" width="70px">가격</th>
-								<th onclick="sortTable(5)" class="header" width="60px">등록상태</th>
-								<th onclick="sortTable(6)" class="header" width="80px">할인</th>
-								<th onclick="sortTable(7)" class="header" width="120px">할인기간</th>
-								<th onclick="sortTable(8)" class="header" width="80px">인분수</th>
-								<th onclick="sortTable(9)" class="header" width="100px">보관방법</th>
-								<th onclick="sortTable(10)" class="header" width="100px">등록날짜</th>
-								<th class="header">수정 및 삭제</th>
+								<th onclick="sortTable(0)" class="header" width="180px">작성번호</th>
+								<th onclick="sortTable(1)" class="header" width="180px">작성자</th>
+								<th onclick="sortTable(2)" class="header" width="180px">글 제목</th>
+								<th onclick="sortTable(3)" class="header" width="180px">작성일자</th>
+								<th onclick="sortTable(4)" class="header" width="180px">비밀글</th>
+								<th onclick="sortTable(5)" class="header" width="180px">상품이름</th>
+								<th class="header" width="180px">답글작성</th>
 							</tr>
 						</thead>
 						<c:choose>
-							<c:when test="${empty goodsList}">
+							<c:when test="${empty boardGqList}">
 								<tr>
 									<td colspan=5 class="fixed"><strong>등록된 상품이 없습니다.</strong></td>
 								</tr>
 							</c:when>
-							<c:when test="${not empty goodsList}">
-								
-								<c:forEach var="item" items="${goodsList}" begin="0" end="15">
+							<c:when test="${not empty boardGqList}">
+								<c:forEach var="item" items="${boardGqList}" begin="1" end="10">
 									<tr class="border-bottom">
-										<td>${item.g_id}</td>
+										<td>${item.b_gq_id}</td>
+										<td>${item.u_id}</td>
+										<td><a href="${contextPath}/boardGq/gq_detail.do?b_gq_id=${item.b_gq_id}">${item.title}</a></td>
+										<td>${item.creDate}</td>
+										<c:if test="${item.secret == null}">
+										<td>N</td>
+										</c:if>
+										<c:if test="${item.secret != null }">
+										<td>${item.secret}</td>
+										</c:if>
 										<td>${item.g_name}</td>
-										<td>${item.g_cate2}</td>
-										<td>${item.g_amount}</td>
-										<td>${item.g_price}</td>
-										<td>${item.g_state}</td>
-										<!-- 추후 표기방식 변경 예정 -->
-										<td>${item.g_saleWon}, ${item.g_salePer}</td>
-										<td>
-											<fmt:formatDate value="${item.g_saleDate1}" type="Date" dateStyle="short"/> ~ 
-											<fmt:formatDate value="${item.g_saleDate2}" type="Date" dateStyle="short"/>
-										</td>
-										<td>${item.g_inbun}</td>
-										<td>${item.g_bang}</td>
-										<td><fmt:formatDate value="${item.g_creDate}" type="Date" dateStyle="short" /></td>
-										<td>
-											<a href="${contextPath}/goods/updateGoodsForm.do?g_id=${item.g_id}">수정하기</a>
-											<br>
-											<br>
-											<a href="${contextPath}/goods/deleteGoods.do?g_id=${item.g_id}" onClick="delOk()">삭제하기</a>
-										</td>
+										<c:if test="${item.compare == 'N' }">
+										<td><a href="${contextPath}/boardGq/boardGqReviewform.do?b_gq_id=${item.b_gq_id}">답글작성</a></td>
+										</c:if>
+										<c:if test="${item.compare == 'Y' }">
+										<td><p>답변완료</p></td>
+										</c:if>
 									</tr>
 								</c:forEach>
 							</c:when>
@@ -376,7 +333,7 @@ td.fixed {
 													</tr>
 												</c:when>
 												<c:when test="${not empty orderList}">
-												<c:forEach var="item" items="${orderList }" begin="1" end="30">
+												<c:forEach var="item" items="${orderList }" begin="1" end="10">
 														<tr class="border-bottom">
 															<td>${item.o_id}</td>
 															<td>${item.g_name}</td>
