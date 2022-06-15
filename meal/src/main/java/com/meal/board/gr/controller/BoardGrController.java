@@ -18,8 +18,8 @@ public interface BoardGrController {
 	public ModelAndView boardGrUpdate(@ModelAttribute BoardGrVO boardGrVO, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 	
-	public ModelAndView writeBoardGr(@RequestParam("o_id") int o_id,MultipartHttpServletRequest multipartRequest, HttpServletResponse response)
-			throws Exception;
+	public ModelAndView writeBoardGr(@RequestParam(value = "o_id", required = false) String o_id, MultipartHttpServletRequest multipartRequest,
+			HttpServletResponse response) throws Exception;
 	
 	public ModelAndView boardGrUpdateform(@ModelAttribute("b_gr_id") Integer b_gr_id, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;

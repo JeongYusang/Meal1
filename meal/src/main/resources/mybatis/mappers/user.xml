@@ -143,6 +143,12 @@ select * from user_tb where u_email1 = #{email1} and u_email2 = #{email2} and u_
 		]]>
 	</select>
 	
+		<select id="myMileagePage" resultMap="mileResult" parameterType="Map">
+   <![CDATA[
+	    select R1.* from (select * from mileage) R1 where u_id = #{u_id} order by o_id desc limit #{start} , #{end} 
+	   ]]>
+	</select>
+	
 
 
 </mapper>

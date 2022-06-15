@@ -127,10 +127,9 @@
 }
 .heart2 {
 	height: 30px;
-	width: 30px;
-	position: relative;
-	left: 110px;
-	bottom: -250px;
+    width: 30px;
+    position: relative;
+    left: 250px;
 }
 </style>
 

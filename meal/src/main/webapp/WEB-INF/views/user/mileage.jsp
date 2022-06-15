@@ -2,6 +2,7 @@
 	pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="section" value="0" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -120,11 +121,6 @@ tr.border-bottom td {
 	border-bottom: 1px solid black;
 }
 
-.mileage-table {
-	font-size: 20px;
-	margin: auto;
-}
-
 #use {
 	color: red;
 }
@@ -141,6 +137,7 @@ tr.border-bottom td {
 
 #main-title h1 {
 	margin: 10px 0 0 0;
+	color: #FD6EB0;
 }
 
 #sub-title {
@@ -207,11 +204,27 @@ hr {
 								<c:if test="${mileage.m_point < 0 }">
 									<td id="use">${mileage.m_point}</td>
 								</c:if>
-								
-								<td><a href="${contextPath }/goods/goodsDetail.do?g_id=${mileage.g_id}">${mileage.g_name}</a></td>
+
+								<td><a
+									href="${contextPath }/goods/goodsDetail.do?g_id=${mileage.g_id}">${mileage.g_name}</a></td>
 								<td>${mileage.pay_order_time}</td>
 							</tr>
 						</c:forEach>
+						<tr><td colspan=8 class="fixed"><c:forEach var="page" begin="1"
+									end="9" step="1">
+									<c:if test="${section >0 && page==1 }">
+										<a
+											href="${contextPath}/member/myMileage.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
+									</c:if>
+									<a
+										href="${contextPath}/member/myMileage.do?section=${section}&pageNum=${page}">${(section)*10 +page}
+									</a>
+									<c:if test="${page ==10 }">
+										<a
+											href="${contextPath}/member/myMileage.do?section=${section}+1&pageNum=${section*10}+1">next</a>
+									</c:if>
+
+								</c:forEach></td></tr>
 					</table>
 				</div>
 			</div>
@@ -230,16 +243,32 @@ hr {
 						<c:forEach var="mileage" items="${mileage}" varStatus="status">
 							<c:choose>
 								<c:when test="${mileage.m_point > 0 }">
-									<tr>
+									<tr class="border-bottom">
 										<td>${mileage.o_id}</td>
 										<td id="earn">적립</td>
 										<td id="earn">${mileage.m_point}</td>
-										<td><a href="${contextPath }/goods/goodsDetail.do?g_id=${mileage.g_id}">${mileage.g_name}</a></td>
+										<td><a
+											href="${contextPath }/goods/goodsDetail.do?g_id=${mileage.g_id}">${mileage.g_name}</a></td>
 										<td>${mileage.pay_order_time}</td>
 									</tr>
 								</c:when>
 							</c:choose>
 						</c:forEach>
+						<tr><td colspan=8 class="fixed"><c:forEach var="page" begin="1"
+									end="9" step="1">
+									<c:if test="${section >0 && page==1 }">
+										<a
+											href="${contextPath}/member/myMileage.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
+									</c:if>
+									<a
+										href="${contextPath}/member/myMileage.do?section=${section}&pageNum=${page}">${(section)*10 +page}
+									</a>
+									<c:if test="${page ==10 }">
+										<a
+											href="${contextPath}/member/myMileage.do?section=${section}+1&pageNum=${section*10}+1">next</a>
+									</c:if>
+
+								</c:forEach></td></tr>
 					</table>
 				</div>
 			</div>
@@ -258,7 +287,7 @@ hr {
 						<c:forEach var="mileage" items="${mileage}" varStatus="status">
 							<c:choose>
 								<c:when test="${mileage.m_point < 0 }">
-									<tr>
+									<tr class="border-bottom">
 										<td>${mileage.o_id}</td>
 										<td id="use">사용</td>
 										<td id="use">${mileage.m_point}</td>
@@ -268,7 +297,24 @@ hr {
 								</c:when>
 							</c:choose>
 						</c:forEach>
+						<tr>
+							<td colspan=8 class="fixed"><c:forEach var="page" begin="1"
+									end="9" step="1">
+									<c:if test="${section >0 && page==1 }">
+										<a
+											href="${contextPath}/member/myMileage.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
+									</c:if>
+									<a
+										href="${contextPath}/member/myMileage.do?section=${section}&pageNum=${page}">${(section)*10 +page}
+									</a>
+									<c:if test="${page ==10 }">
+										<a
+											href="${contextPath}/member/myMileage.do?section=${section}+1&pageNum=${section*10}+1">next</a>
+									</c:if>
 
+								</c:forEach></td>
+						</tr>
+						<tr>
 					</table>
 				</div>
 			</div>

@@ -16,8 +16,6 @@ public interface OrderService {
 
 	public Map<String, List<OrderVO>> orderlist(String u_id) throws Exception;
 
-	public String findU_id(int o_id) throws Exception;
-
 	public void deleteOrder(int o_id) throws Exception;
 
 	public String overlappedO_id(int o_id) throws Exception;
@@ -35,4 +33,10 @@ public interface OrderService {
 	public int MaxOrderNum() throws Exception;
 
 	public void insertCartOrder(OrderVO orderVO) throws Exception;
+
+	public OrderVO selectOrder(int o_id)throws Exception;
+
+	public List<OrderVO> CanceledUserOrderPage(HashMap<String, Object> pagingMap)throws Exception;
+
+	public List<OrderVO> CanceledUserOrders(String u_id)throws Exception;
 }

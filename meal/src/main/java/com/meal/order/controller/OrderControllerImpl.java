@@ -37,14 +37,11 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 	@Autowired
 	OrderService orderService;
 
-
 	@Autowired
 	GoodsService goodsService;
 
-
 	@Autowired
 	CartService cartService;
-	
 
 	@Override
 	@RequestMapping(value = "/OrderForm.do", method = { RequestMethod.POST, RequestMethod.GET })
@@ -114,7 +111,7 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			CartVO cartInfo = cartService.selectCartInfo(c_id1);
 			int g_id = cartInfo.g_id;
 			GoodsVO goodsinfo = goodsService.selectGoodsDetail(g_id);
-			String g_name =goodsinfo.getG_name();
+			String g_name = goodsinfo.getG_name();
 			cartInfo.setG_name(g_name);
 			// 배송비관련 구문
 			int G_price = goodsinfo.getG_price();
@@ -173,7 +170,8 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			return mav;
 		}
 	}
-	//6-14
+
+	// 6-14
 	@Override
 	@RequestMapping(value = "/insertCartOrder.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView insertCartOrder(@ModelAttribute("orderVO") OrderVO _orderVO, HttpServletRequest request,
@@ -239,6 +237,48 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 		}
 	}
 
+	// 6월 14일 취소된 주문 조회
+
+	@Override
+	@RequestMapping(value = "/selectCanceledOrders.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView selectCanceledOrders(
+
+			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+			@RequestParam(value = "section", required = false) String section,
+			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession();
+		String viewName = (String) request.getAttribute("viewName");
+		System.out.println("뷰네임" + viewName);
+
+		ModelAndView mav = new ModelAndView(viewName);
+		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+		if (memberInfo != null) {
+			String u_id = memberInfo.getU_id();
+			HashMap<String, Object> Map = new HashMap<String, Object>();
+			Map.put("pageNum", pageNum);
+			Map.put("section", section);
+			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(Map);
+			pagingMap.put("u_id", u_id);
+
+			List<OrderVO> OrderVO = orderService.CanceledUserOrderPage(pagingMap);
+
+			List<OrderVO> OrderList = orderService.CanceledUserOrders(u_id);
+
+			mav.addObject("OrderList", OrderList);
+			mav.addObject("OrderVO", OrderVO);
+			mav.setViewName(viewName);
+
+			return mav;
+		} else {
+			String message = "회원 아이디로 로그인 해주시길 바랍니다";
+			String viewName1 = "redirect:/main/main.do";
+			mav.addObject(message);
+			mav.setViewName(viewName1);
+
+		}
+		return mav;
+	}
 
 	@Override
 	@RequestMapping(value = "/selectUserOrders.do", method = { RequestMethod.POST, RequestMethod.GET })
@@ -326,7 +366,10 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 		HttpSession session = request.getSession();
 		ModelAndView mav = new ModelAndView();
 		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
-		String _U_id = orderService.findU_id(o_id);
+		OrderVO orderVO = orderService.selectOrder(o_id);
+
+		String _U_id = orderVO.getU_id();
+
 		if (memberInfo != null) {
 			if (memberInfo.getU_id().equals(_U_id)) {
 				orderService.deleteOrder(o_id);
@@ -351,6 +394,43 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			mav.setViewName(viewName2);
 			return mav;
 		}
+	}
+
+	// 6월 14일 주문 정보 가져오기
+	@Override
+	@RequestMapping(value = "/selectOrder.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView selectOrder(@RequestParam("o_id") int o_id,
+			@RequestParam(value = "message", required = false) String message, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+
+		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+		OrderVO orderVO = orderService.selectOrder(o_id);
+		String u_id = orderVO.getU_id();
+		if (memberInfo.getU_id().equals(u_id)) {
+			if (orderVO.getGood_cancel().equals("Y")) {
+				if (message != null) {
+					mav.addObject(message);
+				}
+				String viewName = (String) request.getAttribute("viewName");
+				mav.addObject("orderVO", orderVO);
+				mav.setViewName(viewName);
+			} else {
+				message = "취소된 주문이 아닙니다.";
+				mav.addObject(message);
+				String viewName = "redirect:/order/selectCanceledOrders.do";
+				mav.setViewName(viewName);
+			}
+		} else {
+			message = "로그인 해주시길 바랍니다";
+			mav.addObject(message);
+			String viewName = "redirect:/main/loginForm.do";
+			mav.setViewName(viewName);
+
+		}
+		return mav;
+
 	}
 
 }

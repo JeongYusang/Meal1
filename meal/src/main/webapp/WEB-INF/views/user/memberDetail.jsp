@@ -30,11 +30,9 @@
 }
 
 .div2-1 {
+	margin: 10px;
 	display: inline-block;
 	float: right;
-	margin-right: 10%;
-	margin-top: 20px;
-	font-size: 20px;
 }
 
 .div2-1 a {
@@ -128,25 +126,55 @@
 .div4 .tabmenu input:checked ~ .tabCon {
 	display: block;
 }
+
+#myinfo-wrap {
+	display: inline;
+}
+
+#myinfo-wrap img {
+	width: 150px;
+	heigth: 150px;
+	display: inline;
+	float: left;
+}
+.texts {
+	color: white;
+	font-size: 34px;
+	line-height: 150px;
+	background: #ffc0cf;
+}
+
+.texts b {
+	text-transform: capitalize;
+	font-size: 40px;
+}
 </style>
 </head>
 <body>
 
 	<div class="div1">
-		<div class="div2">회원정보</div>
 		<div class="div2-1">
-			<a href="${contextPath }/member/">수정</a><br>
-			<br>
+			<a href="${contextPath }/member/">수정</a>
 			<a href="#">삭제</a>
 		</div>
-		<div class="div3">
-			<div class="div3-1">등급(VIP)</div>
-			<div class="div3-2">${memberVO.u_name }</div>
-			<div class="div3-3">
-				마일리지: 
-				${memberVO.u_mile }원
-				 <br> 총구매액:x원
+		<div id="main-wrap1">
+		<div id="myinfo-wrap">
+			<div>
+				<c:if test="${memberInfo.u_rank == 'gold'}">
+					<img src="${contextPath}/resources/image/gold-medal.png" />
+				</c:if>
+				<c:if test="${memberInfo.u_rank == 'silver'}">
+					<img src="${contextPath}/resources/image/silver-medal.png" />
+				</c:if>
+				<c:if test="${memberInfo.u_rank == 'bronze'}">
+					<img src="${contextPath}/resources/image/bronze-medal.png" />
+				</c:if>
+				<ul class="texts">
+					<li class="name">&nbsp;<b>[${memberInfo.u_rank}]</b>&nbsp;${memberInfo.u_name}님 환영합니다<span
+						class="milage"> 마일리지:${memberInfo.u_mile}&nbsp;</span></li>
+				</ul>
 			</div>
+		</div>
 
 
 		</div>

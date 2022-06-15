@@ -68,7 +68,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public String FindId(HashMap<String, Object> map) throws Exception {
-		return (String)memberDAO.FindId(map);
+		return (String) memberDAO.FindId(map);
 	}
 
 	@Override
@@ -80,6 +80,12 @@ public class MemberServiceImpl implements MemberService {
 	public List<MileageVO> myMileage(String u_id) throws Exception {
 		List<MileageVO> mileList = (List<MileageVO>) memberDAO.myMileage(u_id);
 		return mileList;
+	}
+
+	@Override
+	public List<MileageVO> myMileageList(HashMap<String, Object> pagingMap) throws Exception {
+		List<MileageVO> listInfo = (List<MileageVO>) memberDAO.myMileageList(pagingMap);
+		return listInfo;
 	}
 
 }
