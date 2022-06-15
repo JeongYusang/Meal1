@@ -24,8 +24,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.meal.admin.service.AdminService;
 import com.meal.admin.vo.AdminVO;
+import com.meal.board.gq.service.BoardGqService;
+import com.meal.board.gq.vo.BoardGqVO;
+import com.meal.board.gr.service.BoardGrService;
+import com.meal.board.gr.vo.BoardGrVO;
+import com.meal.board.one.service.Board1Service;
+import com.meal.board.one.vo.Board1VO;
 import com.meal.common.controller.BaseController;
-import com.meal.goods.vo.GoodsVO;
 import com.meal.member.service.MemberService;
 import com.meal.member.vo.MemberVO;
 import com.meal.member.vo.MileageVO;
@@ -48,6 +53,13 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 	private AdminService adminService;
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private BoardGqService boardGqService;
+	@Autowired
+	private BoardGrService boardGrService;
+	@Autowired
+	private Board1Service board1Service;
+	
 	@Autowired
 	private MemberVO memberVO;
 	@Autowired
@@ -207,15 +219,12 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum,
-			@RequestParam(value = "CdateMap", required = false) Map<String, Object> CdateMap,
-			@RequestParam(value = "Csection", required = false) String Csection,
-			@RequestParam(value = "CpageNum", required = false) String CpageNum,
-			@RequestParam("id") String id,HttpServletRequest request,
+			@RequestParam(value = "u_id", required = false)String u_id,HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		String viewName = (String) request.getAttribute("viewName");
 		mav.setViewName(viewName);
-		MemberVO memberInfo = (MemberVO) memberService.decode(id);
+		MemberVO memberInfo = (MemberVO) memberService.decode(u_id);
 
 		if (memberInfo != null) {
 			mav.addObject("memberVO", memberInfo);
@@ -223,11 +232,17 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 			Map.put("pageNum", pageNum);
 			Map.put("section", section);
 			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(Map);
-			pagingMap.put("u_id", id);
+			pagingMap.put("u_id", u_id);
 			List<OrderVO> OrderList = orderService.UserboardOrderPage(pagingMap);
 			List<OrderVO> CancledOrderList = orderService.CanceledUserOrderPage(pagingMap);
+			List<Board1VO> Board1List = board1Service.selectMyBoard1List(pagingMap);
+			List<BoardGrVO> BoardGrList = boardGrService.selectMyBoardGrList(pagingMap);
+			List<BoardGqVO> BoardGqList = boardGqService.selectMyBoardGqList(pagingMap);
 			mav.addObject("OrderList",OrderList);
 			mav.addObject("CancledOrderList",CancledOrderList);
+			mav.addObject("Board1List",Board1List);
+			mav.addObject("BoardGrList",BoardGrList);
+			mav.addObject("BoardGqList",BoardGqList);
 
 			// orderList (u_id) grList(u_id) gqList(u_id) oneList(u_id) 추가할예정
 		} else {
@@ -253,7 +268,6 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 				mav.addObject("message", message);
 				mav.setViewName("/member/FindID");
 				return mav;
-
 			}
 
 			logger.info("==========================");

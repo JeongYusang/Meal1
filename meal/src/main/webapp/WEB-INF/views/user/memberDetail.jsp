@@ -80,13 +80,13 @@
 	padding-inline-start: 0px;
 }
 
-.div4 .tabmenu {
+.div4 .tabmenu1 {
 	margin: 0 auto;
 	position: relative;
 	margin: 0 auto;
 }
 
-.div4 .tabmenu ul li {
+.div4 .tabmenu1 #main_tab .btnCon {
 	display: inline-block;
 	width: 300px;
 	height: auto;
@@ -95,35 +95,35 @@
 	margin: 0 27px;
 }
 
-.div4 .tabmenu label {
+.div4 .tabmenu1 label {
 	display: block;
-    width: 100%;
-    height: 70px;
-    font-size: 30px;
+	width: 100%;
+	height: 70px;
+	font-size: 30px;
 }
 
-.div4 .tabmenu input {
+.div4 .tabmenu1 input {
 	display: none;
 }
 
 .div4 .tabCon {
 	display: none;
-    text-align: center;
-    left: 0;
-    top: 80%;
-    position: absolute;
-    box-sizing: border-box;
-    width: 100%;
-    height: 1180px;
-    border: 5px solid #ffc0cf;
-    margin-bottom: 10px;
+	text-align: center;
+	left: 0;
+	top: 80%;
+	position: absolute;
+	box-sizing: border-box;
+	width: 100%;
+	height: 1180px;
+	border: 5px solid #ffc0cf;
+	margin-bottom: 10px;
 }
 
-.div4 .tabmenu input:checked ~ label {
+.div4 .tabmenu1 input:checked ~ label {
 	background: hotpink;
 }
 
-.div4 .tabmenu input:checked ~ .tabCon {
+.div4 .tabmenu1 input:checked ~ .tabCon {
 	display: block;
 }
 
@@ -165,7 +165,7 @@
 }
 
 tr.orderlist td {
-    border-bottom: 1px solid gray;
+	border-bottom: 1px solid gray;
 }
 
 #top-table {
@@ -176,7 +176,62 @@ tr.orderlist td {
 	background-color: #ffc0cf;
 	color: white;
 }
+
+ul.tabs {
+	margin: auto;
+	padding: 0px;
+	list-style: none;
+}
+
+ul.tabs li {
+	text-align: center;
+	display: inline-block;
+	border-radius: 10px;
+	font-size: large;
+	color: black;
+	background: #f1f1f1;
+	padding: 10px 15px;
+	cursor: pointer;
+	width: 284px;
+	height: 30px;
+}
+
+ul.tabs li.current {
+	font-size: 16px;
+	border: 5px solid;
+	border-radius: 10px;
+	background-color: #ffd3dd;
+	color: white;
+}
+
+.tab-content {
+	display: none;
+	border: 1px solid;
+	padding: 12px;
+}
+
+.tab-content.current {
+	display: inherit;
+}
 </style>
+
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		$('ul.tabs li').click(function() {
+			var tab_id = $(this).attr('data-tab');
+
+			$('ul.tabs li').removeClass('current');
+			$('.tab-content').removeClass('current');
+
+			$(this).addClass('current');
+			$("#" + tab_id).addClass('current');
+		})
+
+	});
+</script>
 </head>
 <body>
 
@@ -207,8 +262,8 @@ tr.orderlist td {
 		</div>
 
 		<div class="div4">
-			<div class="tabmenu">
-				<ul>
+			<div class="tabmenu1">
+				<ul id=main_tab>
 					<li id="tab1" class="btnCon"><input type="radio" checked
 						name="tabmenu" id="tabmenu1"><label for="tabmenu1">결제완료
 					</label>
@@ -249,30 +304,35 @@ tr.orderlist td {
 																test="${OrderList.o_goods_price >= 30000}">${OrderList.o_goods_price - OrderList.o_useMile}원</c:if>
 															<c:if test="${OrderList.o_goods_price < 30000}">${OrderList.o_goods_price + 3000 - OrderList.o_useMile}원</c:if></td>
 														<td><b id="state">${OrderList.delivery_state}</b></td>
-														<td><c:if test="${OrderList.delivery_state == '주문완료'}">
+														<td><c:if
+																test="${OrderList.delivery_state == '주문완료'}">
 																<a href="#">주문 환불</a>
-															</c:if> 
-															<c:if test="${OrderList.delivery_state == '결제완료'}">
+															</c:if> <c:if test="${OrderList.delivery_state == '결제완료'}">
 																<a href="#">주문 수정하기</a>
 																<br>
 																<a href="#">주문 환불</a>
 																<br>
-															</c:if> 
-															<c:if test="${OrderList.delivery_state == '배송시작'}">
-																<a href="https://tracker.delivery/#/kr.cjlogistics/560067553920">배송
+															</c:if> <c:if test="${OrderList.delivery_state == '배송시작'}">
+																<a
+																	href="https://tracker.delivery/#/kr.cjlogistics/560067553920">배송
 																	조회하기</a>
-															</c:if> 
-															<c:if test="${OrderList.delivery_state == '주문확인중'}">
-																<a href="${contextPath}/order/deleteOrder.do?o_id=${OrderList.o_id}">주문 취소하기</a>
-															</c:if> 
-															<c:if test="${OrderList.delivery_state == '배송완료'}">
+															</c:if> <c:if test="${OrderList.delivery_state == '주문확인중'}">
+																<a
+																	href="${contextPath}/order/deleteOrder.do?o_id=${OrderList.o_id}">주문
+																	취소하기</a>
+															</c:if> <c:if test="${OrderList.delivery_state == '배송완료'}">
 																<c:if test="${OrderList.review == 'false'}">
-																	<a href="${contextPath}/boardGr/boardGrWrite.do?g_id=${OrderList.g_id}&o_id=${OrderList.o_id}">후기 작성하기</a>
+																	<a
+																		href="${contextPath}/boardGr/boardGrWrite.do?g_id=${OrderList.g_id}&o_id=${OrderList.o_id}">후기
+																		작성하기</a>
 																</c:if>
 																<c:if test="${OrderList.review == 'true'}">
-																	<a href="${contextPath}/boardGr/gr_detail.do?b_gr_id=${OrderList.b_gr_id}">후기 보기</a>
+																	<a
+																		href="${contextPath}/boardGr/gr_detail.do?b_gr_id=${OrderList.b_gr_id}">후기
+																		보기</a>
 																</c:if>
-															</c:if> <a href="${contextPath}/order/OrderResult.do?parentNo=${OrderList.parentNo}">주문상세</a></td>
+															</c:if> <a
+															href="${contextPath}/order/OrderResult.do?parentNo=${OrderList.parentNo}">주문상세</a></td>
 													</tr>
 												</c:forEach>
 											</c:otherwise>
@@ -285,14 +345,14 @@ tr.orderlist td {
 										<c:forEach var="page" begin="1" end="9" step="1">
 											<c:if test="${section >0 && page==1 }">
 												<a
-													href="${contextPath}/member/memberDetail.do?section=${section}-1&pageNum=${(section-1)*10+1 }&id=${memberInfo.u_id}">preview</a>
+													href="${contextPath}/member/memberDetail.do?section=${section}-1&pageNum=${(section-1)*10+1 }&u_id=${memberInfo.u_id}">preview</a>
 											</c:if>
 											<a
-												href="${contextPath}/member/memberDetail.do?section=${section}&pageNum=${page}&id=${memberInfo.u_id}">${(section)*10 +page}
+												href="${contextPath}/member/memberDetail.do?section=${section}&pageNum=${page}&u_id=${memberInfo.u_id}">${(section)*10 +page}
 											</a>
 											<c:if test="${page ==10 }">
 												<a
-													href="${contextPath}/member/memberDetail.do?section=${section}+1&pageNum=${section*10}+1&id=${memberInfo.u_id}">next</a>
+													href="${contextPath}/member/memberDetail.do?section=${section}+1&pageNum=${section*10}+1&u_id=${memberInfo.u_id}">next</a>
 											</c:if>
 										</c:forEach>
 									</c:when>
@@ -335,7 +395,7 @@ tr.orderlist td {
 												<td>${OrderList.o_goods_qty}개/${OrderList.o_goods_price}원</td>
 												<td>${OrderList.pay_order_time}</td>
 												<td><b id="state">${OrderList.delivery_state}</b> <br>
-												<a
+													<a
 													href="${contextPath}/order/selectOrder.do?o_id=${OrderList.o_id}">취소상세</a></td>
 											</tr>
 										</c:forEach>
@@ -345,12 +405,15 @@ tr.orderlist td {
 									<td colspan=8 class="fixed"><c:forEach var="page"
 											begin="1" end="9" step="1">
 											<c:if test="${section >0 && page==1 }">
-												<a href="${contextPath}/member/memberDetail.do?Csection=${section}-1&CpageNum=${(section-1)*10+1 }&id=${memberInfo.u_id}">preview</a>
+												<a
+													href="${contextPath}/member/memberDetail.do?section=${section}-1&pageNum=${(section-1)*10+1 }&u_id=${memberInfo.u_id}">preview</a>
 											</c:if>
-											<a href="${contextPath}/member/memberDetail.do?Csection=${section}&CpageNum=${page}&id=${memberInfo.u_id}">${(section)*10 +page}
+											<a
+												href="${contextPath}/member/memberDetail.do?section=${section}&pageNum=${page}&u_id=${memberInfo.u_id}">${(section)*10 +page}
 											</a>
 											<c:if test="${page ==10 }">
-												<a href="${contextPath}/member/memberDetail.do?Csection=${section}+1&CpageNum=${section*10}+1&id=${memberInfo.u_id}">next</a>
+												<a
+													href="${contextPath}/member/memberDetail.do?section=${section}+1&pageNum=${section*10}+1&u_id=${memberInfo.u_id}">next</a>
 											</c:if>
 										</c:forEach></td>
 								</tr>
@@ -361,7 +424,78 @@ tr.orderlist td {
 					<li id="tab3" class="btnCon"><input type="radio"
 						name="tabmenu" id="tabmenu3"> <label for="tabmenu3">작성게시글
 					</label>
-						<div class="tabCon">내용물3</div></li>
+						<div class="tabCon">
+							<div style="margin: 10px 0 0 0;">
+								<div class="container1">
+									<ul class="tabs">
+										<li class="tab-link current" data-tab="tab-1">1대1 문의</li>
+										<li class="tab-link" data-tab="tab-2">리뷰</li>
+										<li class="tab-link" data-tab="tab-3">상품문의</li>
+									</ul>
+								</div>
+							</div>
+							<div id="tab-1" class="tab-content">
+								<div class="detail">
+									<div id="tabletitle">
+										<h6 class="titleText">상품문의</h6>
+									</div>
+									<table class="stable-striped">
+										<thead>
+											<tr id="top-table">
+												<th width="50px">번호</th>
+												<th width="200px">작성자</th>
+												<th width="400px">제목</th>
+												<th width="200px">날짜</th>
+												<th width="200px">답변여부</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach var="item" items="${BoardGqList}">
+												<label for="border-bottom"></label>
+												<tr class="border-bottom">
+													<td>${item.b_1_id}</td>
+													<td>${item.u_id}</td>
+													<td><a href="${contextPath}/board1/b1Detail.do?b_1_id=${item.b_1_id}">${item.title}</a></td>
+													<td>${item.creDate}</td>
+													<td>${item.compare}</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div id="tab-2" class="tab-content"></div>
+							<div id="tab-3" class="tab-content">
+								<div class="detail">
+									<div id="tabletitle">
+										<h6 class="titleText">1대1 문의</h6>
+									</div>
+									<table class="stable-striped">
+										<thead>
+											<tr id="top-table">
+												<th width="50px">번호</th>
+												<th width="200px">작성자</th>
+												<th width="400px">제목</th>
+												<th width="200px">날짜</th>
+												<th width="200px">답변여부</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach var="item" items="${Board1List}">
+												<label for="border-bottom"></label>
+												<tr class="border-bottom">
+													<td>${item.b_1_id}</td>
+													<td>${item.u_id}</td>
+													<td><a href="${contextPath}/board1/b1Detail.do?b_1_id=${item.b_1_id}">${item.title}</a></td>
+													<td>${item.creDate}</td>
+													<td>${item.compare}</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
 				</ul>
 			</div>
 		</div>
