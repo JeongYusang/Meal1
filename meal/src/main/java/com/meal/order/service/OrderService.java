@@ -29,8 +29,8 @@ public interface OrderService {
 	public List<OrderVO> tabpageorderlist(HashMap<String, Object> infoMap);
 
 	public String selectMaxParentNO(String u_id) throws Exception;
-
-	public Map<String, List<OrderVO>> orderSellerList(String s_id) throws Exception;
+	//판매자 주문내역 출력위해 사용0614
+	public List<OrderVO> orderSellerList(String s_id) throws Exception;
 
 	public int MaxOrderNum() throws Exception;
 

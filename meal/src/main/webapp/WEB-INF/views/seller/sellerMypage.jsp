@@ -9,7 +9,95 @@
 <head>
 <meta charset="UTF-8">
 <title>상품 조회하기</title>
+<script>
+	function fn_delivUpdate(o_id,select_id) {
+		var s_delivery_state = document.getElementById(select_id);
+		var index = s_delivery_state.selectedIndex;
+		var value = s_delivery_state[index].value;
+		//console.log("value: "+value );
 
+		$.ajax({
+			type : "post",
+			async : false,
+			url : "${contextPath}/admin/delivUpdate.do",
+			data : {
+				o_id : o_id,
+				"delivery_state" : value
+			},
+			success : function(data, textStatus) {
+				if (data.trim() == 'mod_success') {
+					alert("배송 정보를 수정했습니다.");
+					location.href = "${contextPath}/seller/sellerMypage.do";
+				} else if (data.trim() == 'failed') {
+					alert("다시 시도해 주세요.");
+				}
+
+			},
+			error : function(data, textStatus) {
+				alert("에러가 발생했습니다." + data);
+			},
+			complete : function(data, textStatus) {
+				//alert("작업을완료 했습니다");
+
+			}
+		}); //end ajax		
+	}
+	
+	function sortTable(n) {
+		var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+		table = document.getElementById("stable-striped");
+		switching = true;
+		//Set the sorting direction to ascending:
+		dir = "asc";
+		/*Make a loop that will continue until
+		no switching has been done:*/
+		while (switching) {
+			//start by saying: no switching is done:
+			switching = false;
+			rows = table.rows;
+			/*Loop through all table rows (except the
+			first, which contains table headers):*/
+			for (i = 1; i < (rows.length - 1); i++) {
+				//start by saying there should be no switching:
+				shouldSwitch = false;
+				/*Get the two elements you want to compare,
+				one from current row and one from the next:*/
+				x = rows[i].getElementsByTagName("TD")[n];
+				y = rows[i + 1].getElementsByTagName("TD")[n];
+				/*check if the two rows should switch place,
+				based on the direction, asc or desc:*/
+				if (dir == "asc") {
+					if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+						//if so, mark as a switch and break the loop:
+						shouldSwitch = true;
+						break;
+					}
+				} else if (dir == "desc") {
+					if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+						//if so, mark as a switch and break the loop:
+						shouldSwitch = true;
+						break;
+					}
+				}
+			}
+			if (shouldSwitch) {
+				/*If a switch has been marked, make the switch
+				and mark that a switch has been done:*/
+				rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+				switching = true;
+				//Each time a switch is done, increase this count by 1:
+				switchcount++;
+			} else {
+				/*If no switching has been done AND the direction is "asc",
+				set the direction to "desc" and run the while loop again.*/
+				if (switchcount == 0 && dir == "asc") {
+					dir = "desc";
+					switching = true;
+				}
+			}
+		}
+	}
+</script>
 <style type="text/css">
 .div1 {
 	width: 1080px;
@@ -105,7 +193,15 @@
 	font-size: 35px;
 }
 
-.div4 .tabmenu input {
+.div4 .tabmenu #tabmenu1 {
+	display: none;
+}
+
+.div4 .tabmenu #tabmenu2 {
+	display: none;
+}
+
+.div4 .tabmenu #tabmenu3 {
 	display: none;
 }
 
@@ -250,98 +346,98 @@ td.fixed {
 			</div>
 						</div></li>
 					<li id="tab2" class="btnCon"><input type="radio"
-						name="tabmenu" id="tabmenu2"> <label for="tabmenu2">N<br>주문정보
-					</label>
-						<div class="tabCon">
-						<div class="main-container">
-				<div class="table-container">
-					<table id="stable-striped">
-						<thead id="tap-head">
-							<tr id="top-table">
-								<th onclick="sortTable(0)" class="header" width="70px">상품ID</th>
-								<th onclick="sortTable(1)" class="header" width="150px">상품명</th>
-								<th onclick="sortTable(2)" class="header" width="100px">가격</th>
-								<th onclick="sortTable(3)" class="header" width="70px">수량</th>
-								<th onclick="sortTable(4)" class="header" width="60px">구매자</th>
-								<th onclick="sortTable(5)" class="header" width="200px">배송주소</th>
-								<th onclick="sortTable(6)" class="header" width="120px">주문상태</th>
-								<th class="header" width="210px">수정</th>
-							</tr>
-						</thead>
-						<c:choose>
-							<c:when test="${empty OrderMap}">
-								<tr>
-									<td colspan=8 class="fixed"><strong>등록된 주문내역이 없습니다.</strong></td>
-								</tr>
-							</c:when>
-							<c:when test="${not empty OrderMap}">
-								<c:forEach var="OrderMap" items="${OrderMap.orderListConfirm}" begin="0" end="15">
-									<tr class="border-bottom">
-										<td>${OrderMap.g_id}</td>
-										<td>${OrderMap.g_name}</td>
-										<td>${OrderMap.o_goods_price}</td>
-										<td>${OrderMap.o_goods_qty}</td>
-										<td>${OrderMap.u_name}</td>
-										<!-- 추후 표기방식 변경 예정 -->
-										<td>${OrderMap.receiver_addr1}, ${OrderMap.receiver_addr2}, ${OrderMap.receiver_addr3}</td>
-										<td>${OrderMap.delivery_state}</td>
-										<%-- <td>
-											<select name="s_delivery_state${i.index }"  id="s_delivery_state${i.index }">
-				 <c:choose>
-				   <c:when test="${OrderMap.delivery_state=='결제완료' }">
-				     <option  value="결제완료" selected>결제완료</option>
-				     <option  value="배송중">배송중</option>
-				     <option  value="배송완료">배송완료</option>
-				     <option  value="주문확인중">주문확인중</option>
-				   </c:when>
-				    <c:when test="${OrderMap.delivery_state=='배송중' }">
-				     <option  value="결제완료">결제완료</option>
-				     <option  value="배송중" selected>배송중</option>
-				     <option  value="배송완료">배송완료</option>
-				     <option  value="주문확인중">주문확인중</option>
-				   </c:when>
-				   <c:when test="${OrderMap.delivery_state=='배송완료' }">
-				    <option  value="결제완료">결제완료</option>
-				     <option  value="배송중">배송중</option>
-				     <option  value="배송완료" selected>배송완료</option>
-				     <option  value="주문확인중">주문확인중</option>
-				   </c:when>
-				   <c:when test="${OrderMap.delivery_state=='주문확인중' }">
-				   <option  value="결제완료">결제완료</option>
-				     <option  value="배송중">배송중</option>
-				     <option  value="배송완료">배송완료</option>
-				     <option  value="주문확인중" selected>주문확인중</option>
-				   </c:when>
-				   </c:choose>
-				 </select> 
-			     <input  type="button" value="배송수정"  onClick="fn_modify_order_state('${item.order_id}','s_delivery_state${i.index}')"/>
-			     </td> --%>
-									</tr>
-								</c:forEach>
-							</c:when>
-						</c:choose>
-					</table>
-					<center>
-						<div class="" id="pagination">
-							<c:forEach var="page" begin="1" end="10" step="1">
-								<c:if test="${section >0 && page==1 }">
-									<a
-										href="${contextPath}/seller/sellerMypage.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
-								</c:if>
-								<a
-									href="${contextPath}/seller/sellerMypage.do?section=${section}&pageNum=${page}">${(section)*10 +page}
-								</a>
-								<c:if test="${page == 10 }">
-									<a
-										href="${contextPath}/seller/sellerMypage.do?section=${section}+1&pageNum=${section*10}+1">다음</a>
-								</c:if>
-							</c:forEach>
-						</div>
-					</center>
+							name="tabmenu" id="tabmenu2"> <label for="tabmenu2">주문정보
+						</label>
+							<div class="tabCon">
+								<div class="main-container">
+									<div class="table-container">
+										<table id="stable-striped">
+											<thead id="tap-head">
+												<tr id="top-table">
+													<th onclick="sortTable(0)" class="header" width="70px">상품ID</th>
+													<th onclick="sortTable(1)" class="header" width="150px">상품명</th>
+													<th onclick="sortTable(2)" class="header" width="100px">가격</th>
+													<th onclick="sortTable(3)" class="header" width="70px">수량</th>
+													<th onclick="sortTable(4)" class="header" width="60px">구매자</th>
+													<th onclick="sortTable(5)" class="header" width="200px">배송주소</th>
+													<th onclick="sortTable(6)" class="header" width="120px">주문상태</th>
+													<th class="header" width="210px">수정</th>
+												</tr>
+											</thead>
+											<c:choose>
+												<c:when test="${empty orderList}">
+													<tr>
+														<td colspan=8 class="fixed"><strong>등록된
+																주문내역이 없습니다.</strong></td>
+													</tr>
+												</c:when>
+												<c:when test="${not empty orderList}">
+												<c:forEach var="item" items="${orderList }" begin="0" end="15">
+														<tr class="border-bottom">
+															<td>${item.g_id}</td>
+															<td>${item.g_name}</td>
+															<td>${item.o_goods_price}</td>
+															<td>${item.o_goods_qty}</td>
+															<td>${item.u_name}</td>
+															<td>${item.receiver_addr1},
+																${item.receiver_addr2}, ${item.receiver_addr3}</td>
+															<td>${item.delivery_state}</td>
+															<td><select name="s_delivery_state"  id="s_delivery_state">
+																	<c:choose>
+																		<c:when test="${item.delivery_state == '결제완료' }">
+																			<option value="결제완료" selected>결제완료</option>
+																			<option value="배송중">배송중</option>
+																			<option value="배송완료">배송완료</option>
+																			<option value="주문확인중">주문확인중</option>
+																		</c:when>
+																		<c:when test="${item.delivery_state == '배송중' }">
+																			<option value="결제완료">결제완료</option>
+																			<option value="배송중" selected>배송중</option>
+																			<option value="배송완료">배송완료</option>
+																			<option value="주문확인중">주문확인중</option>
+																		</c:when>
+																		<c:when test="${item.delivery_state == '배송완료' }">
+																			<option value="결제완료">결제완료</option>
+																			<option value="배송중">배송중</option>
+																			<option value="배송완료" selected>배송완료</option>
+																			<option value="주문확인중">주문확인중</option>
+																		</c:when>
+																		<c:when test="${item.delivery_state == '주문확인중' }">
+																			<option value="결제완료">결제완료</option>
+																			<option value="배송중">배송중</option>
+																			<option value="배송완료">배송완료</option>
+																			<option value="주문확인중" selected>주문확인중</option>
+																		</c:when>
+																	</c:choose>
+															</select> 
+															<input type="button" value="배송수정" onClick="fn_delivUpdate('${item.o_id}','s_delivery_state')" />														
+															</td>
+														</tr>
+														</c:forEach>
+												</c:when>
+											</c:choose>
+										</table>
+										<center>
+											<div class="" id="pagination">
+												<c:forEach var="page" begin="1" end="10" step="1">
+													<c:if test="${section >0 && page==1 }">
+														<a
+															href="${contextPath}/seller/sellerMypage.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
+													</c:if>
+													<a
+														href="${contextPath}/seller/sellerMypage.do?section=${section}&pageNum=${page}">${(section)*10 +page}
+													</a>
+													<c:if test="${page == 10 }">
+														<a
+															href="${contextPath}/seller/sellerMypage.do?section=${section}+1&pageNum=${section*10}+1">다음</a>
+													</c:if>
+												</c:forEach>
+											</div>
+										</center>
 
-				</div>
-			</div>
-						</div></li>
+									</div>
+								</div>
+							</div></li>
 					<li id="tab3" class="btnCon"><input type="radio"
 						name="tabmenu" id="tabmenu3"> <label for="tabmenu3">N<br>문의 및 후기
 					</label>
