@@ -25,10 +25,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.meal.admin.service.AdminService;
 import com.meal.admin.vo.AdminVO;
+import com.meal.board.gq.service.BoardGqService;
+import com.meal.board.gq.vo.BoardGqVO;
 import com.meal.common.controller.BaseController;
 import com.meal.goods.service.GoodsService;
 import com.meal.goods.vo.GoodsVO;
-import com.meal.order.dao.OrderDAO;
 import com.meal.order.service.OrderService;
 import com.meal.order.vo.OrderVO;
 import com.meal.seller.service.SellerService;
@@ -51,7 +52,7 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 	@Autowired
 	private OrderService orderService;
 	@Autowired
-	private OrderDAO orderDAO;
+	private BoardGqService boardGqService;
 
 	@Autowired
 	private Img_sVO img_sVO;
@@ -338,16 +339,28 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 			      pagingMap.put("s_id", s_id);
 			      //굿즈리스트 호출을 위해 사용
 			      List<GoodsVO> goodsList = goodsService.selectGoodsPage(pagingMap);
-				  System.out.println("---------------------------");
-			      System.out.println("goodsList : " + goodsList);
-			      System.out.println("---------------------------");
-				  //주문내역 확인
-					List<OrderVO> orderList = orderService.orderSellerList(s_id);
+				  
+			      //주문내역 확인
+				  List<OrderVO> orderList = orderService.orderSellerList(s_id);
+
+				  //상품문의 내역 확인 0615
+				  List<BoardGqVO> boardGqList = boardGqService.boardGqSellerList(s_id);
+					
+					System.out.println("---------------------------");
+				    System.out.println("goodsList : " + goodsList);
 					System.out.println("---------------------------");
 					System.out.println("sellerVO : " + sellerVO);
 				    System.out.println("---------------------------");
 					System.out.println("orderList : " + orderList);
 				    System.out.println("---------------------------");
+				    System.out.println("boardGqList : " + boardGqList);
+				    System.out.println("---------------------------");
+					/*
+					 * System.out.println("orderList : " + orderList);
+					 * System.out.println("---------------------------");
+					 */
+				    
+				    mav.addObject("boardGqList", boardGqList);
 				    mav.addObject("sellerVO", sellerVO);
 					mav.addObject("orderList", orderList);
 					mav.addObject("goodsList", goodsList);

@@ -2,6 +2,7 @@ package com.meal.admin.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
 
@@ -18,5 +19,8 @@ public interface AdminDAO{
 	public void insertReason(HashMap<String, Object> map) throws DataAccessException;
 	public String selectOverlappedId(String pw) throws DataAccessException;
 	public List<AdminVO> selectAllAdmins(HashMap<String,Object> pagingMap) throws DataAccessException;
+	
+	//판매자 상품배송 상태 변경을 위해 생성 0615
+	public void delivUpdate(Map<String, String> delivMap) throws DataAccessException;
 			
 }

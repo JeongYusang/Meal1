@@ -152,6 +152,10 @@
 	font-size: 30px;
 }
 
+.div3 .div3-2 {
+	font-size: 15px;
+}
+
 .div3 .div3-3 {
 	font-size: 15px;
 }
@@ -346,7 +350,7 @@ td.fixed {
 			</div>
 						</div></li>
 					<li id="tab2" class="btnCon"><input type="radio"
-							name="tabmenu" id="tabmenu2"> <label for="tabmenu2">주문정보
+							name="tabmenu" id="tabmenu2"> <label for="tabmenu2"><br>주문정보
 						</label>
 							<div class="tabCon">
 								<div class="main-container">
@@ -439,9 +443,70 @@ td.fixed {
 								</div>
 							</div></li>
 					<li id="tab3" class="btnCon"><input type="radio"
-						name="tabmenu" id="tabmenu3"> <label for="tabmenu3">N<br>문의 및 후기
+						name="tabmenu" id="tabmenu3"> <label for="tabmenu3"><br>문의 및 후기
 					</label>
-						<div class="tabCon">내용물3</div></li>
+						<div class="tabCon">
+						<div class="main-container">
+				<div class="table-container">
+					<table id="stable-striped">
+						<thead id="tap-head">
+							<tr id="top-table">
+								<th onclick="sortTable(0)" class="header" width="180px">작성번호</th>
+								<th onclick="sortTable(1)" class="header" width="180px">작성자</th>
+								<th onclick="sortTable(2)" class="header" width="180px">글 제목</th>
+								<th onclick="sortTable(3)" class="header" width="180px">작성일자</th>
+								<th onclick="sortTable(4)" class="header" width="180px">비밀글</th>
+								<th onclick="sortTable(5)" class="header" width="180px">상품이름</th>
+								<th class="header" width="180px">답글작성</th>
+							</tr>
+						</thead>
+						<c:choose>
+							<c:when test="${empty boardGqList}">
+								<tr>
+									<td colspan=5 class="fixed"><strong>등록된 상품이 없습니다.</strong></td>
+								</tr>
+							</c:when>
+							<c:when test="${not empty boardGqList}">
+								<c:forEach var="item" items="${boardGqList}" begin="0" end="15">
+									<tr class="border-bottom">
+										<td>${item.b_gq_id}</td>
+										<td>${item.u_id}</td>
+										<td>${item.title}</td>
+										<td>${item.creDate}</td>
+										<c:if test="${item.secret == null}">
+										<td>N</td>
+										</c:if>
+										<c:if test="${item.secret != null }">
+										<td>${item.secret}</td>
+										</c:if>
+										<td>${item.g_name}</td>
+										<td></td>
+									</tr>
+								</c:forEach>
+							</c:when>
+						</c:choose>
+					</table>
+					<center>
+						<div class="" id="pagination">
+							<c:forEach var="page" begin="1" end="10" step="1">
+								<c:if test="${section >0 && page==1 }">
+									<a
+										href="${contextPath}/seller/sellerMypage.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
+								</c:if>
+								<a
+									href="${contextPath}/seller/sellerMypage.do?section=${section}&pageNum=${page}">${(section)*10 +page}
+								</a>
+								<c:if test="${page == 10 }">
+									<a
+										href="${contextPath}/seller/sellerMypage.do?section=${section}+1&pageNum=${section*10}+1">다음</a>
+								</c:if>
+							</c:forEach>
+						</div>
+					</center>
+
+				</div>
+			</div>
+						</div></li>
 				</ul>
 			</div>
 		</div>

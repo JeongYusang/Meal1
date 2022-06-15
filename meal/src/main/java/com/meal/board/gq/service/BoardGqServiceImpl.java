@@ -123,6 +123,13 @@ public class BoardGqServiceImpl implements BoardGqService {
 	public BoardGqVO gqdownload(int b_gq_id) {
 		return boardGqDAO.gqdownload(b_gq_id);
 	}
+
+	//판매자 상품문의 내역 확인 0615
+	@Override
+	public List<BoardGqVO> boardGqSellerList(String s_id) throws Exception {
+		List<BoardGqVO> boardGqList = boardGqDAO.boardGqSellerList(s_id);
+		return boardGqList;
+	}
 	
 	
 

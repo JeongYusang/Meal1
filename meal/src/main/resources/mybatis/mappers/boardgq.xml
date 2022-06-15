@@ -26,8 +26,8 @@
 		<result property="s_id" column="s_id" />
 		<result property="b_gq_id" column="b_gq_id" />
 	</resultMap>
-	
-		<insert id="boardGqWrite" parameterType="BoardGqVO">
+
+	<insert id="boardGqWrite" parameterType="BoardGqVO">
   <![CDATA[
        insert into board_gq(
        reg_id,
@@ -75,7 +75,7 @@ update board_gq set title = #{title}, content = #{content}, secret = #{secret} w
 	    select R1.* from (select * from board_gq) R1 where parentNo = 0 and s_id = #{s_id} order by b_gq_id desc limit #{start} , #{end} 
 	   ]]>
 	</select>
-	
+
 	<select id="GoodsboardGqPage" resultMap="BoardGqResult"
 		parameterType="Map">
    <![CDATA[
@@ -95,14 +95,16 @@ update board_gq set title = #{title}, content = #{content}, secret = #{secret} w
            select gq.*, g.g_name from board_gq gq LEFT OUTER JOIN goods_tb g on g.g_id = gq.g_id where gq.u_id = #{u_id}
              ]]>
 	</select>
-	
-		<select id="selectSellerBoardGqallList" resultMap="BoardGqResult" parameterType="String">
+
+	<select id="selectSellerBoardGqallList"
+		resultMap="BoardGqResult" parameterType="String">
        <![CDATA[
            select gq.*, g.g_name from board_gq gq LEFT OUTER JOIN goods_tb g on g.g_id = gq.g_id where gq.s_id = #{s_id}
              ]]>
 	</select>
-	
-		<select id="selectGoodsBoardGqallList" resultMap="BoardGqResult" parameterType="int">
+
+	<select id="selectGoodsBoardGqallList" resultMap="BoardGqResult"
+		parameterType="int">
        <![CDATA[
            select gq.*, g.g_name from board_gq gq LEFT OUTER JOIN goods_tb g on g.g_id = gq.g_id where gq.g_id = #{g_id}
              ]]>
@@ -161,7 +163,7 @@ update board_gq set title = #{title}, content = #{content}, secret = #{secret} w
 				where b_gq_id=#{b_gq_id}
     	]]>
 	</select>
-	
+
 	<select id="boardgq_download" resultMap="BoardGqResult"
 		parameterType="Integer">
 	    <![CDATA[
@@ -170,5 +172,16 @@ update board_gq set title = #{title}, content = #{content}, secret = #{secret} w
 		    		where i.b_gq_id=#{b_gq_id}
     	]]>
 	</select>
-	
-	</mapper>
+
+	<!-- 판매자 상품문의 내역 확인 0615 -->
+	<select id="boardGqList" resultMap="BoardGqResult"
+		parameterType="Map">
+		select gq.*, g.g_name
+		from board_gq gq
+		inner join goods_tb g
+		on gq.g_id = g.g_id
+		where gq.s_id = #{s_id} and gq.parentNo = 0 order by gq.credate desc;
+	</select>
+
+
+</mapper>

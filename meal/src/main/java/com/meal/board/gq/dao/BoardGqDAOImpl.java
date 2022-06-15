@@ -123,6 +123,13 @@ public class BoardGqDAOImpl implements BoardGqDAO {
 		return (BoardGqVO) sqlSession.selectOne("mapper.boardGq.boardgq_download",b_gq_id);
 	}
 
+	//판매자 상품문의 내역 확인 0615
+	@Override
+	public List<BoardGqVO> boardGqSellerList(String s_id) throws DataAccessException {
+		List<BoardGqVO> boardGqList = (List<BoardGqVO>) sqlSession.selectList("mapper.boardGq.boardGqList", s_id);
+		return boardGqList;
+	}
+
 	
 
 }

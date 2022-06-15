@@ -39,5 +39,8 @@ public interface BoardGqService {
 	public List<BoardGqVO> selectGoodsBoardGqallList(int g_id)throws Exception;
 
 	public List<BoardGqVO> selectGoodsBoardGqList(HashMap<String, Object> pagingMap)throws Exception;
+	
+	//판매자 상품문의 내역 확인 0615
+	public List<BoardGqVO> boardGqSellerList(String s_id) throws Exception;
 
 }
