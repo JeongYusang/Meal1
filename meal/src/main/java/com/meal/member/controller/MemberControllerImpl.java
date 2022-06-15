@@ -25,9 +25,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.meal.admin.service.AdminService;
 import com.meal.admin.vo.AdminVO;
 import com.meal.common.controller.BaseController;
+import com.meal.goods.vo.GoodsVO;
 import com.meal.member.service.MemberService;
 import com.meal.member.vo.MemberVO;
 import com.meal.member.vo.MileageVO;
+import com.meal.order.service.OrderService;
+import com.meal.order.vo.OrderVO;
 import com.meal.seller.service.SellerService;
 import com.meal.seller.vo.SellerVO;
 
@@ -43,6 +46,8 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 	private SellerService sellerService;
 	@Autowired
 	private AdminService adminService;
+	@Autowired
+	private OrderService orderService;
 	@Autowired
 	private MemberVO memberVO;
 	@Autowired
@@ -63,8 +68,11 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 		session.setAttribute("isLogOn", false);
 		session.removeAttribute("memberInfo");
 		session.removeAttribute("quickZzimList");
-		session.removeAttribute("quickZzimListNum");
+		session.removeAttribute("quickZzimListNum");		
+		String message = "로그아웃이 완료되었습니다.";
+		mav.addObject("message", message);
 		mav.setViewName("redirect:/main/main.do");
+		
 		return mav;
 	}
 
@@ -195,7 +203,14 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 	// 회원 상세 정보창으로 가는것 admin 상세로도 사용중
 	@Override
 	@RequestMapping(value = "/memberDetail.do", method = RequestMethod.GET)
-	public ModelAndView memberDetail(@RequestParam("id") String id, HttpServletRequest request,
+	public ModelAndView memberDetail(@RequestParam(value = "message", required = false) String message,
+			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+			@RequestParam(value = "section", required = false) String section,
+			@RequestParam(value = "pageNum", required = false) String pageNum,
+			@RequestParam(value = "CdateMap", required = false) Map<String, Object> CdateMap,
+			@RequestParam(value = "Csection", required = false) String Csection,
+			@RequestParam(value = "CpageNum", required = false) String CpageNum,
+			@RequestParam("id") String id,HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		String viewName = (String) request.getAttribute("viewName");
@@ -204,13 +219,24 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 
 		if (memberInfo != null) {
 			mav.addObject("memberVO", memberInfo);
+			HashMap<String, Object> Map = new HashMap<String, Object>();
+			Map.put("pageNum", pageNum);
+			Map.put("section", section);
+			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(Map);
+			pagingMap.put("u_id", id);
+			List<OrderVO> OrderList = orderService.UserboardOrderPage(pagingMap);
+			List<OrderVO> CancledOrderList = orderService.CanceledUserOrderPage(pagingMap);
+			mav.addObject("OrderList",OrderList);
+			mav.addObject("CancledOrderList",CancledOrderList);
 
 			// orderList (u_id) grList(u_id) gqList(u_id) oneList(u_id) 추가할예정
 		} else {
 			System.out.println("실패했음");
 		}
+		
 		return mav;
 	}
+	
 
 	// hp 인증
 	@RequestMapping(value = "/FindIDResult2.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -256,11 +282,11 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 	public ModelAndView myMileage(@RequestParam(value = "message", required = false) String message,
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
-			@RequestParam(value = "pageNum", required = false) String pageNum,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
-		/* try { */
+		try {
 			MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			String u_id = memberInfo.getU_id();
 			int u_mile = memberInfo.getU_mile();
@@ -269,20 +295,24 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 			Map.put("section", section);
 			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(Map);
 			pagingMap.put("u_id", u_id);
-			
+
 			List<MileageVO> MilagePage = memberService.myMileageList(pagingMap);
 			String viewName = (String) request.getAttribute("viewName");
 			List<MileageVO> mileage = (List<MileageVO>) memberService.myMileage(u_id);
 			mav.addObject("mileage", mileage);
-			mav.addObject("MilagePage",MilagePage);
+			mav.addObject("MilagePage", MilagePage);
 			mav.addObject("u_mile", u_mile);
 			mav.setViewName(viewName);
-			/*
-			 * } catch (Exception e) { message = "로그인을 해주시길 바랍니다."; String viewName =
-			 * "redirect:/main/main.do"; mav.setViewName(viewName); mav.addObject(message);
-			 * }
-			 */
+
+		} catch (Exception e) {
+			message = "로그인을 해주시길 바랍니다.";
+			String viewName = "redirect:/main/main.do";
+			mav.setViewName(viewName);
+			mav.addObject(message);
+		}
+
 		return mav;
 
 	}
+	
 }

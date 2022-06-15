@@ -87,20 +87,22 @@ public class CartControllerImpl extends BaseController implements CartController
 				if(cate.equals("cart")) {
 				message = "<script>";
 				message += " alert('이미 장바구니에 등록된 상품입니다.');";
-				message += " location.href='" + request.getContextPath() + "/goods/goodsDetail.do?g_id=" + g_id +"';";
+				message += " location.href='" + request.getContextPath() + "/main/main.do';";
 				message += " </script>";
-				}else {
+				}else if(cate.equals("zzim"))  {
 					message = "<script>";
 					message += " alert('이미 찜된 상품입니다.');";
-					message += " location.href='" + request.getContextPath() + "/goods/goodsDetail.do?g_id=" + g_id +"';";
+					message += " location.href='" + request.getContextPath() + "/main/main.do';";
 					message += " </script>";
 				}
 			}else{
 				if(cate.equals("cart")) {
 				cartService.addGoodsInCart(cartVO);
 				message = "<script>";
-				message += " confirm('장바구니에 추가 되었습니다. 장바구니를 확인 하시겠습니까?');";
-				message += " location.href='" + request.getContextPath() + "/cart/myCartList.do';";
+				message += " if (confirm('장바구니에 추가 되었습니다 장바구니 페이지로 이동하시겠습니까?.'))";
+				message += " {location.href='" + request.getContextPath() + "/cart/myCartList.do';}";
+				message += " else {alert('상품 페이지로 돌아갑니다.');";
+				message += " location.href='" + request.getContextPath() + "/goods/goodsDetail.do?g_id=" + g_id +"';}";
 				message += " </script>";
 				}else {
 					cartService.addGoodsInCart(cartVO);
@@ -109,14 +111,15 @@ public class CartControllerImpl extends BaseController implements CartController
 					session.setAttribute("quickZzimListNum", quickZzimList.size());
 					message = "<script>";
 					message += " alert('찜되었습니다.');";
-					message += " location.href='" + request.getContextPath() + "/goods/goodsDetail.do?g_id=" + g_id +"';";
+					message += " location.href='" + request.getContextPath() + "/main/main.do';";
 					message += " </script>";
 				}
 			}
 
 		} catch (Exception e) {
 			message = "<script>";
-			message += " alert('오류가 발생했습니다');";
+			message += " alert('로그인 해주시길 바랍니다');";
+			message += " location.href='" + request.getContextPath() + "/main/main.do';";
 			message += " </script>";
 			e.printStackTrace();
 		}

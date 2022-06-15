@@ -111,6 +111,7 @@
 		<put-attribute name="title" value="내 마일리지" />
 		<put-attribute name="body" value="/WEB-INF/views/user/mileage.jsp" />
 	</definition>
+
 	
 	
 	

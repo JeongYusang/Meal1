@@ -186,8 +186,7 @@ font-size:15px;
 					<tr>
 						<th class="td1">상품</th>
 						<td>
-					<img
-									src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=main"
+					<img src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=main"
 									width="80px;" height="50px" alt = "상품이미지"><div class = "inline">
 							<span class="span1">상품</span><br><span class="span2">${goodsInfo.g_name }</span></div>
 							<input type="hidden" name="g_id" value="${goodsInfo.g_id}" /> 

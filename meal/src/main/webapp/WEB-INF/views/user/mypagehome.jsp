@@ -25,7 +25,7 @@
 	</script>
 </c:if>
 
-<!-- <script type="text/javascript"
+<script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -41,7 +41,7 @@
 		})
 
 	});
-</script> -->
+</script>
 
 <style>
 #main {
@@ -231,7 +231,7 @@ tr.orderlist td {
 		</div>
 		
 		
-		<!-- <div style="margin: 10px 0 0 0;">
+		 <div style="margin: 10px 0 0 0;">
 			<div class="tab-container">
 				<ul class="tabs">
 					<li class="tab-link current" data-tab="tab-1">전체</li>
@@ -240,8 +240,9 @@ tr.orderlist td {
 					<li class="tab-link" data-tab="tab-4">배송완료</li>
 				</ul>
 			</div>
+			
 
-			<div id="tab-1" class="tab-content current"> -->
+			<div id="tab-1" class="tab-content current">
 				<div class="detail">
 					<table class="review-table">
 						<thead>
@@ -310,6 +311,184 @@ tr.orderlist td {
 					</c:choose>
 				</div>
 			</div>
+			<div id="tab-2" class="tab-content">
+				<div class="detail">
+					<table class="review-table">
+						<thead>
+							<tr id="top-table">
+								<th width="15%">상품이미지</th>
+								<th width="40%">상품이름</th>
+								<th width="15%">갯수/가격</th>
+								<th width="20%">배송상태</th>
+							</tr>
+						</thead>
+						<c:choose>
+							<c:when test="${orderMap.orderListPaid != null}">
+								<c:forEach var="OrderMap" items="${orderMap.orderListPaid}">
+									<tr class="orderlist">
+										<td><a
+											href="${contextPath}/goods/goodsDetail.do?g_id=${OrderMap.g_id}">
+												<img
+												src="${contextPath}/download1.do?g_id=${OrderMap.g_id}&cate=main">
+										</a></td>
+										<td id="title"><a
+											href="${contextPath }/goods/goodsDetail.do?g_id=${OrderMap.g_id}">${OrderMap.g_name}</a></td>
+										<td>${OrderMap.o_goods_qty}개/${OrderMap.o_goods_price}원</td>
+										<td><b id="state">${OrderMap.delivery_state}</b><br>
+											<a
+											href="${contextPath}/order/deleteOrder.do?o_id=${OrderMap.o_id}">주문
+												취소하기</a><br> <a
+											href="${contextPath}/order/OrderResult.do?parentNo=${OrderMap.parentNo}">주문
+												상세</a></td>
+									</tr>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+
+								<td colspan=5>주문 내역이 없습니다</td>
+
+							</c:otherwise>
+						</c:choose>
+					</table>
+					<c:choose>
+						<c:when test="${orderMap.orderListPaid != null}">
+							<c:forEach var="page" begin="1" end="9" step="1">
+								<c:if test="${section >0 && page==1 }">
+									<a
+										href="${contextPath}/order/selectUserOrderList.do?section=${section}-1&pageNum=${(section-1)*10+1 }&delivery_state=결제완료">preview</a>
+								</c:if>
+								<a
+									href="${contextPath}/order/selectUserOrderList.do?section=${section}&pageNum=${page}&delivery_state=결제완료">${(section)*10 +page}
+								</a>
+								<c:if test="${page ==10 }">
+									<a
+										href="${contextPath}/order/selectUserOrderList.do?section=${section}+1&pageNum=${section*10}+1&delivery_state=결제완료">next</a>
+								</c:if>
+							</c:forEach>
+						</c:when>
+					</c:choose>
+				</div>
+
+			</div>
+			<div id="tab-3" class="tab-content">
+				<div class="detail">
+					<table class="review-table">
+						<thead>
+							<tr id="top-table">
+								<th width="15%">상품이미지</th>
+								<th width="40%">상품이름</th>
+								<th width="15%">갯수/가격</th>
+								<th width="20%">배송상태</th>
+							</tr>
+						</thead>
+
+						<c:choose>
+							<c:when test="${empty orderMap.orderListDstart}">
+								<tr>
+									<td colspan=5 class="fixed"><strong>작성된 글이 없습니다.</strong></td>
+								</tr>
+							</c:when>
+						<c:otherwise>
+								<c:forEach var="OrderMap" items="${orderMap.orderListDstart}">
+									<tr class="orderlist">
+										<td><a
+											href="${contextPath}/goods/goodsDetail.do?g_id=${OrderMap.g_id}">
+												<img
+												src="${contextPath}/download1.do?g_id=${OrderMap.g_id}&cate=main">
+										</a></td>
+										<td id="title"><a
+											href="${contextPath }/goods/goodsDetail.do?g_id=${OrderMap.g_id}">${OrderMap.g_name}</a></td>
+										<td>${OrderMap.o_goods_qty}개/${OrderMap.o_goods_price}원</td>
+										<td><b id="state">${OrderMap.delivery_state}</b><br>
+											<a
+											href="https://tracker.delivery/#/kr.cjlogistics/560067553920"
+											target="_blank">배송 조회하기</a><br> <a
+											href="${contextPath}/order/OrderResult.do?parentNo=${OrderMap.parentNo}">주문
+												상세</a></td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+					</table>
+					<c:choose>
+						<c:when test="${empty orderMap.orderListDstart}">
+							</c:when>
+						<c:otherwise>
+							<c:forEach var="page" begin="1" end="9" step="1">
+								<c:if test="${section >0 && page==1 }">
+									<a href="${contextPath}/order/selectUserOrderList.do?section=${section}-1&pageNum=${(section-1)*10+1 }&delivery_state=배송시작">preview</a>
+								</c:if>
+								<a href="${contextPath}/order/selectUserOrderList.do?section=${section}&pageNum=${page}&delivery_state=배송시작">${(section)*10 +page}
+								</a>
+								<c:if test="${page ==10 }">
+									<a href="${contextPath}/order/selectUserOrderList.do?section=${section}+1&pageNum=${section*10}+1&delivery_state=배송시작">next</a>
+								</c:if>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
+			<div id="tab-4" class="tab-content">
+				<div class="detail">
+					<table class="review-table">
+						<thead>
+							<tr id="top-table">
+								<th width="15%">상품이미지</th>
+								<th width="40%">상품이름</th>
+								<th width="15%">갯수/가격</th>
+								<th width="20%">배송상태</th>
+							</tr>
+						</thead>
+						<c:choose>
+							<c:when test="${empty orderMap.orderListDone}">
+								<tr>
+									<td colspan=5 class="fixed"><strong>작성된 글이 없습니다.</strong></td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="OrderMap" items="${orderMap.orderListDone}">
+									<tr class="orderlist">
+										<td><a href="${contextPath}/goods/goodsDetail.do?g_id=${OrderMap.g_id}">
+												<img src="${contextPath}/download1.do?g_id=${OrderMap.g_id}&cate=main">
+										</a></td>
+										<td id="title"><a href="${contextPath }/goods/goodsDetail.do?g_id=${OrderMap.g_id}">${OrderMap.g_name}</a></td>
+										<td>${OrderMap.o_goods_qty}개/${OrderMap.o_goods_price}원</td>
+										<td><b id="state">${OrderMap.delivery_state}</b><br>
+											<c:if test="${OrderMap.review == 'false'}">
+												<a href="${contextPath}/boardGr/boardGrWrite.do?g_id=${OrderMap.g_id}&o_id=${OrderMap.o_id}">후기
+													작성하기</a>
+											</c:if> <c:if test="${OrderMap.review == 'true'}">
+												<a href="${contextPath}/boardGr/gr_detail.do?b_gr_id=${OrderMap.b_gr_id}">후기
+													보기</a>
+											</c:if><br> <a href="${contextPath}/order/OrderResult.do?parentNo=${OrderMap.parentNo}">주문
+												상세</a></td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+					</table>
+					<c:choose>
+					<c:when test="${empty orderMap.orderListDone}">
+								<tr>
+									<td colspan=5 class="fixed"><strong>작성된 글이 없습니다.</strong></td>
+								</tr>
+							</c:when>
+						<c:otherwise>
+							<c:forEach var="page" begin="1" end="9" step="1">
+								<c:if test="${section >0 && page==1 }">
+									<a href="${contextPath}/order/selectUserOrderList.do?section=${section}-1&pageNum=${(section-1)*10+1 }&delivery_state=${done}">preview</a>
+								</c:if>
+								<a href="${contextPath}/order/selectUserOrderList.do?section=${section}&pageNum=${page}&delivery_state=${done}">${(section)*10 +page}
+								</a>
+								<c:if test="${page ==10 }">
+									<a href="${contextPath}/order/selectUserOrderList.do?section=${section}+1&pageNum=${section*10}+1&delivery_state=${done}">next</a>
+								</c:if>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
+		</div>
 
 </body>
 </html>
