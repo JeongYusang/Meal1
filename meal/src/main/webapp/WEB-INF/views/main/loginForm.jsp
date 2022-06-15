@@ -131,6 +131,11 @@ function result(){
 				</button>
 			</div>
 		</form>
+			<c:if test ="${not empty non}">
+					<div id="noid" bgcolor="gray" height="30px">
+			<b>비회원으로 주문하시겠습니까?</b> &nbsp; <a href="#">비회원으로 주문하기</a>
+			</div>
+			</c:if>
 	</section>
 
 </body>

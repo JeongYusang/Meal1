@@ -25,7 +25,18 @@ function result(){
 }
 </script>
 </c:if>
+<c:if test='${not empty message1 }'>
+<script>
+window.onload=function()
+{
+  result();
+}
 
+function result(){
+	alert("${message1}");
+}
+</script>
+</c:if>
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
