@@ -164,8 +164,10 @@ tr.border-bottom td {
 				</c:otherwise>
 			</c:choose>
 
-			<tr>
-				<td colspan=8 class="fixed"><c:forEach var="page" begin="1"
+			</tbody>
+		</table>
+		<center>
+		<c:forEach var="page" begin="1"
 						end="9" step="1">
 						<c:if test="${section >0 && page==1 }">
 							<a
@@ -178,11 +180,8 @@ tr.border-bottom td {
 							<a
 								href="${contextPath}/board1/selectBoard1List.do?section=${section}+1&pageNum=${section*10}+1">next</a>
 						</c:if>
-					</c:forEach></td>
-			</tr>
-
-			</tbody>
-		</table>
+					</c:forEach>
+					</center>
 
 
 	</div>

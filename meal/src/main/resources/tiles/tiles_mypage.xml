@@ -37,7 +37,7 @@
 			value="/WEB-INF/views/user/mypagehome.jsp"/>
 	</definition>
 
-	<definition name="/user/mypagecancel" extends="baseLayout2">
+	<definition name="/order/selectCanceledOrders" extends="baseLayout2">
 		<put-attribute name="title" value="유저주문취소창" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/user/mypagecancel.jsp"/>

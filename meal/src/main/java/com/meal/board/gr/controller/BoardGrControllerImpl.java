@@ -60,7 +60,7 @@ public class BoardGrControllerImpl extends BaseController implements BoardGrCont
 
 	@Override
 	@RequestMapping(value = "/boardGrinsert.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView writeBoardGr(@RequestParam("o_id") int o_id, MultipartHttpServletRequest multipartRequest,
+	public ModelAndView writeBoardGr(@RequestParam(value = "o_id", required = false) String o_id, MultipartHttpServletRequest multipartRequest,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		String imageFileName = null;
@@ -279,17 +279,17 @@ public class BoardGrControllerImpl extends BaseController implements BoardGrCont
 		HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(Map);
 		pagingMap.put("u_id", u_id);
 
-		List<BoardGrVO> boardGr = boardGrService.selectMyBoardGrList(pagingMap);
-		List<BoardGrVO> board2 = boardGrService.selectMyBoardGrallList(u_id);
+		List<BoardGrVO> boardGrList = boardGrService.selectMyBoardGrList(pagingMap);
+		List<BoardGrVO> board2 = boardGrService.selectBoardGrallList();
 
-		for (BoardGrVO item : boardGr) {
+		for (BoardGrVO item : boardGrList) {
 			int g_id = item.getG_id();
 			GoodsVO goodsVO = goodsService.selectGoodsDetail(g_id);
 			String g_name = goodsVO.getG_name();
 			item.setG_name(g_name);
 		}
 
-		for (BoardGrVO item : boardGr) {
+		for (BoardGrVO item : boardGrList) {
 			for (BoardGrVO j : board2) {
 				if (!((int) item.getB_gr_id() == (int) j.getParentNo())) {
 					String compare = "N";
@@ -298,14 +298,13 @@ public class BoardGrControllerImpl extends BaseController implements BoardGrCont
 					String compare = "Y";
 					item.setCompare(compare);
 					System.out.println("BoardCompare" + item.getB_gr_id());
-
 					break;
 				}
 			}
 		}
 
 		mav.addObject("memberVO", memberVO);
-		mav.addObject("boardGr", boardGr);
+		mav.addObject("boardGr", boardGrList);
 		return mav;
 	}
 

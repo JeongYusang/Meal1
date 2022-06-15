@@ -2,7 +2,6 @@ package com.meal.member.dao;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
 
@@ -30,5 +29,7 @@ public interface MemberDAO {
 	public String FindId(HashMap<String, Object> map) throws DataAccessException;
 
 	public List<MileageVO> myMileage(String u_id) throws DataAccessException;
+
+	public List<MileageVO> myMileageList(HashMap<String, Object> pagingMap) throws DataAccessException;
 
 }

@@ -2,6 +2,7 @@ package com.meal.member.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -253,24 +254,34 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 	@Override
 	@RequestMapping(value = "/myMileage.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView myMileage(@RequestParam(value = "message", required = false) String message,
+			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+			@RequestParam(value = "section", required = false) String section,
+			@RequestParam(value = "pageNum", required = false) String pageNum,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
-		try {
+		/* try { */
 			MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			String u_id = memberInfo.getU_id();
 			int u_mile = memberInfo.getU_mile();
+			HashMap<String, Object> Map = new HashMap<String, Object>();
+			Map.put("pageNum", pageNum);
+			Map.put("section", section);
+			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(Map);
+			pagingMap.put("u_id", u_id);
+			
+			List<MileageVO> MilagePage = memberService.myMileageList(pagingMap);
 			String viewName = (String) request.getAttribute("viewName");
 			List<MileageVO> mileage = (List<MileageVO>) memberService.myMileage(u_id);
 			mav.addObject("mileage", mileage);
+			mav.addObject("MilagePage",MilagePage);
 			mav.addObject("u_mile", u_mile);
 			mav.setViewName(viewName);
-		} catch (Exception e) {
-			message = "로그인을 해주시길 바랍니다.";
-			String viewName = "redirect:/main/main.do";
-			mav.setViewName(viewName);
-			mav.addObject(message);
-		}
+			/*
+			 * } catch (Exception e) { message = "로그인을 해주시길 바랍니다."; String viewName =
+			 * "redirect:/main/main.do"; mav.setViewName(viewName); mav.addObject(message);
+			 * }
+			 */
 		return mav;
 
 	}

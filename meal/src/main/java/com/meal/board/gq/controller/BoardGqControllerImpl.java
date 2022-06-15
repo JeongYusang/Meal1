@@ -277,7 +277,7 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		pagingMap.put("u_id", u_id);
 
 		List<BoardGqVO> boardGq = boardGqService.selectMyBoardGqList(pagingMap);
-		List<BoardGqVO> board2 = boardGqService.selectMyBoardGqallList(u_id);
+		List<BoardGqVO> board2 = boardGqService.selectBoardGqallList();
 
 		for (BoardGqVO item : boardGq) {
 			int g_id = item.getG_id();

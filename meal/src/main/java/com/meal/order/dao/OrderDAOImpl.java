@@ -14,7 +14,8 @@ public class OrderDAOImpl implements OrderDAO {
 
 	@Autowired
 	private SqlSession sqlSession;
-
+	
+	@Override
 	public int insertOrder(OrderVO _orderVO) throws DataAccessException {
 		sqlSession.insert("mapper.order.insertOrder", _orderVO);
 		return _orderVO.getParentNo();
@@ -36,11 +37,6 @@ public class OrderDAOImpl implements OrderDAO {
 	public List<OrderVO> selectorderList(HashMap<String, String> OrderState) {
 		List<OrderVO> orderList = (List<OrderVO>) sqlSession.selectList("mapper.order.selectOrderList", OrderState);
 		return orderList;
-	}
-
-	@Override
-	public String findU_id(int o_id) throws DataAccessException {
-		return (String) sqlSession.selectOne("mapper.order.findU_id", o_id);
 	}
 
 	@Override
@@ -91,5 +87,22 @@ public class OrderDAOImpl implements OrderDAO {
 	@Override
 	public void insertCartOrder(OrderVO orderVO) throws DataAccessException{
 		sqlSession.insert("mapper.order.insertCartOrder",orderVO);
+	}
+
+	@Override
+	public OrderVO selectOrder(int o_id) throws DataAccessException {
+		return (OrderVO) sqlSession.selectOne("mapper.order.selectOrder", o_id);
+	}
+
+	@Override
+	public List<OrderVO> CanceledUserOrderPage(HashMap<String, Object> map) throws DataAccessException {
+		List<OrderVO> listInfo = (List<OrderVO>) sqlSession.selectList("mapper.order.CanceledUserOrderPage", map);
+		return listInfo;
+	}
+
+	@Override
+	public List<OrderVO> CanceledUserOrders(String u_id) throws DataAccessException {
+		List<OrderVO> listInfo = (List<OrderVO>) sqlSession.selectList("mapper.order.CanceledUserOrders", u_id);
+		return listInfo;
 	}
 }

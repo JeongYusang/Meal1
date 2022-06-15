@@ -34,8 +34,11 @@ public interface MemberController {
 	public ModelAndView memberDetail(@RequestParam("id") String id, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 
-	public ModelAndView myMileage(@RequestParam(value = "message", required = false) String message,HttpServletRequest request,
-			HttpServletResponse response) throws Exception;
+	public ModelAndView myMileage(@RequestParam(value = "message", required = false) String message,
+			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+			@RequestParam(value = "section", required = false) String section,
+			@RequestParam(value = "pageNum", required = false) String pageNum,
+			HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 
 }
