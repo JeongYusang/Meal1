@@ -12,7 +12,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+<script type="text/javascript">
+function fnc_checked(){
+	
+    var g_allergy_M = '';
+    $('input[type="checkbox"]:checked').each(function (index) {
+        if (index != 0) {
+           g_allergy_M += '/';
+     
+        }       
+        g_allergy_M += $(this).val();
+       
+    });
+    document.getElementById("g_allergy_M").value = g_allergy_M;
+    return true;
+}
 
+
+</script>
 
 <style>
 .maingoodslist {
@@ -106,7 +123,7 @@ margin-bottom : 20px;
 			<h1>검색하신 내용은 ${text }입니다.</h1>
 			<div>	</div>
 			<div id="searchDetailWrap">
-				<form action="${contextPath }/search/SearchGoods.do">
+				<form action="${contextPath }/search/SearchGoods.do" name = "searchForm" onsubmit="return fnc_checked()">
 			<div id="allergyInfo">
 			<span>제외 성분</span>
 			<br>
@@ -182,6 +199,3 @@ margin-bottom : 20px;
 
 </body>
 </html>
-
-
-
