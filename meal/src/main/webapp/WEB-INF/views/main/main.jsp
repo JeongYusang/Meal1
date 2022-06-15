@@ -130,7 +130,9 @@
     width: 30px;
     position: relative;
     left: 250px;
+    bottom: 0px;
 }
+
 </style>
 
 </head>

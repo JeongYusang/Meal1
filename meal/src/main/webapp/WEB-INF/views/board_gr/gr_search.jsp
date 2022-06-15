@@ -178,7 +178,7 @@ tr.border-bottom td {
 					<th onclick="sortTable(2)" width="300px">제목</th>
 					<th onclick="sortTable(3)" width="100px">작성자</th>
 					<th onclick="sortTable(4)" width="150px">날짜</th>
-					<th onclick="sortTable(4)" width="150px">답변여부</th>
+					<th onclick="sortTable(5)" width="150px">답변여부</th>
 				</tr>
 			</thead>
 			<c:choose>

@@ -31,14 +31,19 @@ public interface MemberController {
 	public ResponseEntity deleteMember(@RequestParam("map") HashMap<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 
-	public ModelAndView memberDetail(@RequestParam("id") String id, HttpServletRequest request,
-			HttpServletResponse response) throws Exception;
-
 	public ModelAndView myMileage(@RequestParam(value = "message", required = false) String message,
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
+			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
+			HttpServletResponse response) throws Exception;
+
+	public ModelAndView memberDetail(@RequestParam(value = "message", required = false) String message,
+			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum,
-			HttpServletRequest request, HttpServletResponse response) throws Exception;
-
-
+			@RequestParam(value = "CdateMap", required = false) Map<String, Object> CdateMap,
+			@RequestParam(value = "Csection", required = false) String Csection,
+			@RequestParam(value = "CpageNum", required = false) String CpageNum,
+			@RequestParam("id") String id,HttpServletRequest request,
+			HttpServletResponse response) throws Exception;
 }
