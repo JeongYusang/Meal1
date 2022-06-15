@@ -59,6 +59,10 @@ public class AdminControllerImpl extends BaseController implements AdminControll
 		String a_id = adminInfo.getA_id();
 		session.setAttribute("isLogOn", false);
 		session.removeAttribute("adminInfo");
+		session.removeAttribute("quickZzimList");
+		session.removeAttribute("quickZzimListNum");
+		String message = "로그아웃이 완료되었습니다.";
+		mav.addObject("message", message);
 		mav.setViewName("redirect:/main/main.do");
 		return mav;
 	}
@@ -81,7 +85,7 @@ public class AdminControllerImpl extends BaseController implements AdminControll
 		_adminVO.setA_email1(a_email1);
 		_adminVO.setA_email2(a_email2);
 		adminService.addAdmin(_adminVO);
-		String viewName = "/main/main";
+		String viewName = "redirect:/main/main.do";
 		mav.setViewName(viewName);
 		return mav;
 	}

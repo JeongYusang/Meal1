@@ -72,10 +72,12 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			mav.addObject("orderVO", orderVO);
 			return mav;
 		} else {
-			String viewName2 = "redirect:/Non/NonUser.do";
+			String viewName2 = "/main/loginForm";
 			String message = "로그인 해주시길 바랍니다";
 			mav.setViewName(viewName2);
-			mav.addObject(message);
+			mav.addObject("message",message);
+			String non = "비회원관련된 것 꺼내기위한 아무 내용없는 변수";
+			mav.addObject("non", non);
 		}
 		return mav;
 	}

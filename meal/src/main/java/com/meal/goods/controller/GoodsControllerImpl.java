@@ -201,8 +201,9 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
       return resEntity;
    }
    @Override
-   @RequestMapping(value = "/goodsDetail.do", method = RequestMethod.GET)
-	public ModelAndView goodsDetail(@RequestParam("g_id") int g_id, @RequestParam("g_id") int b_gr_id,
+   @RequestMapping(value = "/goodsDetail.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView goodsDetail(@RequestParam("g_id") int g_id, 
+			@RequestParam(value="message", required = false) String message,
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
@@ -267,8 +268,10 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
         logger.info("boardGqList" + boardGqList);
         logger.info("--------------------------------");
         if (g_id == 0) {
-        	String message = "삭제된 상품입니다.";
-        	mav.addObject("message", message);
+        	String message1 = "삭제된 상품입니다.";
+        	mav.addObject("message1", message1);
+        	mav.addObject("message",message);
+        	
         	String viewName1 = "redirect:/main/main.do";
         	mav.setViewName(viewName1);
         } else {

@@ -28,9 +28,10 @@ public interface GoodsController {
 	public ModelAndView deleteGoods(@RequestParam HashMap<String, Object> map, @RequestParam("g_id") int g_id,
 			HttpServletRequest request, HttpServletResponse repsponse) throws Exception;
 
-	public ModelAndView goodsDetail(@RequestParam("g_id") int g_id, @RequestParam("g_id") int b_gr_id,
+	public ModelAndView goodsDetail(@RequestParam("g_id") int g_id,
+			@RequestParam(value="message", required = false) String message,
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
-			HttpServletResponse response) throws Exception;
+			HttpServletResponse response) throws Exception ;
 }
