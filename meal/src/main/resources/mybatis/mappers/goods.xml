@@ -311,16 +311,15 @@ update goods_tb set g_saleprice = '0', g_saleDate1= null, g_saleDate2= null , g_
 	<select id="SearchGoods" parameterType="Map"
 		resultMap="goodsResult">
 		select * from goods_tb where g_name like
-		CONCAT('%',#{text},'%') limit #{start} , #{end}
+		CONCAT('%',#{text},'%')
+		<if test="allergyList != null and !(allergyList.equals(''))">
+		
+		<foreach collection="allergyList" item ="item" separator=" ">
+		and g_allergy_M not like concat('%',#{item},'%')
+		</foreach>
+		</if>
+		limit #{start} , #{end}
 	</select>
-
-	<!-- 알레르기 품목 제외 검색에 관한 쿼리 -->
-	<select id="alergySearch" parameterType="Map"
-		resultMap="goodsResult">
-		select * from goods_tb where g_name not like
-		CONCAT('%','#{text}','%') limit #{start} , #{end}
-	</select>
-
 
 
 </mapper>
