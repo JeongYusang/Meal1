@@ -17,6 +17,7 @@
 		<result property="g_id" column="g_id" />
 		<result property="secret" column="secret" />
 		<result property="g_name" column="g_name" />
+		<result property="compare" column="compare" />
 	</resultMap>
 
 	<resultMap id="img_gqResult" type="Img_gqVO">
