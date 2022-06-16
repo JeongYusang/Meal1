@@ -268,7 +268,7 @@
                <li class="side-list">
                   <H2>구매정보</H2>
                   <ul class="sidebar-content">
-                  <li><a href="${contextPath}/member/memberDetail.do?id=${memberInfo.u_id}">회원정보보기</a></li>
+                  <li><a href="${contextPath}/member/memberDetail.do?u_id=${memberInfo.u_id}">회원정보보기</a></li>
                      <li><a href="${contextPath}/order/selectUserOrders.do">구매내역</a></li>
                      <li><a href="${contextPath}/order/selectCanceledOrders.do">취소/반품/교환내역</a></li>
                   </ul>

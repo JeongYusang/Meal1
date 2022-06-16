@@ -24,7 +24,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.meal.admin.service.AdminService;
 import com.meal.admin.vo.AdminVO;
+import com.meal.board.gq.service.BoardGqService;
+import com.meal.board.gq.vo.BoardGqVO;
+import com.meal.board.gr.service.BoardGrService;
+import com.meal.board.gr.vo.BoardGrVO;
+import com.meal.board.one.service.Board1Service;
+import com.meal.board.one.vo.Board1VO;
 import com.meal.common.controller.BaseController;
+import com.meal.goods.service.GoodsService;
 import com.meal.goods.vo.GoodsVO;
 import com.meal.member.service.MemberService;
 import com.meal.member.vo.MemberVO;
@@ -49,6 +56,15 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 	@Autowired
 	private OrderService orderService;
 	@Autowired
+	private BoardGqService boardGqService;
+	@Autowired
+	private BoardGrService boardGrService;
+	@Autowired
+	private Board1Service board1Service;
+	@Autowired
+	private GoodsService goodsService;
+
+	@Autowired
 	private MemberVO memberVO;
 	@Autowired
 	private SellerVO sellerVO;
@@ -68,11 +84,11 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 		session.setAttribute("isLogOn", false);
 		session.removeAttribute("memberInfo");
 		session.removeAttribute("quickZzimList");
-		session.removeAttribute("quickZzimListNum");		
+		session.removeAttribute("quickZzimListNum");
 		String message = "로그아웃이 완료되었습니다.";
 		mav.addObject("message", message);
 		mav.setViewName("redirect:/main/main.do");
-		
+
 		return mav;
 	}
 
@@ -207,15 +223,10 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum,
-			@RequestParam(value = "CdateMap", required = false) Map<String, Object> CdateMap,
-			@RequestParam(value = "Csection", required = false) String Csection,
-			@RequestParam(value = "CpageNum", required = false) String CpageNum,
-			@RequestParam("id") String id,HttpServletRequest request,
+			@RequestParam(value = "u_id", required = false) String u_id, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		String viewName = (String) request.getAttribute("viewName");
-		mav.setViewName(viewName);
-		MemberVO memberInfo = (MemberVO) memberService.decode(id);
+		MemberVO memberInfo = (MemberVO) memberService.decode(u_id);
 
 		if (memberInfo != null) {
 			mav.addObject("memberVO", memberInfo);
@@ -223,20 +234,90 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 			Map.put("pageNum", pageNum);
 			Map.put("section", section);
 			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(Map);
-			pagingMap.put("u_id", id);
+			pagingMap.put("u_id", u_id);
 			List<OrderVO> OrderList = orderService.UserboardOrderPage(pagingMap);
 			List<OrderVO> CancledOrderList = orderService.CanceledUserOrderPage(pagingMap);
-			mav.addObject("OrderList",OrderList);
-			mav.addObject("CancledOrderList",CancledOrderList);
+			List<Board1VO> Board1List = board1Service.selectMyBoard1List(pagingMap);
+			List<BoardGrVO> BoardGrList = boardGrService.selectMyBoardGrList(pagingMap);
+			List<BoardGqVO> BoardGqList = boardGqService.selectMyBoardGqList(pagingMap);
+			List<BoardGrVO> BoardGr = boardGrService.selectBoardGrallList();
+			List<BoardGqVO> BoardGq = boardGqService.selectBoardGqallList();
+			List<Board1VO> board1 = board1Service.selectBoard1allList();
+			mav.addObject("OrderList", OrderList);
+			mav.addObject("CancledOrderList", CancledOrderList);
+			mav.addObject("Board1List", Board1List);
+			mav.addObject("BoardGrList", BoardGrList);
+			mav.addObject("BoardGqList", BoardGqList);
+			String viewName = (String) request.getAttribute("viewName");
+			mav.setViewName(viewName);
+			
+			
 
-			// orderList (u_id) grList(u_id) gqList(u_id) oneList(u_id) 추가할예정
+			for (Board1VO item : Board1List) {
+				for (Board1VO j : board1) {
+					if (!((int) item.getB_1_id() == (int) j.getParentNo())) {
+						String compare = "N";
+						item.setCompare(compare);
+					} else {
+						String compare = "Y";
+						item.setCompare(compare);
+						System.out.println("BoardCompare" + item.getB_1_id());
+						break;
+					}
+				}
+			}
+			
+
+			for (BoardGqVO item : BoardGqList) {
+				int g_id = item.getG_id();
+				GoodsVO goodsVO = goodsService.selectGoodsDetail(g_id);
+				String g_name = goodsVO.getG_name();
+				item.setG_name(g_name);
+			}
+
+			for (BoardGqVO item : BoardGqList) {
+				for (BoardGqVO j : BoardGq) {
+					if (!((int) item.getB_gq_id() == (int) j.getParentNo())) {
+						String compare = "N";
+						item.setCompare(compare);
+					} else {
+						String compare = "Y";
+						item.setCompare(compare);
+						System.out.println("BoardCompare" + item.getB_gq_id());
+						break;
+					}
+				}
+			}
+
+			for (BoardGrVO item : BoardGrList) {
+				int g_id = item.getG_id();
+				GoodsVO goodsVO = goodsService.selectGoodsDetail(g_id);
+				String g_name = goodsVO.getG_name();
+				item.setG_name(g_name);
+			}
+
+			for (BoardGrVO item : BoardGrList) {
+				for (BoardGrVO j : BoardGr) {
+					if (!((int) item.getB_gr_id() == (int) j.getParentNo())) {
+						String compare = "N";
+						item.setCompare(compare);
+					} else {
+						String compare = "Y";
+						item.setCompare(compare);
+						System.out.println("BoardCompare" + item.getB_gr_id());
+						break;
+					}
+				}
+			}
 		} else {
-			System.out.println("실패했음");
+			message = "로그인을 해주시길 바랍니다.";
+			String viewName = "redirect:/main/loginForm.do";
+			mav.setViewName(viewName);
+
 		}
-		
+
 		return mav;
 	}
-	
 
 	// hp 인증
 	@RequestMapping(value = "/FindIDResult2.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -253,7 +334,6 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 				mav.addObject("message", message);
 				mav.setViewName("/member/FindID");
 				return mav;
-
 			}
 
 			logger.info("==========================");
@@ -286,26 +366,33 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
+		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 		try {
-			MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
-			String u_id = memberInfo.getU_id();
-			int u_mile = memberInfo.getU_mile();
-			HashMap<String, Object> Map = new HashMap<String, Object>();
-			Map.put("pageNum", pageNum);
-			Map.put("section", section);
-			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(Map);
-			pagingMap.put("u_id", u_id);
+			if (memberInfo != null) {
+				String u_id = memberInfo.getU_id();
+				int u_mile = memberInfo.getU_mile();
+				HashMap<String, Object> Map = new HashMap<String, Object>();
+				Map.put("pageNum", pageNum);
+				Map.put("section", section);
+				HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(Map);
+				pagingMap.put("u_id", u_id);
 
-			List<MileageVO> MilagePage = memberService.myMileageList(pagingMap);
-			String viewName = (String) request.getAttribute("viewName");
-			List<MileageVO> mileage = (List<MileageVO>) memberService.myMileage(u_id);
-			mav.addObject("mileage", mileage);
-			mav.addObject("MilagePage", MilagePage);
-			mav.addObject("u_mile", u_mile);
-			mav.setViewName(viewName);
+				List<MileageVO> MilagePage = memberService.myMileageList(pagingMap);
+				String viewName = (String) request.getAttribute("viewName");
+				List<MileageVO> mileage = (List<MileageVO>) memberService.myMileage(u_id);
+				mav.addObject("mileage", mileage);
+				mav.addObject("MilagePage", MilagePage);
+				mav.addObject("u_mile", u_mile);
+				mav.setViewName(viewName);
+			} else {
+				message = "로그인 해주시길 바랍니다.";
+				String viewName = "redirect:/main/loginForm.do";
+				mav.setViewName(viewName);
+				mav.addObject(message);
+			}
 
 		} catch (Exception e) {
-			message = "로그인을 해주시길 바랍니다.";
+			message = "오류가 발생하였습니다";
 			String viewName = "redirect:/main/main.do";
 			mav.setViewName(viewName);
 			mav.addObject(message);
@@ -314,5 +401,5 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 		return mav;
 
 	}
-	
+
 }

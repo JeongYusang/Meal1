@@ -41,9 +41,6 @@ public interface MemberController {
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum,
-			@RequestParam(value = "CdateMap", required = false) Map<String, Object> CdateMap,
-			@RequestParam(value = "Csection", required = false) String Csection,
-			@RequestParam(value = "CpageNum", required = false) String CpageNum,
-			@RequestParam("id") String id,HttpServletRequest request,
+			@RequestParam(value = "u_id", required = false)String u_id,HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 }
