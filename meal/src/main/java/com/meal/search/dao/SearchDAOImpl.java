@@ -23,4 +23,10 @@ public class SearchDAOImpl implements SearchDAO {
 		return searchList;
 	}
 
+	@Override
+	public List<GoodsVO> CateSearchGoods(HashMap<String, Object> map) throws DataAccessException {
+		List<GoodsVO> searchList = (List<GoodsVO>) sqlSession.selectList("mapper.goods.CateSearchGoods", map);
+		return searchList;
+	}
+
 }

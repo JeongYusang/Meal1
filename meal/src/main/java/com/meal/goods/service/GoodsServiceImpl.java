@@ -117,4 +117,9 @@ public class GoodsServiceImpl implements GoodsService {
 		return goodsImg;
 		
 	}
+
+	@Override
+	public List<GoodsVO> GoodsCateList(String cate) throws Exception {
+		return (List<GoodsVO>) goodsDAO.GoodsCateList(cate);
+	}
 }

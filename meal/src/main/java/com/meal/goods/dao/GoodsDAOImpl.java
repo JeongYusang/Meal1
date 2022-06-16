@@ -115,5 +115,11 @@ public class GoodsDAOImpl implements GoodsDAO {
 		return goodsImg;
 	}
 
+	@Override
+	public List<GoodsVO> GoodsCateList(String cate) throws DataAccessException {
+		List<GoodsVO> goodsInfo = (List<GoodsVO>)sqlSession.selectList("mapper.goods.GoodsCateList",cate);
+		return goodsInfo;
+	}
+
 	
 }

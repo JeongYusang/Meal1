@@ -45,18 +45,22 @@ public class SearchController extends BaseController {
 
 
 		String text = map.get("text");
-		String allergy = map.get("g_allergy_M");
-
-		if (allergy != null ) {
+		String g_allergy_M = map.get("g_allergy_M");
+		pagingMap.put("g_allergy_M", g_allergy_M);
+		logger.debug("========================");
+		logger.debug("allergyM : " + g_allergy_M);
+		System.out.println("allergy : " + g_allergy_M);
+		logger.debug("========================");
+		if (g_allergy_M != null ) {
 			logger.debug("========================");
 			logger.debug("allergy 포함구문 ");
 			System.out.println("allergy 포함구문 ");
 			logger.debug("========================");
 			List<String> allergyList = new ArrayList<String>();
-			String[] allergyL = allergy.split("/");
-			int length = allergy.split("/").length;
+			String[] allergyL = g_allergy_M.split("/");
+			int length = g_allergy_M.split("/").length;
 			for (int i = 0; i < length; i++) {
-				allergy = allergyL[i];
+				String allergy = allergyL[i];
 				logger.debug("========================");
 				logger.debug("allergy : " + allergy);
 				System.out.println("allergy : " + allergy);
@@ -77,6 +81,62 @@ public class SearchController extends BaseController {
 		System.out.println("베이스컨트롤러 메인 메소드");
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("searchList", searchList);
+		mav.addObject("text", text);
+		mav.setViewName(viewName);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/CateSearchGoods.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView CatesearchGoods(@RequestParam Map<String, String> map,
+			@RequestParam ("cate")String cate,
+			@RequestParam(value = "section", required = false) String section,
+			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String viewName = (String) request.getAttribute("viewName");
+		HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
+		pagingInfo.put("section", section);
+		pagingInfo.put("pageNum", pageNum);
+		HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
+
+
+		String text = map.get("text");
+		String g_allergy_M = map.get("g_allergy_M");
+		pagingMap.put("g_allergy_M", g_allergy_M);
+		logger.debug("========================");
+		logger.debug("allergyM : " + g_allergy_M);
+		System.out.println("allergy : " + g_allergy_M);
+		logger.debug("========================");
+		if (g_allergy_M != null ) {
+			logger.debug("========================");
+			logger.debug("allergy 포함구문 ");
+			System.out.println("allergy 포함구문 ");
+			logger.debug("========================");
+			List<String> allergyList = new ArrayList<String>();
+			String[] allergyL = g_allergy_M.split("/");
+			int length = g_allergy_M.split("/").length;
+			for (int i = 0; i < length; i++) {
+				String allergy = allergyL[i];
+				logger.debug("========================");
+				logger.debug("allergy : " + allergy);
+				System.out.println("allergy : " + allergy);
+				
+				logger.debug("========================");
+
+				allergyList.add(allergy);
+
+			}
+			pagingMap.put("allergyList", allergyList);
+		}
+		pagingMap.put("text", text);
+		pagingMap.put("cate", cate);
+
+		// 메인창에 띄워줄 상품 정보를 저장 추후 쿼리를 바꿔줄 예정이긴함
+		// HashMap<String,Object> map = new HashMap<String,Object> ();
+		// map.put("text", text);
+		List<GoodsVO> goodsList = (List<GoodsVO>) searchService.CateSearchGoods(pagingMap);
+		System.out.println("베이스컨트롤러 메인 메소드");
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("goodsList", goodsList);
 		mav.addObject("text", text);
 		mav.setViewName(viewName);
 		return mav;

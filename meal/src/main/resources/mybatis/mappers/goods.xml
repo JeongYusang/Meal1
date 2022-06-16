@@ -312,10 +312,28 @@ update goods_tb set g_saleprice = '0', g_saleDate1= null, g_saleDate2= null , g_
 		resultMap="goodsResult">
 		select * from goods_tb where g_name like
 		CONCAT('%',#{text},'%')
-		<if test="allergyList != null and !(allergyList.equals(''))">
-		
-		<foreach collection="allergyList" item ="item" separator=" ">
-		and g_allergy_M not like concat('%',#{item},'%')
+		<if test="g_allergy_M != null and g_allergy_M != ''">
+		<foreach collection="allergyList" item ="allergyList" separator=" ">
+		and g_allergy_M not like concat('%',#{allergyList},'%')
+		</foreach>
+		</if>
+		limit #{start} , #{end}
+	</select>
+	
+	
+	<select id="GoodsCateList" resultMap="goodsResult" parameterType="String">
+		 <![CDATA[
+		  select * from goods_tb where g_cate2 = #{cate}
+		]]>
+	</select>
+	
+	<select id="CateSearchGoods" parameterType="Map"
+		resultMap="goodsResult">
+		select * from goods_tb where g_name like CONCAT('%',#{text},'%') and g_cate2 = #{cate}
+	
+		<if test="g_allergy_M != null and g_allergy_M != ''">
+		<foreach collection="allergyList" item ="allergyList" separator=" ">
+		and g_allergy_M not like concat('%',#{allergyList},'%')
 		</foreach>
 		</if>
 		limit #{start} , #{end}
