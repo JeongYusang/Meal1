@@ -139,4 +139,10 @@ public class OrderServiceImpl implements OrderService {
 	public OrderVO selectOrder(int o_id) {
 		return orderDAO.selectOrder(o_id);
 	}
+	@Override
+	public List<OrderVO> BestGoodsCount() throws Exception{
+		
+		return orderDAO.BestGoodsCount();
+	}
+	
 }

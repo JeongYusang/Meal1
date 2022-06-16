@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.dao.DataAccessException;
+
 import com.meal.order.vo.OrderVO;
 
 public interface OrderService {
@@ -39,4 +41,7 @@ public interface OrderService {
 	public List<OrderVO> CanceledUserOrderPage(HashMap<String, Object> pagingMap)throws Exception;
 
 	public List<OrderVO> CanceledUserOrders(String u_id)throws Exception;
+	//스케줄러 위한 조회문
+	public List<OrderVO> BestGoodsCount() throws Exception;
+		
 }
