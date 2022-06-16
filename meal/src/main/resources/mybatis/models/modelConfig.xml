@@ -21,6 +21,8 @@
 		<typeAlias type="com.meal.admin.vo.ReasonVO" alias="ReasonVO" />
 		<typeAlias type="com.meal.cart.vo.CartVO" alias="CartVO" />
 		<typeAlias type="com.meal.member.vo.MileageVO" alias="MileageVO" />
+		<typeAlias type="com.meal.board.a.vo.BaVO" alias="BaVO" />
+		<typeAlias type="com.meal.board.a.vo.Img_aVO" alias="Img_aVO" />
 	</typeAliases>
 </configuration>
 

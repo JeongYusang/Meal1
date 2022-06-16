@@ -21,7 +21,7 @@ request.setCharacterEncoding("UTF-8");
 		}
 	}
 	function backToList(obj) {
-		obj.action = "${contextPath}/board/listArticles.do";
+		obj.action = "${contextPath}/boardA/listArticles.do";
 		obj.submit();
 	}
 </script>
@@ -32,7 +32,7 @@ request.setCharacterEncoding("UTF-8");
 }
 
 .table-wrap table {
-	width: 100%;
+    width: 80%;
 }
 
 .board-wrap>tr {
@@ -47,6 +47,9 @@ request.setCharacterEncoding("UTF-8");
 
 .board-b-wrap {
 	height: 30px;
+    display: flex;
+    justify-content: flex-end;
+    width: 638px;
 }
 
 .board-b-wrap>input {
@@ -67,29 +70,48 @@ request.setCharacterEncoding("UTF-8");
 
 .table-wrap th.td1 {
 	border-radius: 4px;
-	width: 150px;
+    width: 120px;
 	align: center;
 	background: #ffc0cf;
 }
-.table-wrap td.td2{
-    border-radius: 4px;
-    border: 1px solid black;
+
+.table-wrap td.td2 {
+	border-radius: 4px;
+	border: 1px solid black;
 }
+
+.table-wrap th.fileboxhead {
+	border-radius: 4px;
+	width: 120px;
+	align: center;
+	background: #ffc0cf;
+}
+
+.table-wrap td.fileboxbody {
+	border-radius: 4px;
+	border: 1px solid black;
+}
+
 .table-wrap textarea {
 	width: 100%;
 	border-radius: 4px;
 }
-.filecss{
-align:center;
+
+#preview {
+	width: 100%;
+	height: 100%;
+	border: 0;
 }
 
-#preview{
-    width: 100%;
-    height: 100%;
-    border:0;
+.board-title>h1 {
+	border-bottom: 3px solid #ffc0cf;
+    text-align: center;
+    width: 640px;
 }
-.board-title> h1{
-border-bottom:3px solid #ffc0cf;
+
+td #preview {
+	width: 30px;
+	height:30px;
 }
 </style>
 </head>
@@ -103,40 +125,74 @@ border-bottom:3px solid #ffc0cf;
 			enctype="multipart/form-data">
 			<div class='table-wrap'>
 				<table>
-					
+
 					<tr>
 						<th class="td1">작성자 아이디</th>
-						<td class="td2"><input type=text value="유저ID필드"
-							name="writer"  disabled/></td>
+						<td class="td2"><input type=text value="유저ID필드" name="writer"
+							disabled /></td>
 					</tr>
 					<tr>
 						<th class="td1">제목</th>
-						<td class="td2"><input type=text value="타이틀필드"
-							name="title" id="i_title" /></td>
+						<td class="td2"><input type=text value="타이틀필드" name="title"
+							id="i_title" /></td>
+					</tr>
+					<tr>
+						<th class="td1">카테고리</th>
+						<td class="td2"><select name="cate" id="cate" title="cate"
+							onChange="">
+								<option value="공지사항">공지사항</option>
+								<option value="이벤트">이벤트</option>
+								<option value="자주묻는질문">자주묻는질문</option>
+						</select></td>
 					</tr>
 					<tr>
 						<th class="td1">내용</th>
-						<td class="td2">
-						<textarea rows="20" cols="70" name="내용필드" id="i_content" > ${article.content } </textarea></td>
+						<td class="td2"><textarea rows="20" cols="30" name="내용필드"
+								id="i_content"> ${article.content } </textarea></td>
 					</tr>
-				<tr  height="200px" >
-				<th class="td1">이미지파일 첨부
-				<input class="filecss" type="file" name="imageFileName"
-					onchange="readURL(this);" /></th>
-				<td class = 'td2'><input type="image" id="preview" src="#" alt="이미지 출력창 입니다." /></td>
-			</tr>
+					<tr class="filebox">
+						<th class="fileboxhead">이미지추가</th>
+						<td class="fileboxbody"><input type="file" name="main" />
+						<a href="#this" id="delete" class="btn" name="delete">삭제</a>
+						<a href="#this" id="addFile" class="btn">추가</a>
+						</td>
 				</table>
 			</div>
 			<div class="board-b-wrap">
-			<input type='submit' value="글쓰기" /> 
-				<input type=button value="목록" onClick="backToList(this.form)" />
-		</div>
+				<input type='submit' value="글쓰기" /> <input type=button value="목록"
+					onClick="backToList(this.form)" />
+			</div>
 
 		</form>
-	
+
 	</div>
 </body>
+<script>
+	var gfv_count = 1;
+	$(document).ready(function() {
+		$("#addFile").on("click", function(e) { //파일 추가 버튼
+			e.preventDefault();
+			fn_addFile();
+		});
 
-</html>
-</body>
+		$("a[name='delete']").on("click", function(e) { //삭제 버튼
+			e.preventDefault();
+			fn_deleteFile($(this));
+		});
+	});
+
+	function fn_addFile() {
+		var str = "<p><input type='file' name='main" + (gfv_count++)
+				+ "'><a href='#this' class='btn' name='delete'>삭제</a></p>";
+		$(".fileboxbody").append(str);
+		$("a[name='delete']").on("click", function(e) { //삭제 버튼
+			e.preventDefault();
+			fn_deleteFile($(this));
+		});
+	}
+
+	function fn_deleteFile(obj) {
+		obj.parent().remove();
+	}
+</script>
 </html>

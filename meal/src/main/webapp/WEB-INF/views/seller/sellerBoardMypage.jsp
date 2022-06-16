@@ -225,14 +225,17 @@ td.fixed {
 	text-align: center;
 }
 
-span.fa.fa-star.checked {
-	float: right;
-	font-size: 20px;
+span#fa\ fa-star\ checked {
+    float: left;
+    color: aqua;
+    width: 30px;
+    height: 30px;
 }
 
-span.fa.fa-star {
-	float: right;
-	font-size: 20px;
+span#fa\ fa-star\ {
+    float: left;
+    width: 30px;
+    height: 30px;
 }
 </style>
 </head>
@@ -267,7 +270,7 @@ span.fa.fa-star {
 						<c:choose>
 							<c:when test="${empty boardGqSellerList}">
 								<tr>
-									<td colspan=5 class="fixed"><strong>등록된 상품이 없습니다.</strong></td>
+									<td colspan=7 class="fixed"><strong>등록된 상품이 없습니다.</strong></td>
 								</tr>
 							</c:when>
 							<c:when test="${not empty boardGqSellerList}">
@@ -331,14 +334,14 @@ span.fa.fa-star {
 								<th onclick="sortTable(3)" class="header" width="154px">작성일자</th>
 								<th onclick="sortTable(4)" class="header" width="154px">비밀글</th>
 								<th onclick="sortTable(5)" class="header" width="154px">상품이름</th>
-								<th onclick="sortTable(6)" class="header" width="154px">평점</th>
+								<th onclick="sortTable(6)" class="header" width="200px">평점</th>
 								<th class="header" width="180px">답글작성</th>
 							</tr>
 						</thead>
 						<c:choose>
 							<c:when test="${empty boardGrSellerList}">
 								<tr>
-									<td colspan=5 class="fixed"><strong>등록된 상품이 없습니다.</strong></td>
+									<td colspan=8 class="fixed"><strong>등록된 상품이 없습니다.</strong></td>
 								</tr>
 							</c:when>
 							<c:when test="${not empty boardGrSellerList}">
@@ -358,49 +361,44 @@ span.fa.fa-star {
 										<td>
 											<c:choose>
 												<c:when test="${item.star == 5}">
-												<span>5</span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
+													<span id="fa fa-star checked"></span>
+													<span id="fa fa-star checked"></span>
+													<span id="fa fa-star checked"></span>
+													<span id="fa fa-star checked"></span>
+													<span id="fa fa-star checked"></span>
 												</c:when>
 												<c:when test="${item.star == 4}">
-												<span>4</span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star"></span>
+													<span id="fa fa-star checked"></span>
+													<span id="fa fa-star checked"></span>
+													<span id="fa fa-star checked"></span>
+													<span id="fa fa-star checked"></span>
+													<span id="fa fa-star"></span>
 												</c:when>
 												<c:when test="${item.star == 3}">
-												<span>3</span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
+													<span id="fa fa-star checked"></span>
+													<span id="fa fa-star checked"></span>
+													<span id="fa fa-star checked"></span>
+													<span id="fa fa-star"></span>
+													<span id="fa fa-star"></span>
 												</c:when>
 												<c:when test="${item.star == 2}">
-												<span>2</span> 
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
+													<span id="fa fa-star checked"></span>
+													<span id="fa fa-star checked"></span>
+													<span id="fa fa-star"></span>
+													<span id="fa fa-star"></span>
+													<span id="fa fa-star"></span>
 												</c:when>
 												<c:otherwise>
-												<span>1</span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
+													<span id="fa fa-star checked"></span>
+													<span id="fa fa-star"></span>
+													<span id="fa fa-star"></span>
+													<span id="fa fa-star"></span>
+													<span id="fa fa-star"></span>
 												</c:otherwise>
 											</c:choose>
 											</td>
 										<c:if test="${item.compare == 'N' }">
-										<td><a href="${contextPath}/boardGr/boardGrReviewform.do?b_gq_id=${item.b_gr_id}">답글작성</a></td>
+										<td><a href="${contextPath}/boardGr/boardGrReviewform.do?b_gr_id=${item.b_gr_id}">답글작성</a></td>
 										</c:if>
 										<c:if test="${item.compare == 'Y' }">
 										<td><p>답변완료</p></td>
@@ -451,7 +449,7 @@ span.fa.fa-star {
 						<c:choose>
 							<c:when test="${empty board1SellerList}">
 								<tr>
-									<td colspan=7 class="fixed"><strong>등록된 상품이 없습니다.</strong></td>
+									<td colspan=6 class="fixed"><strong>등록된 상품이 없습니다.</strong></td>
 								</tr>
 							</c:when>
 							<c:when test="${not empty board1SellerList}">
