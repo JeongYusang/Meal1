@@ -105,4 +105,9 @@ public class OrderDAOImpl implements OrderDAO {
 		List<OrderVO> listInfo = (List<OrderVO>) sqlSession.selectList("mapper.order.CanceledUserOrders", u_id);
 		return listInfo;
 	}
+	// 인기상품 스케줄러를 위한 검색
+	public List<OrderVO> BestGoodsCount() throws DataAccessException{
+		List<OrderVO> bestGoodsbyOrder = (List<OrderVO>)sqlSession.selectList("mapper.order.BestGoodsCount");
+		return bestGoodsbyOrder;
+	}
 }

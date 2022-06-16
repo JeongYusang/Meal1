@@ -31,6 +31,7 @@
 		<result property="o_useMile" column="o_useMile" />
 		<result property="b_gr_id" column="b_gr_id" />
 		<result property="parentNo" column="parentNo" />
+		<result property="count" column="count"/>
 	</resultMap>
 
 
@@ -219,5 +220,12 @@
 	<![CDATA[
 		select max(parentNO)+1 from order_tb 
 	 ]]>	
+	</select>
+	
+	<select id="BestGoodsCount" resultMap="orderResult">
+	<![CDATA[
+	   select g_id, count(g_id) as count from order_tb group by g_id order by count desc limit 0,4
+	]]>
+	
 	</select>
 </mapper>

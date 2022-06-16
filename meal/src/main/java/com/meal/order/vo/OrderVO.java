@@ -35,7 +35,14 @@ public class OrderVO {
 	public int b_gr_id;
 	public int sum;
 	public int d_price;
+	public int count;
 	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	public int getD_price() {
 		return d_price;
 	}

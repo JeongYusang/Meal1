@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import com.meal.goods.dao.GoodsDAO;
 import com.meal.goods.service.GoodsService;
 import com.meal.goods.vo.GoodsVO;
+import com.meal.order.service.OrderService;
+import com.meal.order.vo.OrderVO;
 
 @Component("Scheduler")
 public class SchedulerController {
@@ -23,6 +25,9 @@ public class SchedulerController {
 	private GoodsDAO goodsDAO;
 	@Autowired
 	private GoodsService goodsService;
+	@Autowired
+	private OrderService orderService;
+	
 	
 	@Scheduled(cron = "0 15 13 * * ?")
 	public void goodsCateUpdate() {
@@ -45,6 +50,52 @@ public class SchedulerController {
 		logger.info("schedule start : [" + batchResult + "] " + dateFormat.format(calendar.getTime()));
 
 	}
+	
+	@Scheduled(cron = "0 15 13 * * ?")
+	public void BestgoodsCateUpdate() {
+		// goods cate변경
+		// 인기상품검색 검색
+		String batchResult = "성공";
+		try {
+			// BestG List where 날짜차이 검색  
+			/*if(GoodsVO BestG != null){
+			  for(item:list){
+			  // update 날짜에 관하여 NewGoods로 반환
+			  }
+			  BestG 전체검색
+			  if (BestG != null){
+			  for(GoodsVO item:list){
+			  //일반상품으로 변경
+			  }
+			   }
+			
+			*/
+			
+			
+			
+			
+			// 해당 상품조회는 상품등록후 24시간이 지난상황의상품을 검색해줌.
+			List<OrderVO> bestGoods = orderService.BestGoodsCount();
+			for(OrderVO item : bestGoods) {
+				int g_id = item.getG_id();
+				/* cate2 = BestG 로변경할 메소드 ! 
+					g_id만 보내서 bestGoods로 변경할수있게 메소드만들기
+				  
+				*/
+				
+			}
+			
+			
+		} catch (Exception e) {
+			batchResult = "실패";
+		}
+		Calendar calendar = Calendar.getInstance();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		logger.info("schedule start : [" + batchResult + "] " + dateFormat.format(calendar.getTime()));
+
+	}
+	
+	
 	// 상품 세일 지정
 	@Scheduled(cron = "0 15 13 * * ?")
 	public void goodsSaleBegin() {
