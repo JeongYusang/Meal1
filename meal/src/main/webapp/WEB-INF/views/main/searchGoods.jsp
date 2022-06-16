@@ -112,6 +112,35 @@ function fnc_checked(){
 width: 1000px;
 margin-bottom : 20px;
 }
+.soldout {
+filter: brightness(50%);
+position: relative;
+width: 250px;
+height: 250px;
+}
+
+.goods_img{
+position: relative;
+width: 250px;
+height: 250px;
+
+}
+
+#soldtext {
+  text-align: center;
+    position: absolute;
+    font-size: 40px;
+    font-weight: bold;
+    top: 100px;
+    color: white;
+    margin-left: 25px;
+}
+
+#goods-info {
+width: 250px;
+margin: 10px;
+position: relative;
+}
 </style>
 </head>
 <body>
@@ -155,17 +184,13 @@ margin-bottom : 20px;
 
 
 						<li>
-						<div>
-						<a
-							href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id }"><img
-								src="${contextPath}/download1.do?g_id=${item.g_id }&cate=main"
-								width="250px" height="250px"></a>
+						<div id= "goods-info">
+						<a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id }"><c:if test="${item.g_amount <= 0}">
+									<img class = "soldout"src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main">
+									<div id="soldtext">상품준비중</div></c:if>
+							<c:if test="${item.g_amount > 0}"><img class = "goods_img" src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"></c:if></a>
 								 <br>${item.g_name } <br>
-							</div>
-							<div>
-							<c:if
-									test="${empty item.g_saleprice or item.g_saleprice eq 0 }">
-									<br> 
+							<c:if test="${empty item.g_saleprice or item.g_saleprice eq 0 }">
 								가격: ${item.g_price }원
 								</c:if> <c:if
 									test="${not empty item.g_saleprice and item.g_saleprice ne 0}">

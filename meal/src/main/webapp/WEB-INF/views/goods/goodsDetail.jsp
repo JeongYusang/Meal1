@@ -176,8 +176,9 @@ tr.border-bottom td {
 }
 
 #mainImg {
-	width: 600px;
-	height: 600px;
+    width: 650px;
+    height: 650px;
+    margin: 10px 0 0 5px;
 }
 
 .checked {
@@ -257,6 +258,29 @@ h6.titleText {
 div #icon {
 	margin-bottom: 120px;
 }
+.soldout {
+filter: brightness(50%);
+    position: relative;
+    width: 650px;
+    height: 650px;
+    margin: 10px 0 0 5px;
+}
+
+#goods-info #soldtext {
+      text-align: center;
+    position: absolute;
+    font-size: 80px;
+    font-weight: bold;
+    top: 300px;
+    color: white;
+    margin-left: 135px;
+}
+
+#goods-info {
+width: 700px;
+height: 700px;
+position: relative;
+}
 </style>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -302,9 +326,13 @@ div #icon {
 	</script>
 	<div id="main-wrap">
 		<div class="container">
-			<img
-				src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=main"
-				id="mainImg">
+			<div id = "goods-info">
+									<c:if test="${goodsInfo.g_amount <= 0}">
+									<img class = "soldout"src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=main">
+									<div id="soldtext">상품준비중</div></c:if>
+									<c:if test="${goodsInfo.g_amount > 0}"><img src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=main" id="mainImg"></c:if>
+									</div>
+			
 			<div class="InfoTop">
 				<br> <br> <br> <b style="font-size: 52px">${goodsInfo.g_name}</b>
 				<p style="font-size: 45px; font-weight: 600; margin-top: 0;">${goodsInfo.g_price }원</p>
@@ -353,7 +381,7 @@ div #icon {
 					href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=zzim"
 					class="button">찜하기</a> <a
 					href="${contextPath}/order/OrderForm.do?g_id=${goodsInfo.g_id}&o_goods_qty=1"
-					class="button"> 구매하기</a> <a
+					class="button" > 구매하기</a> <a
 					href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=cart"
 					class="button">장바구니담기</a>
 			</div>
