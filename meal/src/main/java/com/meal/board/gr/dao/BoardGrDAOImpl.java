@@ -124,6 +124,13 @@ public class BoardGrDAOImpl implements BoardGrDAO {
 		return (BoardGrVO) sqlSession.selectOne("mapper.boardGr.boardgr_download",b_gr_id);
 	}
 
+	//판매자 페이지 상품후기 내역 조회를 위해 사용 0616
+	@Override
+	public List<BoardGrVO> selectBoardGrSList(HashMap<String, Object> map) throws DataAccessException {
+		List<BoardGrVO> sGrListInfo = (List<BoardGrVO>) sqlSession.selectList("mapper.boardGr.selectBoardGrSList", map);
+		return sGrListInfo;
+	}
+
 	
 
 }

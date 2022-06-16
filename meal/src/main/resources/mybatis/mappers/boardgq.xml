@@ -174,14 +174,14 @@ update board_gq set title = #{title}, content = #{content}, secret = #{secret} w
     	]]>
 	</select>
 
-	<!-- 판매자 상품문의 내역 확인 0615 -->
+	<!-- 판매자페이지 상품문의 내역 확인 0615 -->
 	<select id="boardGqList" resultMap="BoardGqResult"
 		parameterType="Map">
 		select gq.*, g.g_name
 		from board_gq gq
 		inner join goods_tb g
 		on gq.g_id = g.g_id
-		where gq.s_id = #{s_id} and gq.parentNo = 0 order by gq.credate desc;
+		where gq.s_id = #{s_id} and gq.parentNo = 0 order by gq.b_gq_id desc;
 	</select>
 
 

@@ -60,6 +60,13 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/seller/sellerMypage.jsp" />
 	</definition>
+	
+	<!-- 판매자 게시판마이페이지 -->
+	<definition name="/seller/sellerBoardMypage" extends="baseLayout2">
+		<put-attribute name="title" value="판매자 게시판마이페이지" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/seller/sellerBoardMypage.jsp" />
+	</definition>
 
 
 	<!--아이디/비밀번호찾기 -->

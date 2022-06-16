@@ -27,6 +27,8 @@ import com.meal.admin.service.AdminService;
 import com.meal.admin.vo.AdminVO;
 import com.meal.board.gq.service.BoardGqService;
 import com.meal.board.gq.vo.BoardGqVO;
+import com.meal.board.gr.service.BoardGrService;
+import com.meal.board.gr.vo.BoardGrVO;
 import com.meal.board.one.service.Board1Service;
 import com.meal.board.one.vo.Board1VO;
 import com.meal.common.controller.BaseController;
@@ -57,6 +59,8 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 	private BoardGqService boardGqService;
 	@Autowired
 	private Board1Service board1Service;
+	@Autowired
+	private BoardGrService boardGrService;
 
 	@Autowired
 	private Img_sVO img_sVO;
@@ -70,6 +74,10 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 		HttpSession session = request.getSession();
 		session.setAttribute("isLogOn", false);
 		session.removeAttribute("sellerInfo");
+		session.removeAttribute("quickZzimList");
+		session.removeAttribute("quickZzimListNum");
+		String message = "로그아웃이 완료되었습니다.";
+		mav.addObject("message", message);
 		mav.setViewName("redirect:/main/main.do");
 		return mav;
 	}
@@ -346,7 +354,7 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 			      List<GoodsVO> goodsList = goodsService.selectGoodsPage(pagingMap);
 				  
 			      //주문내역 확인
-				  List<OrderVO> orderList = orderService.orderSellerList(s_id1);
+				  List<OrderVO> orderList = orderService.orderSellerList(pagingMap);
 
 					System.out.println("---------------------------");
 				    System.out.println("goodsList : " + goodsList);
@@ -396,16 +404,20 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 			    //굿즈리스트 호출을 위해 사용
 				
 				//1대1문의 내역 확인위해 사용 0615
-				List<Board1VO> board1List = board1Service.selectMyBoard1List(pagingMap);
+				List<Board1VO> board1SellerList = board1Service.selectMyBoard1List(pagingMap);
 				//Board1 답변여부 확인을 위해 추가 0615
-				List<Board1VO> board1 = board1Service.listBoard1(s_id);
+				List<Board1VO> board1A = board1Service.listBoard1(s_id);
 				//상품문의 내역 확인 0615
-				List<BoardGqVO> boardGqList = boardGqService.boardGqSellerList(s_id1);
-				//BoardGq 답변여부 확인을 위해 추가 0615
-				List<BoardGqVO> boardGqAllList = boardGqService.selectBoardGqallList();
+				List<BoardGqVO> boardGqSellerList = boardGqService.boardGqSellerList(pagingMap);
+				//상품문의 답변여부 확인을 위해 추가 0615
+				List<BoardGqVO> boardGqA = boardGqService.selectBoardGqallList();
+				//상품후기 내역확인 0616
+				List<BoardGrVO> boardGrSellerList = boardGrService.selectBoardGrSList(pagingMap);
+				//상품후기 답변여부 확인을 위해 추가 0616
+				List<BoardGrVO> boardGrA = boardGrService.selectBoardGrallList();
 				  
-				for (Board1VO item : board1List) {
-					for (Board1VO a : board1) {
+				for (Board1VO item : board1SellerList) {
+					for (Board1VO a : board1A) {
 						if (!((int) item.getB_1_id() == (int) a.getParentNo())) {
 							String compare = "N";
 							item.setCompare(compare);
@@ -420,8 +432,8 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 					}
 				}
 				
-				for (BoardGqVO item : boardGqList) {
-					for (BoardGqVO a : boardGqAllList) {
+				for (BoardGqVO item : boardGqSellerList) {
+					for (BoardGqVO a : boardGqA) {
 						if (!((int) item.getB_gq_id() == (int) a.getParentNo())) {
 							String compare = "N";
 							item.setCompare(compare);
@@ -429,7 +441,23 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 							String compare = "Y";
 							item.setCompare(compare);
 							System.out.println("---------------------------");
-							System.out.println("BoardCompare" + item.getB_gq_id());
+							System.out.println("BoardGqCompare" + item.getB_gq_id());
+							System.out.println("---------------------------");
+							break;
+						}
+					}
+				}
+				
+				for (BoardGrVO item : boardGrSellerList) {
+					for (BoardGrVO a : boardGrA) {
+						if (!((int) item.getB_gr_id() == (int) a.getParentNo())) {
+							String compare = "N";
+							item.setCompare(compare);
+						} else {
+							String compare = "Y";
+							item.setCompare(compare);
+							System.out.println("---------------------------");
+							System.out.println("BoardGrCompare" + item.getB_gr_id());
 							System.out.println("---------------------------");
 							break;
 						}
@@ -438,12 +466,16 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 					System.out.println("---------------------------");
 					System.out.println("sellerVO : " + sellerVO);
 				    System.out.println("---------------------------");
-				    System.out.println("boardGqList : " + boardGqList);
+				    System.out.println("boardGqSellerList : " + boardGqSellerList);
 				    System.out.println("---------------------------");
-				    System.out.println("board1List : " + board1List);
+				    System.out.println("board1SellerList : " + board1SellerList);
+				    System.out.println("---------------------------");
+				    System.out.println("boardGrSellerList : " + boardGrSellerList);
 				    System.out.println("---------------------------");
 				    
-				    mav.addObject("boardGqList", boardGqList);
+				    mav.addObject("boardGqSellerList", boardGqSellerList);
+				    mav.addObject("board1SellerList", board1SellerList);
+				    mav.addObject("boardGrSellerList", boardGrSellerList);
 				    mav.addObject("sellerVO", sellerVO);
 					mav.setViewName(viewName);
 					

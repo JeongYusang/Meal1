@@ -55,7 +55,7 @@ public interface BoardGqDAO {
 	public BoardGqVO gqdownload(int b_gq_id)throws DataAccessException;
 
 	//판매자 상품문의 내역 확인 0615
-	public List<BoardGqVO> boardGqSellerList(String s_id) throws DataAccessException;
+	public List<BoardGqVO> boardGqSellerList(HashMap<String, Object> map) throws DataAccessException;
 
 	
 

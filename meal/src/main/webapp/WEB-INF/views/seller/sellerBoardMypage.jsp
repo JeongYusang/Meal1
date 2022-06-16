@@ -224,6 +224,16 @@ td {
 td.fixed {
 	text-align: center;
 }
+
+span.fa.fa-star.checked {
+	float: right;
+	font-size: 20px;
+}
+
+span.fa.fa-star {
+	float: right;
+	font-size: 20px;
+}
 </style>
 </head>
 <body>
@@ -236,7 +246,7 @@ td.fixed {
 		<div class="div4">
 			<div class="tabmenu">
 				<ul>
-					<li id="tab1" class="btnCon"><input type="radio"
+					<li id="tab1" class="btnCon"><input type="radio" checked
 						name="tabmenu" id="tabmenu1"> <label for="tabmenu1"><br>상품문의
 					</label>
 						<div class="tabCon">
@@ -255,13 +265,13 @@ td.fixed {
 							</tr>
 						</thead>
 						<c:choose>
-							<c:when test="${empty boardGqList}">
+							<c:when test="${empty boardGqSellerList}">
 								<tr>
 									<td colspan=5 class="fixed"><strong>등록된 상품이 없습니다.</strong></td>
 								</tr>
 							</c:when>
-							<c:when test="${not empty boardGqList}">
-								<c:forEach var="item" items="${boardGqList}" begin="1" end="10">
+							<c:when test="${not empty boardGqSellerList}">
+								<c:forEach var="item" items="${boardGqSellerList}" begin="1" end="10">
 									<tr class="border-bottom">
 										<td>${item.b_gq_id}</td>
 										<td>${item.u_id}</td>
@@ -276,6 +286,121 @@ td.fixed {
 										<td>${item.g_name}</td>
 										<c:if test="${item.compare == 'N' }">
 										<td><a href="${contextPath}/boardGq/boardGqReviewform.do?b_gq_id=${item.b_gq_id}">답글작성</a></td>
+										</c:if>
+										<c:if test="${item.compare == 'Y' }">
+										<td><p>답변완료</p></td>
+										</c:if>
+									</tr>
+								</c:forEach>
+							</c:when>
+						</c:choose>
+					</table>
+					<center>
+						<div class="" id="pagination">
+							<c:forEach var="page" begin="1" end="10" step="1">
+								<c:if test="${section >0 && page==1 }">
+									<a
+										href="${contextPath}/seller/sellerBoardMypage.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
+								</c:if>
+								<a
+									href="${contextPath}/seller/sellerBoardMypage.do?section=${section}&pageNum=${page}">${(section)*10 +page}
+								</a>
+								<c:if test="${page == 10 }">
+									<a
+										href="${contextPath}/seller/sellerBoardMypage.do?section=${section}+1&pageNum=${section*10}+1">다음</a>
+								</c:if>
+							</c:forEach>
+						</div>
+					</center>
+
+				</div>
+			</div>
+						</div></li>
+					<li id="tab2" class="btnCon"><input type="radio"
+							name="tabmenu" id="tabmenu2"> <label for="tabmenu2"><br>상품후기
+						</label>
+							<div class="tabCon">
+							<div class="main-container">
+				<div class="table-container">
+					<table id="stable-striped">
+						<thead id="tap-head">
+							<tr id="top-table">
+								<th onclick="sortTable(0)" class="header" width="154px">작성번호</th>
+								<th onclick="sortTable(1)" class="header" width="154px">작성자</th>
+								<th onclick="sortTable(2)" class="header" width="154px">글 제목</th>
+								<th onclick="sortTable(3)" class="header" width="154px">작성일자</th>
+								<th onclick="sortTable(4)" class="header" width="154px">비밀글</th>
+								<th onclick="sortTable(5)" class="header" width="154px">상품이름</th>
+								<th onclick="sortTable(6)" class="header" width="154px">평점</th>
+								<th class="header" width="180px">답글작성</th>
+							</tr>
+						</thead>
+						<c:choose>
+							<c:when test="${empty boardGrSellerList}">
+								<tr>
+									<td colspan=5 class="fixed"><strong>등록된 상품이 없습니다.</strong></td>
+								</tr>
+							</c:when>
+							<c:when test="${not empty boardGrSellerList}">
+								<c:forEach var="item" items="${boardGrSellerList}" begin="1" end="10">
+									<tr class="border-bottom">
+										<td>${item.b_gr_id}</td>
+										<td>${item.u_id}</td>
+										<td><a href="${contextPath}/boardGr/gr_detail.do?b_gr_id=${item.b_gr_id}">${item.title}</a></td>
+										<td>${item.creDate}</td>
+										<c:if test="${item.secret == null}">
+										<td>N</td>
+										</c:if>
+										<c:if test="${item.secret != null }">
+										<td>${item.secret}</td>
+										</c:if>
+										<td>${item.g_name}</td>
+										<td>
+											<c:choose>
+												<c:when test="${item.star == 5}">
+												<span>5</span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+												</c:when>
+												<c:when test="${item.star == 4}">
+												<span>4</span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star"></span>
+												</c:when>
+												<c:when test="${item.star == 3}">
+												<span>3</span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star"></span>
+												</c:when>
+												<c:when test="${item.star == 2}">
+												<span>2</span> 
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star"></span>
+												</c:when>
+												<c:otherwise>
+												<span>1</span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star"></span>
+												</c:otherwise>
+											</c:choose>
+											</td>
+										<c:if test="${item.compare == 'N' }">
+										<td><a href="${contextPath}/boardGr/boardGrReviewform.do?b_gq_id=${item.b_gr_id}">답글작성</a></td>
 										</c:if>
 										<c:if test="${item.compare == 'Y' }">
 										<td><p>답변완료</p></td>
@@ -305,105 +430,74 @@ td.fixed {
 
 				</div>
 			</div>
-						</div></li>
-					<li id="tab2" class="btnCon"><input type="radio"
-							name="tabmenu" id="tabmenu2"> <label for="tabmenu2"><br>주문정보
-						</label>
-							<div class="tabCon">
-								<div class="main-container">
-									<div class="table-container">
-										<table id="stable-striped">
-											<thead id="tap-head">
-												<tr id="top-table">
-													<th onclick="sortTable(0)" class="header" width="70px">주문번호</th>
-													<th onclick="sortTable(1)" class="header" width="150px">상품명</th>
-													<th onclick="sortTable(2)" class="header" width="100px">가격</th>
-													<th onclick="sortTable(3)" class="header" width="70px">수량</th>
-													<th onclick="sortTable(4)" class="header" width="60px">구매자</th>
-													<th onclick="sortTable(5)" class="header" width="200px">배송주소</th>
-													<th onclick="sortTable(6)" class="header" width="120px">주문상태</th>
-													<th class="header" width="210px">수정</th>
-												</tr>
-											</thead>
-											<c:choose>
-												<c:when test="${empty orderList}">
-													<tr>
-														<td colspan=8 class="fixed"><strong>등록된
-																주문내역이 없습니다.</strong></td>
-													</tr>
-												</c:when>
-												<c:when test="${not empty orderList}">
-												<c:forEach var="item" items="${orderList }" begin="1" end="10">
-														<tr class="border-bottom">
-															<td>${item.o_id}</td>
-															<td>${item.g_name}</td>
-															<td>${item.o_goods_price}</td>
-															<td>${item.o_goods_qty}</td>
-															<td>${item.u_name}</td>
-															<td>${item.receiver_addr1},
-																${item.receiver_addr2}, ${item.receiver_addr3}</td>
-															<td>${item.delivery_state}</td>
-															<td><select name="s_delivery_state"  id="s_delivery_state">
-																	<c:choose>
-																		<c:when test="${item.delivery_state == '결제완료' }">
-																			<option value="결제완료" selected>결제완료</option>
-																			<option value="배송중">배송중</option>
-																			<option value="배송완료">배송완료</option>
-																			<option value="주문확인중">주문확인중</option>
-																		</c:when>
-																		<c:when test="${item.delivery_state == '배송중' }">
-																			<option value="결제완료">결제완료</option>
-																			<option value="배송중" selected>배송중</option>
-																			<option value="배송완료">배송완료</option>
-																			<option value="주문확인중">주문확인중</option>
-																		</c:when>
-																		<c:when test="${item.delivery_state == '배송완료' }">
-																			<option value="결제완료">결제완료</option>
-																			<option value="배송중">배송중</option>
-																			<option value="배송완료" selected>배송완료</option>
-																			<option value="주문확인중">주문확인중</option>
-																		</c:when>
-																		<c:when test="${item.delivery_state == '주문확인중' }">
-																			<option value="결제완료">결제완료</option>
-																			<option value="배송중">배송중</option>
-																			<option value="배송완료">배송완료</option>
-																			<option value="주문확인중" selected>주문확인중</option>
-																		</c:when>
-																	</c:choose>
-															</select> 
-															<input type="button" value="배송수정" onClick="fn_delivUpdate('${item.o_id}','s_delivery_state')" />														
-															</td>
-														</tr>
-														</c:forEach>
-												</c:when>
-											</c:choose>
-										</table>
-										<center>
-											<div class="" id="pagination">
-												<c:forEach var="page" begin="1" end="10" step="1">
-													<c:if test="${section >0 && page==1 }">
-														<a
-															href="${contextPath}/seller/sellerMypage.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
-													</c:if>
-													<a
-														href="${contextPath}/seller/sellerMypage.do?section=${section}&pageNum=${page}">${(section)*10 +page}
-													</a>
-													<c:if test="${page == 10 }">
-														<a
-															href="${contextPath}/seller/sellerMypage.do?section=${section}+1&pageNum=${section*10}+1">다음</a>
-													</c:if>
-												</c:forEach>
-											</div>
-										</center>
-
-									</div>
-								</div>
 							</div></li>
 					<li id="tab3" class="btnCon"><input type="radio"
-						name="tabmenu" id="tabmenu3"> <label for="tabmenu3"><br>취소,교환,반품내역
+						name="tabmenu" id="tabmenu3"> <label for="tabmenu3"><br>1대1문의
 					</label>
 						<div class="tabCon">
-						하잉
+						<div class="main-container">
+				<div class="table-container">
+					<table id="stable-striped">
+						<thead id="tap-head">
+							<tr id="top-table">
+								<th onclick="sortTable(0)" class="header" width="216px">작성번호</th>
+								<th onclick="sortTable(1)" class="header" width="216px">작성자</th>
+								<th onclick="sortTable(2)" class="header" width="216px">글 제목</th>
+								<th onclick="sortTable(3)" class="header" width="216px">작성일자</th>
+								<th onclick="sortTable(4)" class="header" width="216px">비밀글</th>
+								<th class="header" width="180px">답글작성</th>
+							</tr>
+						</thead>
+						<c:choose>
+							<c:when test="${empty board1SellerList}">
+								<tr>
+									<td colspan=7 class="fixed"><strong>등록된 상품이 없습니다.</strong></td>
+								</tr>
+							</c:when>
+							<c:when test="${not empty board1SellerList}">
+								<c:forEach var="item" items="${board1SellerList}" begin="1" end="10">
+									<tr class="border-bottom">
+										<td>${item.b_1_id}</td>
+										<td>${item.u_id}</td>
+										<td><a href="${contextPath}/board1/b1Detail.do?b_1_id=${item.b_1_id}">${item.title}</a></td>
+										<td>${item.creDate}</td>
+										<c:if test="${item.secret == null}">
+										<td>N</td>
+										</c:if>
+										<c:if test="${item.secret != null }">
+										<td>${item.secret}</td>
+										</c:if>
+										<c:if test="${item.compare == 'N' }">
+										<td><a href="${contextPath}/board1/board1Reviewform.do?b_gq_id=${item.b_1_id}">답글작성</a></td>
+										</c:if>
+										<c:if test="${item.compare == 'Y' }">
+										<td><p>답변완료</p></td>
+										</c:if>
+									</tr>
+								</c:forEach>
+							</c:when>
+						</c:choose>
+					</table>
+					<center>
+						<div class="" id="pagination">
+							<c:forEach var="page" begin="1" end="10" step="1">
+								<c:if test="${section >0 && page==1 }">
+									<a
+										href="${contextPath}/seller/sellerMypage.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
+								</c:if>
+								<a
+									href="${contextPath}/seller/sellerMypage.do?section=${section}&pageNum=${page}">${(section)*10 +page}
+								</a>
+								<c:if test="${page == 10 }">
+									<a
+										href="${contextPath}/seller/sellerMypage.do?section=${section}+1&pageNum=${section*10}+1">다음</a>
+								</c:if>
+							</c:forEach>
+						</div>
+					</center>
+
+				</div>
+			</div>
 						</div></li>
 				</ul>
 			</div>

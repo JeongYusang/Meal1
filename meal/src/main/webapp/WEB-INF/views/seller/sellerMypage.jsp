@@ -376,7 +376,7 @@ td.fixed {
 													</tr>
 												</c:when>
 												<c:when test="${not empty orderList}">
-												<c:forEach var="item" items="${orderList }" begin="1" end="30">
+												<c:forEach var="item" items="${orderList }" begin="1" end="10">
 														<tr class="border-bottom">
 															<td>${item.o_id}</td>
 															<td>${item.g_name}</td>

@@ -28,7 +28,7 @@ public interface OrderService {
 
 	public String selectMaxParentNO(String u_id) throws Exception;
 	//판매자 주문내역 출력위해 사용0614
-	public List<OrderVO> orderSellerList(String s_id) throws Exception;
+	public List<OrderVO> orderSellerList(HashMap<String, Object> pgMap) throws Exception;
 
 	public int MaxOrderNum() throws Exception;
 
