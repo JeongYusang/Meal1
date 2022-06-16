@@ -119,6 +119,35 @@ margin-bottom : 20px;
 display: inline-block;
 height: 100px;
 }
+.soldout {
+filter: brightness(50%);
+position: relative;
+width: 250px;
+height: 250px;
+}
+
+.goods_img{
+position: relative;
+width: 250px;
+height: 250px;
+
+}
+
+#soldtext {
+  text-align: center;
+    position: absolute;
+    font-size: 40px;
+    font-weight: bold;
+    top: 100px;
+    color: white;
+    margin-left: 25px;
+}
+
+#goods-info {
+width: 250px;
+margin: 10px;
+position: relative;
+}
 </style>
 </head>
 <body>
@@ -166,13 +195,12 @@ height: 100px;
 				<c:otherwise>
 					<c:forEach var="item" items="${goodsList}">
 						<li>
-						<div>
-						<a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id }"><img
-								src="${contextPath}/download1.do?g_id=${item.g_id }&cate=main"
-								width="250px" height="250px"></a>
+						<div id= "goods-info">
+						<a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id }"><c:if test="${item.g_amount <= 0}">
+									<img class = "soldout"src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main">
+									<div id="soldtext">상품준비중</div></c:if>
+							<c:if test="${item.g_amount > 0}"><img class = "goods_img" src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"></c:if></a>
 								 <br>${item.g_name } <br>
-							</div>
-							<div>
 							<c:if test="${empty item.g_saleprice or item.g_saleprice eq 0 }">
 									<br> 
 								가격: ${item.g_price }원
@@ -186,25 +214,23 @@ height: 100px;
 					</c:choose>
 				</ul>
 			</div>
-			<c:if test="${not empty goodsList}">
 			<center>
 						<div class="pagination" id="pagination">
 							<c:forEach var="page" begin="1" end="9" step="1">
 								<c:if test="${section >0 && page==1 }">
 									<a
-										href="${contextPath}/search/CateSearchGoods.do?cate=${goodsList[0].g_cate2}&section=${section}-1&pageNum=${(section-1)*10+1 }&text=${text}">preview</a>
+										href="${contextPath}/search/CateSearchGoods.do?cate=${goodsList[0].g_cate2}&section=${section}-1&pageNum=${(section-1)*10+1 }&text=${text}&g_allergy_M=${g_allergy_M}">preview</a>
 								</c:if>
 								<a
-									href="${contextPath}/search/CateSearchGoods.do?cate=${goodsList[0].g_cate2}&section=${section}&pageNum=${page}&text=${text}">${(section)*10 +page}
+									href="${contextPath}/search/CateSearchGoods.do?cate=${goodsList[0].g_cate2}&section=${section}&pageNum=${page}&text=${text}&g_allergy_M=${g_allergy_M}">${(section)*10 +page}
 								</a>
 								<c:if test="${page ==10 }">
 									<a
-										href="${contextPath}/search/CateSearchGoods.do?cate=${goodsList[0].g_cate2}&section=${section}+1&pageNum=${section*10}+1&text=${text}">next</a>
+										href="${contextPath}/search/CateSearchGoods.do?cate=${goodsList[0].g_cate2}&section=${section}+1&pageNum=${section*10}+1&text=${text}&g_allergy_M=${g_allergy_M}">next</a>
 								</c:if>
 							</c:forEach>
 						</div>
 					</center>
-					</c:if>
 			
 		</div>
 	</div>
