@@ -36,7 +36,7 @@ function fnc_checked(){
 	width: 1280px;
 	position: relative;
 	text-align: center;
-	height: 1300px;
+	height: 1000px;
 }
 
 .maingoodslist span {
@@ -192,14 +192,14 @@ height: 100px;
 							<c:forEach var="page" begin="1" end="9" step="1">
 								<c:if test="${section >0 && page==1 }">
 									<a
-										href="${contextPath}/search/CateSearchGoods.do?cate=${cate}&section=${section}-1&pageNum=${(section-1)*10+1 }&text=${text}">preview</a>
+										href="${contextPath}/search/CateSearchGoods.do?cate=${goodsList[0].g_cate2}&section=${section}-1&pageNum=${(section-1)*10+1 }&text=${text}">preview</a>
 								</c:if>
 								<a
-									href="${contextPath}/search/CateSearchGoods.do?cate=${cate}&section=${section}&pageNum=${page}&text=${text}">${(section)*10 +page}
+									href="${contextPath}/search/CateSearchGoods.do?cate=${goodsList[0].g_cate2}&section=${section}&pageNum=${page}&text=${text}">${(section)*10 +page}
 								</a>
 								<c:if test="${page ==10 }">
 									<a
-										href="${contextPath}/search/CateSearchGoods.do?cate=${cate}&section=${section}+1&pageNum=${section*10}+1&text=${text}">next</a>
+										href="${contextPath}/search/CateSearchGoods.do?cate=${goodsList[0].g_cate2}&section=${section}+1&pageNum=${section*10}+1&text=${text}">next</a>
 								</c:if>
 							</c:forEach>
 						</div>
