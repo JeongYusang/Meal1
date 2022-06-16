@@ -406,7 +406,7 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 				//1대1문의 내역 확인위해 사용 0615
 				List<Board1VO> board1SellerList = board1Service.selectMyBoard1List(pagingMap);
 				//Board1 답변여부 확인을 위해 추가 0615
-				List<Board1VO> board1A = board1Service.listBoard1(s_id);
+				List<Board1VO> board1A = board1Service.selectBoard1allList();;
 				//상품문의 내역 확인 0615
 				List<BoardGqVO> boardGqSellerList = boardGqService.boardGqSellerList(pagingMap);
 				//상품문의 답변여부 확인을 위해 추가 0615

@@ -66,7 +66,8 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 			pagingMap.put("u_id", u_id);
 
 			List<Board1VO> boardPage = board1Service.selectMyBoard1List(pagingMap);
-			List<Board1VO> board1 = (List<Board1VO>) board1Service.listBoard1(u_id);
+			List<Board1VO> board1 = board1Service.selectBoard1allList();
+
 
 			for (Board1VO item : boardPage) {
 				for (Board1VO j : board1) {
@@ -96,7 +97,7 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 			pagingMap.put("s_id", s_id);
 
 			List<Board1VO> boardPage = board1Service.selectMyBoard1List(pagingMap);
-			List<Board1VO> board1 = (List<Board1VO>) board1Service.listBoard1(s_id);
+			List<Board1VO> board1 = board1Service.selectBoard1allList();
 
 			for (Board1VO item : boardPage) {
 				for (Board1VO j : board1) {

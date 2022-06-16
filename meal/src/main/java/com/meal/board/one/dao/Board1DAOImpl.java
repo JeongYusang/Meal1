@@ -18,11 +18,6 @@ public class Board1DAOImpl implements Board1DAO {
 	private SqlSession sqlSession;
 
 	@Override
-	public List<Board1VO> listBoard1(String u_id) throws DataAccessException {
-		return sqlSession.selectList("mapper.board1.listBoard1", u_id);
-	}
-
-	@Override
 	public void board1Write(Board1VO board1VO) throws DataAccessException {
 		sqlSession.insert("mapper.board1.board1Write", board1VO);
 	}

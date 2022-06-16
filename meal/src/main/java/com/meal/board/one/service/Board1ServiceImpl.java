@@ -18,11 +18,6 @@ public class Board1ServiceImpl implements Board1Service {
 	private Board1DAO board1DAO;
 
 	@Override
-	public List<Board1VO> listBoard1(String u_id) throws Exception {
-		return board1DAO.listBoard1(u_id);
-	}
-
-	@Override
 	public void board1Write(Board1VO board1VO) throws Exception {
 		board1DAO.board1Write(board1VO);
 	}

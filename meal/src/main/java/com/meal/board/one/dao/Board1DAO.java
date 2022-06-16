@@ -9,7 +9,6 @@ import org.springframework.dao.DataAccessException;
 import com.meal.board.one.vo.Board1VO;
 
 public interface Board1DAO {
-	public List<Board1VO> listBoard1(String u_id) throws DataAccessException;
 
 	public void board1Write(Board1VO board1VO) throws DataAccessException;
 

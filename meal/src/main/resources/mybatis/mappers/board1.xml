@@ -23,12 +23,6 @@
             select * from board_1
              ]]>
 	</select>
-
-	<select id="listBoard1" resultType="Board1VO" parameterType="String">
-       <![CDATA[
-            select * from board_1 where u_id = #{u_id} or s_id = #{s_id}   
-             ]]>
-	</select>
 	
 	<select id="board1Page" resultMap="board1Result" parameterType="Map">
    		<![CDATA[
