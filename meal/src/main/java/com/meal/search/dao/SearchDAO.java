@@ -10,6 +10,8 @@ import com.meal.goods.vo.GoodsVO;
 public interface SearchDAO {
 	
 	public List<GoodsVO> SearchGoods(HashMap<String,Object> map) throws DataAccessException;
+
+	public List<GoodsVO> CateSearchGoods(HashMap<String, Object> map) throws DataAccessException;
 		
 
 }

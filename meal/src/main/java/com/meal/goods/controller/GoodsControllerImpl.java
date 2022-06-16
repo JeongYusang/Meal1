@@ -62,6 +62,7 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
    private BoardGqService boardGqService;
    
    // 상품등록창
+   @Override
    @RequestMapping(value = "/goodsForm.do", method = { RequestMethod.POST, RequestMethod.GET })
    protected ModelAndView viewForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
       String viewName = (String) request.getAttribute("viewName");// 인터셉터있을때 없으면주석
@@ -70,7 +71,7 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
       mav.setViewName(viewName);
       return mav;
    }
-
+   @Override
    @RequestMapping(value = "/addNewGoods.do", method = { RequestMethod.POST, RequestMethod.GET })
    public ModelAndView addNewGoods(MultipartHttpServletRequest multipartRequest, HttpServletResponse response)
          throws Exception {
@@ -287,6 +288,7 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 
      }
    // 상품 관리에 관한 메소드
+   @Override
    @RequestMapping(value = "/selectGoodsPage.do", method = { RequestMethod.POST, RequestMethod.GET })
    public ModelAndView selectAllGoods(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
          @RequestParam(value = "section1", required = false) String section,
@@ -545,8 +547,9 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
    }
    }
    
- //메소드 추가
-   private void addGoodsInQuick(int g_id,GoodsVO goodsInfo,HttpSession session){
+ // 디테일 진입시 퀵 메뉴에 추가
+   @Override
+   public void addGoodsInQuick(int g_id,GoodsVO goodsInfo,HttpSession session)throws Exception{
    		boolean already_existed=false;
    		List<GoodsVO> quickGoodsList;
    		quickGoodsList=(ArrayList<GoodsVO>)session.getAttribute("quickGoodsList");
@@ -573,6 +576,24 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
    		session.setAttribute("quickGoodsList",quickGoodsList);
    		session.setAttribute("quickGoodsListNum", quickGoodsList.size());
    	}
+   
+   //cate 별로 리스트 가져오기
+   @Override
+   @RequestMapping(value = "/selectGoodsCate.do", method = { RequestMethod.POST, RequestMethod.GET })
+   public ModelAndView selectGoodsCate(@RequestParam("cate") String cate,
+         HttpServletRequest request, HttpServletResponse repsponse) throws Exception {
+     
+      String viewName = (String) request.getAttribute("viewName");
+      ModelAndView mav = new ModelAndView(viewName);
+      List<GoodsVO> goodsList = (List<GoodsVO>) goodsService.GoodsCateList(cate);
+      
+      mav.addObject("goodsList",goodsList);
+      mav.addObject("cate",cate);
+      
+      return mav;
+     
+
+   }
 
 
 }

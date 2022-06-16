@@ -21,5 +21,10 @@ public class SearchServiceImpl implements SearchService{
 		return (List<GoodsVO>)searchDAO.SearchGoods(map);
 		
 	}
+
+	@Override
+	public List<GoodsVO> CateSearchGoods(HashMap<String, Object> map) throws Exception {
+		return (List<GoodsVO>)searchDAO.CateSearchGoods(map);
+	}
 	
 }

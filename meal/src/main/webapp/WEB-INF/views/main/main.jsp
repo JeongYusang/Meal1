@@ -122,15 +122,22 @@
     height: 30px;
     width: 30px;
     position: relative;
-    left: 250px;
-    bottom: 5px;
+    left: 110px;
+    bottom: -250px;
 }
 .heart2 {
 	height: 30px;
     width: 30px;
     position: relative;
-    left: 250px;
-    bottom: 0px;
+    left: 110px;
+    bottom: -250px;
+}
+.heart3 {
+	height: 30px;
+    width: 30px;
+    position: relative;
+    left: 110px;
+    top: 250px;
 }
 
 </style>
@@ -161,8 +168,7 @@
 					<!-- 다운로드 메소드를 통해서 한것 -->
 					<c:forEach var="item" items="${goodsMap.NewG}" begin="0" end="3">
 						<ul class="ul">
-							<li><a
-								href="${contextPath}/cart/addGoodsInCart.do?g_id=${item.g_id}&cate=zzim">
+							<li><a href="${contextPath}/cart/addGoodsInCart.do?g_id=${item.g_id}&cate=zzim">
 									<img class="heart"
 									src="${contextPath}/resources/image/heart.png">
 							</a> <a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}">
@@ -215,7 +221,7 @@
 						<ul class="ul">
 							<li><a
 								href="${contextPath}/cart/addGoodsInCart.do?g_id=${item.g_id}&cate=zzim">
-									<img class="heart"
+									<img class="heart3"
 									src="${contextPath}/resources/image/heart.png">
 							</a> <a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}""><img
 									src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"

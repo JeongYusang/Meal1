@@ -7,4 +7,6 @@ import com.meal.goods.vo.GoodsVO;
 
 public interface SearchService {
 	public List<GoodsVO> SearchGoods(HashMap<String,Object> map) throws Exception ;
+
+	public List<GoodsVO> CateSearchGoods(HashMap<String, Object> pagingMap) throws Exception ;
 }

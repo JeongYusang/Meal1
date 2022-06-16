@@ -28,4 +28,5 @@ public interface GoodsService {
 	public void updateNomalGoods(GoodsVO newGoods) throws Exception;
 	public List<GoodsVO> selectNew_Goods() throws Exception;
 	public Img_gVO selectImgOne(int ig_id)throws Exception;
+	public List<GoodsVO> GoodsCateList(String cate) throws Exception;
 }

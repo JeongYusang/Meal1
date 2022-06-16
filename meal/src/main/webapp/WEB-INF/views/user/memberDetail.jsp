@@ -13,9 +13,9 @@
 <style type="text/css">
 .div1 {
 	width: 1080px;
-	height: 1550px;
-	position: relative;
-	overflow: hidden;
+    height: 1630px;
+    position: relative;
+    overflow: hidden;
 }
 
 .div2 {
@@ -114,7 +114,7 @@
 	position: absolute;
 	box-sizing: border-box;
 	width: 100%;
-	height: 1180px;
+    height: 1280px;
 	border: 5px solid #ffc0cf;
 	margin-bottom: 10px;
 }
@@ -151,7 +151,7 @@
 }
 
 .div4 img {
-	height: 100px;
+	height: 95px;
 	width: 100px;
 }
 
@@ -206,8 +206,6 @@ ul.tabs li.current {
 
 .tab-content {
 	display: none;
-	border: 1px solid;
-	padding: 12px;
 }
 
 .tab-content.current {
@@ -216,6 +214,7 @@ ul.tabs li.current {
 
 tr.border-bottom td {
 	border-bottom: 1px black solid;
+	border-collapse: collapse;
 }
 
 .checked {
@@ -223,8 +222,14 @@ tr.border-bottom td {
 	font-size: 60px;
 }
 
-.stable-striped{
-font-size: 20px;
+.stable-striped {
+	font-size: 20px;
+	border-collapse: collapse;
+}
+.titleText {
+font-size: 30px;
+color: #FD6EB0;
+margin: 30px;
 }
 </style>
 
@@ -299,21 +304,27 @@ font-size: 20px;
 										<c:choose>
 											<c:when test="${empty OrderList}">
 												<tr>
-													<td colspan=5 class="fixed"><strong>주문 내역이 없습니다.</strong></td>
+													<td colspan=5 class="fixed"><strong>주문 내역이
+															없습니다.</strong></td>
 												</tr>
 											</c:when>
 											<c:otherwise>
 												<c:forEach var="OrderList" items="${OrderList}">
 													<tr class="orderlist">
-														<td><a href="${contextPath}/goods/goodsDetail.do?g_id=${OrderList.g_id}">
-																<img src="${contextPath}/download1.do?g_id=${OrderList.g_id}&cate=main"
+														<td><a
+															href="${contextPath}/goods/goodsDetail.do?g_id=${OrderList.g_id}">
+																<img
+																src="${contextPath}/download1.do?g_id=${OrderList.g_id}&cate=main"
 																onerror="this.src='${contextPath}/resources/image/not for sale.jpg'">
 														</a></td>
-														<td id="title"><a href="${contextPath}/goods/goodsDetail.do?g_id=${OrderList.g_id}">${OrderList.g_name}</a></td>
-														<td>${OrderList.o_goods_qty}개/<c:if test="${OrderList.o_goods_price >= 30000}">${OrderList.o_goods_price - OrderList.o_useMile}원</c:if>
+														<td id="title"><a
+															href="${contextPath}/goods/goodsDetail.do?g_id=${OrderList.g_id}">${OrderList.g_name}</a></td>
+														<td>${OrderList.o_goods_qty}개/<c:if
+																test="${OrderList.o_goods_price >= 30000}">${OrderList.o_goods_price - OrderList.o_useMile}원</c:if>
 															<c:if test="${OrderList.o_goods_price < 30000}">${OrderList.o_goods_price + 3000 - OrderList.o_useMile}원</c:if></td>
 														<td><b id="state">${OrderList.delivery_state}</b></td>
-														<td><c:if test="${OrderList.delivery_state == '주문완료'}">
+														<td><c:if
+																test="${OrderList.delivery_state == '주문완료'}">
 																<a href="#">주문 환불</a>
 															</c:if> <c:if test="${OrderList.delivery_state == '결제완료'}">
 																<a href="#">주문 수정하기</a>
@@ -410,8 +421,8 @@ font-size: 20px;
 									</c:otherwise>
 								</c:choose>
 								<tr>
-									<td colspan=8 class="fixed">
-									<c:forEach var="page" begin="1" end="9" step="1">
+									<td colspan=8 class="fixed"><c:forEach var="page"
+											begin="1" end="9" step="1">
 											<c:if test="${section >0 && page==1 }">
 												<a
 													href="${contextPath}/member/memberDetail.do?section=${section}-1&pageNum=${(section-1)*10+1 }&u_id=${memberInfo.u_id}">preview</a>
@@ -450,8 +461,8 @@ font-size: 20px;
 									<table class="stable-striped">
 										<thead>
 											<tr id="top-table">
-												<th width="50px">번호</th>
-												<th width="200px">작성자</th>
+												<th width="200px"></th>
+												<th width="200px">상품</th>
 												<th width="400px">제목</th>
 												<th width="200px">날짜</th>
 												<th width="200px">답변여부</th>
@@ -459,25 +470,51 @@ font-size: 20px;
 										</thead>
 										<tbody>
 											<c:forEach var="item" items="${BoardGqList}">
-												<tr class="border-bottom">
-													<td>${item.b_gq_id}</td>
-													<td>${item.u_id}</td>
-													<td><a href="${contextPath}/boardGq/gq_detail.do?b_gq_id=${item.b_gq_id}">${item.title}</a></td>
+
+												<tr class="border-bottom"
+													onClick="location.href='${contextPath}/boardGq/gq_detail.do?b_gq_id=${item.b_gq_id}'"
+													style="cursor: hand">
+													<td><img class="GrImg"
+														src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
+														onerror="this.src='${contextPath}/resources/image/not for sale.jpg'">
+													</td>
+													<td>${item.g_name}</td>
+													<td>${item.title}</td>
 													<td>${item.creDate}</td>
 													<td>${item.compare}</td>
 												</tr>
 											</c:forEach>
 										</tbody>
 									</table>
+									<c:choose>
+										<c:when test="${OrderVO == null}">
+											<c:forEach var="page" begin="1" end="9" step="1">
+												<c:if test="${section >0 && page==1 }">
+													<a
+														href="${contextPath}/member/memberDetail.do?section=${section}-1&pageNum=${(section-1)*10+1 }&u_id=${memberInfo.u_id}">preview</a>
+												</c:if>
+												<a
+													href="${contextPath}/member/memberDetail.do?section=${section}&pageNum=${page}&u_id=${memberInfo.u_id}">${(section)*10 +page}
+												</a>
+												<c:if test="${page ==10 }">
+													<a
+														href="${contextPath}/member/memberDetail.do?section=${section}+1&pageNum=${section*10}+1&u_id=${memberInfo.u_id}">next</a>
+												</c:if>
+											</c:forEach>
+										</c:when>
+									</c:choose>
 								</div>
 							</div>
 							<div id="tab-2" class="tab-content">
-								<table id="stable-striped">
+							<h6 class="titleText">상품후기</h6>
+								<table class="stable-striped">
+								
 									<thead>
 										<tr class="stable-striped">
-											<th width="50px">번호</th>
+											<th width="150px"></th>
 											<th width="150px">별점</th>
-											<th width="300px">제목</th>
+											<th width="200px">상품</th>
+											<th width="250px">제목</th>
 											<th width="100px">작성자</th>
 											<th width="150px">날짜</th>
 											<th width="150px">답변여부</th>
@@ -492,8 +529,12 @@ font-size: 20px;
 										</c:when>
 										<c:otherwise>
 											<c:forEach var="item" items="${BoardGrList}">
-												<tr class="item">
-													<td>${item.b_gr_id }</td>
+												<tr class="border-bottom" onClick="location.href='${contextPath}/boardGr/gr_detail.do?b_gr_id=${item.b_gr_id}'"
+													style="cursor: hand">
+													<td><img class="GrImg"
+														src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
+														onerror="this.src='${contextPath}/resources/image/not for sale.jpg'">
+													</td>
 													<td><c:choose>
 															<c:when test="${item.star == 5}">
 																<span class="fa fa-star checked"></span>
@@ -531,7 +572,8 @@ font-size: 20px;
 																<span class="fa fa-star"></span>
 															</c:otherwise>
 														</c:choose></td>
-													<td><a href="${contextPath}/boardGr/gr_detail.do?b_gr_id=${item.b_gr_id}">${item.title}</a></td>
+													<td>${item.g_name}</td>
+													<td>${item.title}</td>
 													<td>${item.u_id}</td>
 													<td>${item.creDate}</td>
 													<td>${item.compare}</td>
@@ -539,7 +581,25 @@ font-size: 20px;
 											</c:forEach>
 										</c:otherwise>
 									</c:choose>
-									</table>
+								</table>
+								<c:choose>
+									<c:when test="${OrderVO == null}">
+										<c:forEach var="page" begin="1" end="9" step="1">
+											<c:if test="${section >0 && page==1 }">
+												<a
+													href="${contextPath}/member/memberDetail.do?section=${section}-1&pageNum=${(section-1)*10+1 }&u_id=${memberInfo.u_id}">preview</a>
+											</c:if>
+											<a
+												href="${contextPath}/member/memberDetail.do?section=${section}&pageNum=${page}&u_id=${memberInfo.u_id}">${(section)*10 +page}
+											</a>
+											<c:if test="${page ==10 }">
+												<a
+													href="${contextPath}/member/memberDetail.do?section=${section}+1&pageNum=${section*10}+1&u_id=${memberInfo.u_id}">next</a>
+											</c:if>
+										</c:forEach>
+									</c:when>
+								</c:choose>
+
 							</div>
 							<div id="tab-3" class="tab-content">
 								<div class="detail">
@@ -561,13 +621,31 @@ font-size: 20px;
 												<tr class="border-bottom">
 													<td>${item.b_1_id}</td>
 													<td>${item.u_id}</td>
-													<td><a href="${contextPath}/board1/b1Detail.do?b_1_id=${item.b_1_id}">${item.title}</a></td>
+													<td><a
+														href="${contextPath}/board1/b1Detail.do?b_1_id=${item.b_1_id}">${item.title}</a></td>
 													<td>${item.creDate}</td>
 													<td>${item.compare}</td>
 												</tr>
 											</c:forEach>
 										</tbody>
 									</table>
+									<c:choose>
+										<c:when test="${OrderVO == null}">
+											<c:forEach var="page" begin="1" end="9" step="1">
+												<c:if test="${section >0 && page==1 }">
+													<a
+														href="${contextPath}/member/memberDetail.do?section=${section}-1&pageNum=${(section-1)*10+1 }&u_id=${memberInfo.u_id}">preview</a>
+												</c:if>
+												<a
+													href="${contextPath}/member/memberDetail.do?section=${section}&pageNum=${page}&u_id=${memberInfo.u_id}">${(section)*10 +page}
+												</a>
+												<c:if test="${page ==10 }">
+													<a
+														href="${contextPath}/member/memberDetail.do?section=${section}+1&pageNum=${section*10}+1&u_id=${memberInfo.u_id}">next</a>
+												</c:if>
+											</c:forEach>
+										</c:when>
+									</c:choose>
 								</div>
 							</div>
 						</div>

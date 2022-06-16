@@ -51,5 +51,8 @@ public interface GoodsDAO {
 
 	public void deleteGoods(GoodsVO goodsInfo) throws DataAccessException;
 	
-	public Img_gVO selectImgOne(int ig_id)throws DataAccessException;
+	public Img_gVO selectImgOne(int ig_id) throws DataAccessException;
+
+	public List<GoodsVO> GoodsCateList(String cate) throws DataAccessException;
+
 }
