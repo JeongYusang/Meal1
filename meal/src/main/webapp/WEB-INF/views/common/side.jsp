@@ -120,6 +120,10 @@
 .check-inner1>.pw {
 	boackground: #ffc0cf;
 }
+
+h2.adminLiName {
+    margin: 0px;
+}
 </style>
 
 </head>
@@ -219,36 +223,33 @@
 				<!-- adminMode -->
 				
 					<li class="side-list">
-						<H2>주요기능</H2> <br>
+						<H2 class="adminLiName">회원관리</H2> <br>
 						<ul class="sidebar-content">
-							<li><a href="${contextPath}/admin/goods/adminGoodsMain.do">상품관리</a></li>
-							<li><a href="${contextPath}/admin/order/adminOrderMain.do">주문관리</a></li>
-							<li><a href="${contextPath}/admin/member/adminMemberMain.do">회원관리</a></li>
-							<li><a href="#">배송관리</a></li>
-							<li><a href="#">게시판관리</a></li>
+							<li><a href="${contextPath}/admin/selectAllMembers.do">회원조회</a></li>
+							<li><a href="${contextPath }/admin/selectAlladmins.do">관리자 조회</a></li>
 						</ul>
 					</li>
 
 					<li class="side-list">
-						<H2>주요기능</H2> <br>
+						<H2 class="adminLiName">상품관리</H2> <br>
 						<ul class="sidebar-content">							
-							<li><a href="${contextPath }/admin/selectAlladmins.do">관리자 조회</a></li>
-							<li><a href="${contextPath}/admin/selectAllMembers.do">회원관리</a></li>
-							<li><a href="${contextPath}/admin/selectAllSellers.do">판매자관리</a></li>
-							   <li><a href="${contextPath}/boardGq/selectBoardGqList.do">상품문의관리</a></li>
-							   <li><a href="${contextPath}/boardGr/selectBoardGrList.do">상품리뷰관리</a></li>
-							   
-							<li><a href="${contextPath}/admin/member/adminMemberMain.do">회원관리</a></li>
+							<li><a href="${contextPath}/admin/goods/adminGoodsMain.do">상품관리</a></li>
+							<li><a href="${contextPath}/admin/order/adminOrderMain.do">주문관리</a></li>
 							<li><a href="#">배송관리</a></li>
-							<li><a href="#">게시판관리</a></li>
 						</ul>
 					</li>
 					<li class="side-list">
-						<h2>정보내역</h2> <br>
+						<h2 class="adminLiName">게시판관리</h2> <br>
 						<ul class="sidebar-content">
-							<li><a href="#">회원정보관리</a></li>
-							<li><a href="#">나의 주소록</a></li>
-							<li><a href="#">개인정보 동의내역</a></li>
+							<li><a href="${contextPath}/boardGq/selectBoardGqList.do">상품문의관리</a></li>
+							<li><a href="${contextPath}/boardGr/selectBoardGrList.do">상품리뷰관리</a></li>
+							<li><a href="${contextPath}/board1/selectBoard1List.do">1대1문의관리</a></li>
+							<li><a href="#">관리자 게시판</a></li>
+						</ul>
+					</li>
+					<li class="side-list">
+						<h2 class="adminLiName">정보내역</h2> <br>
+						<ul class="sidebar-content">
 							<li><button type="button" class="checkpw">회원수정</button></li>
 							<li><button type="button" class="checkpw1">회원탈퇴</button></li>
 						</ul>
