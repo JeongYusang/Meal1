@@ -323,7 +323,12 @@ tr.orderlist td {
 							</tr>
 						</thead>
 						<c:choose>
-							<c:when test="${orderMap.orderListPaid != null}">
+						<c:when test="${empty orderMap.orderListPaid}">
+								<tr>
+									<td colspan=5 class="fixed"><strong>작성된 글이 없습니다.</strong></td>
+								</tr>
+							</c:when>
+							<c:otherwise>
 								<c:forEach var="OrderMap" items="${orderMap.orderListPaid}">
 									<tr class="orderlist">
 										<td><a
@@ -342,16 +347,11 @@ tr.orderlist td {
 												상세</a></td>
 									</tr>
 								</c:forEach>
-							</c:when>
-							<c:otherwise>
-
-								<td colspan=5>주문 내역이 없습니다</td>
-
 							</c:otherwise>
 						</c:choose>
 					</table>
 					<c:choose>
-						<c:when test="${orderMap.orderListPaid != null}">
+						<c:when test="${not empty orderMap.orderListPaid }">
 							<c:forEach var="page" begin="1" end="9" step="1">
 								<c:if test="${section >0 && page==1 }">
 									<a

@@ -6,6 +6,7 @@
 <c:set var="section" value="0" />
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,18 +23,6 @@ window.onload=function()
 
 function result(){
 	alert("${message}");
-}
-</script>
-</c:if>
-<c:if test='${not empty message1 }'>
-<script>
-window.onload=function()
-{
-  result();
-}
-
-function result(){
-	alert("${message1}");
 }
 </script>
 </c:if>
@@ -129,6 +118,19 @@ div .InfoTop {
 
 .button {
 	background-color: #ffd3dd;
+	border: none;
+	border-radius: 4px;
+	color: white;
+	padding: 15px 30px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+}
+.NFSbutton {
+	background-color: #000000;
 	border: none;
 	border-radius: 4px;
 	color: white;
@@ -377,13 +379,17 @@ position: relative;
 						</b>
 					</form>
 				</div>
-				<br> <a
-					href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=zzim"
-					class="button">찜하기</a> <a
-					href="${contextPath}/order/OrderForm.do?g_id=${goodsInfo.g_id}&o_goods_qty=1"
-					class="button" > 구매하기</a> <a
-					href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=cart"
-					class="button">장바구니담기</a>
+				<br> 
+				<c:if test="${goodsInfo.g_amount <=0}">
+				<a href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=zzim" class="button">찜하기</a>	
+				<a class="NFSbutton">구매불가</a>
+				<a class="NFSbutton">상품 준비중</a> 	
+				</c:if>
+				<c:if test="${goodsInfo.g_amount > 0}">
+				<a href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=zzim" class="button">찜하기</a> 
+				<a href="${contextPath}/order/OrderForm.do?g_id=${goodsInfo.g_id}&o_goods_qty=1" class="button" >구매하기</a> 
+				<a href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=cart" class="button">장바구니담기</a>
+				</c:if>
 			</div>
 		</div>
 		<br>
