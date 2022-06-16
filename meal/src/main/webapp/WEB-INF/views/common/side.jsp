@@ -190,9 +190,6 @@
 				<c:when test="${not empty sellerInfo}">
 					<!-- sellerMode -->
 				
-					<ul class="side-list">
-						<li><H2><a href="${contextPath }/seller/sellerMypage.do">주문내역</a></H2></li>
-					</ui>
 					<li class="side-list">
 						<h2>상품정보</h2> <br>
 						<ul class="sidebar-content">
@@ -200,12 +197,12 @@
 							<li><a href="${contextPath }/goods/selectGoodsPage.do">상품관리</a></li>
 						</ul>
 					</li>
+						<ul class="side-list">
+							<li><H2><a href="${contextPath }/seller/sellerMypage.do">주문내역</a></H2></li>
+						</ul>
 					<li class="side-list">
-						<h2>게시판 활동</h2> <br>
-						<ul class="sidebar-content">
-							<li><a href="${contextPath}/boardGr/selectSellerBoardGrList.do">상품 리뷰</a></li>
-                            <li><a href="${contextPath}/boardGq/selectSellerBoardGqList.do">상품 문의</a></li>
-                            <li><a href="${contextPath}/board1/selectMyBoard1.do">1대1 문의</a></li>
+						<ul class="side-list">
+							<li><h2><a href="${contextPath}/seller/sellerBoardMypage.do">게시판 활동</a></h2></li> 
 						</ul>
 					</li>
 					<li class="side-list">
