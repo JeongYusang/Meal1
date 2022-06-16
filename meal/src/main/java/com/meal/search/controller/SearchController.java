@@ -73,6 +73,7 @@ public class SearchController extends BaseController {
 			pagingMap.put("allergyList", allergyList);
 		}
 		pagingMap.put("text", text);
+		pagingMap.put("end", 8);
 
 		// 메인창에 띄워줄 상품 정보를 저장 추후 쿼리를 바꿔줄 예정이긴함
 		// HashMap<String,Object> map = new HashMap<String,Object> ();
@@ -128,6 +129,7 @@ public class SearchController extends BaseController {
 			pagingMap.put("allergyList", allergyList);
 		}
 		pagingMap.put("text", text);
+		pagingMap.put("end", 8);
 		pagingMap.put("cate", cate);
 
 		// 메인창에 띄워줄 상품 정보를 저장 추후 쿼리를 바꿔줄 예정이긴함

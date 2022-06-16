@@ -576,24 +576,6 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
    		session.setAttribute("quickGoodsList",quickGoodsList);
    		session.setAttribute("quickGoodsListNum", quickGoodsList.size());
    	}
-   
-   //cate 별로 리스트 가져오기
-   @Override
-   @RequestMapping(value = "/selectGoodsCate.do", method = { RequestMethod.POST, RequestMethod.GET })
-   public ModelAndView selectGoodsCate(@RequestParam("cate") String cate,
-         HttpServletRequest request, HttpServletResponse repsponse) throws Exception {
-     
-      String viewName = (String) request.getAttribute("viewName");
-      ModelAndView mav = new ModelAndView(viewName);
-      List<GoodsVO> goodsList = (List<GoodsVO>) goodsService.GoodsCateList(cate);
-      
-      mav.addObject("goodsList",goodsList);
-      mav.addObject("cate",cate);
-      
-      return mav;
-     
-
-   }
 
 
 }

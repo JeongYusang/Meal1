@@ -47,7 +47,4 @@ public interface GoodsController {
 	         HttpServletResponse response) throws Exception;
 	
 	public void addGoodsInQuick(int g_id,GoodsVO goodsInfo,HttpSession session)throws Exception;
-	
-	public ModelAndView selectGoodsCate(@RequestParam("cate") String cate,
-	         HttpServletRequest request, HttpServletResponse repsponse) throws Exception;
 }
