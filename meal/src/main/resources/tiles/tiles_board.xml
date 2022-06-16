@@ -130,6 +130,12 @@
 	<put-attribute name="body" value="/WEB-INF/views/board_gq/gq_review_update.jsp" />
 	</definition>
 	
+	<!-- 관리자게시판 테이블 -->
+	<definition name="/boardA/boardAWrite" extends="baseLayout2">
+		<put-attribute name="title" value="어드민 게시판 작성" />
+		<put-attribute name="body" value="/WEB-INF/views/board_a/baInsert.jsp" />
+	</definition>
+	
 	
 	
 </tiles-definitions>
