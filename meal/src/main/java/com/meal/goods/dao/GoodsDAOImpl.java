@@ -16,78 +16,89 @@ public class GoodsDAOImpl implements GoodsDAO {
 
 	@Autowired
 	private SqlSession sqlSession;
-	
+
 	@Override
-	public void addNewGoods(HashMap<String,Object> newGoodsMap) throws DataAccessException{
-		sqlSession.insert("mapper.goods.insertNewGoods",newGoodsMap);
-		 
+	public void addNewGoods(HashMap<String, Object> newGoodsMap) throws DataAccessException {
+		sqlSession.insert("mapper.goods.insertNewGoods", newGoodsMap);
+
 	}
 
 	@Override
-	public void addGoodsImg(HashMap<String, Object> map) throws DataAccessException{
-		sqlSession.insert("mapper.goods.img_gInsert",map);
+	public void addGoodsImg(HashMap<String, Object> map) throws DataAccessException {
+		sqlSession.insert("mapper.goods.img_gInsert", map);
 	}
 
 	@Override
-	public GoodsVO findg_id (String g_name) throws DataAccessException {
-		GoodsVO gVO = (GoodsVO)sqlSession.selectOne("mapper.goods.findg_id", g_name);
+	public GoodsVO findg_id(String g_name) throws DataAccessException {
+		GoodsVO gVO = (GoodsVO) sqlSession.selectOne("mapper.goods.findg_id", g_name);
 		return gVO;
 	}
 
 	@Override
 	public String selectOverlappedG_NAME(String g_name) throws DataAccessException {
-		String result = (String)sqlSession.selectOne("mapper.goods.selectOverlappedG_NAME", g_name);
+		String result = (String) sqlSession.selectOne("mapper.goods.selectOverlappedG_NAME", g_name);
 		return result;
 	}
-	
+
 	@Override
-	public List<Img_gVO> selectImgList(int g_id)throws DataAccessException{
-		List<Img_gVO> list = (List<Img_gVO>)sqlSession.selectList("mapper.goods.selectGoodsImg", g_id);
+	public List<Img_gVO> selectImgList(int g_id) throws DataAccessException {
+		List<Img_gVO> list = (List<Img_gVO>) sqlSession.selectList("mapper.goods.selectGoodsImg", g_id);
 		return list;
 	}
+
 	@Override
 	public List<GoodsVO> selectAllGoods(String cate1) throws DataAccessException {
-		List<GoodsVO> list = (List<GoodsVO>) sqlSession.selectList("mapper.goods.selectGoods",cate1);
+		List<GoodsVO> list = (List<GoodsVO>) sqlSession.selectList("mapper.goods.selectGoods", cate1);
 		return list;
 	}
-	public Img_gVO selectOneImg(HashMap<String,Object> map) throws DataAccessException {
+
+	public Img_gVO selectOneImg(HashMap<String, Object> map) throws DataAccessException {
 		Img_gVO vo = (Img_gVO) sqlSession.selectOne("mapper.goods.selectOneImg", map);
 		return vo;
 	}
-	public List<GoodsVO> selectNew_Goods()throws DataAccessException{
+
+	public List<GoodsVO> selectNew_Goods() throws DataAccessException {
 		List<GoodsVO> list = sqlSession.selectList("mapper.goods.selectNew_Goods");
 		return list;
 	}
-	public void updateNomalGoods(GoodsVO newGoods) throws DataAccessException{
+
+	public void updateNomalGoods(GoodsVO newGoods) throws DataAccessException {
 		sqlSession.update("mapper.goods.updateNomalGoods", newGoods);
-		
+
 	}
-	public GoodsVO selectGoodsDetail(int g_id) throws DataAccessException{
+
+	public GoodsVO selectGoodsDetail(int g_id) throws DataAccessException {
 		GoodsVO goodsVO = (GoodsVO) sqlSession.selectOne("mapper.goods.selectGoodsDetail", g_id);
 		return goodsVO;
 	}
+
 	@Override
 	public List<GoodsVO> selectGoodsPage(HashMap<String, Object> pgMap) throws DataAccessException {
-		List<GoodsVO> GoodsInfo = (List<GoodsVO>)sqlSession.selectList("mapper.goods.goodsPage", pgMap);
+		List<GoodsVO> GoodsInfo = (List<GoodsVO>) sqlSession.selectList("mapper.goods.goodsPage", pgMap);
 		return GoodsInfo;
 	}
+
 	@Override
-	public List<GoodsVO> searchGoodsSale() throws DataAccessException{
-		List<GoodsVO> goodsInfo = (List<GoodsVO>)sqlSession.selectList("mapper.goods.searchGoodsSale");
+	public List<GoodsVO> searchGoodsSale() throws DataAccessException {
+		List<GoodsVO> goodsInfo = (List<GoodsVO>) sqlSession.selectList("mapper.goods.searchGoodsSale");
 		return goodsInfo;
 	}
+
 	@Override
-	public void goodsSaleBegin(GoodsVO goodsVO) throws DataAccessException{
+	public void goodsSaleBegin(GoodsVO goodsVO) throws DataAccessException {
 		sqlSession.update("mapper.goods.goodsSaleBegin", goodsVO);
 	}
+
 	@Override
-	public List<GoodsVO> searchGoodsSaleE() throws DataAccessException{
-		List<GoodsVO> goodsInfo = (List<GoodsVO>)sqlSession.selectList("mapper.goods.searchGoodsSaleE");
+	public List<GoodsVO> searchGoodsSaleE() throws DataAccessException {
+		List<GoodsVO> goodsInfo = (List<GoodsVO>) sqlSession.selectList("mapper.goods.searchGoodsSaleE");
 		return goodsInfo;
 	}
-	public void goodsSaleEnd(int g_id) throws DataAccessException{
+
+	public void goodsSaleEnd(int g_id) throws DataAccessException {
 		sqlSession.update("mapper.goods.goodsSaleEnd", g_id);
 	}
+
 	@Override
 	public GoodsVO goodsG_Info(int g_id) throws DataAccessException {
 		GoodsVO goodsVO = (GoodsVO) sqlSession.selectOne("mapper.goods.selectGoodsDetail", g_id);
@@ -111,15 +122,43 @@ public class GoodsDAOImpl implements GoodsDAO {
 
 	@Override
 	public Img_gVO selectImgOne(int ig_id) throws DataAccessException {
-		Img_gVO goodsImg = (Img_gVO)sqlSession.selectOne("mapper.goods.selectGoodsImg1", ig_id);
+		Img_gVO goodsImg = (Img_gVO) sqlSession.selectOne("mapper.goods.selectGoodsImg1", ig_id);
 		return goodsImg;
 	}
 
 	@Override
 	public List<GoodsVO> GoodsCateList(String cate) throws DataAccessException {
-		List<GoodsVO> goodsInfo = (List<GoodsVO>)sqlSession.selectList("mapper.goods.GoodsCateList",cate);
+		List<GoodsVO> goodsInfo = (List<GoodsVO>) sqlSession.selectList("mapper.goods.GoodsCateList", cate);
 		return goodsInfo;
 	}
 
+	// 6-16 BestGoods scheduler -1
+	@Override
+	public List<GoodsVO> selectBestGoodsN() throws DataAccessException {
+		List<GoodsVO> goodsInfo = (List<GoodsVO>) sqlSession.selectList("mapper.goods.selectBestGoodsN");
+		return goodsInfo;
+	}
+	// 6 - 16 2
+	@Override
+	public void changeBestGoodsN(int g_id) throws DataAccessException {
+		sqlSession.update("mapper.goods.changeBestGoodsN", g_id);
+	}
+	//6-16 3
+	@Override
+	public List<GoodsVO> selectAllBestGoods() throws DataAccessException {
+		List<GoodsVO> goodsInfo = (List<GoodsVO>) sqlSession.selectList("mapper.goods.selectAllBestGoods");
+		return goodsInfo;
+	}
+	//6-16 4
+	@Override
+	public void changeNomalGoods(int g_id) throws DataAccessException {
+		sqlSession.update("mapper.goods.changeNomalGoods",g_id);
+	}
 	
+	//6-16 5
+	@Override
+	public void changeBestGoods(int g_id) throws DataAccessException {
+		sqlSession.update("mapper.goods.changeBestGoods",g_id); 
+	}
+
 }

@@ -158,12 +158,7 @@
  select * from img_g where g_id =#{g_id} and cate = #{cate} 
  ]]>
 	</select>
-	<!-- 스케줄러 -->
-	<select id="selectNew_Goods" resultMap="goodsResult">
- <![CDATA[
-  select * from goods_tb where g_cate1 = 'New_GOODS' and g_creDate < (date_sub(now(), interval 1 day ))
-]]>
-	</select>
+
 
 	<select id="selectGoodsDetail" parameterType="int"
 		resultType="GoodsVO">
@@ -171,12 +166,7 @@
 		select * from goods_tb where g_id =#{g_id}
 	</select>
 
-	<!-- 스케줄러 -->
-	<update id="updateNomalGoods" parameterType="GoodsVO">
- <![CDATA[
-update goods_tb set g_cate1 ='Nomal' where g_cate1 =#{g_cate1} and g_id =#{g_id} 
-]]>
-	</update>
+
 
 	<!-- 상품수정창 -->
 	<update id="updateGoods" parameterType="Map">
@@ -239,6 +229,27 @@ update goods_tb set g_cate1 ='Nomal' where g_cate1 =#{g_cate1} and g_id =#{g_id}
 
 	</update>
 
+	<select id="goodsG_Info" parameterType="int"
+		resultType="GoodsVO">
+	<![CDATA[
+		   select * from goods_tb
+		   where g_id = #{g_id}
+		]]>
+	</select>
+
+	<select id="updateGoodsImg" parameterType="Map">
+		<![CDATA[
+			update img_g set fileName = #{fileName} where g_id=#{g_id} and cate=#{cate}
+		]]>
+	</select>
+
+	<delete id="deleteGoods" parameterType="GoodsVO">
+		<![CDATA[
+			delete from goods_tb where g_id = #{g_id}
+		]]>
+	</delete>
+
+
 	<!-- 상품관리창 -->
 	<select id="goodsPage" resultMap="goodsResult"
 		parameterType="Map">
@@ -247,9 +258,78 @@ update goods_tb set g_cate1 ='Nomal' where g_cate1 =#{g_cate1} and g_id =#{g_id}
 	   ]]>
 	</select>
 
+	<!-- ===============goodsSearch ===========================  -->
+	<select id="SearchGoods" parameterType="Map"
+		resultMap="goodsResult">
+		select * from goods_tb where g_name like
+		CONCAT('%',#{text},'%')
+		<if test="g_allergy_M != null and g_allergy_M != ''">
+		<foreach collection="allergyList" item ="allergyList" separator=" ">
+		and g_allergy_M not like concat('%',#{allergyList},'%')
+		</foreach>
+		</if>
+		limit #{start} , #{end}
+	</select>
+	
 
-	<!-- 스케줄러에서 사용 -->
+	<select id="CateSearchGoods" parameterType="Map"
+		resultMap="goodsResult">
+		select * from goods_tb where g_name like CONCAT('%',#{text},'%') and g_cate2 = #{cate}
+	
+		<if test="g_allergy_M != null and g_allergy_M != ''">
+		<foreach collection="allergyList" item ="allergyList" separator=" ">
+		and g_allergy_M not like concat('%',#{allergyList},'%')
+		</foreach>
+		</if>
+		limit #{start} , #{end}
+	</select>
 
+
+
+	<!-- ==========================scheduler========================== -->
+	
+		<!--====== 신상품 일반상품으로 변경 =====-->
+	<select id="selectNew_Goods" resultMap="goodsResult">
+ <![CDATA[
+  select * from goods_tb where g_cate1 = 'New_GOODS' and g_creDate < (date_sub(now(), interval 3 day ))
+]]>
+	</select>
+	
+	<update id="updateNomalGoods" parameterType="GoodsVO">
+ <![CDATA[
+update goods_tb set g_cate1 ='Normal' where g_cate1 =#{g_cate1} and g_id =#{g_id} 
+]]>
+	</update>
+	
+	<!-- ================================================================ -->
+	<!-- ===인기상품의 원상복귀 ====-->
+	<select id="selectBestGoodsN" resultMap="goodsResult">
+ <![CDATA[
+  select * from goods_tb where g_cate1 = "Best" and g_creDate < (date_sub(now(), interval 3 day ))
+]]>
+	</select>
+
+	<update id = "changeBestGoodsN" parameterType ="int">
+		update goods_tb set g_cate1 = "NEW_GOODS" where g_id = #{g_id}
+	</update>
+
+	<select id="selectAllBestGoods" 
+		resultMap="goodsResult">
+	<![CDATA[
+		   select * from goods_tb
+		   where g_cate1 in ("Best")]]>
+	</select>
+
+	<update id = "changeNomalGoods" parameterType ="int">
+		update goods_tb set g_cate1 = "Normal" where g_id = #{g_id}
+	</update>
+	
+	<update id = "changeBestGoods" parameterType ="int">
+		update goods_tb set g_cate1 = "Best" where g_id = #{g_id}
+	</update>
+	
+
+	<!--===================== scheduler Sale================================ -->
 	<!-- 세일시작 -->
 
 	<select id="searchGoodsSale" resultMap="goodsResult">
@@ -267,9 +347,6 @@ update goods_tb set g_saleprice = #{g_saleprice} where g_id= #{g_id}
 	</update>
 
 
-
-
-	<!-- 세일마감 -->
 	<select id="searchGoodsSaleE" resultMap="goodsResult">
 
 <![CDATA[
@@ -283,61 +360,7 @@ update goods_tb set g_saleprice = '0', g_saleDate1= null, g_saleDate2= null , g_
 ]]>
 	</update>
 
-	<select id="goodsG_Info" parameterType="int"
-		resultType="GoodsVO">
-	<![CDATA[
-		   select * from goods_tb
-		   where g_id = #{g_id}
-		]]>
-	</select>
 
-
-
-	<select id="updateGoodsImg" parameterType="Map">
-		<![CDATA[
-			update img_g set fileName = #{fileName} where g_id=#{g_id} and cate=#{cate}
-		]]>
-	</select>
-
-	<delete id="deleteGoods" parameterType="GoodsVO">
-
-		<![CDATA[
-			delete from goods_tb where g_id = #{g_id}
-		]]>
-
-	</delete>
-
-	<!-- goodsSearch -->
-	<select id="SearchGoods" parameterType="Map"
-		resultMap="goodsResult">
-		select * from goods_tb where g_name like
-		CONCAT('%',#{text},'%')
-		<if test="g_allergy_M != null and g_allergy_M != ''">
-		<foreach collection="allergyList" item ="allergyList" separator=" ">
-		and g_allergy_M not like concat('%',#{allergyList},'%')
-		</foreach>
-		</if>
-		limit #{start} , #{end}
-	</select>
-	
-	
-	<select id="GoodsCateList" resultMap="goodsResult" parameterType="String">
-		 <![CDATA[
-		  select * from goods_tb where g_cate2 = #{cate}
-		]]>
-	</select>
-	
-	<select id="CateSearchGoods" parameterType="Map"
-		resultMap="goodsResult">
-		select * from goods_tb where g_name like CONCAT('%',#{text},'%') and g_cate2 = #{cate}
-	
-		<if test="g_allergy_M != null and g_allergy_M != ''">
-		<foreach collection="allergyList" item ="allergyList" separator=" ">
-		and g_allergy_M not like concat('%',#{allergyList},'%')
-		</foreach>
-		</if>
-		limit #{start} , #{end}
-	</select>
 
 
 </mapper>
