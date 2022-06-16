@@ -27,8 +27,7 @@ public class SchedulerController {
 	private GoodsService goodsService;
 	@Autowired
 	private OrderService orderService;
-	
-	
+
 	@Scheduled(cron = "0 15 13 * * ?")
 	public void goodsCateUpdate() {
 		// goods cate변경
@@ -50,42 +49,43 @@ public class SchedulerController {
 		logger.info("schedule start : [" + batchResult + "] " + dateFormat.format(calendar.getTime()));
 
 	}
-	
-	@Scheduled(cron = "0 15 13 * * ?")
+	// 6-16
+	@Scheduled(cron = "5/30 * * * * ?")
 	public void BestgoodsCateUpdate() {
 		// goods cate변경
 		// 인기상품검색 검색
 		String batchResult = "성공";
 		try {
-			// BestG List where 날짜차이 검색  
-			/*if(GoodsVO BestG != null){
-			  for(item:list){
-			  // update 날짜에 관하여 NewGoods로 반환
-			  }
-			  BestG 전체검색
-			  if (BestG != null){
-			  for(GoodsVO item:list){
-			  //일반상품으로 변경
-			  }
-			   }
-			
-			*/
-			
-			
-			
-			
-			// 해당 상품조회는 상품등록후 24시간이 지난상황의상품을 검색해줌.
-			List<OrderVO> bestGoods = orderService.BestGoodsCount();
-			for(OrderVO item : bestGoods) {
-				int g_id = item.getG_id();
-				/* cate2 = BestG 로변경할 메소드 ! 
-					g_id만 보내서 bestGoods로 변경할수있게 메소드만들기
-				  
-				*/
-				
+			// 인기상품 신상품으로 변경
+			List<GoodsVO> bestGoodsN = (List<GoodsVO>) goodsService.selectBestGoodsN();
+			if (bestGoodsN != null) {
+				for (GoodsVO item : bestGoodsN) {
+					int g_id = item.getG_id();
+					goodsService.changeBestGoodsN(g_id);
+				}
+				logger.debug("인기상품 변환중");
+				System.out.println("인기상품 변환중");
 			}
-			
-			
+			// 인기상품 일반상품으로 변경
+			List<GoodsVO> bestGoodsN1 = (List<GoodsVO>) goodsService.selectAllBestGoods();
+			if (bestGoodsN1 != null) {
+				for (GoodsVO item : bestGoodsN1) {
+					int g_id = item.getG_id();
+					goodsService.changeNomalGoods(g_id);
+				}
+				logger.debug("인기상품 변환중");
+			}
+
+			// 인기상품 새등록
+			List<OrderVO> orderList = (List<OrderVO>) orderService.BestGoodsCount();
+			if (orderList != null) {
+				for (OrderVO item : orderList) {
+					int g_id = item.getG_id();
+					goodsService.changeBestGoods(g_id);
+				}
+				logger.debug("인기상품 변환완료");
+			}
+
 		} catch (Exception e) {
 			batchResult = "실패";
 		}
@@ -94,8 +94,7 @@ public class SchedulerController {
 		logger.info("schedule start : [" + batchResult + "] " + dateFormat.format(calendar.getTime()));
 
 	}
-	
-	
+
 	// 상품 세일 지정
 	@Scheduled(cron = "0 15 13 * * ?")
 	public void goodsSaleBegin() {
@@ -117,11 +116,11 @@ public class SchedulerController {
 				if (goodsSaleP != 0) {
 					// 퍼센트 할인일경우
 					goodsSaleP = 100 - goodsSaleP;
-					salePrice = goodsPrice * goodsSaleP / 100 ;
+					salePrice = goodsPrice * goodsSaleP / 100;
 					item.setG_saleprice(salePrice);
 					logger.info("goodsPrice: " + goodsPrice);
-					logger.info("goodsSaleP: " +goodsSaleP);
-					logger.info("goodsSalePrice: " +salePrice);
+					logger.info("goodsSaleP: " + goodsSaleP);
+					logger.info("goodsSalePrice: " + salePrice);
 					goodsDAO.goodsSaleBegin(item);
 				} else if (goodsSaleW != 0) {
 					// 가격 할인일경우
@@ -129,10 +128,10 @@ public class SchedulerController {
 					item.setG_saleprice(salePrice);
 					goodsDAO.goodsSaleBegin(item);
 					logger.info("goodsPrice: " + goodsPrice);
-					logger.info("goodsSaleW: " +goodsSaleW);
-					logger.info("goodsSalePrice: " +salePrice);
+					logger.info("goodsSaleW: " + goodsSaleW);
+					logger.info("goodsSalePrice: " + salePrice);
 				}
-				
+
 				logger.debug("goodsCateUpdate");
 			}
 		} catch (Exception e) {
@@ -143,8 +142,6 @@ public class SchedulerController {
 		logger.info("schedule start : [" + batchResult + "] " + dateFormat.format(calendar.getTime()));
 
 	}
-
-
 
 	// 상품 세일 종료
 	@Scheduled(cron = "0 15 13 * * ?")

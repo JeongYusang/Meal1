@@ -200,8 +200,10 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 				_orderVO.setO_goods_price(price);
 				orderService.insertCartOrder(_orderVO);
 				// 마일리지 관련하여 추후 생각을 해야함.
+				int c_id =item.getC_id();
+				cartService.removeCartGoods(c_id);
 			}
-
+			session.removeAttribute("CartList");
 			String viewName1 = "redirect:/order/CartOrderForm.do";
 			mav.setViewName(viewName1);
 			return mav;

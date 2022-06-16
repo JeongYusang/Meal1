@@ -54,5 +54,15 @@ public interface GoodsDAO {
 	public Img_gVO selectImgOne(int ig_id) throws DataAccessException;
 
 	public List<GoodsVO> GoodsCateList(String cate) throws DataAccessException;
-
-}
+	
+	// 스케줄러 인기상품변경 6-16 1
+	public List<GoodsVO> selectBestGoodsN() throws DataAccessException;
+	// 스케줄러 인기상품변경 6-16 2
+	public void changeBestGoodsN(int g_id) throws DataAccessException;
+	// 6-16 3
+	public List<GoodsVO> selectAllBestGoods() throws DataAccessException;
+	//6-16 4
+	public void changeNomalGoods(int g_id) throws DataAccessException; 
+	//6-16 5
+	public void changeBestGoods(int g_id) throws DataAccessException;
+ }
