@@ -190,14 +190,9 @@
 				<c:when test="${not empty sellerInfo}">
 					<!-- sellerMode -->
 				
-					<li class="side-list">
-						<H2>판매정보</H2> <br>
-						<ul class="sidebar-content">
-							<li><a href="${contextPath }/seller/sellerMypage.do">판매내역</a></li>
-							<li><a href="${contextPath }/seller/sellerMypage.do">배송중인상품</a></li>
-							<li><a href="${contextPath }/seller/sellerMypage.do">취소/반품/교환내역</a></li>
-						</ul>
-					</li>
+					<ul class="side-list">
+						<li><H2><a href="${contextPath }/seller/sellerMypage.do">주문내역</a></H2></li>
+					</ui>
 					<li class="side-list">
 						<h2>상품정보</h2> <br>
 						<ul class="sidebar-content">

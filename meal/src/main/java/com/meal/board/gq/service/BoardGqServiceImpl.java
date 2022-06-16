@@ -126,8 +126,8 @@ public class BoardGqServiceImpl implements BoardGqService {
 
 	//판매자 상품문의 내역 확인 0615
 	@Override
-	public List<BoardGqVO> boardGqSellerList(String s_id) throws Exception {
-		List<BoardGqVO> boardGqList = boardGqDAO.boardGqSellerList(s_id);
+	public List<BoardGqVO> boardGqSellerList(HashMap<String, Object> map) throws Exception {
+		List<BoardGqVO> boardGqList = boardGqDAO.boardGqSellerList(map);
 		return boardGqList;
 	}
 	

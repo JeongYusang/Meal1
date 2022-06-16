@@ -125,8 +125,8 @@ public class BoardGqDAOImpl implements BoardGqDAO {
 
 	//판매자 상품문의 내역 확인 0615
 	@Override
-	public List<BoardGqVO> boardGqSellerList(String s_id) throws DataAccessException {
-		List<BoardGqVO> boardGqList = (List<BoardGqVO>) sqlSession.selectList("mapper.boardGq.boardGqList", s_id);
+	public List<BoardGqVO> boardGqSellerList(HashMap<String, Object> map) throws DataAccessException {
+		List<BoardGqVO> boardGqList = (List<BoardGqVO>) sqlSession.selectList("mapper.boardGq.boardGqList", map);
 		return boardGqList;
 	}
 

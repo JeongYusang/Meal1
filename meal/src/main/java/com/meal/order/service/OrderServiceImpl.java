@@ -103,8 +103,8 @@ public class OrderServiceImpl implements OrderService {
 
 	// 판매자 마이페이지 내 오더리스트 불러오기위해 만듬 0614
 	@Override
-	public List<OrderVO> orderSellerList(String s_id) throws Exception {
-		List<OrderVO> orderList = (List<OrderVO>) orderDAO.orderSellerList(s_id);
+	public List<OrderVO> orderSellerList(HashMap<String, Object> pgMap) throws Exception {
+		List<OrderVO> orderList = (List<OrderVO>) orderDAO.orderSellerList(pgMap);
 		return orderList;
 	}
 

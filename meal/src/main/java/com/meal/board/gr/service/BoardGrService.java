@@ -42,4 +42,9 @@ public interface BoardGrService {
 
 	public List<BoardGrVO> selectGoodsBoardGrallList(int g_id)throws Exception;
 
+	//상품후기 내역 조회를 위해 사용 0616
+	public List<BoardGrVO> selectBoardGrSList(HashMap<String, Object> map) throws Exception;
+	
+	
+
 }

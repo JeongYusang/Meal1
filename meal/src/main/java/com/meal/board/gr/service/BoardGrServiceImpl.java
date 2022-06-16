@@ -121,4 +121,11 @@ public class BoardGrServiceImpl implements BoardGrService {
 		return boardGrDAO.grdownload(b_gr_id);
 	}
 
+	//판매자 페이지 상품후기 내역 조회를 위해 사용 0616
+	@Override
+	public List<BoardGrVO> selectBoardGrSList(HashMap<String, Object> map) throws Exception {
+		List<BoardGrVO> sGrListInfo = (List<BoardGrVO>) boardGrDAO.selectBoardGrSList(map);
+		return sGrListInfo;
+	}
+
 }

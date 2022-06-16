@@ -180,8 +180,15 @@ update board_gr set title = #{title}, content = #{content}, secret = #{secret} w
     	]]>
 	</select>
 	
-	
-	
+	<!-- 판매자 페이지 상품후기 내역 조회를 위해 사용 0616 -->
+	<select id="selectBoardGrSList" resultMap="boardGrResult"
+		parameterType="Map">
+		select gr.*, g.g_name
+		from board_gr gr
+		inner join goods_tb g
+		on gr.g_id = g.g_id
+		where gr.s_id = #{s_id} and gr.parentNo = 0 order by gr.b_gr_id desc;
+	</select>
 	
 
 

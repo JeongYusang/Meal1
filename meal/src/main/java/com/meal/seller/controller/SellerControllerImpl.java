@@ -27,6 +27,10 @@ import com.meal.admin.service.AdminService;
 import com.meal.admin.vo.AdminVO;
 import com.meal.board.gq.service.BoardGqService;
 import com.meal.board.gq.vo.BoardGqVO;
+import com.meal.board.gr.service.BoardGrService;
+import com.meal.board.gr.vo.BoardGrVO;
+import com.meal.board.one.service.Board1Service;
+import com.meal.board.one.vo.Board1VO;
 import com.meal.common.controller.BaseController;
 import com.meal.goods.service.GoodsService;
 import com.meal.goods.vo.GoodsVO;
@@ -53,6 +57,10 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 	private OrderService orderService;
 	@Autowired
 	private BoardGqService boardGqService;
+	@Autowired
+	private Board1Service board1Service;
+	@Autowired
+	private BoardGrService boardGrService;
 
 	@Autowired
 	private Img_sVO img_sVO;
@@ -66,6 +74,10 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 		HttpSession session = request.getSession();
 		session.setAttribute("isLogOn", false);
 		session.removeAttribute("sellerInfo");
+		session.removeAttribute("quickZzimList");
+		session.removeAttribute("quickZzimListNum");
+		String message = "로그아웃이 완료되었습니다.";
+		mav.addObject("message", message);
 		mav.setViewName("redirect:/main/main.do");
 		return mav;
 	}
@@ -342,28 +354,8 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 			      List<GoodsVO> goodsList = goodsService.selectGoodsPage(pagingMap);
 				  
 			      //주문내역 확인
-				  List<OrderVO> orderList = orderService.orderSellerList(s_id1);
+				  List<OrderVO> orderList = orderService.orderSellerList(pagingMap);
 
-				  //상품문의 내역 확인 0615
-				  List<BoardGqVO> boardGqList = boardGqService.boardGqSellerList(s_id1);
-				  //compare사용위해 추가 0615
-				  List<BoardGqVO> boardGqAllList = boardGqService.selectBoardGqallList();
-				  
-				  for (BoardGqVO item : boardGqList) {
-					  for (BoardGqVO a : boardGqAllList) {
-						  if (!((int) item.getB_gq_id() == (int) a.getParentNo())) {
-							  String compare = "N";
-							  item.setCompare(compare);
-						  } else {
-							  String compare = "Y";
-							  item.setCompare(compare);
-							  System.out.println("---------------------------");
-							  System.out.println("BoardCompare" + item.getB_gq_id());
-							  System.out.println("---------------------------");
-							  break;
-						  }
-					  }
-				  }
 					System.out.println("---------------------------");
 				    System.out.println("goodsList : " + goodsList);
 					System.out.println("---------------------------");
@@ -371,14 +363,7 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 				    System.out.println("---------------------------");
 					System.out.println("orderList : " + orderList);
 				    System.out.println("---------------------------");
-				    System.out.println("boardGqList : " + boardGqList);
-				    System.out.println("---------------------------");
-					/*
-					 * System.out.println("orderList : " + orderList);
-					 * System.out.println("---------------------------");
-					 */
-				    
-				    mav.addObject("boardGqList", boardGqList);
+
 				    mav.addObject("sellerVO", sellerVO);
 					mav.addObject("orderList", orderList);
 					mav.addObject("goodsList", goodsList);
@@ -393,4 +378,113 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 					return mav;
 			      
 			}
+		
+		@Override
+		@RequestMapping(value="/sellerBoardMypage.do", method= {RequestMethod.GET, RequestMethod.POST})
+		public ModelAndView sellerBoardMypage(@RequestParam(value = "s_id", required = false) String s_id, @RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+		         @RequestParam(value = "section1", required = false) String section,
+		         @RequestParam(value = "pgNum", required = false) String pgNum, HttpServletRequest request,
+		         HttpServletResponse response) throws Exception {
+			ModelAndView mav = new ModelAndView();
+			HttpSession session = request.getSession();
+		    SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
+			
+		    if (sellerVO != null) {
+			    String s_id1 = sellerVO.getS_id();
+			    String viewName = (String) request.getAttribute("viewName");
+			    mav.setViewName(viewName);
+			      
+				HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
+			    pagingInfo.put("section", section);
+			    pagingInfo.put("pgNum", pgNum);
+			    
+			    HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
+			    
+			    pagingMap.put("s_id", s_id1);
+			    //굿즈리스트 호출을 위해 사용
+				
+				//1대1문의 내역 확인위해 사용 0615
+				List<Board1VO> board1SellerList = board1Service.selectMyBoard1List(pagingMap);
+				//Board1 답변여부 확인을 위해 추가 0615
+				List<Board1VO> board1A = board1Service.listBoard1(s_id);
+				//상품문의 내역 확인 0615
+				List<BoardGqVO> boardGqSellerList = boardGqService.boardGqSellerList(pagingMap);
+				//상품문의 답변여부 확인을 위해 추가 0615
+				List<BoardGqVO> boardGqA = boardGqService.selectBoardGqallList();
+				//상품후기 내역확인 0616
+				List<BoardGrVO> boardGrSellerList = boardGrService.selectBoardGrSList(pagingMap);
+				//상품후기 답변여부 확인을 위해 추가 0616
+				List<BoardGrVO> boardGrA = boardGrService.selectBoardGrallList();
+				  
+				for (Board1VO item : board1SellerList) {
+					for (Board1VO a : board1A) {
+						if (!((int) item.getB_1_id() == (int) a.getParentNo())) {
+							String compare = "N";
+							item.setCompare(compare);
+						} else {
+							String compare = "Y";
+							item.setCompare(compare);
+							System.out.println("---------------------------");
+							System.out.println("Board1Compare" + item.getB_1_id());
+							System.out.println("---------------------------");
+							break;
+						}
+					}
+				}
+				
+				for (BoardGqVO item : boardGqSellerList) {
+					for (BoardGqVO a : boardGqA) {
+						if (!((int) item.getB_gq_id() == (int) a.getParentNo())) {
+							String compare = "N";
+							item.setCompare(compare);
+						} else {
+							String compare = "Y";
+							item.setCompare(compare);
+							System.out.println("---------------------------");
+							System.out.println("BoardGqCompare" + item.getB_gq_id());
+							System.out.println("---------------------------");
+							break;
+						}
+					}
+				}
+				
+				for (BoardGrVO item : boardGrSellerList) {
+					for (BoardGrVO a : boardGrA) {
+						if (!((int) item.getB_gr_id() == (int) a.getParentNo())) {
+							String compare = "N";
+							item.setCompare(compare);
+						} else {
+							String compare = "Y";
+							item.setCompare(compare);
+							System.out.println("---------------------------");
+							System.out.println("BoardGrCompare" + item.getB_gr_id());
+							System.out.println("---------------------------");
+							break;
+						}
+					}
+				}
+					System.out.println("---------------------------");
+					System.out.println("sellerVO : " + sellerVO);
+				    System.out.println("---------------------------");
+				    System.out.println("boardGqSellerList : " + boardGqSellerList);
+				    System.out.println("---------------------------");
+				    System.out.println("board1SellerList : " + board1SellerList);
+				    System.out.println("---------------------------");
+				    System.out.println("boardGrSellerList : " + boardGrSellerList);
+				    System.out.println("---------------------------");
+				    
+				    mav.addObject("boardGqSellerList", boardGqSellerList);
+				    mav.addObject("board1SellerList", board1SellerList);
+				    mav.addObject("boardGrSellerList", boardGrSellerList);
+				    mav.addObject("sellerVO", sellerVO);
+					mav.setViewName(viewName);
+					
+					return mav;
+			     } 
+			     	String message ="잘못된 접근방법입니다.";
+					mav.addObject("message", message);
+					String viewName1 = "redirect:/main/main.do";
+					mav.setViewName(viewName1);
+					return mav;
+		}
 	}
