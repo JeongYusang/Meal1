@@ -202,13 +202,12 @@ tr.border-bottom td {
 			<c:forEach var="item" items="${sellerlist}">
 				<label for="border-bottom"></label>
 				<tr class="border-bottom">
-
-					<td><a href="${contextPath}/seller/sellerDetail.do?id=${item.s_id}">${item.s_id}</a></td>
-					<td><a href="${contextPath}/seller/sellerDetail.do?id=${item.s_id}">${item.s_Wname}</a></td>
-					<td><a href="${contextPath}/seller/sellerDetail.do?id=${item.s_id}">${item.s_BL_Num}</a></td>
-					<td><a href="${contextPath}/seller/sellerDetail.do?id=${item.s_id}">등록된 상품수</a></td>
-					<td><a href="${contextPath}/seller/sellerDetail.do?id=${item.s_id}">판매수량</a></td>
-					<td><a href="${contextPath}/seller/sellerDetail.do?id=${item.s_id}">매출액</a></td>
+					<td><a href="${contextPath }/seller/sellerMypage.do?s_id=${item.s_id}">${item.s_id}</a></td>
+					<td><a href="${contextPath }/seller/sellerMypage.do?s_id=${item.s_id}">${item.s_Wname}</a></td>
+					<td><a href="${contextPath }/seller/sellerMypage.do?s_id=${item.s_id}">${item.s_BL_Num}</a></td>
+					<td><a href="${contextPath }/seller/sellerMypage.do?s_id=${item.s_id}">등록된 상품수</a></td>
+					<td><a href="${contextPath }/seller/sellerMypage.do?s_id=${item.s_id}">판매수량</a></td>
+					<td><a href="${contextPath }/seller/sellerMypage.do?s_id=${item.s_id}">매출액</a></td>
 					<td>${item.s_cate}</td>
 					<td>${item.s_lastLog}</td>
 					<!-- <td><a href ="${contextPath }/updateForm" -->
