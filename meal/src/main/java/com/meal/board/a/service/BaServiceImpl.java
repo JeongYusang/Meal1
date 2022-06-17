@@ -1,6 +1,7 @@
 package com.meal.board.a.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,12 @@ public class BaServiceImpl implements BaService {
 	@Override
 	public void addImg(HashMap<String, Object> item) throws Exception {
 		baDAO.addImg(item);
+	}
+	
+	@Override
+	public List<BaVO> BaAllList(HashMap<String, Object> map) throws Exception {
+		List<BaVO> BaAllList = (List<BaVO>) baDAO.BaAllList(map);
+		return BaAllList;
 	}
 
 }

@@ -244,7 +244,7 @@ h2.adminLiName {
 							<li><a href="${contextPath}/boardGq/selectBoardGqList.do">상품문의관리</a></li>
 							<li><a href="${contextPath}/boardGr/selectBoardGrList.do">상품리뷰관리</a></li>
 							<li><a href="${contextPath}/board1/selectBoard1List.do">1대1문의관리</a></li>
-							<li><a href="#">관리자 게시판</a></li>
+							<li><a href="${contextPath}/boardA/boardAList.do">관리자 게시판</a></li>
 						</ul>
 					</li>
 					<li class="side-list">
@@ -289,6 +289,9 @@ h2.adminLiName {
                </li>
 
             </c:when>
+            <c:otherwise>
+            	<h2><a href="${contextPath}/main/loginForm.do">로그인</a>후 이용가능 합니다.</h2>
+            </c:otherwise>
 			</c:choose>
 		</ul>
 	</nav>

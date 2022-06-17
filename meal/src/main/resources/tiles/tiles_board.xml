@@ -136,6 +136,11 @@
 		<put-attribute name="body" value="/WEB-INF/views/board_a/baInsert.jsp" />
 	</definition>
 	
+	<definition name="/boardA/boardAList" extends="baseLayout2">
+		<put-attribute name="title" value="어드민 게시판 목록"/>
+		<put-attribute name="body" value="/WEB-INF/views/board_a/boardAList.jsp"/>
+	</definition>
+	
 	
 	
 </tiles-definitions>

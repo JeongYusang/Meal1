@@ -1,6 +1,7 @@
 package com.meal.board.a.DAO;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,12 @@ public class BaDAOImpl implements BaDAO{
 	@Override
 	public void addImg(HashMap<String, Object> item) throws DataAccessException {
 		sqlSession.insert("mapper.boardA.addImg", item);
+	}
+
+	@Override
+	public List<BaVO> BaAllList(HashMap<String, Object> map) throws DataAccessException {
+		List<BaVO> BaAllList = (List<BaVO>) sqlSession.selectList("mapper.boardA.boardAInfo", map);
+		return BaAllList;
 	}
 
 }

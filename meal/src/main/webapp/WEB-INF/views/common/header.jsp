@@ -352,7 +352,8 @@
 							<c:when test="${isLogOn==true and not empty adminInfo }">
 							<li><c:out value=" 어드민 ${adminInfo.a_name}님 반갑습니다" /></li>
 							<li><a href="${contextPath }/admin/logout.do">로그아웃 |</a></li>
-							<li><a href="${contextPath}/admin/selectAllMembers.do">관리페이지 |
+							<li><a href="${contextPath}/admin/selectAllMembers.do">관리페이지 |</a></li>
+							<li><a href="${contextPath}/boardA/boardAWrite.do">글쓰기
 							</a></li>
 						</c:when>
 						<c:otherwise>
