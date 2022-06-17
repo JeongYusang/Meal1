@@ -121,20 +121,20 @@ td #preview {
 		<div class='board-title'>
 			<h1>새 글쓰기</h1>
 		</div>
-		<form name="frmArticle" method="post" action="${contextPath}"
+		<form name="frmArticle" method="post" action="${contextPath}/boardA/boardAinsert.do"
 			enctype="multipart/form-data">
 			<div class='table-wrap'>
 				<table>
 
 					<tr>
 						<th class="td1">작성자 아이디</th>
-						<td class="td2"><input type=text value="유저ID필드" name="writer"
-							disabled /></td>
+						<td class="td2"><input type=text value="${adminInfo.a_id }"
+							disabled /><input type="hidden" value="${adminInfo.a_id }" name="a_id"></td>
 					</tr>
 					<tr>
 						<th class="td1">제목</th>
-						<td class="td2"><input type=text value="타이틀필드" name="title"
-							id="i_title" /></td>
+						<td class="td2"><input type=text value="제목입력" name="title"
+							id="title" /></td>
 					</tr>
 					<tr>
 						<th class="td1">카테고리</th>
@@ -147,8 +147,8 @@ td #preview {
 					</tr>
 					<tr>
 						<th class="td1">내용</th>
-						<td class="td2"><textarea rows="20" cols="30" name="내용필드"
-								id="i_content"> ${article.content } </textarea></td>
+						<td class="td2"><textarea rows="20" cols="30" name="content"
+								id="content"> ${article.content } </textarea></td>
 					</tr>
 					<tr class="filebox">
 						<th class="fileboxhead">이미지추가</th>

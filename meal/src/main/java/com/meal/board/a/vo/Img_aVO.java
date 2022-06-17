@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 @Component("Img_aVO")
 public class Img_aVO {
 	public int ib_a_id;
-	public String reg_id;
 	public String fileName;
 	public String creDate;
 	public String cate;
@@ -17,12 +16,6 @@ public class Img_aVO {
 	}
 	public void setIb_a_id(int ib_a_id) {
 		this.ib_a_id = ib_a_id;
-	}
-	public String getReg_id() {
-		return reg_id;
-	}
-	public void setReg_id(String reg_id) {
-		this.reg_id = reg_id;
 	}
 	public String getFileName() {
 		return fileName;

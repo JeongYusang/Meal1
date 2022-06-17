@@ -7,19 +7,16 @@
 
 	<resultMap id="BoardAdminResult" type="BaVO">
 		<result property="b_a_id" column="b_a_id" />
-		<result property="reg_id" column="reg_id" />
 		<result property="title" column="title" />
 		<result property="content" column="content" />
 		<result property="cate" column="cate" />
 		<result property="creDate" column="creDate" />
-		<result property="parentNo" column="parentNo" />
 		<result property="a_id" column="a_id" />
 		<result property="secret" column="secret" />
 	</resultMap>
 	
 	<resultMap id="img_aResult" type="Img_aVO">
 		<result property="ib_a_id" column="ib_a_id" />
-		<result property="reg_id" column="reg_id" />
 		<result property="fileName" column="fileName" />
 		<result property="cate" column="cate" />
 		<result property="creDate" column="creDate" />
@@ -29,18 +26,14 @@
 	<insert id="boardAWrite" parameterType="BaVO">
 	<![CDATA[
 		insert into board_a(
-		reg_id,
 		title,
 		content,
 		cate,
-		parentNo,
 		a_id,
 		secret)
-		values (#{reg_id},
-			   #{title},
+		values (#{title},
 			   #{content},
 			   #{cate},
-			   #{parentNo},
 			   #{a_id},
 			   #{secret})
 	]]>
@@ -55,11 +48,12 @@
 
 	<insert id="addImg" parameterType="Map">
 		<![CDATA[
-			insert into img_b_a(fileName,b_a_id,reg_id) values (#{fileName}, #{b_a_id}, #{reg_id})
+			insert into img_b_a(fileName,b_a_id,cate) values (#{fileName}, #{b_a_id}, #{cate})
 		]]>		
 	</insert>
 
-
-
-
+	<select id="boardAInfo" parameterType="Map" resultMap="BoardAdminResult">
+		select R1.* from (select * from board_a) R1 where a_id = #{a_id} order by b_a_id desc limit #{start} , #{end} 
+	</select>
+	
 </mapper>
