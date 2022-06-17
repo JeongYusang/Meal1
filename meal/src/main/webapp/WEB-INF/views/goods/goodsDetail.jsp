@@ -220,7 +220,6 @@ div .InfoTop {
 	background-color: #ffd3dd;
 	border: none;
 	border-radius: 4px;
-	color: white;
 	padding: 15px 30px;
 	text-align: center;
 	text-decoration: none;
@@ -306,14 +305,28 @@ ul#slider1 {
 	font-size: 60px;
 }
 
-span.fa.fa-star.checked {
+#box11 span.fa.fa-star.checked {
 	float: right;
-	font-size: 40px;
+	font-size: 20px;
 }
 
-span.fa.fa-star {
+#box11 span.fa.fa-star {
 	float: right;
+	font-size: 20px;
+}
+
+.InfoTop span.fa.fa-star.checked {
+	float: left;
 	font-size: 40px;
+	color: #ffc0cb;
+}
+
+.InfoTop span.fa.fa-star {
+	float: left;
+	font-size: 40px;
+	color: white;
+	-webkit-text-stroke-width: 2px;
+	-webkit-text-stroke-color: #ffc0cb;
 }
 
 img#titleimg {
@@ -350,11 +363,12 @@ h6.titleText {
 
 .ultra {
 	list-style: none;
+	padding-inline-start: 0px;
 }
 
 .litra {
 	float: left;
-	margin-right: 30px;
+	margin: 30px 30px 0px 0px;
 	display: inline-block;
 }
 
@@ -467,6 +481,16 @@ div #icon {
 	font-size: 36px;
 	font-weight: bold;
 }
+
+#InfoTop {
+	text-align: left;
+}
+
+#avg {
+	float: left;
+	font-size: 16px;
+	padding: 16px 0 0 10px;
+}
 </style>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -537,8 +561,55 @@ div #icon {
 			</div>
 
 			<div class="InfoTop">
-				<br> <br> <br> <b style="font-size: 52px">${goodsInfo.g_name}</b>
-				<p style="font-size: 45px; font-weight: 600; margin-top: 0;">${goodsInfo.g_price }원</p>
+				<br> <br> <br> <b style="font-size: 40px">${goodsInfo.g_name}</b>
+				<p
+					style="font-size: 36px; font-weight: 600; margin-top: 0; margin-bottom: 10px;">${goodsInfo.g_price }원</p>
+				<c:choose>
+					<c:when test="${g_avg == 5}">
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star checked"></span>
+					</c:when>
+					<c:when test="${g_avg == 4}">
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star"></span>
+					</c:when>
+					<c:when test="${g_avg == 3}">
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star"></span>
+						<span class="fa fa-star"></span>
+					</c:when>
+					<c:when test="${g_avg == 2}">
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star"></span>
+						<span class="fa fa-star"></span>
+						<span class="fa fa-star"></span>
+
+					</c:when>
+					<c:when test="${g_avg == 1}">
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star"></span>
+						<span class="fa fa-star"></span>
+						<span class="fa fa-star"></span>
+						<span class="fa fa-star"></span>
+					</c:when>
+					<c:otherwise>
+						<span class="fa fa-star"></span>
+						<span class="fa fa-star"></span>
+						<span class="fa fa-star"></span>
+						<span class="fa fa-star"></span>
+						<span class="fa fa-star"></span>
+					</c:otherwise>
+				</c:choose>
+				<span id="avg">${g_avg}점</span><br> <br>
 				<div id="icon">
 					<ul class="ultra">
 						<li class="litra"><img
@@ -596,10 +667,8 @@ div #icon {
 					<a
 						href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=zzim"
 						class="button">찜하기</a>
-					<a name="qty" onClick="buy();" class="button">구매하기</a>
-					<a
-						href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=cart"
-						class="button">장바구니담기</a>
+					<a onClick="buy();" class="button">구매하기</a>
+					<a onClick="cart();" class="button">장바구니담기</a>
 				</c:if>
 			</div>
 		</div>
@@ -642,153 +711,186 @@ div #icon {
 												없습니다.</strong></td>
 									</tr>
 								</c:when>
-								
+
 								<c:otherwise>
-								<c:forEach var="item" items="${boardGrList}" begin="0" end="10">
-								<c:choose>
-								<c:when test="${empty item.secret or not empty item.secret and item.u_id == memberInfo.u_id or not empty item.secret and item.s_id == sellerInfo.s_id}">
-										<div id="box11">
-											<c:choose>
-												<c:when test="${item.star == 5}">
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-												</c:when>
-												<c:when test="${item.star == 4}">
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-												</c:when>
-												<c:when test="${item.star == 3}">
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-												</c:when>
-												<c:when test="${item.star == 2}">
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-												</c:when>
-												<c:otherwise>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star checked"></span>
-												</c:otherwise>
-											</c:choose>
-											<ul id="slider1">
-												<li id="slider1-1"><span id="slide1-11">${item.title}
-												</span>
+									<c:forEach var="item" items="${boardGrList}" begin="0" end="10">
+										<c:choose>
+											<c:when
+												test="${empty item.secret or not empty item.secret and item.u_id == memberInfo.u_id or not empty item.secret and item.s_id == sellerInfo.s_id or not empty item.secret and not empty adminInfo}">
+												<div id="box11">
+													<c:choose>
+														<c:when test="${item.star == 5}">
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+														</c:when>
+														<c:when test="${item.star == 4}">
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+														</c:when>
+														<c:when test="${item.star == 3}">
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+														</c:when>
+														<c:when test="${item.star == 2}">
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+														</c:when>
+														<c:otherwise>
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star checked"></span>
+														</c:otherwise>
+													</c:choose>
+													<ul id="slider1">
+														<li id="slider1-1"><span id="slide1-11">${item.title}
+														</span>
 
-													<p id=Pcontent>
-													<c:if test="${item.u_id == memberInfo.u_id }">
-															<br>
-															<input id="buttons" type=button value="수정"
-																onClick="gr_update('${contextPath}/boardGr/boardGrUpdateform.do',${item.b_gr_id })" />
-															<input id="buttons" type=button value="삭제"
-																onClick="gr_remove_board('${contextPath}/boardGr/boardGrDelete.do',${item.b_gr_id })" />
-														</c:if>
-														<c:if test="${item.s_id == sellerInfo.s_id }">
-														<br>
-															<input id="buttons" type=button value="답글"
-																onClick="gr_review('${contextPath}/boardGr/boardGrReviewform.do', ${item.b_gr_id})" />
-														</c:if>
-														
-
-														<img id="p_img"
-															src="${contextPath}/thumbnailsBoard.do?b_gr_id=${item.b_gr_id}"
-															onerror="this.style.display='none';" /> <br>
-														<textarea readonly>${item.content}</textarea>
-														<br>
-														<c:forEach var="boardGrReviewList"
-															items="${boardGrReviewList}">
-															<c:if
-																test="${boardGrReviewList.parentNo == item.b_gr_id}">
-																<input id="answer" type="text" value="답변">
-																<br>
-																<br>
-																<input type="text" id="Reviewtitle"
-																	value="${boardGrReviewList.title}" readonly>
-																<input type="text" id="Reviewwriter"
-																	value=" 작성자: ${boardGrReviewList.s_id}" readonly>
-																<br>
-																<c:if test="${boardGrReviewList.s_id == sellerInfo.s_id }">
-																<input id="buttons" type=button value="수정" onClick="gr_update('${contextPath}/boardGr/boardGrUpdateform.do',${boardGrReviewList.b_gr_id })" />
-																<input id="buttons" type=button value="삭제" onClick="gr_remove_board('${contextPath}/boardGr/boardGrDelete.do',${boardGrReviewList.b_gr_id })" />
+															<p id=Pcontent>
+																<c:if test="${item.u_id == memberInfo.u_id }">
+																	<br>
+																	<input id="buttons" type=button value="수정"
+																		onClick="gr_update('${contextPath}/boardGr/boardGrUpdateform.do',${item.b_gr_id })" />
+																	<input id="buttons" type=button value="삭제"
+																		onClick="gr_remove_board('${contextPath}/boardGr/boardGrDelete.do',${item.b_gr_id })" />
 																</c:if>
-
+																<c:if test="${item.s_id == sellerInfo.s_id }">
+																	<br>
+																	<input id="buttons" type=button value="답글"
+																		onClick="gr_review('${contextPath}/boardGr/boardGrReviewform.do', ${item.b_gr_id})" />
+																</c:if>
+																<c:if test="${not empty adminInfo }">
+																				<input id="buttons" type=button value="삭제"
+																					onClick="gr_remove_board('${contextPath}/boardGr/boardGrDelete.do',${item.b_gr_id })" />
+																			</c:if>
 
 
 																<img id="p_img"
-																	src="${contextPath}/thumbnailsBoard.do?b_gr_id=${boardGrReviewList.b_gr_id}"
-																	onerror="this.style.display='none';" />
+																	src="${contextPath}/thumbnailsBoard.do?b_gr_id=${item.b_gr_id}"
+																	onerror="this.style.display='none';" /> <br>
+																<textarea readonly>${item.content}</textarea>
 																<br>
-																<textarea readonly>${boardGrReviewList.content}</textarea>
-															</c:if>
-														</c:forEach>
-													</p></li>
-											</ul>
-										</div>
-								</c:when>
-								<c:when test="${not empty item.secret and item.u_id != memberInfo.u_id and item.s_id != sellerInfo.s_id}">
-								<div id="box11">
-								<c:choose>
-								
-												<c:when test="${item.star == 5}">
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-												</c:when>
-												<c:when test="${item.star == 4}">
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-												</c:when>
-												<c:when test="${item.star == 3}">
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-												</c:when>
-												<c:when test="${item.star == 2}">
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-												</c:when>
-												<c:otherwise>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star checked"></span>
-												</c:otherwise>
-											</c:choose>
-											<ul id="slider1">
-												<li id="slider1-1"><span id="slide1-11">비밀글입니다
-												</span>
-														<br>
-												</li>
-											</ul>
-											</div>
+																<c:forEach var="boardGrReviewList"
+																	items="${boardGrReviewList}">
+																	<c:choose>
+																		<c:when
+																			test="${boardGrReviewList.parentNo == item.b_gr_id and empty boardGrReviewList.secret or not empty boardGrReviewList.secret and item.u_id == memberInfo.u_id or not empty boardGrReviewList.secret and item.s_id == sellerInfo.s_id or not empty adminInfo}">
+																			<input id="answer" type="text" value="답변">
+																			<br>
+																			<br>
+																			<input type="text" id="Reviewtitle"
+																				value="${boardGrReviewList.title}" readonly>
+																			<input type="text" id="Reviewwriter"
+																				value=" 작성자: ${boardGrReviewList.s_id}" readonly>
+																			<br>
+																			<c:if
+																				test="${boardGrReviewList.s_id == sellerInfo.s_id }">
+																				<input id="buttons" type=button value="수정"
+																					onClick="gr_update('${contextPath}/boardGr/boardGrUpdateform.do',${boardGrReviewList.b_gr_id })" />
+																				<input id="buttons" type=button value="삭제"
+																					onClick="gr_remove_board('${contextPath}/boardGr/boardGrDelete.do',${boardGrReviewList.b_gr_id })" />
+																			</c:if>
+																			<c:if test="${not empty adminInfo }">
+																				<input id="buttons" type=button value="삭제"
+																					onClick="gr_remove_board('${contextPath}/boardGr/boardGrDelete.do',${boardGrReviewList.b_gr_id })" />
+																			</c:if>
+
+
+
+																			<img id="p_img"
+																				src="${contextPath}/thumbnailsBoard.do?b_gr_id=${boardGrReviewList.b_gr_id}"
+																				onerror="this.style.display='none';" />
+																			<br>
+																			<textarea readonly>${boardGrReviewList.content}</textarea>
+																		</c:when>
+																		<c:when
+																			test="${boardGrReviewList.parentNo == item.b_gr_id and not empty boardGrReviewList.secret and item.u_id != memberInfo.u_id and item.s_id != sellerInfo.s_id and empty adminInfo}">
+																			<br>
+																			<input id="answer" type="text" value="답변">
+																			<br>
+																			<br>
+																			<input type="text" id="Reviewtitle" value="비밀글입니다"
+																				readonly>
+																			<br>
+																			<input type="text" id="Reviewwriter"
+																				value=" 작성자: ****" readonly>
+																			<br>
+
+																			<img id="p_img"
+																				src="${contextPath}/resources/image/lock.png"
+																				onerror="this.style.display='none';" />
+																			<br>
+																			<textarea readonly>비밀글입니다</textarea>
+
+																		</c:when>
+																	</c:choose>
+																</c:forEach>
+															</p></li>
+													</ul>
+												</div>
 											</c:when>
-											</c:choose>
-								</c:forEach>
+											<c:when
+												test="${not empty item.secret and item.u_id != memberInfo.u_id and item.s_id != sellerInfo.s_id and empty adminInfo}">
+												<div id="box11">
+													<c:choose>
+
+														<c:when test="${item.star == 5}">
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+														</c:when>
+														<c:when test="${item.star == 4}">
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+														</c:when>
+														<c:when test="${item.star == 3}">
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+														</c:when>
+														<c:when test="${item.star == 2}">
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star checked"></span>
+															<span class="fa fa-star checked"></span>
+														</c:when>
+														<c:otherwise>
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star"></span>
+															<span class="fa fa-star checked"></span>
+														</c:otherwise>
+													</c:choose>
+													<ul id="slider1">
+														<li id="slider1-1"><span id="slide1-11">비밀글입니다
+														</span> <br></li>
+													</ul>
+												</div>
+											</c:when>
+										</c:choose>
+									</c:forEach>
 								</c:otherwise>
 							</c:choose>
 						</tbody>
@@ -832,67 +934,103 @@ div #icon {
 								</c:when>
 								<c:otherwise>
 									<c:forEach var="item" items="${boardGqList}" begin="0" end="10">
-									<c:choose>
-								<c:when test="${empty item.secret or not empty item.secret and item.u_id == memberInfo.u_id or not empty item.secret and item.s_id == sellerInfo.s_id}">
-										<ul id="slider1">
-											<li id="slider1-1"><span id="slide1-11">${item.title}<input
-													type="text" id="title_Reviewwriter"
-													value=" 작성자: ${item.u_id}" readonly></span>
-												<p id=Pcontent>
-													<c:if test="${item.u_id == memberInfo.u_id }">
-														<input id="buttons" type=button value="수정"
-															onClick="fn_update('${contextPath}/boardGq/boardGqUpdateform.do',${item.b_gq_id })" />
-														<input id="buttons" type=button value="삭제"
-															onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${item.b_gq_id })" />
-													</c:if>
-													<c:if test="${item.s_id == sellerInfo.s_id }">
-														<input id="buttons" type=button value="답글"
-															onClick="fn_review('${contextPath}/boardGq/boardGqReviewform.do', ${item.b_gq_id})" />
-													</c:if>
-													<br> <img id="p_img"
-														src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${item.b_gq_id}"
-														onerror="this.style.display='none';" />
-													<textarea readonly>${item.content}</textarea>
-													<c:forEach var="boardGqReviewList"
-														items="${boardGqReviewList}">
-														<c:if test="${boardGqReviewList.parentNo == item.b_gq_id}">
-															<br>
-															<input id="answer" type="text" value="답변">
-															<br>
-															<br>
-															<input type="text" id="Reviewtitle"
-																value="${boardGqReviewList.title}" readonly>
-															<br>
-															<input type="text" id="Reviewwriter"
-																value=" 작성자: ${boardGqReviewList.s_id}" readonly>
-															<br>
-															<c:if
-																test="${boardGqReviewList.s_id == sellerInfo.s_id }">
+										<c:choose>
+											<c:when
+												test="${empty item.secret or not empty item.secret and item.u_id == memberInfo.u_id or not empty item.secret and item.s_id == sellerInfo.s_id or not empty adminInfo}">
+												<ul id="slider1">
+													<li id="slider1-1"><span id="slide1-11">${item.title}<input
+															type="text" id="title_Reviewwriter"
+															value=" 작성자: ${item.u_id}" readonly></span>
+														<p id=Pcontent>
+															<c:if test="${item.u_id == memberInfo.u_id }">
 																<input id="buttons" type=button value="수정"
-																	onClick="fn_update('${contextPath}/boardGq/boardGqUpdateform.do',${boardGqReviewList.b_gq_id })" />
+																	onClick="fn_update('${contextPath}/boardGq/boardGqUpdateform.do',${item.b_gq_id })" />
 																<input id="buttons" type=button value="삭제"
-																	onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${boardGqReviewList.b_gq_id })" />
-																<br>
+																	onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${item.b_gq_id })" />
 															</c:if>
-															<img id="p_img"
-																src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${boardGqReviewList.b_gq_id}"
+															<c:if test="${item.s_id == sellerInfo.s_id }">
+																<input id="buttons" type=button value="답글"
+																	onClick="fn_review('${contextPath}/boardGq/boardGqReviewform.do', ${item.b_gq_id})" />
+															</c:if>
+															<c:if test="${not empty adminInfo }">
+																<input id="buttons" type=button value="삭제"
+																	onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${item.b_gq_id })" />
+															</c:if>
+															<br> <img id="p_img"
+																src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${item.b_gq_id}"
 																onerror="this.style.display='none';" />
-															<br>
-															<textarea readonly>${boardGqReviewList.content}</textarea>
-														</c:if>
-													</c:forEach>
-												</p></li>
-										</ul>
-										</c:when>
-										<c:when test="${not empty item.secret and item.u_id != memberInfo.u_id and item.s_id != sellerInfo.s_id}">
-										<ul id="slider1">
-											<li id="slider1-1"><span id="slide1-11">비밀글입니다<input
-													type="text" id="title_Reviewwriter"
-													value=" 작성자: ****" readonly></span>
-								
-											</li>
-										</ul>
-										</c:when>
+															<textarea readonly>${item.content}</textarea>
+															<c:forEach var="boardGqReviewList"
+																items="${boardGqReviewList}">
+																<c:choose>
+																	<c:when
+																		test="${boardGqReviewList.parentNo == item.b_gq_id and empty boardGqReviewList.secret or not empty boardGqReviewList.secret and item.u_id == memberInfo.u_id or not empty boardGqReviewList.secret and item.s_id == sellerInfo.s_id or not empty adminInfo}">
+																		<br>
+																		<input id="answer" type="text" value="답변">
+																		<br>
+																		<br>
+																		<input type="text" id="Reviewtitle"
+																			value="${boardGqReviewList.title}" readonly>
+																		<br>
+																		<input type="text" id="Reviewwriter"
+																			value=" 작성자: ${boardGqReviewList.s_id}" readonly>
+																		<br>
+
+
+
+																		<c:if
+																			test="${boardGqReviewList.s_id == sellerInfo.s_id }">
+																			<input id="buttons" type=button value="수정"
+																				onClick="fn_update('${contextPath}/boardGq/boardGqUpdateform.do',${boardGqReviewList.b_gq_id })" />
+																			<input id="buttons" type=button value="삭제"
+																				onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${boardGqReviewList.b_gq_id })" />
+																			<br>
+																		</c:if>
+																		<c:if test="${not empty adminInfo }">
+																			<input id="buttons" type=button value="삭제"
+																				onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${boardGqReviewList.b_gq_id })" />
+																			<br>
+																		</c:if>
+																		<img id="p_img"
+																			src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${boardGqReviewList.b_gq_id}"
+																			onerror="this.style.display='none';" />
+																		<br>
+																		<textarea readonly>${boardGqReviewList.content}</textarea>
+																	</c:when>
+
+																	<c:when
+																		test="${boardGqReviewList.parentNo == item.b_gq_id and not empty boardGqReviewList.secret and item.u_id != memberInfo.u_id and item.s_id != sellerInfo.s_id and empty adminInfo}">
+																		<br>
+																		<input id="answer" type="text" value="답변">
+																		<br>
+																		<br>
+																		<input type="text" id="Reviewtitle" value="비밀글입니다"
+																			readonly>
+																		<br>
+																		<input type="text" id="Reviewwriter"
+																			value=" 작성자: ****" readonly>
+																		<br>
+
+																		<img id="p_img"
+																			src="${contextPath}/resources/image/lock.png"
+																			onerror="this.style.display='none';" />
+																		<br>
+																		<textarea readonly>비밀글입니다</textarea>
+
+																	</c:when>
+																</c:choose>
+															</c:forEach>
+														</p></li>
+												</ul>
+											</c:when>
+											<c:when
+												test="${not empty item.secret and item.u_id != memberInfo.u_id and item.s_id != sellerInfo.s_id and empty adminInfo}">
+												<ul id="slider1">
+													<li id="slider1-1"><span id="slide1-11">비밀글입니다<input
+															type="text" id="title_Reviewwriter" value=" 작성자: ****"
+															readonly></span></li>
+												</ul>
+											</c:when>
 										</c:choose>
 									</c:forEach>
 								</c:otherwise>
@@ -919,9 +1057,10 @@ div #icon {
 						</div>
 					</center>
 					<c:if test="${empty sellerInfo and empty adminInfo}">
-					<div class="write">
-						<a href="${contextPath }/boardGq/boardGqWrite.do?g_id=${goodsInfo.g_id}">글쓰기</a>
-					</div>
+						<div class="write">
+							<a
+								href="${contextPath }/boardGq/boardGqWrite.do?g_id=${goodsInfo.g_id}">글쓰기</a>
+						</div>
 					</c:if>
 				</div>
 			</div>

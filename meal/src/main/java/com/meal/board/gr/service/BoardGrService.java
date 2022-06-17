@@ -46,6 +46,8 @@ public interface BoardGrService {
 	public List<BoardGrVO> selectBoardGrSList(HashMap<String, Object> map) throws Exception;
 
 	public List<BoardGrVO> SelectReview(int g_id) throws Exception;
+
+	public int selectGoodAvg(int g_id) throws Exception;
 	
 	
 

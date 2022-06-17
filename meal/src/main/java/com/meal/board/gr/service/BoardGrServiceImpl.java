@@ -136,5 +136,10 @@ public class BoardGrServiceImpl implements BoardGrService {
 		List<BoardGrVO> SelectReview = (List<BoardGrVO>) boardGrDAO.SelectReview(g_id);
 		return SelectReview;
 	}
+	// 06/17 긋즈 디테일에 사용할 별점 평균 구하기
+	@Override
+	public int selectGoodAvg(int g_id) throws Exception {
+		return boardGrDAO.selectGoodAvg(g_id);
+	}
 
 }

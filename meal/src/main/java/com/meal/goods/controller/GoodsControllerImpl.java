@@ -225,6 +225,7 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 		List<BoardGrVO> boardGrList = boardGrService.selectGoodsBoardGrList(pagingMap);
 		List<BoardGrVO> boardGr = boardGrService.selectGoodsBoardGrallList(g_id);
 		List<BoardGrVO> boardGrReviewList = boardGrService.SelectReview(g_id);
+		int g_avg = boardGrService.selectGoodAvg(g_id);
 
 		for (BoardGrVO item : boardGr) {
 			for (BoardGrVO j : boardGrList) {
@@ -244,6 +245,7 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 		List<BoardGqVO> boardGqList = boardGqService.selectGoodsBoardGqList(pagingMap);
 		List<BoardGqVO> boardGq = boardGqService.selectGoodsBoardGqallList(g_id);
 		List<BoardGqVO> boardGqReviewList = boardGqService.SelectReview(g_id);
+		
 
 		for (BoardGqVO item : boardGq) {
 			for (BoardGqVO j : boardGqList) {
@@ -279,6 +281,7 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
         	mav.setViewName(viewName1);
         } else {
         mav.addObject("goodsInfo", goodsInfo);
+        mav.addObject("g_avg", g_avg);
         mav.addObject("ImgList", imgList);
         mav.addObject("boardGrList",boardGrList);
         mav.addObject("boardGrReviewList",boardGrReviewList);

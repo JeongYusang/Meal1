@@ -51,4 +51,6 @@ public interface BoardGrDAO {
 	
 	public List<BoardGrVO> SelectReview(int g_id) throws DataAccessException;
 
+	public int selectGoodAvg(int g_id) throws DataAccessException;
+
 }

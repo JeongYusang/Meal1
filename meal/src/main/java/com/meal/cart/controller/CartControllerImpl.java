@@ -65,7 +65,7 @@ public class CartControllerImpl extends BaseController implements CartController
 	
 	@Override
 	@RequestMapping(value="/addGoodsInCart.do" ,method = { RequestMethod.POST, RequestMethod.GET })
-	public ResponseEntity addGoodsInCart(@RequestParam("g_id") int g_id,@RequestParam("cate") String cate,
+	public ResponseEntity addGoodsInCart(@RequestParam("g_id") int g_id,@RequestParam("cate") String cate,@RequestParam("c_qty") int c_qty,
             HttpServletRequest request, HttpServletResponse response)  throws Exception{
 		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("utf-8");
@@ -74,7 +74,6 @@ public class CartControllerImpl extends BaseController implements CartController
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 		try {
-
 			HttpSession session=request.getSession();
 			memberVO=(MemberVO)session.getAttribute("memberInfo");
 			String u_id=memberVO.getU_id();
@@ -82,6 +81,7 @@ public class CartControllerImpl extends BaseController implements CartController
 			cartVO.setU_id(u_id);
 			cartVO.setG_id(g_id);
 			cartVO.setCate(cate);
+			cartVO.setC_qty(c_qty);
 			boolean isAreadyExisted=cartService.findCartGoods(cartVO);
 			if(isAreadyExisted==true){
 				if(cate.equals("cart")) {
@@ -101,7 +101,7 @@ public class CartControllerImpl extends BaseController implements CartController
 				message = "<script>";
 				message += " if (confirm('장바구니에 추가 되었습니다 장바구니 페이지로 이동하시겠습니까?.'))";
 				message += " {location.href='" + request.getContextPath() + "/cart/myCartList.do';}";
-				message += " else {alert('상품 페이지로 돌아갑니다.');";
+				message += " else {";
 				message += " location.href='" + request.getContextPath() + "/goods/goodsDetail.do?g_id=" + g_id +"';}";
 				message += " </script>";
 				}else {
@@ -119,7 +119,7 @@ public class CartControllerImpl extends BaseController implements CartController
 		} catch (Exception e) {
 			message = "<script>";
 			message += " alert('로그인 해주시길 바랍니다');";
-			message += " location.href='" + request.getContextPath() + "/main/main.do';";
+			message += " location.href='" + request.getContextPath() + "/main/loginForm.do';";
 			message += " </script>";
 			e.printStackTrace();
 		}
@@ -129,8 +129,7 @@ public class CartControllerImpl extends BaseController implements CartController
 
 	@Override
 	@RequestMapping(value="/removeCartGoods.do" ,method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView removeCartGoods(@RequestParam("c_id") int c_id,
-			                          HttpServletRequest request, HttpServletResponse response)  throws Exception{
+	public ModelAndView removeCartGoods(@RequestParam("c_id") int c_id,HttpServletRequest request, HttpServletResponse response)  throws Exception{
 		ModelAndView mav=new ModelAndView();
 		HttpSession session=request.getSession();
 		cartService.removeCartGoods(c_id);

@@ -56,11 +56,13 @@
 		    	insert into cart_tb(c_id,
 		    							cate,
 		    	                        g_id,
-		    	                        u_id)
+		    	                        u_id,
+		    	                        c_qty)
 		        				 values(#{c_id},
 		        				 		#{cate},
     							        #{g_id},
-    							        #{u_id})
+    							        #{u_id},
+    							        #{c_qty})
     	]]>
 	</insert>
 
