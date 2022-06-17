@@ -164,6 +164,10 @@
 	border-collapse: collapse;
 }
 
+.milage {
+	float: right;
+}
+
 tr.orderlist td {
 	border-bottom: 1px solid gray;
 }
