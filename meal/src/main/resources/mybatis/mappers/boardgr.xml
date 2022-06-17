@@ -97,6 +97,12 @@ update board_gr set title = #{title}, content = #{content}, secret = #{secret} w
 	    select R1.* from (select * from board_gr) R1 where parentNo = 0 and g_id = #{g_id} order by b_gr_id desc limit #{start} , #{end} 
 	   ]]>
 	</select>
+	
+	<select id="SelectReview" resultMap="boardGrResult" parameterType="Integer">
+   <![CDATA[
+	    select * from board_gr where parentNo != 0 and g_id = #{g_id}
+	   ]]>
+	</select>
 
 
 	<select id="selectBoardGrallList" resultMap="boardGrResult">

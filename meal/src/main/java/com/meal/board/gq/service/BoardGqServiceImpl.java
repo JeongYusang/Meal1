@@ -107,12 +107,6 @@ public class BoardGqServiceImpl implements BoardGqService {
 		boardGqDAO.addImg(item);
 
 	}
-
-
-	
-	
-
-	
 	
 	@Override
 	public BoardGqVO findb_gq_id() throws Exception {
@@ -129,6 +123,12 @@ public class BoardGqServiceImpl implements BoardGqService {
 	public List<BoardGqVO> boardGqSellerList(HashMap<String, Object> map) throws Exception {
 		List<BoardGqVO> boardGqList = boardGqDAO.boardGqSellerList(map);
 		return boardGqList;
+	}
+	// 굿즈 디테일 상품 문의 답글 조회기능 0617
+	@Override
+	public List<BoardGqVO> SelectReview(int g_id) throws Exception {
+		List<BoardGqVO> SelectReview = boardGqDAO.SelectReview(g_id);
+		return SelectReview;
 	}
 	
 	

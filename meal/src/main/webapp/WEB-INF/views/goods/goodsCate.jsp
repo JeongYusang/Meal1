@@ -49,7 +49,6 @@ function fnc_checked(){
 	display: flex;
 	align-items: flex-start;
 	justify-content: center;
-	height: 800px;
 }
 
 #searchDetailWrap {
@@ -148,6 +147,10 @@ width: 250px;
 margin: 10px;
 position: relative;
 }
+#title_text{
+font-size: 40px;
+color: #FD6EB0;
+}
 </style>
 </head>
 <body>
@@ -155,7 +158,7 @@ position: relative;
 	<div id="main-wrap1">
 
 		<div class="maingoodslist">
-			<h1>${cate}</h1>
+			<div id = "title_text">${cate}</div>
 			<div id="searchDetailWrap">
 				<form action="${contextPath }/search/CateSearchGoods.do" name = "searchForm" onsubmit="return fnc_checked()">
 			<div id="allergyInfo">

@@ -333,8 +333,7 @@ function result(){
 			<h1>리뷰 상세</h1>
 		</div>
 		<div id="goods-info">
-			<br> <img class="imagegoods"
-				src="${contextPath}/resources/image/new1.png" />
+			<br> <img class = "imagegoods"src="${contextPath}/download1.do?g_id=${boardGqVO.g_id}&cate=main" alt = "상품이미지">
 			<div id="goodstext">
 				<h3>${boardGqVO.s_id}</h3>
 				<h3>${boardGqVO.g_name}</h3>

@@ -224,6 +224,7 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 
 		List<BoardGrVO> boardGrList = boardGrService.selectGoodsBoardGrList(pagingMap);
 		List<BoardGrVO> boardGr = boardGrService.selectGoodsBoardGrallList(g_id);
+		List<BoardGrVO> boardGrReviewList = boardGrService.SelectReview(g_id);
 
 		for (BoardGrVO item : boardGr) {
 			for (BoardGrVO j : boardGrList) {
@@ -240,8 +241,9 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
 			}
 		}
         //상품문의게시판 리스트 정보
-		List<BoardGqVO> boardGq = boardGqService.selectGoodsBoardGqList(pagingMap);
-		List<BoardGqVO> boardGqList = boardGqService.selectGoodsBoardGqallList(g_id);
+		List<BoardGqVO> boardGqList = boardGqService.selectGoodsBoardGqList(pagingMap);
+		List<BoardGqVO> boardGq = boardGqService.selectGoodsBoardGqallList(g_id);
+		List<BoardGqVO> boardGqReviewList = boardGqService.SelectReview(g_id);
 
 		for (BoardGqVO item : boardGq) {
 			for (BoardGqVO j : boardGqList) {
@@ -279,7 +281,9 @@ public class GoodsControllerImpl extends BaseController implements GoodsControll
         mav.addObject("goodsInfo", goodsInfo);
         mav.addObject("ImgList", imgList);
         mav.addObject("boardGrList",boardGrList);
+        mav.addObject("boardGrReviewList",boardGrReviewList);
         mav.addObject("boardGqList", boardGqList);
+        mav.addObject("boardGqReviewList", boardGqReviewList);
         mav.setViewName(viewName);
         addGoodsInQuick(g_id,goodsInfo,session);
         }

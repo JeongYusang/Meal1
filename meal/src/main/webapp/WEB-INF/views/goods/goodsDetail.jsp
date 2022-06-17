@@ -15,16 +15,15 @@
 <title>상품 상세 정보</title>
 
 <c:if test='${not empty message }'>
-<script>
-window.onload=function()
-{
-  result();
-}
+	<script>
+		window.onload = function() {
+			result();
+		}
 
-function result(){
-	alert("${message}");
-}
-</script>
+		function result() {
+			alert("${message}");
+		}
+	</script>
 </c:if>
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -42,6 +41,107 @@ function result(){
 		})
 
 	});
+	
+	function fn_remove_board(url,b_gq_id){
+		 var form = document.createElement("form");
+		 form.setAttribute("method", "get");
+		 form.setAttribute("action", url);
+	   var articleNOInput = document.createElement("input");
+	   articleNOInput.setAttribute("type","hidden");
+	   articleNOInput.setAttribute("name","b_gq_id");
+	   articleNOInput.setAttribute("value", b_gq_id);
+		 
+	   form.appendChild(articleNOInput);
+	   document.body.appendChild(form);
+	   
+
+
+	   form.submit();
+
+	}
+	function fn_return(url){
+		var form = document.createElement("form");
+		form.setAttribute("method","get");
+		form.setAttribute("action",url);
+		document.body.appendChild(form);
+		form.submit();
+	}
+	function fn_update(url,b_gq_id){
+		 var form = document.createElement("form");
+		 form.setAttribute("method", "get");
+		 form.setAttribute("action", url);
+	  var articleNOInput = document.createElement("input");
+	  articleNOInput.setAttribute("type","hidden");
+	  articleNOInput.setAttribute("name","b_gq_id");
+	  articleNOInput.setAttribute("value", b_gq_id);
+		 
+	  form.appendChild(articleNOInput);
+	  document.body.appendChild(form);
+	  form.submit();
+
+	}
+	function fn_review(url,b_gq_id){
+		 var form = document.createElement("form");
+		 form.setAttribute("method", "get");
+		 form.setAttribute("action", url);
+	 var articleNOInput = document.createElement("input");
+	 articleNOInput.setAttribute("type","hidden");
+	 articleNOInput.setAttribute("name","b_gq_id");
+	 articleNOInput.setAttribute("value", b_gq_id);
+		 
+	 form.appendChild(articleNOInput);
+	 document.body.appendChild(form);
+	 form.submit();
+	}
+	//asda
+	function gr_remove_board(url,b_gr_id){
+	 var form = document.createElement("form");
+	 form.setAttribute("method", "get");
+	 form.setAttribute("action", url);
+   var articleNOInput = document.createElement("input");
+   articleNOInput.setAttribute("type","hidden");
+   articleNOInput.setAttribute("name","b_gr_id");
+   articleNOInput.setAttribute("value", b_gr_id);
+   form.appendChild(articleNOInput);
+   document.body.appendChild(form);
+   form.submit();
+
+}
+function gr_return(url){
+	var form = document.createElement("form");
+	form.setAttribute("method","get");
+	form.setAttribute("action",url);
+	document.body.appendChild(form);
+	form.submit();
+}
+function gr_update(url,b_gr_id){
+	 var form = document.createElement("form");
+	 form.setAttribute("method", "get");
+	 form.setAttribute("action", url);
+  var articleNOInput = document.createElement("input");
+  articleNOInput.setAttribute("type","hidden");
+  articleNOInput.setAttribute("name","b_gr_id");
+  articleNOInput.setAttribute("value", b_gr_id);
+	 
+  form.appendChild(articleNOInput);
+  document.body.appendChild(form);
+  form.submit();
+
+}
+function gr_review(url,b_gr_id){
+	 var form = document.createElement("form");
+	 form.setAttribute("method", "get");
+	 form.setAttribute("action", url);
+ var articleNOInput = document.createElement("input");
+ articleNOInput.setAttribute("type","hidden");
+ articleNOInput.setAttribute("name","b_gr_id");
+ articleNOInput.setAttribute("value", b_gr_id);
+	 
+ form.appendChild(articleNOInput);
+ document.body.appendChild(form);
+ form.submit();
+
+}
 </script>
 
 <style>
@@ -99,7 +199,7 @@ ul.tabs li.current {
 	text-align: center;
 	display: inline-block;
 	width: 1260px;
-	height: 1260px;
+	height: 1400px;
 }
 
 .detail1 {
@@ -129,6 +229,7 @@ div .InfoTop {
 	margin: 4px 2px;
 	cursor: pointer;
 }
+
 .NFSbutton {
 	background-color: #000000;
 	border: none;
@@ -178,9 +279,9 @@ tr.border-bottom td {
 }
 
 #mainImg {
-    width: 650px;
-    height: 650px;
-    margin: 10px 0 0 5px;
+	width: 650px;
+	height: 650px;
+	margin: 10px 0 0 5px;
 }
 
 .checked {
@@ -260,28 +361,111 @@ h6.titleText {
 div #icon {
 	margin-bottom: 120px;
 }
+
 .soldout {
-filter: brightness(50%);
-    position: relative;
-    width: 650px;
-    height: 650px;
-    margin: 10px 0 0 5px;
+	filter: brightness(50%);
+	position: relative;
+	width: 650px;
+	height: 650px;
+	margin: 10px 0 0 5px;
 }
 
 #goods-info #soldtext {
-      text-align: center;
-    position: absolute;
-    font-size: 80px;
-    font-weight: bold;
-    top: 300px;
-    color: white;
-    margin-left: 135px;
+	text-align: center;
+	position: absolute;
+	font-size: 80px;
+	font-weight: bold;
+	top: 300px;
+	color: white;
+	margin-left: 135px;
 }
 
 #goods-info {
-width: 700px;
-height: 700px;
-position: relative;
+	width: 700px;
+	height: 700px;
+	position: relative;
+}
+
+#buttons {
+	float: right;
+	display: inline;
+	margin: 5px;
+	border: 0px;
+	height: 30px;
+	width: 50px;
+	background: #ffc0cf;
+	margin: 5px;
+}
+
+#Pcontent {
+	margin-top: 3px;
+	text-align: left;
+}
+
+#Pcontent input {
+	border: none;
+	border-right: 0px;
+	border-top: 0px;
+	boder-left: 0px;
+	boder-bottom: 0px; /* 테두리 없애기 */
+	outline: none;
+}
+
+#Reviewtitle {
+	display: block;
+	margin: 0px;
+	float: left;
+	font-size: 24px;
+}
+
+#Reviewwriter {
+	display: block;
+	margin: 0px;
+	float: right;
+	font-size: 18px;
+	text-align: right;
+	margin-top: 9px;
+}
+
+#title_Reviewwriter {
+	display: block;
+	margin: 0px;
+	float: right;
+	font-size: 18px;
+	text-align: right;
+	margin-top: 9px;
+	border: none;
+	border-right: 0px;
+	border-top: 0px;
+	boder-left: 0px;
+	boder-bottom: 0px; /* 테두리 없애기 */
+	outline: none;
+}
+
+#Pcontent textarea {
+	width: 1091px;
+	height: 185px;
+	margin: 0 0 0 60px;
+	font-size: 20px;
+	resize: none;
+	border: none;
+	border-right: 0px;
+	border-top: 0px;
+	boder-left: 0px;
+	boder-bottom: 0px; /* 테두리 없애기 */
+	outline: none;
+}
+
+#p_img {
+	border: solid 1px;
+	margin: 20px 0 20px 450px;
+	width: 280px;
+	height: 280px;
+}
+
+#answer {
+	font-size: 36px;
+	font-weight: bold;
 }
 </style>
 <link rel="stylesheet"
@@ -319,22 +503,39 @@ position: relative;
 		function change() {
 			hm = document.form.amount;
 			sum = document.form.sum;
+			qty = document.form.qty;
 
 			if (hm.value < 0) {
 				hm.value = 0;
 			}
 			sum.value = parseInt(hm.value) * sell_price;
 		}
+		function buy() {
+			hm = document.form.amount;
+			window.location.href = '${contextPath}/order/OrderForm.do?g_id=${goodsInfo.g_id}&o_goods_qty='
+					+ hm.value
+		}
+		function cart() {
+			hm = document.form.amount;
+			window.location.href = '${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=cart&c_qty='
+					+ hm.value
+		}
 	</script>
 	<div id="main-wrap">
 		<div class="container">
-			<div id = "goods-info">
-									<c:if test="${goodsInfo.g_amount <= 0}">
-									<img class = "soldout"src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=main">
-									<div id="soldtext">상품준비중</div></c:if>
-									<c:if test="${goodsInfo.g_amount > 0}"><img src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=main" id="mainImg"></c:if>
-									</div>
-			
+			<div id="goods-info">
+				<c:if test="${goodsInfo.g_amount <= 0}">
+					<img class="soldout"
+						src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=main">
+					<div id="soldtext">상품준비중</div>
+				</c:if>
+				<c:if test="${goodsInfo.g_amount > 0}">
+					<img
+						src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=main"
+						id="mainImg">
+				</c:if>
+			</div>
+
 			<div class="InfoTop">
 				<br> <br> <br> <b style="font-size: 52px">${goodsInfo.g_name}</b>
 				<p style="font-size: 45px; font-weight: 600; margin-top: 0;">${goodsInfo.g_price }원</p>
@@ -352,43 +553,53 @@ position: relative;
 					</ul>
 				</div>
 				<div class="text">
-					<h3>남은수량 : ${goodsInfo.g_amount }개</h3>
-					<h3>유통기한 : ${goodsInfo.g_eatDate }</h3>
-					<h3>단위(인분) : ${goodsInfo.g_inbun }</h3>
-					<h3>알레르기 상세정보 : ${goodsInfo.g_allergy_D }</h3>
+					<h3>남은수량 : ${goodsInfo.g_amount}개</h3>
+					<h3>유통기한 : ${goodsInfo.g_eatDate}</h3>
+					<h3>단위(인분) : ${goodsInfo.g_inbun}</h3>
+					<h3>알레르기 상세정보 : ${goodsInfo.g_allergy_D}</h3>
 					<h4>---------------------------------------------</h4>
-					<h2>
-						할인기간 :
-						<fmt:formatDate value="${goodsInfo.g_saleDate1}" type="Date"
-							pattern="yy년 MM월 dd일" />
-						~
-						<fmt:formatDate value="${goodsInfo.g_saleDate2}" type="Date"
-							pattern="yy년 MM월 dd일" />
-					</h2>
+					<c:if test="${goodsInfo.g_amount > 0}">
+						<h2>
+							할인기간 :
+							<fmt:formatDate value="${goodsInfo.g_saleDate1}" type="Date"
+								pattern="yy년 MM월 dd일" />
+							~
+							<fmt:formatDate value="${goodsInfo.g_saleDate2}" type="Date"
+								pattern="yy년 MM월 dd일" />
+						</h2>
+					</c:if>
 				</div>
-				<div id="price">
-					<form name="form" method="get" enctype="multipart/form-data">
-						<b>수량 : &nbsp;<input type="button" value=" + "
-							onclick="add();"> <input type=hidden name="sell_price"
-							value="${goodsInfo.g_price }"> <input type="text"
-							name="amount" value="1" size="1" onchange="change();"> <input
-							type="button" value=" - " onclick="del();"><br> <br>
+				<c:if test="${goodsInfo.g_amount > 0}">
+					<div id="price">
+						<form name="form" method="get" enctype="multipart/form-data">
+							<b>수량 : &nbsp;<input type="button" value=" + "
+								onclick="add();"> <input type=hidden name="sell_price"
+								value="${goodsInfo.g_price }"> <input type="text"
+								name="amount" value="1" size="1" onchange="change();"> <input
+								type="button" value=" - " onclick="del();"><br> <br>
 
-							금액 : <input type="text" name="sum" size="8"
-							style="width: 100px; height: 30px; font-size: 30px; border: none; border-right: 0px; border-top: 0px; boder-left: 0px; boder-bottom: 0px;">원
-						</b>
-					</form>
-				</div>
-				<br> 
+								금액 : <input type="text" name="sum" size="8"
+								style="width: 100px; height: 30px; font-size: 30px; border: none; border-right: 0px; border-top: 0px; boder-left: 0px; boder-bottom: 0px;">원
+							</b>
+						</form>
+					</div>
+				</c:if>
+				<br>
 				<c:if test="${goodsInfo.g_amount <=0}">
-				<a href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=zzim" class="button">찜하기</a>	
-				<a class="NFSbutton">구매불가</a>
-				<a class="NFSbutton">상품 준비중</a> 	
+					<a
+						href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=zzim"
+						class="button">찜하기</a>
+					<a class="NFSbutton">구매불가</a>
+					<a class="NFSbutton">상품 준비중</a>
 				</c:if>
 				<c:if test="${goodsInfo.g_amount > 0}">
-				<a href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=zzim" class="button">찜하기</a> 
-				<a href="${contextPath}/order/OrderForm.do?g_id=${goodsInfo.g_id}&o_goods_qty=1" class="button" >구매하기</a> 
-				<a href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=cart" class="button">장바구니담기</a>
+					<a
+						href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=zzim"
+						class="button">찜하기</a>
+					<a name="qty" onClick="buy();" class="button">구매하기</a>
+					<a
+						href="${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=cart"
+						class="button">장바구니담기</a>
 				</c:if>
 			</div>
 		</div>
@@ -427,11 +638,15 @@ position: relative;
 							<c:choose>
 								<c:when test="${empty boardGrList}">
 									<tr class="border-bottom asdf">
-										<td colspan=5 class="fixed"><strong>등록된 리뷰가 없습니다.</strong></td>
+										<td colspan=5 class="fixed"><strong>등록된 리뷰가
+												없습니다.</strong></td>
 									</tr>
 								</c:when>
-								<c:when test="${not empty boardGrList}">
-									<c:forEach var="item" items="${boardGrList}" begin="0" end="10">
+								
+								<c:otherwise>
+								<c:forEach var="item" items="${boardGrList}" begin="0" end="10">
+								<c:choose>
+								<c:when test="${empty item.secret or not empty item.secret and item.u_id == memberInfo.u_id or not empty item.secret and item.s_id == sellerInfo.s_id}">
 										<div id="box11">
 											<c:choose>
 												<c:when test="${item.star == 5}">
@@ -442,48 +657,139 @@ position: relative;
 													<span class="fa fa-star checked"></span>
 												</c:when>
 												<c:when test="${item.star == 4}">
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
 													<span class="fa fa-star"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
 												</c:when>
 												<c:when test="${item.star == 3}">
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star checked"></span>
 													<span class="fa fa-star"></span>
 													<span class="fa fa-star"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
 												</c:when>
 												<c:when test="${item.star == 2}">
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star"></span>
 													<span class="fa fa-star checked"></span>
 													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
 												</c:when>
 												<c:otherwise>
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star"></span>
 													<span class="fa fa-star checked"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
-													<span class="fa fa-star"></span>
 												</c:otherwise>
 											</c:choose>
 											<ul id="slider1">
 												<li id="slider1-1"><span id="slide1-11">${item.title}
 												</span>
 
-													<p>
-														<img src="${contextPath}/thumbnailsBoard.do?b_gr_id=${item.b_gr_id}" /><br>
-														${item.content}
-													</p>
-													<p class="pDDAK">${item.creDate}</p></li>
+													<p id=Pcontent>
+													<c:if test="${item.u_id == memberInfo.u_id }">
+															<br>
+															<input id="buttons" type=button value="수정"
+																onClick="gr_update('${contextPath}/boardGr/boardGrUpdateform.do',${item.b_gr_id })" />
+															<input id="buttons" type=button value="삭제"
+																onClick="gr_remove_board('${contextPath}/boardGr/boardGrDelete.do',${item.b_gr_id })" />
+														</c:if>
+														<c:if test="${item.s_id == sellerInfo.s_id }">
+														<br>
+															<input id="buttons" type=button value="답글"
+																onClick="gr_review('${contextPath}/boardGr/boardGrReviewform.do', ${item.b_gr_id})" />
+														</c:if>
+														
+
+														<img id="p_img"
+															src="${contextPath}/thumbnailsBoard.do?b_gr_id=${item.b_gr_id}"
+															onerror="this.style.display='none';" /> <br>
+														<textarea readonly>${item.content}</textarea>
+														<br>
+														<c:forEach var="boardGrReviewList"
+															items="${boardGrReviewList}">
+															<c:if
+																test="${boardGrReviewList.parentNo == item.b_gr_id}">
+																<input id="answer" type="text" value="답변">
+																<br>
+																<br>
+																<input type="text" id="Reviewtitle"
+																	value="${boardGrReviewList.title}" readonly>
+																<input type="text" id="Reviewwriter"
+																	value=" 작성자: ${boardGrReviewList.s_id}" readonly>
+																<br>
+																<c:if test="${boardGrReviewList.s_id == sellerInfo.s_id }">
+																<input id="buttons" type=button value="수정" onClick="gr_update('${contextPath}/boardGr/boardGrUpdateform.do',${boardGrReviewList.b_gr_id })" />
+																<input id="buttons" type=button value="삭제" onClick="gr_remove_board('${contextPath}/boardGr/boardGrDelete.do',${boardGrReviewList.b_gr_id })" />
+																</c:if>
+
+
+
+																<img id="p_img"
+																	src="${contextPath}/thumbnailsBoard.do?b_gr_id=${boardGrReviewList.b_gr_id}"
+																	onerror="this.style.display='none';" />
+																<br>
+																<textarea readonly>${boardGrReviewList.content}</textarea>
+															</c:if>
+														</c:forEach>
+													</p></li>
 											</ul>
 										</div>
-									</c:forEach>
-
 								</c:when>
+								<c:when test="${not empty item.secret and item.u_id != memberInfo.u_id and item.s_id != sellerInfo.s_id}">
+								<div id="box11">
+								<c:choose>
+								
+												<c:when test="${item.star == 5}">
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+												</c:when>
+												<c:when test="${item.star == 4}">
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+												</c:when>
+												<c:when test="${item.star == 3}">
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+												</c:when>
+												<c:when test="${item.star == 2}">
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star checked"></span>
+													<span class="fa fa-star checked"></span>
+												</c:when>
+												<c:otherwise>
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star"></span>
+													<span class="fa fa-star checked"></span>
+												</c:otherwise>
+											</c:choose>
+											<ul id="slider1">
+												<li id="slider1-1"><span id="slide1-11">비밀글입니다
+												</span>
+														<br>
+												</li>
+											</ul>
+											</div>
+											</c:when>
+											</c:choose>
+								</c:forEach>
+								</c:otherwise>
 							</c:choose>
 						</tbody>
 					</table>
@@ -518,31 +824,84 @@ position: relative;
 					<table class="review-table">
 						<tbody>
 							<c:choose>
-								<c:when test="${empty boardGqList }">
+								<c:when test="${empty boardGqList}">
 									<tr class="border-bottom asdf">
 										<td colspan=5 class="fixed"><strong>등록된 게시물이
 												없습니다.</strong></td>
 									</tr>
 								</c:when>
-								<c:when test="${not empty boardGqList }">
+								<c:otherwise>
 									<c:forEach var="item" items="${boardGqList}" begin="0" end="10">
+									<c:choose>
+								<c:when test="${empty item.secret or not empty item.secret and item.u_id == memberInfo.u_id or not empty item.secret and item.s_id == sellerInfo.s_id}">
 										<ul id="slider1">
-											<li id="slider1-1"><span id="slide1-11">${item.title}
-													${item.u_id} </span>
-												<p CLASS="F">
-													<img src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${item.b_gq_id}"/><br>
-													${item.content}
-												</p>
-												<p class="pDDAK">${item.creDate}</p></li>
+											<li id="slider1-1"><span id="slide1-11">${item.title}<input
+													type="text" id="title_Reviewwriter"
+													value=" 작성자: ${item.u_id}" readonly></span>
+												<p id=Pcontent>
+													<c:if test="${item.u_id == memberInfo.u_id }">
+														<input id="buttons" type=button value="수정"
+															onClick="fn_update('${contextPath}/boardGq/boardGqUpdateform.do',${item.b_gq_id })" />
+														<input id="buttons" type=button value="삭제"
+															onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${item.b_gq_id })" />
+													</c:if>
+													<c:if test="${item.s_id == sellerInfo.s_id }">
+														<input id="buttons" type=button value="답글"
+															onClick="fn_review('${contextPath}/boardGq/boardGqReviewform.do', ${item.b_gq_id})" />
+													</c:if>
+													<br> <img id="p_img"
+														src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${item.b_gq_id}"
+														onerror="this.style.display='none';" />
+													<textarea readonly>${item.content}</textarea>
+													<c:forEach var="boardGqReviewList"
+														items="${boardGqReviewList}">
+														<c:if test="${boardGqReviewList.parentNo == item.b_gq_id}">
+															<br>
+															<input id="answer" type="text" value="답변">
+															<br>
+															<br>
+															<input type="text" id="Reviewtitle"
+																value="${boardGqReviewList.title}" readonly>
+															<br>
+															<input type="text" id="Reviewwriter"
+																value=" 작성자: ${boardGqReviewList.s_id}" readonly>
+															<br>
+															<c:if
+																test="${boardGqReviewList.s_id == sellerInfo.s_id }">
+																<input id="buttons" type=button value="수정"
+																	onClick="fn_update('${contextPath}/boardGq/boardGqUpdateform.do',${boardGqReviewList.b_gq_id })" />
+																<input id="buttons" type=button value="삭제"
+																	onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${boardGqReviewList.b_gq_id })" />
+																<br>
+															</c:if>
+															<img id="p_img"
+																src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${boardGqReviewList.b_gq_id}"
+																onerror="this.style.display='none';" />
+															<br>
+															<textarea readonly>${boardGqReviewList.content}</textarea>
+														</c:if>
+													</c:forEach>
+												</p></li>
 										</ul>
+										</c:when>
+										<c:when test="${not empty item.secret and item.u_id != memberInfo.u_id and item.s_id != sellerInfo.s_id}">
+										<ul id="slider1">
+											<li id="slider1-1"><span id="slide1-11">비밀글입니다<input
+													type="text" id="title_Reviewwriter"
+													value=" 작성자: ****" readonly></span>
+								
+											</li>
+										</ul>
+										</c:when>
+										</c:choose>
 									</c:forEach>
-								</c:when>
+								</c:otherwise>
 							</c:choose>
 
 						</tbody>
 					</table>
 					<center>
-						 <div id="page">
+						<div id="page">
 
 							<c:forEach var="page" begin="1" end="9" step="1">
 								<c:if test="${section >0 && page==1 }">
@@ -559,10 +918,11 @@ position: relative;
 							</c:forEach>
 						</div>
 					</center>
+					<c:if test="${empty sellerInfo and empty adminInfo}">
 					<div class="write">
-						<a
-							href="${contextPath }/boardGq/boardGqWrite.do?g_id=${goodsInfo.g_id}">글쓰기</a>
+						<a href="${contextPath }/boardGq/boardGqWrite.do?g_id=${goodsInfo.g_id}">글쓰기</a>
 					</div>
+					</c:if>
 				</div>
 			</div>
 			<div id="tab-4" class="tab-content">
