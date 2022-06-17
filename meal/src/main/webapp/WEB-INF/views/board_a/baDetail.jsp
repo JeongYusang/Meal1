@@ -38,7 +38,7 @@
 	border-bottom: 3px solid #ffc0cf;
 }
 
-.board-b-wrap>input {
+input[type="button"] {
 	float: right;
 	display: inline-block;
 	background-color: #ffc0cf;
@@ -89,12 +89,47 @@
 	border-radius: 4px;
 }
 
-h1 #H1TITLE{
+h1#H1TITLE{
 	text-align: center;
 }
 
-div #divTR {
+img#eventIMG {
+	width:100%;
+	height: 100%;
+}
+
+div#divNO2 {
 	float: left;
+	text-align: center;
+	margin-left: 50px;
+}
+div#divTITLE2 {
+	float: left;
+	text-align: center;
+	margin-left: 50px;
+}
+div#divID2 {
+	float: left;
+	text-align: center;
+	margin-left: 50px;
+}
+div#divDATE2 {
+	float: left;
+	text-align: center;
+	margin-left: 50px;
+}
+
+div#divNO1 {
+    text-align: center;
+}
+div#divTITLE1 {
+    text-align: center;
+}
+div#divID1 {
+    text-align: center;
+}
+div#divDATE1 {
+    text-align: center;
 }
 
 </style>
@@ -105,105 +140,109 @@ div #divTR {
 <body>
 	<div class='board-wrap'>
 		<div class="board-b-wrap">
-
-			<h1 id="H1TITLE">${boardAInfo.cate}</h1>
-			<input type=button value="수정" onClick="fn_enable(this.form)" /> <input
-				type=button value="삭제"
-				onClick="fn_remove_article('${contextPath}/board/removeArticle.do', ${article.articleNO})" />
-
-			<input type=button value="목록" onClick="backToList(this.form)" /> <input
-				type=button value="답글"
-				onClick="fn_reply_form('${contextPath}/board/replyForm.do', ${article.articleNO})" />
+			<h1 id="H1TITLE">
+				${boardAInfo.cate}
+			</h1>
+			<c:choose>
+				<c:when test="${adminInfo ne null }">
+				<div id="adminBTN">
+					<input type=button value="수정" onClick="fn_enable(this.form)" /> 
+					<input type=button value="삭제" onClick="fn_remove_article('${contextPath}/board/removeArticle.do', ${article.articleNO})" />
+				</div>
+				</c:when>
+				<c:when test="${adminInfo eq null }">
+				<div id="adminBTN">
+				</div>
+				</c:when>
+			</c:choose> 
+					<input type=button value="목록" onClick="backToList(this.form)" />
 		</div>
 			<div class='table-wrap'>
 				<c:choose>
 					<c:when test="${boardAInfo.cate == '이벤트' }">
 				<div id="divTBL">
-					<div id="divTR">
-						<div class="divTD">글번호</div>
-						<div class="divTD2">${boardAInfo.b_a_id }
+					<div id="divNO2">
+						<div class="divNO">글번호</div>
+						<div class="divNO1">${boardAInfo.b_a_id }
 					</div>
 					</div>
-					<div id="divTR">
-						<div class="divTD">제목</div>
-						<div class="divTD2">${boardAInfo.title }</div>
+					<div id="divTITLE2">
+						<div class="divTITLE">제목</div>
+						<div class="divTITLE1">${boardAInfo.title }</div>
 					</div>
-					<div id="divTR">
-						<div class="divTD">작성자 아이디</div>
-						<div class="divTD2">${boardAInfo.a_id }</div>
+					<div id="divID2">
+						<div class="divID">작성자 아이디</div>
+						<div class="divID1">${boardAInfo.a_id }</div>
 					</div>
-					<div id="divTR">
-						<div class="divTD">등록일자</div>
-						<div class="divTD2">${boardAInfo.creDate}
+					<div id="divDATE2">
+						<div class="divDATE">등록일자</div>
+						<div class="divDATE1">${boardAInfo.creDate}
 						</div>
 					</div>
-					<div id="divTR">
-						<div class="divTD">내용</div>
+					</div>
+					<div id="divCONTENT2">
 						<c:forEach var="item" items="${imgList}">
-						<div class="divTD2">
+						<div class="divCONTENT1">
 							${boardInfo.content}
-							<img src="${contextPath}/download3.do?b_a_id=${item.b_a_id}" >
+							<img src="${contextPath}/download3.do?b_a_id=${item.b_a_id}&cate=${item.cate}" id="eventIMG"/>
 						</div>
 						</c:forEach>
-					</div>
 					</div>
 					</c:when>
 					</c:choose>
 					<c:choose>
 					<c:when test="${boardAInfo.cate == '공지사항' }">
 					<div id="divTBL">
-					<div id="divTR">
-						<div class="divTD">글번호</div>
-						<div class="divTD2">${boardAInfo.b_a_id }
+					<div id="divNO2">
+						<div class="divNO">글번호</div>
+						<div class="divNO1">${boardAInfo.b_a_id }
 					</div>
 					</div>
-					<div id="divTR">
-						<div class="divTD">제목</div>
-						<div class="divTD2">${boardAInfo.title }</div>
+					<div id="divTITLE2">
+						<div class="divTITLE">제목</div>
+						<div class="divTITLE1">${boardAInfo.title }</div>
 					</div>
-					<div id="divTR">
-						<div class="divTD">작성자 아이디</div>
-						<div class="divTD2">${boardAInfo.a_id }</div>
+					<div id="divID2">
+						<div class="divID">작성자 아이디</div>
+						<div class="divID1">${boardAInfo.a_id }</div>
 					</div>
-					<div id="divTR">
-						<div class="divTD">등록일자</div>
-						<div class="divTD2">"${boardAInfo.creDate}"
-						</div>
-					</div>
-					<div id="divTR">
-						<div class="divTD">내용</div>
-						<div class="divTD2">
-							<img src="${contextPath}/download3.do?b_a_id=${b_a_id}&cate=${cate}" >
+					<div id="divDATE2">
+						<div class="divDATE">등록일자</div>
+						<div class="divDATE1">"${boardAInfo.creDate}"
 						</div>
 					</div>
 					</div>
+					<c:forEach var="item" items="${imgList}">
+						<div class="divCONTENT1">
+							<img src="${contextPath}/download3.do?b_a_id=${item.b_a_id}&cate=${item.cate}" >
+						</div>
+					</c:forEach>
 					</c:when>
 					</c:choose>
 					<c:choose>
 					<c:when test="${boardAInfo.cate == '자주묻는질문' }">
 					<div id="divTBL">
-					<div id="divTR">
-						<div class="divTD">글번호</div>
-						<div class="divTD2">${boardAInfo.b_a_id }
+					<div id="divNO2">
+						<div class="divNO">글번호</div>
+						<div class="divNO1">${boardAInfo.b_a_id }
 					</div>
 					</div>
-					<div id="divTR">
-						<div class="divTD">제목</div>
-						<div class="divTD2">${boardAInfo.title }</div>
+					<div id="divTITLE2">
+						<div class="divTITLE">제목</div>
+						<div class="divTITLE1">${boardAInfo.title }</div>
 					</div>
-					<div id="divTR">
-						<div class="divTD">작성자 아이디</div>
-						<div class="divTD2">${boardAInfo.a_id }</div>
+					<div id="divID2">
+						<div class="divID">작성자 아이디</div>
+						<div class="divID1">${boardAInfo.a_id }</div>
 					</div>
-					<div id="divTR">
-						<div class="divTD">등록일자</div>
-						<div class="divTD2">${boardAInfo.creDate}
+					<div id="divDATE2">
+						<div class="divDATE">등록일자</div>
+						<div class="divDATE1">${boardAInfo.creDate}
 						</div>
 					</div>
-					<div id="divTR">
-						<div class="divTD">내용</div>
-						<div class="divTD2"><textarea rows="20" cols="70" name="content"
-								id="content" disabled /> ${boardAInfo.content } </textarea></div>
+					<div id="divCONTENT2">
+						<div class="divCONTENT">내용</div>
+						<div class="divCONTENT1">${boardAInfo.content }</div>
 					</div>
 				</div>
 					</c:when>
