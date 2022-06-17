@@ -163,7 +163,6 @@ public class BaControllerImpl extends BaseController implements BaController {
 			pagingInfo.put("pgNum", pgNum);
 			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
 		
-			pagingMap.put("a_id", a_id);
 			
 			//관리자 게시판 조회를 위해 사용
 			List<BaVO> boardAList = (List<BaVO>) baService.BaAllList(pagingMap);
@@ -191,6 +190,9 @@ public class BaControllerImpl extends BaseController implements BaController {
 	@RequestMapping(value="/boardADetail.do", method= {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView boardAList(@RequestParam("b_a_id") String b_a_id, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		AdminVO adminInfo = (AdminVO) session.getAttribute("adminInfo");
+		
 		int b_a_id1 = Integer.parseInt(b_a_id);
 		List<Img_aVO> imgList =(List<Img_aVO>)baService.selectImgList(b_a_id1); 
 		BaVO boardAInfo = (BaVO) baService.selectBaDetail(b_a_id1);
@@ -201,6 +203,7 @@ public class BaControllerImpl extends BaseController implements BaController {
 		System.out.println("---------------------------");
 
 		String viewName = (String) request.getAttribute("viewName");
+		mav.addObject("adminInfo", adminInfo);
 		mav.addObject("imgList", imgList);
 		mav.addObject("boardAInfo", boardAInfo);
 		mav.setViewName(viewName);
@@ -208,4 +211,56 @@ public class BaControllerImpl extends BaseController implements BaController {
 		return mav;
 	
 	}
+	
+	@Override
+	@RequestMapping(value="/boardASPList.do", method= {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView boardASPList(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+		@RequestParam(value = "section1", required = false) String section,
+		@RequestParam(value = "pgNum", required = false) String pgNum,
+		@RequestParam(value = "cate", required = false) String cate,
+		HttpServletRequest request,
+		HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		
+		HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
+		pagingInfo.put("section", section);
+		pagingInfo.put("pgNum", pgNum);
+		HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
+
+		List<BaVO> boardASPList = (List<BaVO>) baService.BaAllList(pagingMap);
+		
+		
+		if ( cate == "이벤트") {
+			System.out.println("---------------------------");
+			System.out.println("boardASPList : " + boardASPList);
+			System.out.println("---------------------------");
+			
+			String viewName = (String) request.getAttribute("viewName");
+			mav.addObject("boardASPList", boardASPList);
+			mav.setViewName(viewName);
+
+			} else if ( cate == "공지사항") {
+				System.out.println("---------------------------");
+				System.out.println("boardASPList : " + boardASPList);
+				System.out.println("---------------------------");
+				
+				String viewName = (String) request.getAttribute("viewName");
+				mav.addObject("boardASPList", boardASPList);
+				mav.setViewName(viewName);
+
+			} else if ( cate == "자주묻는질문") {
+				System.out.println("---------------------------");
+				System.out.println("boardASPList : " + boardASPList);
+				System.out.println("---------------------------");
+				
+				String viewName = (String) request.getAttribute("viewName");
+				mav.addObject("boardASPList", boardASPList);
+				mav.setViewName(viewName);
+
+			} 
+		return mav;
+		}
+			
+	
 }

@@ -53,7 +53,7 @@
 	</insert>
 
 	<select id="boardAInfo" parameterType="Map" resultMap="BoardAdminResult">
-		select R1.* from (select * from board_a) R1 where a_id = #{a_id} order by b_a_id desc limit #{start} , #{end} 
+		select R1.* from (select * from board_a) R1 order by b_a_id desc limit #{start} , #{end} 
 	</select>
 	
 	<select id="selectBAImg" parameterType="int" resultMap="img_aResult">
