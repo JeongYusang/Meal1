@@ -121,8 +121,9 @@
     z-index: 1;
    
 }
-#soldout {
-filter: brightness(50%);
+
+.soldout {
+filter: brightness(70%);
 position: relative;
 width: 250px;
 height: 250px;
@@ -179,7 +180,7 @@ position: relative;
 							<div id = "goods-info">
 							<a href="${contextPath}/cart/addGoodsInCart.do?g_id=${item.g_id}&cate=zzim"><img class="heart" src="${contextPath}/resources/image/heart.png"></a> <a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}">
 									<c:if test="${item.g_amount <= 0}">
-									<img class = "soldout"src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main">
+									<img class = "soldout" src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main">
 									<div id="soldtext">상품준비중</div></c:if>
 							<c:if test="${item.g_amount > 0}"><img class = "goods_img" src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"></c:if> <br>${item.g_name } <br>
 									<c:if
@@ -208,7 +209,7 @@ position: relative;
 									<img class="heart"
 									src="${contextPath}/resources/image/heart.png">
 							</a> <a href="${contextPath }/goods/goodsDetail.do?g_id=${item.g_id}">
-							<c:if test="${item.g_amount <= 0}"><img id = "soldout"src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
+							<c:if test="${item.g_amount <= 0}"><img class = "soldout"src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
 									width="250px" height="250px"><div id="soldtext">상품준비중</div></c:if>
 							<c:if test="${item.g_amount > 0}"><img src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"
 									width="250px" height="250px"></c:if> <br>${item.g_name } <br>
