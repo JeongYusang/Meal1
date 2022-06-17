@@ -154,6 +154,7 @@ public class SearchController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("goodsList", goodsList);
 		mav.addObject("text", text);
+		mav.addObject("cate", cate);
 		mav.addObject("g_allergy_M", g_allergy_M);
 		mav.setViewName(viewName);
 		return mav;

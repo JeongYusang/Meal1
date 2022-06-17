@@ -44,6 +44,8 @@ public interface BoardGrService {
 
 	//상품후기 내역 조회를 위해 사용 0616
 	public List<BoardGrVO> selectBoardGrSList(HashMap<String, Object> map) throws Exception;
+
+	public List<BoardGrVO> SelectReview(int g_id) throws Exception;
 	
 	
 

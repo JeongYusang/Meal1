@@ -57,6 +57,8 @@ public interface BoardGqDAO {
 	//판매자 상품문의 내역 확인 0615
 	public List<BoardGqVO> boardGqSellerList(HashMap<String, Object> map) throws DataAccessException;
 
+	public List<BoardGqVO> SelectReview(int g_id)throws DataAccessException;
+
 	
 
 	

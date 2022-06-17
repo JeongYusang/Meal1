@@ -130,6 +130,12 @@ public class BoardGrDAOImpl implements BoardGrDAO {
 		List<BoardGrVO> sGrListInfo = (List<BoardGrVO>) sqlSession.selectList("mapper.boardGr.selectBoardGrSList", map);
 		return sGrListInfo;
 	}
+	//굿즈 디테일 상품 후기를 위해 답글 조회기능 0617
+	@Override
+	public List<BoardGrVO> SelectReview(int g_id) throws DataAccessException {
+		List<BoardGrVO> SelectReview = (List<BoardGrVO>) sqlSession.selectList("mapper.boardGr.SelectReview", g_id);
+		return SelectReview;
+	}
 
 	
 

@@ -43,4 +43,6 @@ public interface BoardGqService {
 	//판매자 상품문의 내역 확인 0615
 	public List<BoardGqVO> boardGqSellerList(HashMap<String, Object> map) throws Exception;
 
+	public List<BoardGqVO> SelectReview(int g_id) throws Exception;
+
 }

@@ -121,7 +121,7 @@
     z-index: 1;
    
 }
-.soldout {
+#soldout {
 filter: brightness(50%);
 position: relative;
 width: 250px;

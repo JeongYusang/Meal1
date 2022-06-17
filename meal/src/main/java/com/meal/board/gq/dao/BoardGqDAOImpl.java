@@ -129,6 +129,12 @@ public class BoardGqDAOImpl implements BoardGqDAO {
 		List<BoardGqVO> boardGqList = (List<BoardGqVO>) sqlSession.selectList("mapper.boardGq.boardGqList", map);
 		return boardGqList;
 	}
+	// 굿즈 디테일 상품 문의 답글 조회기능 0617
+	@Override
+	public List<BoardGqVO> SelectReview(int g_id) throws DataAccessException {
+		List<BoardGqVO> SelectReview = (List<BoardGqVO>) sqlSession.selectList("mapper.boardGq.SelectReview", g_id);
+		return SelectReview;
+	}
 
 	
 
