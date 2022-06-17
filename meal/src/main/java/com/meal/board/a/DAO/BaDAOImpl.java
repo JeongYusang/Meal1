@@ -9,6 +9,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import com.meal.board.a.vo.BaVO;
+import com.meal.board.a.vo.Img_aVO;
 
 @Repository("baDAO")
 public class BaDAOImpl implements BaDAO{
@@ -35,6 +36,18 @@ public class BaDAOImpl implements BaDAO{
 	public List<BaVO> BaAllList(HashMap<String, Object> map) throws DataAccessException {
 		List<BaVO> BaAllList = (List<BaVO>) sqlSession.selectList("mapper.boardA.boardAInfo", map);
 		return BaAllList;
+	}
+
+	@Override
+	public List<Img_aVO> selectImgList(int b_a_id) throws DataAccessException {
+		List<Img_aVO> list = (List<Img_aVO>) sqlSession.selectList("mapper.boardA.selectBAImg", b_a_id);
+		return list;
+	}
+
+	@Override
+	public BaVO selectBaDetail(int b_a_id) throws DataAccessException {
+		BaVO baVO = (BaVO) sqlSession.selectOne("mapper.boardA.selectBaDetail", b_a_id);
+		return baVO;
 	}
 
 }

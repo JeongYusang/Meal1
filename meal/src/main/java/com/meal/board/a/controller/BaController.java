@@ -20,4 +20,6 @@ public interface BaController {
 			@RequestParam(value = "section1", required = false) String section,
 			@RequestParam(value = "pgNum", required = false) String pgNum, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
+	
+	public ModelAndView boardAList(@RequestParam("b_a_id") String b_a_id, HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

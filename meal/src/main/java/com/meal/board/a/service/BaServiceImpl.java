@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.meal.board.a.DAO.BaDAO;
 import com.meal.board.a.vo.BaVO;
+import com.meal.board.a.vo.Img_aVO;
 
 @Service("baService")
 public class BaServiceImpl implements BaService {
@@ -34,6 +35,18 @@ public class BaServiceImpl implements BaService {
 	public List<BaVO> BaAllList(HashMap<String, Object> map) throws Exception {
 		List<BaVO> BaAllList = (List<BaVO>) baDAO.BaAllList(map);
 		return BaAllList;
+	}
+
+	@Override
+	public List<Img_aVO> selectImgList(int b_a_id) throws Exception {
+		List<Img_aVO> list = (List<Img_aVO>) baDAO.selectImgList(b_a_id);
+		return list;
+	}
+
+	@Override
+	public BaVO selectBaDetail(int b_a_id) throws Exception {
+		BaVO baVO = (BaVO) baDAO.selectBaDetail(b_a_id);
+		return baVO;
 	}
 
 }
