@@ -87,6 +87,7 @@ input {
 	max-height: 100px;
 	position: relative;
 	border: 0px solid #bcbcbc;
+	margin-top: 100px;
 }
 
 /* nav */

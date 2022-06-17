@@ -101,7 +101,7 @@
 <style type="text/css">
 .div1 {
 	width: 1080px;
-	height: 1000px;
+	height: 1250px;
 	position: relative;
 	overflow: hidden;
 }
@@ -217,7 +217,7 @@
 	position: absolute;
 	box-sizing: border-box;
 	width: 100%;
-	height: 800px;
+	height: auto;
 	border: 5px solid #ffc0cf;
 }
 
