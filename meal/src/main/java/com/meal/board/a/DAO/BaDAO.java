@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.dao.DataAccessException;
 
 import com.meal.board.a.vo.BaVO;
+import com.meal.board.a.vo.Img_aVO;
+import com.meal.goods.vo.Img_gVO;
 
 public interface BaDAO {
 
@@ -16,4 +18,8 @@ public interface BaDAO {
 	public void addImg(HashMap<String, Object> item) throws DataAccessException;
 
 	public List<BaVO> BaAllList(HashMap<String, Object> map) throws DataAccessException;
+	
+	public List<Img_aVO> selectImgList(int b_a_id) throws DataAccessException;
+	
+	public BaVO selectBaDetail(int b_a_id) throws DataAccessException;
 }

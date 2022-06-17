@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.meal.admin.vo.AdminVO;
 import com.meal.board.a.service.BaService;
 import com.meal.board.a.vo.BaVO;
+import com.meal.board.a.vo.Img_aVO;
 import com.meal.common.controller.BaseController;
 
 @Controller("boardAController")
@@ -185,4 +186,26 @@ public class BaControllerImpl extends BaseController implements BaController {
 				return mav;
 			}
 }
+
+	@Override
+	@RequestMapping(value="/boardADetail.do", method= {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView boardAList(@RequestParam("b_a_id") String b_a_id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		int b_a_id1 = Integer.parseInt(b_a_id);
+		List<Img_aVO> imgList =(List<Img_aVO>)baService.selectImgList(b_a_id1); 
+		BaVO boardAInfo = (BaVO) baService.selectBaDetail(b_a_id1);
+		System.out.println("---------------------------");
+		System.out.println("boardAInfo : " + boardAInfo);
+		System.out.println("---------------------------");
+		System.out.println("imgList : " + imgList);
+		System.out.println("---------------------------");
+
+		String viewName = (String) request.getAttribute("viewName");
+		mav.addObject("imgList", imgList);
+		mav.addObject("boardAInfo", boardAInfo);
+		mav.setViewName(viewName);
+
+		return mav;
+	
+	}
 }

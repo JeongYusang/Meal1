@@ -273,7 +273,11 @@ span#fa\ fa-star\ {
 										<td>${item.b_a_id}</td>
 										<td>${item.a_id}</td>
 										<%-- <td><a href="${contextPath}/boardGq/gq_detail.do?b_gq_id=${item.b_gq_id}"></a></td> --%>
-										<td>${item.title}</td>
+										<td>
+											<a href="${contextPath}/boardA/boardADetail.do?b_a_id=${item.b_a_id}">
+												<img src="${contextPath}/download3.do?b_a_id=${item.b_a_id}&cate=${item.cate}">
+													${item.title}
+											</a></td>
 										<td>${item.creDate}</td>
 									</tr>
 									</c:if>
@@ -330,7 +334,7 @@ span#fa\ fa-star\ {
 										<td>${item.b_a_id}</td>
 										<td>${item.a_id}</td>
 										<%-- <td><a href="${contextPath}/boardGq/gq_detail.do?b_gq_id=${item.b_gq_id}"></a></td> --%>
-										<td>${item.title}</td>
+										<td><a href="${contextPath}/boardA/boardADetail.do?b_a_id=${item.b_a_id}">${item.title}</a></td>
 										<td>${item.creDate}</td>
 									</tr>
 									</c:if>
@@ -387,7 +391,9 @@ span#fa\ fa-star\ {
 										<td>${item.b_a_id}</td>
 										<td>${item.a_id}</td>
 										<%-- <td><a href="${contextPath}/boardGq/gq_detail.do?b_gq_id=${item.b_gq_id}"></a></td> --%>
-										<td>${item.title}</td>
+										<td><a href="${contextPath}/boardA/boardADetail.do?b_a_id=${item.b_a_id}">
+												${item.title}
+											</a></td>
 										<td>${item.creDate}</td>
 									</tr>
 									</c:if>
