@@ -36,6 +36,9 @@
 		document.getElementById("totalPrice").value = Ototalprice;
 		document.getElementById("h_total_order_goods_qty").value = length;
 		document.getElementById("h_totalDelivery").value = totaldele;
+		// 이 두개는 ctrl에서 사용하기위한 요소
+		document.getElementById("Tprice").value = parseInt(totalprice);
+		document.getElementById("TdeleP").value = totaldele;
 	}
 
 	function execDaumPostcode() {
@@ -310,6 +313,8 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 <body>
 	<div id="main-wrap">
 		<form name="order">
+		<input type="hidden" id="Tprice" >
+		<input type="hidden" id="TdeleP">
 			<c:forEach var="cartVO" items="${CartList}">
 				<input type="hidden" id="g_id" value="${cartVO.g_id}">
 			</c:forEach>
@@ -491,6 +496,9 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 						</td>
 						<td><input id="final_total_Price" type="number"
 							name="FinalTotalPrice" size=10 readonly>원</td>
+							
+							
+							
 					</tr>
 				</tbody>
 			</table>

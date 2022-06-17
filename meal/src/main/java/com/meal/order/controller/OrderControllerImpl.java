@@ -186,7 +186,12 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			int parentNo = (Integer) orderService.MaxOrderNum();
 			_orderVO.setParentNo(parentNo);
 
+			int totalUseMilage = _orderVO.getO_useMile();
+			System.out.println("total Use Milage" + totalUseMilage);
+			int i = 1;
+			// saleprice에 대한 구문도 추가하긴해야함.
 			for (CartVO item : cartList) {
+				i ++;
 				int qty = item.getC_qty();
 				_orderVO.setO_goods_qty(qty);
 				String g_name = item.getG_name();
@@ -198,6 +203,30 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 				_orderVO.setS_id(s_id);
 				int price = goodsInfo.getG_price();
 				_orderVO.setO_goods_price(price);
+				
+				int buyprice = qty* price;
+				if (item.getC_deleP() != 0 ) {
+					int deliP = 3000;
+					buyprice += deliP;
+					if (totalUseMilage >= buyprice) {
+						totalUseMilage -= buyprice;
+						_orderVO.setO_useMile(buyprice);
+				
+					}else {
+						_orderVO.setO_useMile(totalUseMilage);
+						totalUseMilage = 0;
+					}
+				}else if (item.getC_deleP() == 0) {
+					if (totalUseMilage >= buyprice) {
+						totalUseMilage -= buyprice;
+						_orderVO.setO_useMile(buyprice);
+						
+					}else {
+						_orderVO.setO_useMile(totalUseMilage);
+						totalUseMilage = 0;
+					}
+					System.out.println("total Use Milage"+i+"번째" + totalUseMilage);
+				}
 				orderService.insertCartOrder(_orderVO);
 				// 마일리지 관련하여 추후 생각을 해야함.
 				int c_id =item.getC_id();
