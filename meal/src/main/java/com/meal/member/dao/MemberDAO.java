@@ -34,5 +34,7 @@ public interface MemberDAO {
 
 	public List<MileageVO> myMileagePlus(HashMap<String, Object> pagingMap) throws DataAccessException;
 
+	public MemberVO FindID2(HashMap<String, Object> map) throws DataAccessException;
+
 
 }

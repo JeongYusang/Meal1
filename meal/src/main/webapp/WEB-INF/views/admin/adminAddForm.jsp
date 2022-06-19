@@ -370,7 +370,7 @@ tr.box {
 	text-align: center;
 	box-sizing: border-box;
 	padding: 20px;
-	font-size: 20px;
+	font-size: 14px;
 }
 
 .agree-context .agree-inner .agree-close {
@@ -412,7 +412,7 @@ tr.box {
 	text-align: center;
 	box-sizing: border-box;
 	padding: 20px;
-	font-size: 20px;
+	font-size: 14px;
 }
 
 .agree-context1 .agree-inner1 .agree-close1 {
@@ -547,15 +547,6 @@ tr.box {
 						<th>휴대폰*</th>
 						<td><input type="tel" name="a_hp1" id="hp1"
 							required="required" /></td>
-						<td colspan="2" class="righttd"><input type="button" id="hp2"
-							value="인증 전송" /></td>
-					</tr>
-					<tr class="box">
-						<th>번호확인*</th>
-						<td><input type="text" name="hpA" id="hpA"
-							required="required" /></td>
-						<td colspan="2" class="righttd"><input type="button"
-							id="hpA1" value="인증 확인" /></td>
 					</tr>
 					
 					<tr class="box">
@@ -566,7 +557,7 @@ tr.box {
 						<input type="text" name="a_email2" id="a_email2"
 							style="width: 100px;"  value="">
 						<select style="width: 100px; margin-right: 10px"
-							name="a_email2" id="select">
+							 id="select">
 							<option value="" disabled selected>E-Mail 선택</option>
 							<option value="directly" id="a_email2">직접 입력하기</option>
 							<option value="naver.com">naver.com</option>

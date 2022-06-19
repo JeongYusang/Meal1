@@ -232,16 +232,16 @@ tr.box {
 
 .agree-context .agree-inner {
 	width: 80%;
-	height: 80%;
-	background: #ffc0cf;
-	top: 30px;
-	left: 50%;
-	transform: translateX(-50%);
-	position: absolute;
-	text-align: center;
-	box-sizing: border-box;
-	padding: 20px;
-	font-size: 20px;
+    height: 80%;
+    background: #ffc0cf;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 20px;
+    font-size: 14px;
 }
 
 .agree-context .agree-inner .agree-close {
@@ -283,7 +283,7 @@ tr.box {
 	text-align: center;
 	box-sizing: border-box;
 	padding: 20px;
-	font-size: 20px;
+	font-size: 14px;
 }
 
 .agree-context1 .agree-inner1 .agree-close1 {

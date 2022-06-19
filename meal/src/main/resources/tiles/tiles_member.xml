@@ -34,6 +34,13 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/user/userDelete.jsp" />
 	</definition>
+		<definition name="/member/FindIDResult2" extends="baseLayout">
+		<put-attribute name="title" value="아이디 찾기" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/Find_ID_Result.jsp" />
+	</definition>
+	
+	
 
 
 	<!--판매자 회원가입 -->

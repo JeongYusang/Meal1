@@ -82,5 +82,11 @@ public class MemberDAOImpl  implements MemberDAO{
 		List<MileageVO> boardInfo = (List<MileageVO>) sqlSession.selectList("mapper.user.myMileagePlus", pagingMap);
 		return boardInfo;
 	}
+
+	@Override
+	public MemberVO FindID2(HashMap<String, Object> map) throws DataAccessException {
+		MemberVO memberVO = (MemberVO)sqlSession.selectOne("mapper.user.FindID2", map);
+		return memberVO;
+	}
 }
 

@@ -94,4 +94,9 @@ public class MemberServiceImpl implements MemberService {
 		return listInfo;
 	}
 
+	@Override
+	public MemberVO FindID2(HashMap<String, Object> map) throws Exception {
+		return (MemberVO) memberDAO.FindID2(map);
+	}
+
 }

@@ -48,15 +48,12 @@ String id = (String) request.getAttribute("id");
 								<c:when test="${not empty MemberInfo.u_id }">
 									<p>${MemberInfo.u_name }님의가입을환영합니다.</p>
 									<p>아이디는${MemberInfo.u_id } 입니다.</p>
-									<p>비밀번호는 ${MemberInfo.u_pw } 환영합니다.</p>
-
 									<p>언제나 좋은 서비스를 제공할 수 있도록 최선을 다하겠습니다.</p>
 
 								</c:when>
 								<c:when test="${not empty SellerInfo.s_id }">
 									<p>${SellerInfo.s_name }님의가입을환영합니다.</p>
 									<p>아이디는${SellerInfo.s_id }입니다.</p>
-									<p>비밀번호는 ${SellerInfo.s_pw }입니다.</p>
 									<p>언제나 좋은 서비스를 제공할 수 있도록 최선을 다하겠습니다.</p>
 								</c:when>
 							</c:choose>

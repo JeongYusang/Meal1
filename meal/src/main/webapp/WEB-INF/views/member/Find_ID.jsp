@@ -197,7 +197,7 @@ height: 45px;
 </style>
 </head>
 <body>
-<form action="${contextPath}/Email/IDemail.do" method="post" method="post">
+<form action="${contextPath}/Email/IDemail.do" method="post">
   <div id="tab">
   	<div id="dadada">	
   	<h1>아이디 찾기</h1>
