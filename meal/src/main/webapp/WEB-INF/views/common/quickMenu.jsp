@@ -210,6 +210,7 @@ margin: 0px;
 				</ul>
 
 			</div>
+			<c:if test="${not empty memberInfo }">
 				<div class="quickInfo">
 				<strong><a href="${contextPath}/cart/myZzimList.do">찜 목록</a></strong>
 				<ul>
@@ -261,6 +262,7 @@ margin: 0px;
 				</ul>
 
 			</div>
+			</c:if>
 
 
 		</div>
