@@ -388,12 +388,15 @@ color: white;
                <th class="boxhead">알러지 상세항목</th>
                <td class="boxbody"><textarea id="test" name="g_allergy_D" cols="30" rows="3">${goodsInfo.g_allergy_D}</textarea></td>
             </tr>
+            <c:forEach var = "item" items="${imageList}">
+            <c:if test="${item.cate == main }"></c:if>
             <tr class="box">
                <th class="boxhead">상세이미지*</th>
                <td class="boxbody"><img id="g_image" width="150px" height="150px"
-                  src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=detail">${imageList[1].fileName}
+                  src="${contextPath}/download1.do?g_id=${goodsInfo.g_id}&cate=${item.cate}">${item.fileName}
                   <br> <input type="file" name="detail" class="imgex" /></td>
             </tr>
+            </c:forEach>
             <tr class="box">
                <th class="boxhead">상세설명*</th>
                <td class="boxbody"><textarea id="test" name="g_detail1" cols="30" rows="10">${goodsInfo.g_detail1 }</textarea>
