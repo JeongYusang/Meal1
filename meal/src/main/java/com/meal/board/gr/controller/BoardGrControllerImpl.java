@@ -546,14 +546,13 @@ public class BoardGrControllerImpl extends BaseController implements BoardGrCont
 				}
 
 			} else if (adminVO != null) {
-				mav.addObject("boardGrVO", boardGrVO);
+				boardGrService.boardGrDelete(b_gr_id);
 				String viewName1 = "redirect:/boardGr/selectBoardGrList.do";
 				mav.setViewName(viewName1);
 				return mav;
 			}
 			String message = "게시물 작성자가 아닙니다.";
 			redirectAttributes.addAttribute("message", message);
-			redirectAttributes.addAttribute("b_gr_id", b_gr_id);
 			viewName = "redirect:/boardGr/gr_detail.do";
 			mav.setViewName(viewName);
 			return mav;
@@ -562,7 +561,6 @@ public class BoardGrControllerImpl extends BaseController implements BoardGrCont
 			mav.addObject("boardGrVO", boardGrVO);
 			String message = "회원정보가 일치하지 않습니다.";
 			redirectAttributes.addAttribute("message", message);
-			redirectAttributes.addAttribute("b_gr_id", b_gr_id);
 			viewName = "redirect:/boardGr/gr_detail.do";
 			mav.setViewName(viewName);
 			return mav;
