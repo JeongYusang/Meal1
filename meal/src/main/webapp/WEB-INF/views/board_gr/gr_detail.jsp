@@ -188,51 +188,6 @@ function fn_review(url,b_gr_id){
 	margin: 0px;
 }
 
-.check-context {
-	z-index: 50;
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	background: rgba(0, 0, 0, 0.7);
-	z-index: 500;
-	display: none;
-}
-
-.check-context .check-inner {
-	width: 80%;
-	height: 80%;
-	background: #ffc0cf;
-	top: 30px;
-	left: 50%;
-	transform: translateX(-50%);
-	position: absolute;
-	text-align: center;
-	box-sizing: border-box;
-	padding: 20px;
-	font-size: 20px;
-}
-
-.check-context .check-inner>btn {
-	z-index: 300px;
-	width: 30px;
-	height: 27px;
-	border: 0;
-	position: absolute;
-	right: 35%;
-	top: 10px;
-	background: #ffc0cf;
-	/* 백그라운드는 이너와 맞춰줄것 */
-}
-
-.check-context .check-inner {
-	width: 40%;
-	height: 40%;
-	top: 150px;
-	position: absolute;
-}
-
 .checked {
 	color: #ffc0cb;
 	font-size: 60px;
@@ -289,35 +244,6 @@ color: black;
 </head>
 
 <body>
-
-
-	<div class="check-context">
-
-		<!-- Modal content -->
-		<div class="check-inner">
-
-
-			<div class="checkform">
-				<h1>비밀번호 재확인</h1>
-				<h3>회원의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인해주세요</h3>
-				<hr>
-				<form id="checkForm" method='post'
-					action="${contextPath}/member/checkpw.do">
-					<table id="checkpw">
-						<tr>
-							<th><h1>비밀번호</h1></th>
-							<td><input type="password" name="_u_pw" id="_u_pw"
-								style="height: 22px; margin-top: 10px; margin-left: 10px;" /></td>
-						</tr>
-					</table>
-					<center>
-						<button class="pwcheck" type="submit">전송하기</button>
-						<button class="check-close" type="button">돌아가기</button>
-					</center>
-				</form>
-			</div>
-		</div>
-	</div>
 	
 	<div id="goods-info">
 			<br> <img src="${contextPath}/download1.do?g_id=${boardGrInfo.g_id}&cate=main" />

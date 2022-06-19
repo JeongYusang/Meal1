@@ -255,11 +255,6 @@ tr.border-bottom td {
 					</c:when>
 				</c:choose>
 		</center>
-		<hr>
-		<br>
-		<div id="write">
-			<a href="${contextPath }/boardGq/boardGqWrite.do">글쓰기</a>
-		</div>
 	</div>
 
 

@@ -541,7 +541,6 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 
 			} else if (adminVO != null) {
 				boardGqService.boardGqDelete(b_gq_id);
-				mav.addObject("boardGqVO", boardGqVO);
 				String message = "게시글이 삭제 되었습니다";
 				redirectAttributes.addAttribute("message", message);
 				String viewName1 = "redirect:/boardGq/selectBoardGqList.do";

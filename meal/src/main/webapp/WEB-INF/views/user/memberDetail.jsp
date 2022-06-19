@@ -514,7 +514,7 @@ margin: 30px;
 								<table class="stable-striped">
 								
 									<thead>
-										<tr class="stable-striped">
+										<tr id="top-table">
 											<th width="150px"></th>
 											<th width="150px">별점</th>
 											<th width="200px">상품</th>
@@ -527,7 +527,7 @@ margin: 30px;
 									<c:choose>
 										<c:when test="${empty BoardGrList}">
 											<tr>
-												<td colspan=5 class="fixed"><strong>작성된 글이
+												<td colspan=8 class="fixed"><strong>작성된 글이
 														없습니다.</strong></td>
 											</tr>
 										</c:when>
