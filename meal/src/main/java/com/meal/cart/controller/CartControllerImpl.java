@@ -21,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.meal.cart.service.CartService;
 import com.meal.cart.vo.CartVO;
 import com.meal.common.controller.BaseController;
+import com.meal.goods.service.GoodsService;
+import com.meal.goods.vo.GoodsVO;
 import com.meal.member.vo.MemberVO;
 
 @Controller("cartController")
@@ -36,10 +38,12 @@ public class CartControllerImpl extends BaseController implements CartController
 	private CartVO cartVO;
 	@Autowired
 	private MemberVO memberVO;
+	@Autowired
+	private GoodsService goodsService;
 	
 	@Override
 	@RequestMapping(value="/myCartList.do" ,method = RequestMethod.GET)
-	public ModelAndView myCartMain(HttpServletRequest request, HttpServletResponse response)  throws Exception {
+	public ModelAndView myCartMain(@RequestParam(value = "message", required = false) String message,HttpServletRequest request, HttpServletResponse response)  throws Exception {
 		String viewName=(String)request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView(viewName);
 		HttpSession session=request.getSession();
@@ -47,6 +51,7 @@ public class CartControllerImpl extends BaseController implements CartController
 		String u_id=memberInfo.getU_id();
 		List <CartVO> CartList=cartService.myCartList(u_id);
 		mav.addObject("CartList", CartList);
+		mav.addObject("message",message);
 		return mav;
 	}
 	
@@ -159,9 +164,23 @@ public class CartControllerImpl extends BaseController implements CartController
 	@RequestMapping(value="/plusCartGoods.do" ,method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView plusCartGoods(@RequestParam("c_id") int c_id,HttpServletRequest request, HttpServletResponse response)  throws Exception{
 		ModelAndView mav=new ModelAndView();
-		cartService.plusCartGoods(c_id);
-		String viewName = "redirect:/cart/myCartList.do";
-		mav.setViewName(viewName);
+		CartVO cartVO = cartService.selectCartInfo(c_id);
+		
+		int c_qty = cartVO.getC_qty();
+		int g_id = cartVO.getG_id();
+		GoodsVO goodsInfo= goodsService.goodsG_Info(g_id);
+		int g_amount = goodsInfo.getG_amount();
+		
+		if(g_amount ==c_qty) {
+			String message = "수량을 초과하였습니다.";
+			String viewName = "redirect:/cart/myCartList.do";
+			mav.addObject("message", message);
+			mav.setViewName(viewName);
+		}else {
+			cartService.plusCartGoods(c_id);
+			String viewName = "redirect:/cart/myCartList.do";
+			mav.setViewName(viewName);
+		}
 		return mav;
 	}
 	

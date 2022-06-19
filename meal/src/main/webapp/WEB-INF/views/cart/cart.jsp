@@ -2,6 +2,17 @@
 	pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:if test='${not empty message }'>
+	<script>
+		window.onload = function() {
+			result();
+		}
+
+		function result() {
+			alert("${message}");
+		}
+	</script>
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>
@@ -289,14 +300,14 @@
 	color: green;
 	background-color: white;
 }
-
+/* 해당부분 제거
 .favorite {
 	width: 80px;
 	display: block;
 	vertical-align: top;
 	float: right;
 }
-
+ */
 .cartlogo {
 	margin-top: 5px;
 	width: 40px;
@@ -346,8 +357,6 @@
 							<input type='checkbox' name='checked_cart' value='selectall'
 								onclick='selectAll(this)' /> <b>전체선택</b>
 						</div>
-						<button class="favorite">선택 삭제</button>
-						<button class="favorite">선택 주문</button>
 					</div>
 					<c:choose>
 						<c:when test="${CartList != null}">
