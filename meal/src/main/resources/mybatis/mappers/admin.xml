@@ -55,5 +55,10 @@
    ]]>
 	</insert>
 	
+	<insert id ="insertReason" parameterType ="Map">
+	<![CDATA[
+	insert into reason_tb (reg_id, why, reason) values ( #{reg_id}, #{why}, #{reason})
+	]]>
 	
+	</insert>
 </mapper>
