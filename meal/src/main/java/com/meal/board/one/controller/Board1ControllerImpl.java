@@ -348,7 +348,6 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 
 				if (memberVO.getU_id().equals(board1VO.getU_id())) {
 					board1Service.board1Delete(b_1_id);
-					redirectAttributes.addAttribute("board1VO", board1VO);
 					String viewName1 = "redirect:/board1/selectBoard1List.do";
 					mav.setViewName(viewName1);
 					return mav;
@@ -358,7 +357,6 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 
 				if (sellerVO.getS_id().equals(board1VO.getS_id())) {
 					board1Service.board1Delete(b_1_id);
-					redirectAttributes.addAttribute("board1VO", board1VO);
 					String viewName1 = "redirect:/board1/selectBoard1List.do";
 					mav.setViewName(viewName1);
 					return mav;
@@ -373,7 +371,6 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 			}
 			String message = "게시물 작성자가 아닙니다.";
 			redirectAttributes.addAttribute("message", message);
-			redirectAttributes.addAttribute("b_1_id", b_1_id);
 			viewName = "redirect:/board1/b1Detail.do";
 			mav.setViewName(viewName);
 			return mav;
@@ -382,7 +379,6 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 			mav.addObject("board1VO", board1VO);
 			String message = "회원정보가 일치하지 않습니다.";
 			redirectAttributes.addAttribute("message", message);
-			redirectAttributes.addAttribute("b_1_id", b_1_id);
 			viewName = "redirect:/board1/b1Detail.do";
 			mav.setViewName(viewName);
 			return mav;
