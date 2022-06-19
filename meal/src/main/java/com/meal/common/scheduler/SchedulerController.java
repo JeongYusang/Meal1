@@ -28,7 +28,7 @@ public class SchedulerController {
 	@Autowired
 	private OrderService orderService;
 
-	@Scheduled(cron = "0 15 13 * * ?")
+	@Scheduled(cron = "5/30 * * * * ?")
 	public void goodsCateUpdate() {
 		// goods cate변경
 		// 신상품 검색
@@ -96,7 +96,7 @@ public class SchedulerController {
 	}
 
 	// 상품 세일 지정
-	@Scheduled(cron = "0 15 13 * * ?")
+	@Scheduled(cron = "5/30 * * * * ?")
 	public void goodsSaleBegin() {
 		// goods saleprice 변경
 		// 신상품 검색
@@ -144,7 +144,7 @@ public class SchedulerController {
 	}
 
 	// 상품 세일 종료
-	@Scheduled(cron = "0 15 13 * * ?")
+	@Scheduled(cron = "5/30 * * * * ?")
 	public void goodsSaleEnd() {
 		// goods saleprice 변경
 		// 신상품 검색

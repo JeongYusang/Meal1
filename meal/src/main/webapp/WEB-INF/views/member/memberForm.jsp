@@ -511,7 +511,7 @@ tr.box {
 				</table>
 				<center>
 					<input type="submit" value="회원가입" id="addmember" disabled>
-					<input type="button" value="뒤로가기" id="back">
+					<input type="button" value="뒤로가기" id="back" onclick="history.go(-1);">
 				</center>
 			</form>
 		</div>

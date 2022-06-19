@@ -718,7 +718,7 @@ input#emailKeyResult1 {
 				<center>
 					<input type="submit" value="회원가입" id="addmember" disabled> 
 					<input
-						type="button" value="뒤로가기" id="back">
+						type="button" value="뒤로가기" id="back" onclick="history.go(-1);">
 				</center>
 			</form>
 		</div>
