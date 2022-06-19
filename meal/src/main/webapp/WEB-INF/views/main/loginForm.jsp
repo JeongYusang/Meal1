@@ -112,11 +112,10 @@ function result(){
 			<input type="text" name="u_id" placeholder="아이디"><br> <br>
 			<input type="password" name="u_pw" placeholder="비밀번호"><br>
 			<br> 
-			<INPUT type="submit" value="로그인"> 
-			<INPUT type="button" value="초기화"> <br> <br> <a
-				href="${contextPath}/main/memberFormS.do">회원가입</a> | <a
-				href="${contextPath}/member/FindID.do">아이디찾기</a> | <a
-				href="${contextPath}/main/FindPW.do">비밀번호찾기</a><br> <br>
+			<INPUT type="submit" value="로그인"><br> <br> 
+			<a href="${contextPath}/main/memberFormS.do">회원가입</a> | 
+			<a href="${contextPath}/member/FindID.do">아이디찾기</a> |
+			<a href="${contextPath}/main/FindPW.do">비밀번호찾기</a><br> <br>
 			<p>간편로그인</p>
 			<div class="btbtbt">
 				<button type="button" id="kakao-login-btn"

@@ -30,4 +30,6 @@ public interface MemberService {
 	
 	public List<MileageVO> myMileagePlus(HashMap<String, Object> pagingMap)throws Exception;
 
+	public MemberVO FindID2(HashMap<String, Object> map)throws Exception;
+
 }

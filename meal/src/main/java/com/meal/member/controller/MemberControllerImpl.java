@@ -227,8 +227,10 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		MemberVO memberInfo = (MemberVO) memberService.decode(u_id);
+		HttpSession session = request.getSession();
+		AdminVO adminInfo = (AdminVO) session.getAttribute("adminInfo");
 
-		if (memberInfo != null) {
+		if (memberInfo != null || adminInfo != null) {
 			mav.addObject("memberVO", memberInfo);
 			HashMap<String, Object> Map = new HashMap<String, Object>();
 			Map.put("pageNum", pageNum);
@@ -324,33 +326,17 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 	public ModelAndView FindIDEmail(@RequestParam HashMap<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		String viewName = (String) request.getAttribute("/member/FindIDResult");
-		mav.setViewName(viewName);
 		try {
 			String name = (String) map.get("name");
 			String hp1 = (String) map.get("hp1");
-			if (hp1 == null || hp1 == "" || name == null || name == "") {
-				String message = "번호를 입력해주세요.";
-				mav.addObject("message", message);
-				mav.setViewName("/member/FindID");
-				return mav;
-			}
-
-			logger.info("==========================");
-			logger.info("name = " + name);
-			logger.info("hp1 = " + hp1);
-
-			logger.info("==========================");
-			if (hp1.indexOf("-") != 0) {
-				hp1.split("-");
-
-			}
-
+			String u_id = memberService.FindID2(map).getU_id();;
+			mav.addObject("u_id", u_id);
+			String viewName = (String) request.getAttribute("viewName");
+			mav.setViewName(viewName);
 			return mav;
 		} catch (Exception e) {
-			String message = "형식을 지켜주세요.";
-			mav.addObject("message", message);
-			mav.setViewName("/member/FindID");
+			String viewName = (String) request.getAttribute("viewName");
+			mav.setViewName(viewName);
 			return mav;
 		}
 

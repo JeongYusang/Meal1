@@ -85,8 +85,10 @@ public class AdminControllerImpl extends BaseController implements AdminControll
 		_adminVO.setA_email1(a_email1);
 		_adminVO.setA_email2(a_email2);
 		adminService.addAdmin(_adminVO);
+		String message = "관리자 아이디" + a_id + " 추가 완료";
 		String viewName = "redirect:/main/main.do";
 		mav.setViewName(viewName);
+		mav.addObject("message", message);
 		return mav;
 	}
 
@@ -97,21 +99,32 @@ public class AdminControllerImpl extends BaseController implements AdminControll
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		String viewName = (String) request.getAttribute("viewName");
-		ModelAndView mav = new ModelAndView(viewName);
-		HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
-		pagingInfo.put("section", section);
-		pagingInfo.put("pageNum", pageNum);
-		HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
-		List<MemberVO> memberVO = adminService.selectAllMembers(pagingMap);
-		mav.addObject("memberlist", memberVO);
+		HttpSession session = request.getSession();
+		AdminVO adminInfo = (AdminVO) session.getAttribute("adminInfo");
+		ModelAndView mav = new ModelAndView();
+		if (adminInfo != null) {
+			String viewName = (String) request.getAttribute("viewName");
+			HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
+			pagingInfo.put("section", section);
+			pagingInfo.put("pageNum", pageNum);
+			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
+			List<MemberVO> memberVO = adminService.selectAllMembers(pagingMap);
+			mav.addObject("memberlist", memberVO);
+			mav.setViewName(viewName);
 
-		// 해당부분은 메세지가 있을경우 출력해주기 위한것!
-		String message = (String) request.getAttribute("message");
-		if (message != null) {
+			// 해당부분은 메세지가 있을경우 출력해주기 위한것!
+			String message = (String) request.getAttribute("message");
+			if (message != null) {
+				mav.addObject("message", message);
+			}
+		} else {
+			String message = "권한이 없습니다";
 			mav.addObject("message", message);
+			String viewName = "redirect:/main/main.do";
+			mav.setViewName(viewName);
 		}
 		return mav;
+
 	}
 
 	// 판매자조회
@@ -120,52 +133,69 @@ public class AdminControllerImpl extends BaseController implements AdminControll
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		String viewName = (String) request.getAttribute("viewName");
-		ModelAndView mav = new ModelAndView(viewName);
-		HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
-		pagingInfo.put("section", section);
-		pagingInfo.put("pageNum", pageNum);
-		HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
-		List<SellerVO> sellerVO = adminService.selectAllSellers(pagingMap);
-		mav.addObject("sellerlist", sellerVO);
-
+		HttpSession session = request.getSession();
+		AdminVO adminInfo = (AdminVO) session.getAttribute("adminInfo");
+		ModelAndView mav = new ModelAndView();
+		if (adminInfo != null) {
+			String viewName = (String) request.getAttribute("viewName");
+			HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
+			pagingInfo.put("section", section);
+			pagingInfo.put("pageNum", pageNum);
+			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
+			List<SellerVO> sellerVO = adminService.selectAllSellers(pagingMap);
+			mav.addObject("sellerlist", sellerVO);
+			mav.setViewName(viewName);
+		} else {
+			String message = "권한이 없습니다";
+			mav.addObject("message", message);
+			String viewName = "redirect:/main/main.do";
+			mav.setViewName(viewName);
+		}
 		return mav;
+
 	}
-	
+
 	@RequestMapping(value = "/selectAlladmins.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView selectAlladmins(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		String viewName = (String) request.getAttribute("viewName");
-		ModelAndView mav = new ModelAndView(viewName);
-		HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
-		pagingInfo.put("section", section);
-		pagingInfo.put("pageNum", pageNum);
-		HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
-		List<AdminVO> adminList = adminService.selectAllAdmins(pagingMap);
-		mav.addObject("adminList", adminList);
-
-		// 해당부분은 메세지가 있을경우 출력해주기 위한것!
-		String message = (String) request.getAttribute("message");
-		if (message != null) {
+		HttpSession session = request.getSession();
+		AdminVO adminInfo = (AdminVO) session.getAttribute("adminInfo");
+		ModelAndView mav = new ModelAndView();
+		if (adminInfo != null) {
+			String viewName = (String) request.getAttribute("viewName");
+			HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
+			pagingInfo.put("section", section);
+			pagingInfo.put("pageNum", pageNum);
+			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
+			List<AdminVO> adminList = adminService.selectAllAdmins(pagingMap);
+			mav.addObject("adminList", adminList);
+			mav.setViewName(viewName);
+			// 해당부분은 메세지가 있을경우 출력해주기 위한것!
+			String message = (String) request.getAttribute("message");
+			if (message != null) {
+				mav.addObject("message", message);
+			}
+		} else {
+			String message = "권한이 없습니다";
 			mav.addObject("message", message);
+			String viewName = "redirect:/main/main.do";
+			mav.setViewName(viewName);
 		}
 		return mav;
 	}
-	
-	
-	
 
 	// 관리자 기준의 상품 or 회원관리 관련한 폼
 	@RequestMapping(value = "/AUpdateForm.do", method = RequestMethod.GET)
 	public ModelAndView AupdateForm(@RequestParam("id") String id, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-
+		
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		AdminVO adminInfo = (AdminVO) session.getAttribute("adminInfo");
 		// id 를 통해서 seller인지 member인지 확인
+		if (adminInfo != null) {
 		MemberVO memberVO = (MemberVO) memberService.decode(id);
 		SellerVO sellerVO = (SellerVO) sellerService.decode(id);
 
@@ -187,14 +217,21 @@ public class AdminControllerImpl extends BaseController implements AdminControll
 			mav.setViewName(viewName);
 			return mav;
 		}
+		}else {
+			String message = "권한이 없습니다";
+			mav.addObject("message", message);
+			String viewName = "redirect:/main/main.do";
+			mav.setViewName(viewName);	
+		}
+		return mav;
 	}
-	
-	//판매자 상품배송 상태 변경을 위해 생성 0615
-	@RequestMapping(value="/delivUpdate.do", method= {RequestMethod.POST, RequestMethod.GET})
-	public ResponseEntity delivUpdate(@RequestParam Map<String, String> delivMap,
-											  HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+	// 판매자 상품배송 상태 변경을 위해 생성 0615
+	@RequestMapping(value = "/delivUpdate.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public ResponseEntity delivUpdate(@RequestParam Map<String, String> delivMap, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		adminService.delivUpdate(delivMap);
-		
+
 		String message = null;
 		ResponseEntity resEntity = null;
 		HttpHeaders responseHeaders = new HttpHeaders();

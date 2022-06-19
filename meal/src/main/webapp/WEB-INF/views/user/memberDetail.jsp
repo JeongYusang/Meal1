@@ -262,23 +262,24 @@ margin: 30px;
 
 	<div class="div1">
 		<div class="div2-1">
-			<a href="${contextPath }/member/">수정</a> <a href="#">삭제</a>
+		<button type="button" class="checkpw">수정</button>
+         <button type="button" class="checkpw1">탈퇴</button>
 		</div>
 		<div id="main-wrap1">
 			<div id="myinfo-wrap">
 				<div>
-					<c:if test="${memberInfo.u_rank == 'gold'}">
+					<c:if test="${memberVO.u_rank == 'gold'}">
 						<img src="${contextPath}/resources/image/gold-medal.png" />
 					</c:if>
-					<c:if test="${memberInfo.u_rank == 'silver'}">
+					<c:if test="${memberVO.u_rank == 'silver'}">
 						<img src="${contextPath}/resources/image/silver-medal.png" />
 					</c:if>
-					<c:if test="${memberInfo.u_rank == 'bronze'}">
+					<c:if test="${memberVO.u_rank == 'bronze'}">
 						<img src="${contextPath}/resources/image/bronze-medal.png" />
 					</c:if>
 					<ul class="texts">
-						<li class="name">&nbsp;<b>[${memberInfo.u_rank}]</b>&nbsp;${memberInfo.u_name}님
-							환영합니다<span class="milage"> 마일리지:${memberInfo.u_mile}&nbsp;</span></li>
+						<li class="name">&nbsp;<b>[${memberVO.u_rank}]</b>&nbsp;${memberVO.u_name}님
+							<span class="milage"> 마일리지:${memberVO.u_mile}&nbsp;</span></li>
 					</ul>
 				</div>
 			</div>
@@ -368,14 +369,14 @@ margin: 30px;
 										<c:forEach var="page" begin="1" end="9" step="1">
 											<c:if test="${section >0 && page==1 }">
 												<a
-													href="${contextPath}/member/memberDetail.do?section=${section}-1&pageNum=${(section-1)*10+1 }&u_id=${memberInfo.u_id}">preview</a>
+													href="${contextPath}/member/memberDetail.do?section=${section}-1&pageNum=${(section-1)*10+1 }&u_id=${memberVO.u_id}">preview</a>
 											</c:if>
 											<a
-												href="${contextPath}/member/memberDetail.do?section=${section}&pageNum=${page}&u_id=${memberInfo.u_id}">${(section)*10 +page}
+												href="${contextPath}/member/memberDetail.do?section=${section}&pageNum=${page}&u_id=${memberVO.u_id}">${(section)*10 +page}
 											</a>
 											<c:if test="${page ==10 }">
 												<a
-													href="${contextPath}/member/memberDetail.do?section=${section}+1&pageNum=${section*10}+1&u_id=${memberInfo.u_id}">next</a>
+													href="${contextPath}/member/memberDetail.do?section=${section}+1&pageNum=${section*10}+1&u_id=${memberVO.u_id}">next</a>
 											</c:if>
 										</c:forEach>
 									</c:when>
@@ -429,14 +430,14 @@ margin: 30px;
 											begin="1" end="9" step="1">
 											<c:if test="${section >0 && page==1 }">
 												<a
-													href="${contextPath}/member/memberDetail.do?section=${section}-1&pageNum=${(section-1)*10+1 }&u_id=${memberInfo.u_id}">preview</a>
+													href="${contextPath}/member/memberDetail.do?section=${section}-1&pageNum=${(section-1)*10+1 }&u_id=${memberVO.u_id}">preview</a>
 											</c:if>
 											<a
-												href="${contextPath}/member/memberDetail.do?section=${section}&pageNum=${page}&u_id=${memberInfo.u_id}">${(section)*10 +page}
+												href="${contextPath}/member/memberDetail.do?section=${section}&pageNum=${page}&u_id=${memberVO.u_id}">${(section)*10 +page}
 											</a>
 											<c:if test="${page ==10 }">
 												<a
-													href="${contextPath}/member/memberDetail.do?section=${section}+1&pageNum=${section*10}+1&u_id=${memberInfo.u_id}">next</a>
+													href="${contextPath}/member/memberDetail.do?section=${section}+1&pageNum=${section*10}+1&u_id=${memberVO.u_id}">next</a>
 											</c:if>
 										</c:forEach></td>
 								</tr>
@@ -495,14 +496,14 @@ margin: 30px;
 											<c:forEach var="page" begin="1" end="9" step="1">
 												<c:if test="${section >0 && page==1 }">
 													<a
-														href="${contextPath}/member/memberDetail.do?section=${section}-1&pageNum=${(section-1)*10+1 }&u_id=${memberInfo.u_id}">preview</a>
+														href="${contextPath}/member/memberDetail.do?section=${section}-1&pageNum=${(section-1)*10+1 }&u_id=${memberVO.u_id}">preview</a>
 												</c:if>
 												<a
-													href="${contextPath}/member/memberDetail.do?section=${section}&pageNum=${page}&u_id=${memberInfo.u_id}">${(section)*10 +page}
+													href="${contextPath}/member/memberDetail.do?section=${section}&pageNum=${page}&u_id=${memberVO.u_id}">${(section)*10 +page}
 												</a>
 												<c:if test="${page ==10 }">
 													<a
-														href="${contextPath}/member/memberDetail.do?section=${section}+1&pageNum=${section*10}+1&u_id=${memberInfo.u_id}">next</a>
+														href="${contextPath}/member/memberDetail.do?section=${section}+1&pageNum=${section*10}+1&u_id=${memberVO.u_id}">next</a>
 												</c:if>
 											</c:forEach>
 										</c:when>
@@ -591,14 +592,14 @@ margin: 30px;
 										<c:forEach var="page" begin="1" end="9" step="1">
 											<c:if test="${section >0 && page==1 }">
 												<a
-													href="${contextPath}/member/memberDetail.do?section=${section}-1&pageNum=${(section-1)*10+1 }&u_id=${memberInfo.u_id}">preview</a>
+													href="${contextPath}/member/memberDetail.do?section=${section}-1&pageNum=${(section-1)*10+1 }&u_id=${memberVO.u_id}">preview</a>
 											</c:if>
 											<a
-												href="${contextPath}/member/memberDetail.do?section=${section}&pageNum=${page}&u_id=${memberInfo.u_id}">${(section)*10 +page}
+												href="${contextPath}/member/memberDetail.do?section=${section}&pageNum=${page}&u_id=${memberVO.u_id}">${(section)*10 +page}
 											</a>
 											<c:if test="${page ==10 }">
 												<a
-													href="${contextPath}/member/memberDetail.do?section=${section}+1&pageNum=${section*10}+1&u_id=${memberInfo.u_id}">next</a>
+													href="${contextPath}/member/memberDetail.do?section=${section}+1&pageNum=${section*10}+1&u_id=${memberVO.u_id}">next</a>
 											</c:if>
 										</c:forEach>
 									</c:when>
@@ -638,14 +639,14 @@ margin: 30px;
 											<c:forEach var="page" begin="1" end="9" step="1">
 												<c:if test="${section >0 && page==1 }">
 													<a
-														href="${contextPath}/member/memberDetail.do?section=${section}-1&pageNum=${(section-1)*10+1 }&u_id=${memberInfo.u_id}">preview</a>
+														href="${contextPath}/member/memberDetail.do?section=${section}-1&pageNum=${(section-1)*10+1 }&u_id=${memberVO.u_id}">preview</a>
 												</c:if>
 												<a
-													href="${contextPath}/member/memberDetail.do?section=${section}&pageNum=${page}&u_id=${memberInfo.u_id}">${(section)*10 +page}
+													href="${contextPath}/member/memberDetail.do?section=${section}&pageNum=${page}&u_id=${memberVO.u_id}">${(section)*10 +page}
 												</a>
 												<c:if test="${page ==10 }">
 													<a
-														href="${contextPath}/member/memberDetail.do?section=${section}+1&pageNum=${section*10}+1&u_id=${memberInfo.u_id}">next</a>
+														href="${contextPath}/member/memberDetail.do?section=${section}+1&pageNum=${section*10}+1&u_id=${memberVO.u_id}">next</a>
 												</c:if>
 											</c:forEach>
 										</c:when>

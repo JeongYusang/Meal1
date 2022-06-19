@@ -136,7 +136,7 @@ tr.border-bottom td {
 	margin-bottom: 20px;
 }
 
-#pick-user {
+#pick-seller {
 	width: 400px;
 	height: 100px;
 	background-color: #ffc0cf;
@@ -147,7 +147,7 @@ tr.border-bottom td {
 	line-height: 100px;
 }
 
-#pick-user a {
+#pick-seller a {
 	color: white;
 }
 
@@ -155,7 +155,7 @@ tr.border-bottom td {
 	margin: 30px;
 }
 
-#pick-seller {
+#pick-user {
 	width: 400px;
 	height: 100px;
 	margin: 0 auto;

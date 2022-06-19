@@ -427,7 +427,7 @@ input#emailKeyResult1 {
 	text-align: center;
 	box-sizing: border-box;
 	padding: 20px;
-	font-size: 20px;
+	font-size: 14px;
 }
 
 .agree-context .agree-inner .agree-close {
@@ -469,7 +469,7 @@ input#emailKeyResult1 {
 	text-align: center;
 	box-sizing: border-box;
 	padding: 20px;
-	font-size: 20px;
+	font-size: 14px;
 }
 
 .agree-context1 .agree-inner1 .agree-close1 {
