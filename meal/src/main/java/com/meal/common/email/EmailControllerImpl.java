@@ -157,7 +157,7 @@ public class EmailControllerImpl extends BaseController {
 			mail.addRecipient(RecipientType.TO, new InternetAddress(email));
 			mailSender.send(mail);
 		
-			String message = "해당 이메일로 전송이 완료되었니다.";
+			String message = "해당 이메일로 전송이 완료되었습니다.";
 		
 			map.put("key", key);
 			map.put("message", message);
