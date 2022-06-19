@@ -510,7 +510,7 @@ tr.box {
 			</tr> -->
 				</table>
 				<center>
-					<input type="submit" value="회원가입" id="addmember" disabled="true">
+					<input type="submit" value="회원가입" id="addmember" disabled>
 					<input type="button" value="뒤로가기" id="back">
 				</center>
 			</form>
@@ -595,7 +595,6 @@ tr.box {
 					alert("사용할 수 있는 ID입니다.");
 					$('#btnOverlapped').prop("disabled", true);
 					$('#_u_id').prop("disabled", true);
-					$('#addmember').prop("disabled", false);
 					$('#u_id').val(_id);
 				} else {
 					alert("사용할 수 없는 ID입니다.");
@@ -655,7 +654,7 @@ tr.box {
 			$(".KeyInfo").css("font-size", "5px");
 			$("#emailDoubleChk").val("true");
 			$("#emailKey").attr("disabled", true);
-
+			document.getElementById("addmember").disabled = false;
 		} else {
 			$(".KeyInfo").text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
 			$(".KeyInfo").css("color", "red");
