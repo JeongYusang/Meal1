@@ -226,7 +226,7 @@ color: black;
 									id="rate3"><label for="rate3">★</label> <input
 									type="radio" name="star" value="2" id="rate4"><label
 									for="rate4">★</label> <input type="radio" name="star" value="1"
-									id="rate5"><label for="rate5">★</label>
+									id="rate5" checked><label for="rate5">★</label>
 							</fieldset></td>
 					</tr>
 
