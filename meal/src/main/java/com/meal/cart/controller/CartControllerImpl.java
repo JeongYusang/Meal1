@@ -65,7 +65,7 @@ public class CartControllerImpl extends BaseController implements CartController
 	
 	@Override
 	@RequestMapping(value="/addGoodsInCart.do" ,method = { RequestMethod.POST, RequestMethod.GET })
-	public ResponseEntity addGoodsInCart(@RequestParam("g_id") int g_id,@RequestParam("cate") String cate,@RequestParam("c_qty") int c_qty,
+	public ResponseEntity addGoodsInCart(@RequestParam("g_id") int g_id,@RequestParam("cate") String cate,@RequestParam(value="c_qty", required = false) String c_qty,
             HttpServletRequest request, HttpServletResponse response)  throws Exception{
 		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("utf-8");
@@ -81,7 +81,9 @@ public class CartControllerImpl extends BaseController implements CartController
 			cartVO.setU_id(u_id);
 			cartVO.setG_id(g_id);
 			cartVO.setCate(cate);
-			cartVO.setC_qty(c_qty);
+			if(c_qty!= null) {
+			cartVO.setC_qty(Integer.parseInt(c_qty));
+			}
 			boolean isAreadyExisted=cartService.findCartGoods(cartVO);
 			if(isAreadyExisted==true){
 				if(cate.equals("cart")) {
