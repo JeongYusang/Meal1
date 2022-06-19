@@ -136,26 +136,29 @@ function check1() {
     console.log(" (salePer != '' || saleWon !='') " + (salePer != '' || saleWon != '')); */
     
     if(salePer != '' && saleWon != '' ){
-       alert("할인 적용유형을 한가지만 기입해주세요.");
-       return false;
-    }
-       
-    if(salePer != '' || saleWon != '' )  {
-       if((saleDate1 == '' || saleDate2 == '') || (saleDate3 == '' || saleDate4 == ''  ) ) {
-          alert("할인 금액에 따른 기간을 설정해주세요!");
+        alert("할인 적용유형을 한가지만 기입해주세요.");
+        return false;
+     }
+        
+     if(salePer != '' || saleWon != '' )  {
+        if(saleDate1 == '' || saleDate2 == '' ) {
+        	if(saleDate3 == '' || saleDate4 == '' ) {
+                	
+           alert("할인 금액에 따른 기간을 설정해주세요!");
+           return false;
+        }
+     }
+    
+     if(saleDate3 != '' || saleDate4 != '' ) {
+    	 if(saleDate1 == '' || saleDate2 == '' ) {
+    	         
+         if(salePer == '' && saleWon == '')  {
+         alert ("할인 기간에 따른 할인율 또는 할인가격을 적어주세요.")
           return false;
-       }
-    }
-   
-    if(saleDate3 == '' || saleDate4 == '' ) {
-       
-       if(salePer != '' || saleWon != '')  {
-          if(!(saleDate1 != '' && saleDate2 != '') ){
-            alert ("할인 기간에 따른 할인율 또는 할인가격을 적어주세요.");
-            return false;
-          }
-      }
-   } 
+        } 
+    	 }
+     }
+     
     
     
     var g_allergy_M = '';
@@ -169,6 +172,7 @@ function check1() {
     });
     document.getElementById("g_allergy_M").value = g_allergy_M;
     return true;
+}
 }
 </script>
 
@@ -299,18 +303,20 @@ color: white;
             <tr class="box">
                <th class="boxhead">적용된 할인기간</th>
                <td class="boxbody"><fmt:formatDate value="${goodsInfo.g_saleDate1 }"
-                     type="Date" dateStyle="short" /><fmt:formatDate
+                     type="Date" dateStyle="short" />~<fmt:formatDate
                      value="${goodsInfo.g_saleDate2 }" type="Date" dateStyle="short" />
                   <input type="hidden" value="${goodsInfo.g_saleDate1}" /> <input
-                  type="hidden" value="${goodsInfo.g_saleDate2}" /> <input
+                  type="hidden"name = "g_saleDate2" value="${goodsInfo.g_saleDate2}" />
+                  <input
+                  type="hidden"name = "g_saleDate1" value="${goodsInfo.g_saleDate1}" /> <input
                   type="button" onclick="fn_saleDel()" value="기존 세일 삭제하기." class="delDate">
                </td>
             </tr>
             <tr class="box">
                <th class="boxhead">변경할 할인기간</th>
                <td class="boxbody"><input name="g_saleDate3" id="g_saleDate3" type="date"
-                  value="submit"> ~ <input name="g_saleDate4"
-                  id="g_saleDate4" type="date" value="submit"></td>
+                  > ~ <input name="g_saleDate4"
+                  id="g_saleDate4" type="date" ></td>
             </tr>
             <tr class="box">
                <th class="boxhead">수량*</th>
@@ -376,7 +382,7 @@ color: white;
                   value="밀" name="g_allergy" id="g_allergy_M6">밀
                   <input type="hidden"
                   id="g_allergy_M" name="g_allergy_M"  value=""></td>
-                  <input type ="hidden" name ="allergy" id = "allergyM" value="${goodsInfo.g_allergy_M}">
+                  <input type ="hidden" name ="allergyM" id = "allergyM" value="${goodsInfo.g_allergy_M}">
             </tr>
             <tr class="box">
                <th class="boxhead">알러지 상세항목</th>
