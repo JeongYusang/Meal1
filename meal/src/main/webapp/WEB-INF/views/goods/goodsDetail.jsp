@@ -501,18 +501,43 @@ div #icon {
 		var amount;
 
 		function init() {
-			sell_price = document.form.sell_price.value;
-			amount = document.form.amount.value;
-			document.form.sum.value = sell_price;
-			change();
+			if(${goodsInfo.g_saleprice != 0 }){
+				sell_price = document.form.g_saleprice.value;
+				console.log("sell_price:" + sell_price);
+				
+				amount = document.form.amount.value;
+				document.form.sum.value = salePrice;
+				change();
+				
+				
+			
+			}else{
+				sell_price = document.form.sell_price.value;
+				amount = document.form.amount.value;
+				document.form.sum.value = sell_price;
+				console.log("sell_price:" + sell_price);
+				change();
+					
+			}
+			
 		}
 
 		function add() {
-			hm = document.form.amount;
-			sum = document.form.sum;
-			hm.value++;
+			var goodsAmount = ${goodsInfo.g_amount};
+			var hm = document.getElementById("gAmount").value;
+			console.log(hm);
+			console.log(goodsAmount);
+			if(goodsAmount <= hm){
+				alert("상품수량이 부족합니다.");				
+				
+			}else{
+				hm = document.form.amount;
+				sum = document.form.sum;
+				hm.value++;
 
-			sum.value = parseInt(hm.value) * sell_price;
+				sum.value = parseInt(hm.value) * sell_price;
+	
+			}
 		}
 
 		function del() {
@@ -521,29 +546,49 @@ div #icon {
 			if (hm.value > 1) {
 				hm.value--;
 				sum.value = parseInt(hm.value) * sell_price;
+			}else if(hm.value == 1){
+				alert("최소갯수는 0개입니다.");
 			}
 		}
 
 		function change() {
 			hm = document.form.amount;
+			var goodsAmount = ${goodsInfo.g_amount};
+			if(goodsAmount < hm){
+				alert("상품 수량을 초과하였습니다.")
+				hm = goodsAmount
+			}else{
 			sum = document.form.sum;
 			qty = document.form.qty;
-
+			}
 			if (hm.value < 0) {
 				hm.value = 0;
 			}
 			sum.value = parseInt(hm.value) * sell_price;
 		}
 		function buy() {
-			hm = document.form.amount;
-			window.location.href = '${contextPath}/order/OrderForm.do?g_id=${goodsInfo.g_id}&o_goods_qty='
-					+ hm.value
+				var goodsAmount = ${goodsInfo.g_amount};
+				var hm = document.getElementById("gAmount").value;
+				if(goodsAmount>=hm){
+				window.location.href = '${contextPath}/order/OrderForm.do?g_id=${goodsInfo.g_id}&o_goods_qty='
+					+ hm
+				}else{
+					alert("상품 수량을 초과하였습니다.")
+				}
+				
 		}
 		function cart() {
-			hm = document.form.amount;
+
+			var goodsAmount = ${goodsInfo.g_amount};
+			var hm = document.getElementById("gAmount").value;
+			if(goodsAmount >= hm){
 			window.location.href = '${contextPath}/cart/addGoodsInCart.do?g_id=${goodsInfo.g_id}&cate=cart&c_qty='
-					+ hm.value
-		}
+					+ hm
+			}else{
+				alert("상품 수량을 초과하였습니다.")
+			}
+			
+	}
 	</script>
 	<div id="main-wrap">
 		<div class="container">
@@ -561,9 +606,31 @@ div #icon {
 			</div>
 
 			<div class="InfoTop">
-				<br> <br> <br> <b style="font-size: 40px">${goodsInfo.g_name}</b>
-				<p
-					style="font-size: 36px; font-weight: 600; margin-top: 0; margin-bottom: 10px;">${goodsInfo.g_price }원</p>
+				<c:choose>
+
+					<c:when test="${goodsInfo.g_saleprice != 0}">
+						<br>
+						<br>
+						<b style="font-size: 40px">${goodsInfo.g_name}</b>
+						<p
+							style="text-decoration: line-through; font-size: 36px; font-weight: 600; margin-top: 0; margin-bottom: 10px;">${goodsInfo.g_price }원</p>
+
+						<p
+							style="font-size: 36px; font-weight: 600; margin-top: 0; margin-bottom: 10px;">${goodsInfo.g_saleprice }원</p>
+
+					</c:when>
+					<c:otherwise>
+						<br>
+						<br>
+						<br>
+						<b style="font-size: 40px">${goodsInfo.g_name}</b>
+						<p
+							style="font-size: 36px; font-weight: 600; margin-top: 0; margin-bottom: 10px;">${goodsInfo.g_price }원</p>
+
+					</c:otherwise>
+
+				</c:choose>
+
 				<c:choose>
 					<c:when test="${g_avg == 5}">
 						<span class="fa fa-star checked"></span>
@@ -625,12 +692,16 @@ div #icon {
 				</div>
 				<div class="text">
 					<h3>남은수량 : ${goodsInfo.g_amount}개</h3>
+					<c:if test="${goodsInfo.g_eatDate != null}">
+					
 					<h3>유통기한 : ${goodsInfo.g_eatDate}</h3>
+					</c:if>
 					<h3>단위(인분) : ${goodsInfo.g_inbun}</h3>
-					<h3>알레르기 상세정보 : ${goodsInfo.g_allergy_D}</h3>
+					<h3>알레르기 상세정보 : ${goodsInfo.g_allergy_M}</h3>
 					<h4>---------------------------------------------</h4>
-					<c:if test="${goodsInfo.g_amount > 0}">
+					<c:if test="${goodsInfo.g_saleprice != 0}">
 						<h2>
+
 							할인기간 :
 							<fmt:formatDate value="${goodsInfo.g_saleDate1}" type="Date"
 								pattern="yy년 MM월 dd일" />
@@ -645,11 +716,13 @@ div #icon {
 						<form name="form" method="get" enctype="multipart/form-data">
 							<b>수량 : &nbsp;<input type="button" value=" + "
 								onclick="add();"> <input type=hidden name="sell_price"
-								value="${goodsInfo.g_price }"> <input type="text"
-								name="amount" value="1" size="1" onchange="change();"> <input
-								type="button" value=" - " onclick="del();"><br> <br>
-
-								금액 : <input type="text" name="sum" size="8"
+								value="${goodsInfo.g_price }"> <input type="hidden" id="salePrice" name="g_saleprice" value="${goodsInfo.g_saleprice }"> 
+					
+								<input type="text"
+								id="gAmount" name="amount" value="1" size="1"
+								onchange="change();"> <input type="button" value=" - "
+								onclick="del();"><br> <br> 금액 : <input
+								type="text" name="sum" size="8"
 								style="width: 100px; height: 30px; font-size: 30px; border: none; border-right: 0px; border-top: 0px; boder-left: 0px; boder-bottom: 0px;">원
 							</b>
 						</form>
@@ -773,9 +846,9 @@ div #icon {
 																		onClick="gr_review('${contextPath}/boardGr/boardGrReviewform.do', ${item.b_gr_id})" />
 																</c:if>
 																<c:if test="${not empty adminInfo }">
-																				<input id="buttons" type=button value="삭제"
-																					onClick="gr_remove_board('${contextPath}/boardGr/boardGrDelete.do',${item.b_gr_id })" />
-																			</c:if>
+																	<input id="buttons" type=button value="삭제"
+																		onClick="gr_remove_board('${contextPath}/boardGr/boardGrDelete.do',${item.b_gr_id })" />
+																</c:if>
 
 
 																<img id="p_img"

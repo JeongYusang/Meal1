@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 public interface CartController {
 	
-	public ModelAndView myCartMain(HttpServletRequest request, HttpServletResponse response)  throws Exception;
+	public ModelAndView myCartMain(@RequestParam(value = "message", required = false) String message,HttpServletRequest request, HttpServletResponse response)  throws Exception;
 	
 	public ResponseEntity addGoodsInCart(@RequestParam("g_id") int g_id,@RequestParam("cate") String cate,@RequestParam(value="c_qty", required = false) String c_qty,
             HttpServletRequest request, HttpServletResponse response)  throws Exception;
