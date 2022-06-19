@@ -137,6 +137,7 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 		// mav.addObject("CartList", cartList);
 		session.setAttribute("CartList", cartList);
 		mav.addObject("GoodsList", goodsList);
+		mav.addObject("OrderToCart",OrderToCart);
 		mav.setViewName(viewName);
 		return mav;
 	}

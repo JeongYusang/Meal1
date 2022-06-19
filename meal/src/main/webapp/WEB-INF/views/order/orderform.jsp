@@ -71,7 +71,10 @@
 	var IMP = window.IMP; // 생략 가능
 	IMP.init('imp53396567');
 	function fn_buyBTN() {
-
+		var userMileage = document.getElementById("max_mile").value;
+		
+		
+		
 		IMP.request_pay({
 							pg : 'html5_inicis', // version 1.1.0부터 지원.
 							pay_method : 'card',
@@ -138,8 +141,18 @@
 	function calculatePay() {
 		var price1 = document.getElementById("totalPrice").value;
 		var price2 = document.getElementById("o_useMile").value;
+		var userMileage = document.getElementById("max_mile").value;
+		if(userMileage< price2){
+		alert ("보유 마일리지보다 큰 금액을 입력하였습니다.");
+		document.order.u_mile.value = 0;
+		document.getElementById("orderBTN").disabled = true;
+		}else{
+		
 		document.order.FinalTotalPrice.value = parseInt(price1) + ${orderVO.d_price} - parseInt(price2);
 		document.order.u_mile.value = price2;
+		document.getElementById("orderBTN").disabled = false;
+		}
+		
 	}
 
 
@@ -256,7 +269,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 </head>
 <body>
 	<div id="main-wrap">
-		<form name="order">
+		<form name="order" onsubmit="return fn_buyBTN()">
 			<input type="hidden" id="g_name" value="${goodsVO.g_name}"> 
 			<input type="hidden" id="g_id" value="${goodsVO.g_id}">
 			<input type="hidden" id="s_id" value="${goodsVO.s_id}">
@@ -310,9 +323,8 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 								<td class="fixed_join"><h4>주소</h4></td>
 								<td><input type="text" id="zipcode" name="zipcode" size="5"
 									value="${memberInfo.u_addr1}">
-									<button>
 										<a href="javascript:execDaumPostcode()">우편번호검색</a>
-									</button> <br> <br> 도로명 주소: <input type="text"
+									<br> <br> 도로명 주소: <input type="text"
 									id="roadAddress" name="receiver_addr2" size="50"
 									value="${memberInfo.u_addr2 }" /> <br> <br> 나머지 주소:
 									<input type="text" id="namujiAddress" name="receiver_addr3"
@@ -428,7 +440,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 		</form>
 
 		<center>
-			<input class='order' type='button' value='결제하기' onclick="fn_buyBTN()" />
+			<input class='order' id="orderBTN" type='button' value='결제하기' onclick="fn_buyBTN()" />
 			<button class="order">
 				<a href="${contextPath}/main/main.do">메인으로 가기</a>
 			</button>

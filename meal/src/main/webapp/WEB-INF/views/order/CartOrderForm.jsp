@@ -98,7 +98,7 @@
 	var IMP = window.IMP; // 생략 가능
 	IMP.init('imp53396567');
 	function fn_buyBTN() {
-
+		
 		var length = document.getElementsByName("g_name").length;
 		var Gname = document.getElementsByName("g_name")[0].value + " 포함 "
 				+ length + " 종";
@@ -176,7 +176,7 @@
 								msg = '결제에 실패하였습니다.';
 								msg += '에러내용 : ' + rsp.error_msg;
 								//실패시 이동할 페이지
-								location.href = "${contextPath}/order/OrderForm.do?g_id=${goodsVO.g_id}&o_goods_qty=${orderVO.o_goods_qty}";
+								location.href = "${contextPath}/order/CartOrderForm.do?OrderToCart=${OrderToCart}";
 								alert(msg);
 							}
 						});
@@ -186,13 +186,40 @@
 		var price1 = document.getElementById("totalPrice").value;
 		var price2 = document.getElementById("o_useMile").value;
 		var tDele = document.getElementById("h_totalDelivery").value;
+		var userMileage = document.getElementById("max_mile").value;
+		
+		if(userMileage < price2){
+			alert ("보유 마일리지보다 큰 금액을 입력하였습니다.");
+			document.order.u_mile.value = 0;
+			document.getElementById("orderBTN").disabled = true;
+			}else{
 		document.order.FinalTotalPrice.value = parseInt(price1) + parseInt(tDele)-parseInt(price2);
 		document.order.u_mile.value = price2;
+		document.getElementById("orderBTN").disabled = false;
 		if(parseInt(price1) - parseInt(price2) <100){
 			alert("최대 마일리지 사용금액을 초과 하였습니다.");	
 		}
+			}
+	}
+	function calculatePay() {
+		var price1 = document.getElementById("totalPrice").value;
+		var price2 = document.getElementById("o_useMile").value;
+		var userMileage = document.getElementById("max_mile").value;
+		
+		if(userMileage< price2){
+		alert ("보유 마일리지보다 큰 금액을 입력하였습니다.");
+		document.order.u_mile.value = 0;
+		document.getElementById("orderBTN").disabled = true;
+		}else{
+		
+		document.order.u_mile.value = price2;
+		document.getElementById("orderBTN").disabled = false;
+		}
+		
 	}
 
+	
+	
  	 	function maxMile(){
 	 var price1 = document.getElementById("totalPrice").value;
 	 var price2 = document.getElementById("o_useMile").value;
@@ -313,8 +340,8 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 <body>
 	<div id="main-wrap">
 		<form name="order">
-		<input type="hidden" id="Tprice" >
-		<input type="hidden" id="TdeleP">
+			<input type="hidden" id="Tprice"> <input type="hidden"
+				id="TdeleP">
 			<c:forEach var="cartVO" items="${CartList}">
 				<input type="hidden" id="g_id" value="${cartVO.g_id}">
 			</c:forEach>
@@ -386,14 +413,13 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 							<tr class="line">
 								<td class="fixed_join"><h4>주소</h4></td>
 								<td><input type="text" id="zipcode" name="zipcode" size="5"
-									value="${memberInfo.u_addr1}">
-									<button>
-										<a href="javascript:execDaumPostcode()">우편번호검색</a>
-									</button> <br> <br> 도로명 주소: <input type="text"
-									id="roadAddress" name="receiver_addr2" size="50"
-									value="${memberInfo.u_addr2 }" /> <br> <br> 나머지 주소:
-									<input type="text" id="namujiAddress" name="receiver_addr3"
-									size="50" value="${memberInfo.u_addr3 }" />
+									value="${memberInfo.u_addr1}"> <a
+									href="javascript:execDaumPostcode()">우편번호검색</a> <br> <br>
+									도로명 주소: <input type="text" id="roadAddress"
+									name="receiver_addr2" size="50" value="${memberInfo.u_addr2 }" />
+									<br> <br> 나머지 주소: <input type="text"
+									id="namujiAddress" name="receiver_addr3" size="50"
+									value="${memberInfo.u_addr3 }" />
 						</c:if>
 						<c:if test="${memberInfo.u_addr1 == null}">
 							<tr class="line">
@@ -465,8 +491,8 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 						<tr>
 							<td>마일리지 사용 <input id="o_useMile" size="5" name="o_useMile"
 								type="number" onChange="calculatePay()" value="0" />원
-								<button type="button" name="useMile" id="useMileBTN" onClick="maxMile()">모두
-									사용</button></td>
+								<button type="button" name="useMile" id="useMileBTN"
+									onClick="maxMile()">모두 사용</button></td>
 						</tr>
 					</tbody>
 				</table>
@@ -496,9 +522,9 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 						</td>
 						<td><input id="final_total_Price" type="number"
 							name="FinalTotalPrice" size=10 readonly>원</td>
-							
-							
-							
+
+
+
 					</tr>
 				</tbody>
 			</table>
@@ -506,7 +532,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 		</form>
 
 		<center>
-			<input class='order' type='button' value='결제하기' onclick="fn_buyBTN()" />
+			<input class='order' id= "orderBTN" type='button' value='결제하기' onclick="fn_buyBTN()" />
 			<button class="order">
 				<a href="${contextPath}/main/main.do">메인으로 가기</a>
 			</button>
