@@ -30,13 +30,6 @@ public interface OrderController {
 	public ModelAndView OrderResult(@RequestParam(value = "parentNo", required = false) String parentNo,
 			HttpServletRequest request, HttpServletResponse response) throws Exception;
 
-	public ModelAndView selectUserOrderList(
-			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
-			@RequestParam(value = "section", required = false) String section,
-			@RequestParam(value = "pageNum", required = false) String pageNum,
-			@RequestParam(value = "delivery_state", required = false) String delivery_state, HttpServletRequest request,
-			HttpServletResponse response) throws Exception;
-
 	public ModelAndView CartOrderForm(@RequestParam("OrderToCart") String OrderToCart, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 

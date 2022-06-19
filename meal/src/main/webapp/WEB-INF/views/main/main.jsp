@@ -123,7 +123,7 @@
 }
 
 .soldout {
-filter: brightness(70%);
+filter: brightness(30%);
 position: relative;
 width: 250px;
 height: 250px;

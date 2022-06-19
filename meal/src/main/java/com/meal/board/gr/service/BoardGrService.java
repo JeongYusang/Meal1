@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.meal.board.gr.vo.BoardGrVO;
+import com.meal.board.gr.vo.Img_grVO;
 
 public interface BoardGrService {
 
@@ -48,6 +49,8 @@ public interface BoardGrService {
 	public List<BoardGrVO> SelectReview(int g_id) throws Exception;
 
 	public int selectGoodAvg(int g_id) throws Exception;
+	
+	public List<Img_grVO> imageList(int b_gr_id) throws Exception;
 	
 	
 

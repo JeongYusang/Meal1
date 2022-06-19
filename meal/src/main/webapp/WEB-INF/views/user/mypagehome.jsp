@@ -236,7 +236,7 @@ tr.orderlist td {
 				<ul class="tabs">
 					<li class="tab-link current" data-tab="tab-1">전체</li>
 					<li class="tab-link" data-tab="tab-2">결제완료</li>
-					<li class="tab-link" data-tab="tab-3">배송시작</li>
+					<li class="tab-link" data-tab="tab-3">배송중</li>
 					<li class="tab-link" data-tab="tab-4">배송완료</li>
 				</ul>
 			</div>
@@ -263,7 +263,7 @@ tr.orderlist td {
 					</tr>
 				</c:when>
 							<c:otherwise>
-								<c:forEach var="OrderList" items="${OrderList}">
+								<c:forEach var="OrderList" items="${OrderVO}">
 									<tr class="orderlist">
 										<td><a href="${contextPath}/goods/goodsDetail.do?g_id=${OrderList.g_id}">
 										<img src="${contextPath}/download1.do?g_id=${OrderList.g_id}&cate=main" onerror= "this.src='${contextPath}/resources/image/not for sale.jpg'"></a></td>
@@ -274,13 +274,9 @@ tr.orderlist td {
 										<td><c:if test="${OrderList.delivery_state == '주문완료'}">
 												<a href="#">주문 환불</a>
 											</c:if> <c:if test="${OrderList.delivery_state == '결제완료'}">
-												<a href="#">주문 수정하기</a>
-												<br>
-												<a href="#">주문 환불</a>
-											</c:if> <c:if test="${OrderList.delivery_state == '배송시작'}">
-												<a href="https://tracker.delivery/#/kr.cjlogistics/560067553920">배송 조회하기</a>
-											</c:if> <c:if test="${OrderList.delivery_state == '주문확인중'}">
 												<a href="${contextPath}/order/deleteOrder.do?o_id=${OrderList.o_id}">주문 취소하기</a>
+											</c:if> <c:if test="${OrderList.delivery_state == '배송중'}">
+												<a href="https://tracker.delivery/#/kr.cjlogistics/560067553920">배송 조회하기</a>
 											</c:if> <c:if test="${OrderList.delivery_state == '배송완료'}">
 												<c:if test="${OrderList.review == 'false'}">
 													<a href="${contextPath}/boardGr/boardGrWrite.do?g_id=${OrderList.g_id}&o_id=${OrderList.o_id}">후기 작성하기</a>
@@ -351,18 +347,15 @@ tr.orderlist td {
 						</c:choose>
 					</table>
 					<c:choose>
-						<c:when test="${not empty orderMap.orderListPaid }">
+						<c:when test="${OrderVO != null}">
 							<c:forEach var="page" begin="1" end="9" step="1">
 								<c:if test="${section >0 && page==1 }">
-									<a
-										href="${contextPath}/order/selectUserOrderList.do?section=${section}-1&pageNum=${(section-1)*10+1 }&delivery_state=결제완료">preview</a>
+									<a href="${contextPath}/order/selectUserOrders.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
 								</c:if>
-								<a
-									href="${contextPath}/order/selectUserOrderList.do?section=${section}&pageNum=${page}&delivery_state=결제완료">${(section)*10 +page}
+								<a href="${contextPath}/order/selectUserOrders.do?section=${section}&pageNum=${page}">${(section)*10 +page}
 								</a>
 								<c:if test="${page ==10 }">
-									<a
-										href="${contextPath}/order/selectUserOrderList.do?section=${section}+1&pageNum=${section*10}+1&delivery_state=결제완료">next</a>
+									<a href="${contextPath}/order/selectUserOrders.do?section=${section}+1&pageNum=${section*10}+1">next</a>
 								</c:if>
 							</c:forEach>
 						</c:when>
@@ -411,20 +404,18 @@ tr.orderlist td {
 						</c:choose>
 					</table>
 					<c:choose>
-						<c:when test="${empty orderMap.orderListDstart}">
-							</c:when>
-						<c:otherwise>
+						<c:when test="${OrderVO != null}">
 							<c:forEach var="page" begin="1" end="9" step="1">
 								<c:if test="${section >0 && page==1 }">
-									<a href="${contextPath}/order/selectUserOrderList.do?section=${section}-1&pageNum=${(section-1)*10+1 }&delivery_state=배송시작">preview</a>
+									<a href="${contextPath}/order/selectUserOrders.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
 								</c:if>
-								<a href="${contextPath}/order/selectUserOrderList.do?section=${section}&pageNum=${page}&delivery_state=배송시작">${(section)*10 +page}
+								<a href="${contextPath}/order/selectUserOrders.do?section=${section}&pageNum=${page}">${(section)*10 +page}
 								</a>
 								<c:if test="${page ==10 }">
-									<a href="${contextPath}/order/selectUserOrderList.do?section=${section}+1&pageNum=${section*10}+1&delivery_state=배송시작">next</a>
+									<a href="${contextPath}/order/selectUserOrders.do?section=${section}+1&pageNum=${section*10}+1">next</a>
 								</c:if>
 							</c:forEach>
-						</c:otherwise>
+						</c:when>
 					</c:choose>
 				</div>
 			</div>
@@ -468,23 +459,18 @@ tr.orderlist td {
 						</c:choose>
 					</table>
 					<c:choose>
-					<c:when test="${empty orderMap.orderListDone}">
-								<tr>
-									<td colspan=5 class="fixed"><strong>작성된 글이 없습니다.</strong></td>
-								</tr>
-							</c:when>
-						<c:otherwise>
+					<c:when test="${OrderVO != null}">
 							<c:forEach var="page" begin="1" end="9" step="1">
 								<c:if test="${section >0 && page==1 }">
-									<a href="${contextPath}/order/selectUserOrderList.do?section=${section}-1&pageNum=${(section-1)*10+1 }&delivery_state=${done}">preview</a>
+									<a href="${contextPath}/order/selectUserOrders.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
 								</c:if>
-								<a href="${contextPath}/order/selectUserOrderList.do?section=${section}&pageNum=${page}&delivery_state=${done}">${(section)*10 +page}
+								<a href="${contextPath}/order/selectUserOrders.do?section=${section}&pageNum=${page}">${(section)*10 +page}
 								</a>
 								<c:if test="${page ==10 }">
-									<a href="${contextPath}/order/selectUserOrderList.do?section=${section}+1&pageNum=${section*10}+1&delivery_state=${done}">next</a>
+									<a href="${contextPath}/order/selectUserOrders.do?section=${section}+1&pageNum=${section*10}+1">next</a>
 								</c:if>
 							</c:forEach>
-						</c:otherwise>
+						</c:when>
 					</c:choose>
 				</div>
 			</div>

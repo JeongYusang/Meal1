@@ -18,8 +18,10 @@ import com.meal.board.a.service.BaService;
 import com.meal.board.a.vo.Img_aVO;
 import com.meal.board.gq.service.BoardGqService;
 import com.meal.board.gq.vo.BoardGqVO;
+import com.meal.board.gq.vo.Img_gqVO;
 import com.meal.board.gr.service.BoardGrService;
 import com.meal.board.gr.vo.BoardGrVO;
+import com.meal.board.gr.vo.Img_grVO;
 import com.meal.goods.service.GoodsService;
 import com.meal.goods.vo.GoodsVO;
 import com.meal.goods.vo.Img_gVO;
@@ -35,6 +37,10 @@ public class DownLoad {
 	private GoodsVO goodsVO;
 	@Autowired
 	private Img_gVO img_gVO;
+	@Autowired
+	private Img_gqVO Img_gqVO;
+	@Autowired
+	private Img_grVO Img_grVO;
 	@Autowired
 	private BoardGrService boardGrService;
 	@Autowired
@@ -165,11 +171,37 @@ public class DownLoad {
 	@RequestMapping(value = "/thumbnailsBoard.do", method = { RequestMethod.POST, RequestMethod.GET })
 	protected void thumbnails(@RequestParam("b_gr_id") int b_gr_id, HttpServletResponse response) throws Exception {
 		BoardGrVO boardGrVO = boardGrService.grdownload(b_gr_id);
-		String fileName = boardGrVO.getFileName();
+		List<Img_grVO> imageList = (List<Img_grVO>) boardGrService.imageList(b_gr_id);
+		
+		for(int i = 0;i < imageList.size();i++) {
+			Img_grVO Img_grVO = (Img_grVO) imageList.get(i);
+			String fileName = (String)Img_grVO.getFileName();
+		
 		int g_id = boardGrVO.getG_id();
 		OutputStream out = response.getOutputStream();
-		String filePath = CURR_IMAGE_PATH + "\\" + "goods" + "\\" + g_id + "\\" + "Gr" + "\\" + b_gr_id + "\\"
-				+ fileName;
+		String filePath = CURR_IMAGE_PATH + "\\" + "goods" + "\\" + g_id + "\\" + "Gr" + "\\" + b_gr_id + "\\" + fileName;
+		File image = new File(filePath);
+		
+		if (image.exists()) {
+			Thumbnails.of(image).size(300, 300).outputFormat("png").toOutputStream(out);
+		}
+		byte[] buffer = new byte[1024 * 8];
+		out.write(buffer);
+		out.close();
+		}
+	}
+
+	// 상품문의게시판에 관한 썸네일에 관한 다운로드
+	@RequestMapping(value = "/thumbnailsBoardGq.do", method = { RequestMethod.POST, RequestMethod.GET })
+	protected void thumbnailsGq(@RequestParam("b_gq_id") int b_gq_id, HttpServletResponse response) throws Exception {
+		BoardGqVO boardGqVO = boardGqService.gqdownload(b_gq_id);
+		List<Img_gqVO> imageList = (List<Img_gqVO>) boardGqService.imageList(b_gq_id);
+		for(int i = 0;i < imageList.size();i++) {
+			Img_gqVO Img_gqVO = (Img_gqVO) imageList.get(i);
+			String fileName = (String)Img_gqVO.getFileName();
+		int g_id = boardGqVO.getG_id();
+		OutputStream out = response.getOutputStream();
+		String filePath = CURR_IMAGE_PATH + "\\" + "goods" + "\\" + g_id + "\\" + "Gq" + "\\" + b_gq_id + "\\" + fileName;
 		File image = new File(filePath);
 
 		if (image.exists()) {
@@ -179,24 +211,6 @@ public class DownLoad {
 		out.write(buffer);
 		out.close();
 	}
-
-	// 상품문의게시판에 관한 썸네일에 관한 다운로드
-	@RequestMapping(value = "/thumbnailsBoardGq.do", method = { RequestMethod.POST, RequestMethod.GET })
-	protected void thumbnailsGq(@RequestParam("b_gq_id") int b_gq_id, HttpServletResponse response) throws Exception {
-		BoardGqVO boardGqVO = boardGqService.gqdownload(b_gq_id);
-		String fileName = boardGqVO.getFileName();
-		int g_id = boardGqVO.getG_id();
-		OutputStream out = response.getOutputStream();
-		String filePath = CURR_IMAGE_PATH + "\\" + "goods" + "\\" + g_id + "\\" + "Gq" + "\\" + b_gq_id + "\\"
-				+ fileName;
-		File image = new File(filePath);
-
-		if (image.exists()) {
-			Thumbnails.of(image).size(300, 300).outputFormat("png").toOutputStream(out);
-		}
-		byte[] buffer = new byte[1024 * 8];
-		out.write(buffer);
-		out.close();
 	}
 
 	// 굿즈디테일 상세 이미지 다운로드

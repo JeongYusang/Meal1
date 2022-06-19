@@ -109,13 +109,7 @@
 
 	<select id="UserboardOrderListPage" parameterType="Map" resultMap="orderResult">
    <![CDATA[
-	    select R1.* from (select * from order_tb) R1 where u_id = #{u_id} and delivery_state = #{delivery_state} and good_cancel = 'N' order by pay_order_time desc limit #{start} , #{end} 
-	   ]]>
-	</select>
-
-	<select id="selectOrderList" parameterType="String" resultMap="orderResult">
-   <![CDATA[
-	   select o.*, gr.b_gr_id from order_tb o left outer join board_gr gr on o.o_id = gr.o_id where o.delivery_state = #{delivery_state} and o.u_id = #{u_id} and good_cancel = 'N' order by pay_order_time desc;
+	    select R1.* from (select o.*, gr.b_gr_id from order_tb o left outer join board_gr gr on o.o_id = gr.o_id) R1 where u_id = #{u_id} and delivery_state = #{delivery_state} and good_cancel = 'N' order by pay_order_time desc limit #{start} , #{end} 
 	   ]]>
 	</select>
 

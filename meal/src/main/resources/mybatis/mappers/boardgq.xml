@@ -164,7 +164,7 @@ update board_gq set title = #{title}, content = #{content}, secret = #{secret} w
     	]]>
 	</select>
 	<select id="selectBoardGqDetailImage" resultMap="img_gqResult"
-		parameterType="String">
+		parameterType="Integer">
 	    <![CDATA[
 		    	select * from  img_b_gq
 				where b_gq_id=#{b_gq_id}

@@ -378,10 +378,12 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 				pagingMap.put("u_id", u_id);
 
 				List<MileageVO> MilagePage = memberService.myMileageList(pagingMap);
+				List<MileageVO> myMileagePlus = memberService.myMileagePlus(pagingMap);
+				List<MileageVO> myMileageMinus = memberService.myMileageMinus(pagingMap);
 				String viewName = (String) request.getAttribute("viewName");
-				List<MileageVO> mileage = (List<MileageVO>) memberService.myMileage(u_id);
-				mav.addObject("mileage", mileage);
 				mav.addObject("MilagePage", MilagePage);
+				mav.addObject("myMileagePlus", myMileagePlus);
+				mav.addObject("myMileageMinus", myMileageMinus);
 				mav.addObject("u_mile", u_mile);
 				mav.setViewName(viewName);
 			} else {

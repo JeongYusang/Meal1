@@ -82,7 +82,7 @@ public class BoardGqDAOImpl implements BoardGqDAO {
 	
 	@Override
 	public List<Img_gqVO> selectBoardGqDetailImage(int b_gq_id) throws DataAccessException{
-		List<Img_gqVO> imageList=(ArrayList)sqlSession.selectList("mapper.boardGq.selectBoardGqDetailImage",b_gq_id);
+		List<Img_gqVO> imageList=(List<Img_gqVO>)sqlSession.selectList("mapper.boardGq.selectBoardGqDetailImage",b_gq_id);
 		return imageList;
 	}
 	

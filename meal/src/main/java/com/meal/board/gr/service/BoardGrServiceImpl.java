@@ -83,7 +83,13 @@ public class BoardGrServiceImpl implements BoardGrService {
 		List<Img_grVO> imageList = boardGrDAO.selectBoardGrDetailImage(b_gr_id);
 		boardGrMap.put("imageList", imageList);
 		return boardGrMap;
-
+	}
+	
+	@Override
+	public List<Img_grVO> imageList(int b_gr_id) throws Exception {
+		List<Img_grVO> imageList = boardGrDAO.selectBoardGrDetailImage(b_gr_id);
+		return imageList;
+				
 	}
 
 	/* 답변쓰기 */

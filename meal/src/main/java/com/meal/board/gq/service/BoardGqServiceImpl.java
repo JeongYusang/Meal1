@@ -80,7 +80,13 @@ public class BoardGqServiceImpl implements BoardGqService {
 		List<Img_gqVO> imageList =boardGqDAO.selectBoardGqDetailImage(b_gq_id);
 		boardGqMap.put("imageList", imageList);
 		return boardGqMap;
-
+	}
+	
+	@Override
+	public List<Img_gqVO> imageList(int b_gq_id) throws Exception {
+		List<Img_gqVO> imageList =boardGqDAO.selectBoardGqDetailImage(b_gq_id);
+		return imageList;
+		
 	}
 	@Override
 	public List<BoardGqVO> boardGqViewReview(int b_gq_id) throws Exception {

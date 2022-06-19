@@ -137,17 +137,24 @@ select * from user_tb where u_email1 = #{email1} and u_email2 = #{email2} and u_
 			]]>
 	</update>
 	
-	<select id="myMileage" resultType="MileageVO" parameterType="String">
-	    <![CDATA[
-			select m.*, o.g_name, o.pay_order_time, o.g_id from  mileage m left outer join order_tb o on o.o_id = m.o_id where m.u_id = #{u_id};
+	<select id="myMileagePage" resultMap="mileResult" parameterType="Map">
+	   <![CDATA[
+		    select R1.* from (select m.*, o.g_name, o.pay_order_time, o.g_id from  mileage m left outer join order_tb o on o.o_id = m.o_id) R1 where u_id = #{u_id} order by o_id desc limit #{start} , #{end} 
 		]]>
 	</select>
 	
-		<select id="myMileagePage" resultMap="mileResult" parameterType="Map">
-   <![CDATA[
-	    select R1.* from (select * from mileage) R1 where u_id = #{u_id} order by o_id desc limit #{start} , #{end} 
-	   ]]>
+	<select id="myMileageMinus" resultMap="mileResult" parameterType="Map">
+	   <![CDATA[
+		    select R1.* from (select m.*, o.g_name, o.pay_order_time, o.g_id from  mileage m left outer join order_tb o on o.o_id = m.o_id) R1 where u_id = #{u_id} and m_point < 0 order by o_id desc limit #{start} , #{end} 
+		]]>
 	</select>
+	
+	<select id="myMileagePlus" resultMap="mileResult" parameterType="Map">
+	   <![CDATA[
+		    select R1.* from (select m.*, o.g_name, o.pay_order_time, o.g_id from  mileage m left outer join order_tb o on o.o_id = m.o_id) R1 where u_id = #{u_id} and m_point > 0 order by o_id desc limit #{start} , #{end} 
+		]]>
+	</select>
+	
 	
 
 

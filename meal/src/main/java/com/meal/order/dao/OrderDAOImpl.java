@@ -34,8 +34,8 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public List<OrderVO> selectorderList(HashMap<String, String> OrderState) {
-		List<OrderVO> orderList = (List<OrderVO>) sqlSession.selectList("mapper.order.selectOrderList", OrderState);
+	public List<OrderVO> selectorderList(HashMap<String, Object> map) {
+		List<OrderVO> orderList = (List<OrderVO>) sqlSession.selectList("mapper.order.UserboardOrderListPage", map);
 		return orderList;
 	}
 
@@ -58,12 +58,6 @@ public class OrderDAOImpl implements OrderDAO {
 	@Override
 	public List<OrderVO> UserboardOrderListPage(HashMap<String, Object> pagingMap) throws DataAccessException {
 		List<OrderVO> listInfo = (List<OrderVO>) sqlSession.selectList("mapper.order.UserboardOrderListPage", pagingMap);
-		return listInfo;
-	}
-
-	@Override
-	public List<OrderVO> tabpageorderlist(HashMap<String, Object> infoMap) throws DataAccessException {
-		List<OrderVO> listInfo = (List<OrderVO>) sqlSession.selectList("mapper.order.tabpageorderlist", infoMap);
 		return listInfo;
 	}
 

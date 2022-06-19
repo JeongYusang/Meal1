@@ -23,9 +23,11 @@ public interface MemberService {
 	public MemberVO FindPW(HashMap<String,Object> map) throws Exception;
 
 	public String FindId(HashMap<String , Object> map) throws Exception;
-
-	public List<MileageVO> myMileage(String u_id) throws Exception;
-
+	
 	public List<MileageVO> myMileageList(HashMap<String, Object> pagingMap)throws Exception;
+
+	public List<MileageVO> myMileageMinus(HashMap<String, Object> pagingMap)throws Exception;
+	
+	public List<MileageVO> myMileagePlus(HashMap<String, Object> pagingMap)throws Exception;
 
 }

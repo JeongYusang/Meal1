@@ -189,7 +189,7 @@ hr {
 								<th width="300px">날짜</th>
 							</tr>
 						</thead>
-						<c:forEach var="mileage" items="${mileage}" varStatus="status">
+						<c:forEach var="mileage" items="${MilagePage}" varStatus="status">
 							<tr class="border-bottom">
 								<td>${mileage.o_id}</td>
 								<c:if test="${mileage.m_point > 0 }">
@@ -240,7 +240,7 @@ hr {
 								<th width="300px">날짜</th>
 							</tr>
 						</thead>
-						<c:forEach var="mileage" items="${mileage}" varStatus="status">
+						<c:forEach var="mileage" items="${myMileagePlus}" varStatus="status">
 							<c:choose>
 								<c:when test="${mileage.m_point > 0 }">
 									<tr class="border-bottom">
@@ -284,7 +284,7 @@ hr {
 								<th width="300px">날짜</th>
 							</tr>
 						</thead>
-						<c:forEach var="mileage" items="${mileage}" varStatus="status">
+						<c:forEach var="mileage" items="${myMileageMinus}" varStatus="status">
 							<c:choose>
 								<c:when test="${mileage.m_point < 0 }">
 									<tr class="border-bottom">
