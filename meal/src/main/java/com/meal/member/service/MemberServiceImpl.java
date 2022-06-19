@@ -77,14 +77,20 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<MileageVO> myMileage(String u_id) throws Exception {
-		List<MileageVO> mileList = (List<MileageVO>) memberDAO.myMileage(u_id);
-		return mileList;
+	public List<MileageVO> myMileageList(HashMap<String, Object> pagingMap) throws Exception {
+		List<MileageVO> listInfo = (List<MileageVO>) memberDAO.myMileageList(pagingMap);
+		return listInfo;
 	}
 
 	@Override
-	public List<MileageVO> myMileageList(HashMap<String, Object> pagingMap) throws Exception {
-		List<MileageVO> listInfo = (List<MileageVO>) memberDAO.myMileageList(pagingMap);
+	public List<MileageVO> myMileageMinus(HashMap<String, Object> pagingMap) throws Exception {
+		List<MileageVO> listInfo = (List<MileageVO>) memberDAO.myMileageMinus(pagingMap);
+		return listInfo;
+	}
+
+	@Override
+	public List<MileageVO> myMileagePlus(HashMap<String, Object> pagingMap) throws Exception {
+		List<MileageVO> listInfo = (List<MileageVO>) memberDAO.myMileagePlus(pagingMap);
 		return listInfo;
 	}
 

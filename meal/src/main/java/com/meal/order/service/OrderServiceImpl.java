@@ -40,29 +40,29 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public Map<String, List<OrderVO>> orderlist(String u_id) throws Exception {
-		HashMap<String, String> FindMap = new HashMap<String, String>();
-		FindMap.put("u_id", u_id);
-		FindMap.put("delivery_state", "배송완료");
-		List<OrderVO> orderListDone = orderDAO.selectorderList(FindMap);
+	public Map<String, List<OrderVO>> orderlist(HashMap<String, Object> Map) throws Exception {
+		Map<String, List<OrderVO>> orderMap = new HashMap<String, List<OrderVO>>();
+		String cate1 = "배송완료";
+		String cate2 = "배송중";
+		String cate3 = "결제완료";
+		Map.put("delivery_state", cate1);
+		List<OrderVO> orderListDone = orderDAO.selectorderList(Map);
 		// 상품 주문당 1 후기를 위한 후기글 중복 검사
 		for (OrderVO item : orderListDone) {
 			int o_id = item.getO_id();
 			String review = orderDAO.overlappedO_id(o_id);
 			item.setReview(review);
 		}
-		HashMap<String, String> FindMap2 = new HashMap<String, String>();
-		FindMap2.put("u_id", u_id);
-		FindMap2.put("delivery_state", "배송시작");
-		List<OrderVO> orderListDstart = orderDAO.selectorderList(FindMap2);
 
-		HashMap<String, String> FindMap3 = new HashMap<String, String>();
-		FindMap3.put("u_id", u_id);
-		FindMap3.put("delivery_state", "결제완료");
-		List<OrderVO> orderListPaid = orderDAO.selectorderList(FindMap3);
+		HashMap<String, Object> DstartMap = Map;
+		DstartMap.put("delivery_state", cate2);
+		List<OrderVO> orderListDstart = orderDAO.selectorderList(DstartMap);
+		HashMap<String, Object> PaidMap = Map;
+		PaidMap.put("delivery_state", cate3);
+		List<OrderVO> orderListPaid = orderDAO.selectorderList(PaidMap);
 
-		Map<String, List<OrderVO>> orderMap = new HashMap<String, List<OrderVO>>();
 		orderMap.put("orderListDone", orderListDone);
+
 		orderMap.put("orderListPaid", orderListPaid);
 		orderMap.put("orderListDstart", orderListDstart);
 		return orderMap;
@@ -87,12 +87,6 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderVO> UserboardOrderListPage(HashMap<String, Object> pagingMap) throws Exception {
 		List<OrderVO> listInfo = (List<OrderVO>) orderDAO.UserboardOrderListPage(pagingMap);
-		return listInfo;
-	}
-
-	@Override
-	public List<OrderVO> tabpageorderlist(HashMap<String, Object> infoMap) {
-		List<OrderVO> listInfo = (List<OrderVO>) orderDAO.tabpageorderlist(infoMap);
 		return listInfo;
 	}
 
@@ -139,10 +133,11 @@ public class OrderServiceImpl implements OrderService {
 	public OrderVO selectOrder(int o_id) {
 		return orderDAO.selectOrder(o_id);
 	}
+
 	@Override
-	public List<OrderVO> BestGoodsCount() throws Exception{
-		
+	public List<OrderVO> BestGoodsCount() throws Exception {
+
 		return orderDAO.BestGoodsCount();
 	}
-	
+
 }

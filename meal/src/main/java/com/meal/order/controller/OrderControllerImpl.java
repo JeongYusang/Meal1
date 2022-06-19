@@ -333,54 +333,15 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			pagingMap.put("u_id", u_id);
 			List<OrderVO> OrderVO = orderService.UserboardOrderPage(pagingMap);
 			List<OrderVO> OrderList = orderService.selectUserOrders(u_id);
-			for (OrderVO item : OrderList) {
+			for (OrderVO item : OrderVO) {
 				int o_id = item.getO_id();
 				String review = orderService.overlappedO_id(o_id);
 				item.setReview(review);
 			}
-			Map<String, List<OrderVO>> orderMap = orderService.orderlist(u_id);
+			Map<String, List<OrderVO>> orderMap = orderService.orderlist(pagingMap);
 			mav.addObject("orderMap", orderMap);
-			mav.addObject("OrderList", OrderList);
 			mav.addObject("OrderVO", OrderVO);
 			mav.setViewName(viewName);
-			return mav;
-		} else {
-			String message = "회원 아이디로 로그인 해주시길 바랍니다";
-			String viewName1 = "redirect:/main/main.do";
-			mav.addObject(message);
-			mav.setViewName(viewName1);
-
-		}
-		return mav;
-	}
-
-	@Override
-	@RequestMapping(value = "/selectUserOrderList.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView selectUserOrderList(
-			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
-			@RequestParam(value = "section", required = false) String section,
-			@RequestParam(value = "pageNum", required = false) String pageNum,
-			@RequestParam(value = "delivery_state") String delivery_state, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		HttpSession session = request.getSession();
-		String viewName = (String) request.getAttribute("viewName");
-		ModelAndView mav = new ModelAndView(viewName);
-		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
-		if (memberInfo != null) {
-			String u_id = memberInfo.getU_id();
-			HashMap<String, Object> Map = new HashMap<String, Object>();
-			Map.put("pageNum", pageNum);
-			Map.put("section", section);
-			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(Map);
-			pagingMap.put("u_id", u_id);
-			pagingMap.put("delivery_state", delivery_state);
-			List<OrderVO> OrderVO = orderService.UserboardOrderListPage(pagingMap);
-			HashMap<String, Object> InfoMap = new HashMap<String, Object>();
-			InfoMap.put("u_id", u_id);
-			InfoMap.put("delivery_state", delivery_state);
-			List<OrderVO> orderList = orderService.tabpageorderlist(InfoMap);
-			mav.addObject("orderList", orderList);
-			mav.addObject("OrderVO", OrderVO);
 			return mav;
 		} else {
 			String message = "회원 아이디로 로그인 해주시길 바랍니다";

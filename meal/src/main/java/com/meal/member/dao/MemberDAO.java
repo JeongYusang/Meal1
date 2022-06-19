@@ -28,8 +28,11 @@ public interface MemberDAO {
 
 	public String FindId(HashMap<String, Object> map) throws DataAccessException;
 
-	public List<MileageVO> myMileage(String u_id) throws DataAccessException;
-
 	public List<MileageVO> myMileageList(HashMap<String, Object> pagingMap) throws DataAccessException;
+
+	public List<MileageVO> myMileageMinus(HashMap<String, Object> pagingMap) throws DataAccessException;
+
+	public List<MileageVO> myMileagePlus(HashMap<String, Object> pagingMap) throws DataAccessException;
+
 
 }

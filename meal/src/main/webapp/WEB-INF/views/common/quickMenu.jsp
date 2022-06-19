@@ -146,7 +146,7 @@
 border: none; 
 background: transparent;
 text-align: center;
-
+width: 140px;
 }
 .quickInfo-wrap ul {
 padding: 0px;

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.meal.board.gq.vo.BoardGqVO;
+import com.meal.board.gq.vo.Img_gqVO;
 
 public interface BoardGqService {
 
@@ -44,5 +45,7 @@ public interface BoardGqService {
 	public List<BoardGqVO> boardGqSellerList(HashMap<String, Object> map) throws Exception;
 
 	public List<BoardGqVO> SelectReview(int g_id) throws Exception;
+	
+	public List<Img_gqVO> imageList(int b_gq_id) throws Exception;
 
 }

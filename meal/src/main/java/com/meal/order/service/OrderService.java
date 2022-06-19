@@ -16,17 +16,15 @@ public interface OrderService {
 
 	public List<OrderVO> UserboardOrderPage(HashMap<String, Object> Map) throws Exception;
 
-	public Map<String, List<OrderVO>> orderlist(String u_id) throws Exception;
+	public Map<String, List<OrderVO>> orderlist(HashMap<String, Object> Map) throws Exception;
 
 	public void deleteOrder(int o_id) throws Exception;
 
 	public String overlappedO_id(int o_id) throws Exception;
-
-	public List<OrderVO> OrderResult(String parentNo) throws Exception;
-
+	
 	public List<OrderVO> UserboardOrderListPage(HashMap<String, Object> pagingMap) throws Exception;
 
-	public List<OrderVO> tabpageorderlist(HashMap<String, Object> infoMap);
+	public List<OrderVO> OrderResult(String parentNo) throws Exception;
 
 	public String selectMaxParentNO(String u_id) throws Exception;
 	//판매자 주문내역 출력위해 사용0614

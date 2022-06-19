@@ -66,14 +66,20 @@ public class MemberDAOImpl  implements MemberDAO{
 	}
 
 	@Override
-	public List<MileageVO> myMileage(String u_id) throws DataAccessException {
-		List<MileageVO> mileList = (List<MileageVO>)sqlSession.selectList("mapper.user.myMileage",u_id);
-		return mileList;
+	public List<MileageVO> myMileageList(HashMap<String, Object> pagingMap) throws DataAccessException {
+		List<MileageVO> boardInfo = (List<MileageVO>) sqlSession.selectList("mapper.user.myMileagePage", pagingMap);
+		return boardInfo;
 	}
 
 	@Override
-	public List<MileageVO> myMileageList(HashMap<String, Object> pagingMap) throws DataAccessException {
-		List<MileageVO> boardInfo = (List<MileageVO>) sqlSession.selectList("mapper.user.myMileagePage", pagingMap);
+	public List<MileageVO> myMileageMinus(HashMap<String, Object> pagingMap) throws DataAccessException {
+		List<MileageVO> boardInfo = (List<MileageVO>) sqlSession.selectList("mapper.user.myMileageMinus", pagingMap);
+		return boardInfo;
+	}
+
+	@Override
+	public List<MileageVO> myMileagePlus(HashMap<String, Object> pagingMap) throws DataAccessException {
+		List<MileageVO> boardInfo = (List<MileageVO>) sqlSession.selectList("mapper.user.myMileagePlus", pagingMap);
 		return boardInfo;
 	}
 }

@@ -78,7 +78,7 @@ public class BoardGrDAOImpl implements BoardGrDAO {
 	
 	@Override
 	public List<Img_grVO> selectBoardGrDetailImage(int b_gr_id) throws DataAccessException{
-		List<Img_grVO> imageList=(ArrayList)sqlSession.selectList("mapper.boardGr.selectBoardGrDetailImage",b_gr_id);
+		List<Img_grVO> imageList=(List<Img_grVO>)sqlSession.selectList("mapper.boardGr.selectBoardGrDetailImage",b_gr_id);
 		return imageList;
 	}
 	@Override
