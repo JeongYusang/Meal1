@@ -149,12 +149,8 @@ img#contentID {
 			<c:choose>
 				<c:when test="${adminInfo ne null }">
 				<div id="adminBTN">
-					<a href="${contextPath}/boardA/boardAUpdateForm.do?b_a_id=${boardAInfo.b_a_id}">수정</a> 
-					<input type=button value="삭제" onClick="fn_remove_article('${contextPath}/board/removeArticle.do', ${article.articleNO})" />
-				</div>
-				</c:when>
-				<c:when test="${adminInfo eq null }">
-				<div id="adminBTN">
+					<a href="${contextPath}/boardA/UpdateBAform.do?b_a_id=${boardAInfo.b_a_id}">수정</a> 
+					<a href="${contextPath}/boardA/deleteBA.do?b_a_id=${boardAInfo.b_a_id}">삭제</a>
 				</div>
 				</c:when>
 			</c:choose> 

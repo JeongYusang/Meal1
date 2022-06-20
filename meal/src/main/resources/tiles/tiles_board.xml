@@ -161,7 +161,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/board_a/QuestionA.jsp"/>
 	</definition>
 	
-	<definition name="/boardA/boardAUpdateform" extends="baseLayout2">
+	<definition name="/boardA/UpdateBAform" extends="baseLayout2">
 		<put-attribute name="title" value="자주묻는질문"/>
 		<put-attribute name="body" value="/WEB-INF/views/board_a/baUpdate.jsp"/>
 	</definition>

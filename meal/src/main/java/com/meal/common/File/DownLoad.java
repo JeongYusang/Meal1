@@ -118,7 +118,7 @@ public class DownLoad {
 	// 관리자게시판 이미지를 위한 경로 0617
 	@RequestMapping("/download3")
 	protected void download(@RequestParam("cate") String cate,
-			@RequestParam("b_a_id") int b_a_id, HttpServletResponse response) throws Exception {
+			@RequestParam("b_a_id") String b_a_id, HttpServletResponse response) throws Exception {
 		OutputStream out = response.getOutputStream();
 
 		List<Img_aVO> listbaImg = baService.selectImgList(b_a_id);

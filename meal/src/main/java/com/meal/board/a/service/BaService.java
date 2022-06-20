@@ -17,10 +17,11 @@ public interface BaService {
 
 	public List<BaVO> selectBAlist(HashMap<String, Object> pagingMap) throws Exception;
 	
-	public List<Img_aVO> selectImgList(int b_a_id) throws Exception;
+	public List<Img_aVO> selectImgList(String b_a_id) throws Exception;
 	
-	public BaVO selectBaDetail(int b_a_id) throws Exception;
+	public BaVO selectBaDetail(String b_a_id) throws Exception;
+
+	public void updateBAImg(HashMap<String, Object> newImgList) throws Exception;
 
 	public void deleteBA(BaVO boardAInfo) throws Exception;
-
 }
