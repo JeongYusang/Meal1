@@ -13,9 +13,9 @@
 <style type="text/css">
 .div1 {
 	width: 1080px;
-    height: 1630px;
-    position: relative;
-    overflow: hidden;
+	height: 1630px;
+	position: relative;
+	overflow: hidden;
 }
 
 .div2 {
@@ -114,7 +114,7 @@
 	position: absolute;
 	box-sizing: border-box;
 	width: 100%;
-    height: 1280px;
+	height: 1280px;
 	border: 5px solid #ffc0cf;
 	margin-bottom: 10px;
 }
@@ -230,10 +230,11 @@ tr.border-bottom td {
 	font-size: 20px;
 	border-collapse: collapse;
 }
+
 .titleText {
-font-size: 30px;
-color: #FD6EB0;
-margin: 30px;
+	font-size: 30px;
+	color: #FD6EB0;
+	margin: 30px;
 }
 </style>
 
@@ -256,15 +257,15 @@ margin: 30px;
 		})
 
 	});
-	
-	function delchk(){
-	    if(confirm("정말 삭제하시겠습니까?")){
-	        location.href = "/member/deleteMember.do?u_id=${memberVO.u_id}";
-	        return true;
-	    } else {
-	    	alert("취소 되었습니다");
-	        return false;
-	    }
+
+	function delchk() {
+		if (confirm("정말 삭제하시겠습니까?")) {
+			location.href = "/member/deleteMember.do?u_id=${memberVO.u_id}";
+			return true;
+		} else {
+			alert("취소 되었습니다");
+			return false;
+		}
 	}
 </script>
 </head>
@@ -272,16 +273,19 @@ margin: 30px;
 
 	<div class="div1">
 		<div class="div2-1">
-		<c:choose>
-		<c:when test="${not empty adminInfo }">
-		<a href = "${contextPath }/member/MemberUpdateForm.do?u_id=${memberVO.u_id}">수정</a>
-		<a href = "${contextPath }/member/deleteMember.do?u_id=${memberVO.u_id}" onClick = "delchk()">삭제</a>
-		</c:when>
-		<c:otherwise>
-		<button type="button" class="checkpw">수정</button>
-         <button type="button" class="checkpw1">탈퇴</button>
-         </c:otherwise>
-         </c:choose>
+			<c:choose>
+				<c:when test="${not empty adminInfo }">
+					<a
+						href="${contextPath }/member/MemberUpdateForm.do?u_id=${memberVO.u_id}">수정</a>
+					<a
+						href="${contextPath }/member/deleteMember.do?u_id=${memberVO.u_id}"
+						onClick="delchk()">삭제</a>
+				</c:when>
+				<c:otherwise>
+					<button type="button" class="checkpw">수정</button>
+					<button type="button" class="checkpw1">탈퇴</button>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<div id="main-wrap1">
 			<div id="myinfo-wrap">
@@ -348,30 +352,32 @@ margin: 30px;
 														<td><b id="state">${OrderList.delivery_state}</b></td>
 														<td><c:if
 																test="${OrderList.delivery_state == '주문완료'}">
-																<a href="#">주문 환불</a>
-															</c:if> <c:if test="${OrderList.delivery_state == '결제완료'}">
-																<a href="#">주문 수정하기</a>
+																<a
+																	href="${contextPath}/order/deleteOrder.do?o_id=${OrderList.o_id}">주문
+																	취소하기</a>
 																<br>
-																<a href="#">주문 환불</a>
+															</c:if> <c:if test="${OrderList.delivery_state == '결제완료'}">
+																<a
+																	href="${contextPath}/order/deleteOrder.do?o_id=${OrderList.o_id}">주문
+																	취소하기</a>
 																<br>
 															</c:if> <c:if test="${OrderList.delivery_state == '배송시작'}">
 																<a
 																	href="https://tracker.delivery/#/kr.cjlogistics/560067553920">배송
 																	조회하기</a>
-															</c:if> <c:if test="${OrderList.delivery_state == '주문확인중'}">
-																<a
-																	href="${contextPath}/order/deleteOrder.do?o_id=${OrderList.o_id}">주문
-																	취소하기</a>
+																<br>
 															</c:if> <c:if test="${OrderList.delivery_state == '배송완료'}">
 																<c:if test="${OrderList.review == 'false'}">
 																	<a
 																		href="${contextPath}/boardGr/boardGrWrite.do?g_id=${OrderList.g_id}&o_id=${OrderList.o_id}">후기
 																		작성하기</a>
+																	<br>
 																</c:if>
 																<c:if test="${OrderList.review == 'true'}">
 																	<a
 																		href="${contextPath}/boardGr/gr_detail.do?b_gr_id=${OrderList.b_gr_id}">후기
 																		보기</a>
+																	<br>
 																</c:if>
 															</c:if> <a
 															href="${contextPath}/order/OrderResult.do?parentNo=${OrderList.parentNo}">주문상세</a></td>
@@ -529,9 +535,9 @@ margin: 30px;
 								</div>
 							</div>
 							<div id="tab-2" class="tab-content">
-							<h6 class="titleText">상품후기</h6>
+								<h6 class="titleText">상품후기</h6>
 								<table class="stable-striped">
-								
+
 									<thead>
 										<tr id="top-table">
 											<th width="150px"></th>
@@ -552,7 +558,8 @@ margin: 30px;
 										</c:when>
 										<c:otherwise>
 											<c:forEach var="item" items="${BoardGrList}">
-												<tr class="border-bottom" onClick="location.href='${contextPath}/boardGr/gr_detail.do?b_gr_id=${item.b_gr_id}'"
+												<tr class="border-bottom"
+													onClick="location.href='${contextPath}/boardGr/gr_detail.do?b_gr_id=${item.b_gr_id}'"
 													style="cursor: hand">
 													<td><img class="GrImg"
 														src="${contextPath}/download1.do?g_id=${item.g_id}&cate=main"

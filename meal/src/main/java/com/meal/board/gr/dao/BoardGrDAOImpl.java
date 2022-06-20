@@ -142,6 +142,12 @@ public class BoardGrDAOImpl implements BoardGrDAO {
 		return (Integer) sqlSession.selectOne("mapper.boardGr.selectGoodAvg",g_id);
 	}
 
+	@Override
+	public BoardGrVO o_idSearch(int o_id) throws DataAccessException {
+		BoardGrVO o_idSearch = (BoardGrVO) sqlSession.selectOne("mapper.boardGr.o_idSearch", o_id);
+		return o_idSearch;
+	}
+
 	
 
 }

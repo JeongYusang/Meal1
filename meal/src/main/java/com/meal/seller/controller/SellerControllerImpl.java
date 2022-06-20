@@ -334,8 +334,8 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 	@RequestMapping(value = "/sellerMypage.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView sellerMypage(@RequestParam(value = "s_id", required = false) String s_id,
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
-			@RequestParam(value = "section1", required = false) String section,
-			@RequestParam(value = "pgNum", required = false) String pgNum, HttpServletRequest request,
+			@RequestParam(value = "section", required = false) String section,
+			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
@@ -349,7 +349,7 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 
 			HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
 			pagingInfo.put("section", section);
-			pagingInfo.put("pgNum", pgNum);
+			pagingInfo.put("pageNum", pageNum);
 
 			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
 
@@ -359,6 +359,8 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 
 			// 주문내역 확인
 			List<OrderVO> orderList = orderService.orderSellerList(pagingMap);
+			// 취소된 주문 확인
+			List<OrderVO> orderCanceledSellerList = orderService.orderCanceledSellerList(pagingMap);
 
 			System.out.println("---------------------------");
 			System.out.println("goodsList : " + goodsList);
@@ -372,7 +374,7 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 			mav.addObject("orderList", orderList);
 			mav.addObject("goodsList", goodsList);
 			mav.setViewName(viewName);
-
+			mav.addObject("orderCanceledSellerList", orderCanceledSellerList);
 			return mav;
 		}else if (adminVO != null) {
 			sellerVO = (SellerVO) sellerService.decode(s_id);
@@ -381,7 +383,7 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 
 			HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
 			pagingInfo.put("section", section);
-			pagingInfo.put("pgNum", pgNum);
+			pagingInfo.put("pageNum", pageNum);
 
 			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
 
@@ -391,6 +393,8 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 
 			// 주문내역 확인
 			List<OrderVO> orderList = orderService.orderSellerList(pagingMap);
+			// 취소된 주문 확인
+			List<OrderVO> orderCanceledSellerList = orderService.orderCanceledSellerList(pagingMap);
 
 			System.out.println("---------------------------");
 			System.out.println("goodsList : " + goodsList);
@@ -400,9 +404,11 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 			System.out.println("orderList : " + orderList);
 			System.out.println("---------------------------");
 
+
 			mav.addObject("sellerVO", sellerVO);
 			mav.addObject("orderList", orderList);
 			mav.addObject("goodsList", goodsList);
+			mav.addObject("orderCanceledSellerList", orderCanceledSellerList);
 			mav.setViewName(viewName);
 
 			return mav;
@@ -422,8 +428,8 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 	@RequestMapping(value = "/sellerBoardMypage.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView sellerBoardMypage(@RequestParam(value = "s_id", required = false) String s_id,
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
-			@RequestParam(value = "section1", required = false) String section,
-			@RequestParam(value = "pgNum", required = false) String pgNum,
+			@RequestParam(value = "section", required = false) String section,
+			@RequestParam(value = "pageNum", required = false) String pageNum,
 			@RequestParam(value = "message", required = false) String message,HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
@@ -440,7 +446,7 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 
 			HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
 			pagingInfo.put("section", section);
-			pagingInfo.put("pgNum", pgNum);
+			pagingInfo.put("pageNum", pageNum);
 
 			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
 
@@ -460,6 +466,7 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 			List<BoardGrVO> boardGrSellerList = boardGrService.selectBoardGrSList(pagingMap);
 			// 상품후기 답변여부 확인을 위해 추가 0616
 			List<BoardGrVO> boardGrA = boardGrService.selectBoardGrallList();
+		
 
 			for (Board1VO item : board1SellerList) {
 				for (Board1VO a : board1A) {
@@ -529,7 +536,7 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 
 			HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
 			pagingInfo.put("section", section);
-			pagingInfo.put("pgNum", pgNum);
+			pagingInfo.put("pageNum", pageNum);
 
 			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
 

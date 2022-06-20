@@ -28,14 +28,14 @@ public interface SellerController {
 	public ModelAndView sellerDetail(@RequestParam("id") String id, HttpServletRequest request,
 			HttpServletResponse response) throws Exception ;
 	public ModelAndView sellerMypage(@RequestParam(value = "s_id", required = false) String s_id, @RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
-	         @RequestParam(value = "section1", required = false) String section,
-	         @RequestParam(value = "pgNum", required = false) String pgNum, HttpServletRequest request,
+	         @RequestParam(value = "section", required = false) String section,
+	         @RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
 	         HttpServletResponse response) throws Exception;
 	//판매자기준 게시판 전체조회 0615
 	public ModelAndView sellerBoardMypage(@RequestParam(value = "s_id", required = false) String s_id,
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
-			@RequestParam(value = "section1", required = false) String section,
-			@RequestParam(value = "pgNum", required = false) String pgNum,
+			@RequestParam(value = "section", required = false) String section,
+			@RequestParam(value = "pageNum", required = false) String pageNum,
 			@RequestParam(value = "message", required = false) String message,HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 }

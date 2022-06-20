@@ -41,5 +41,7 @@ public interface OrderService {
 	public List<OrderVO> CanceledUserOrders(String u_id)throws Exception;
 	//스케줄러 위한 조회문
 	public List<OrderVO> BestGoodsCount() throws Exception;
+
+	public List<OrderVO> orderCanceledSellerList(HashMap<String, Object> pagingMap) throws Exception;
 		
 }

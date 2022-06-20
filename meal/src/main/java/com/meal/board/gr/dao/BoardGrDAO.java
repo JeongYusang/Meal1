@@ -53,4 +53,6 @@ public interface BoardGrDAO {
 
 	public int selectGoodAvg(int g_id) throws DataAccessException;
 
+	public BoardGrVO o_idSearch(int o_id) throws DataAccessException;
+
 }

@@ -38,7 +38,12 @@
 	<insert id="insertOrder" parameterType="orderVO">
 		<selectKey resultType="int" keyProperty="parentNo"
 			order="BEFORE">
-			select max(parentNo)+1 from order_tb
+			SELECT 
+    CASE
+        WHEN max(parentNo) IS NULL THEN 1
+        ELSE Max(parentNo) + 1
+        END as parentNo
+	from order_tb
 		</selectKey>
 	    <![CDATA[
 		            insert into order_tb (u_id,
@@ -145,16 +150,16 @@
 	   ]]>
 	</select>
 
-	<select id="tabpageorderlist" parameterType="Map" resultMap="orderResult">
-	<![CDATA[
-		   select * from order_tb where u_id=#{u_id} and delivery_state = #{delivery_state} and good_cancel = 'N' order by pay_order_time desc
-		]]>
-	</select>
-
 	<!-- 판매자가 주문리스트를 받기위해 사용 0614 -->
 	<select id="orderSellerList"  parameterType="Map" resultMap="orderResult">
    <![CDATA[
-	   select R1.* from (select * from order_tb) R1 where s_id = #{s_id} order by o_id desc limit #{start} , #{end} 
+	   select R1.* from (select * from order_tb) R1 where s_id = #{s_id} and good_cancel ='N' order by o_id desc limit #{start} , #{end} 
+	   ]]>
+	</select>
+	
+	<select id="orderCanceledSellerList"  parameterType="Map" resultMap="orderResult">
+   <![CDATA[
+	   select R1.* from (select * from order_tb) R1 where s_id = #{s_id} and good_cancel ='Y' order by o_id desc limit #{start} , #{end} 
 	   ]]>
 	</select>
 	

@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.meal.board.gr.service.BoardGrService;
+import com.meal.board.gr.vo.BoardGrVO;
 import com.meal.cart.service.CartService;
 import com.meal.cart.vo.CartVO;
 import com.meal.common.controller.BaseController;
@@ -42,6 +44,9 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 
 	@Autowired
 	CartService cartService;
+	
+	@Autowired
+	BoardGrService boardGrService;
 
 	@Override
 	@RequestMapping(value = "/OrderForm.do", method = { RequestMethod.POST, RequestMethod.GET })
@@ -333,11 +338,16 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(Map);
 			pagingMap.put("u_id", u_id);
 			List<OrderVO> OrderVO = orderService.UserboardOrderPage(pagingMap);
-			List<OrderVO> OrderList = orderService.selectUserOrders(u_id);
 			for (OrderVO item : OrderVO) {
 				int o_id = item.getO_id();
 				String review = orderService.overlappedO_id(o_id);
 				item.setReview(review);
+				BoardGrVO o_idSearch = (BoardGrVO) boardGrService.o_idSearch(o_id);
+				if(o_idSearch != null) {
+				if ((int) item.getO_id() == (int) ((BoardGrVO) o_idSearch).getO_id()) {
+								item.setB_gr_id(((BoardGrVO) o_idSearch).getB_gr_id());
+							}
+				}
 			}
 			Map<String, List<OrderVO>> orderMap = orderService.orderlist(pagingMap);
 			mav.addObject("orderMap", orderMap);

@@ -51,7 +51,7 @@ public interface BoardGrService {
 	public int selectGoodAvg(int g_id) throws Exception;
 	
 	public List<Img_grVO> imageList(int b_gr_id) throws Exception;
-	
-	
 
+	public BoardGrVO o_idSearch(int o_id) throws Exception;
+	
 }

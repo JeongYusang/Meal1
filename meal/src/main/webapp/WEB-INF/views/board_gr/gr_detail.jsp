@@ -333,7 +333,7 @@ color: black;
 			<div id="content">
 				<c:forEach var="imageList" items="${imageList}">
 					<img id="g_image" width="300px" height="300px"
-						src="${contextPath}/thumbnailsBoard.do?b_gr_id=${imageList.b_gr_id}&${imageList.fileName}">
+						src="${contextPath}/thumbnailsBoard.do?b_gr_id=${imageList.b_gr_id}&fileName=${imageList.fileName}">
 				</c:forEach>
 				<br> ${boardGrInfo.content}
 			</div>
@@ -365,7 +365,7 @@ color: black;
 						<c:if test="${imageList != null}">
 							<c:forEach var="imageList" items="${imageList}">
 								<img id="g_image" width="300px" height="300px"
-									src="${contextPath}/thumbnailsBoard.do?b_gr_id=${review.b_gr_id}&${imageList.fileName}">
+									src="${contextPath}/thumbnailsBoard.do?b_gr_id=${review.b_gr_id}&fileName=${imageList.fileName}">
 							</c:forEach>
 							</c:if>
 							<br> ${review.content}

@@ -148,4 +148,10 @@ public class BoardGrServiceImpl implements BoardGrService {
 		return boardGrDAO.selectGoodAvg(g_id);
 	}
 
+	@Override
+	public BoardGrVO o_idSearch(int o_id) throws Exception {
+		BoardGrVO o_idSearch = (BoardGrVO) boardGrDAO.o_idSearch(o_id);
+		return o_idSearch;
+	}
+
 }

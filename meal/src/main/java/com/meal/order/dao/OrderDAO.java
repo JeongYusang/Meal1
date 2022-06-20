@@ -41,5 +41,7 @@ public interface OrderDAO {
 	public List<OrderVO> CanceledUserOrders(String u_id)throws DataAccessException;
 	//6.16 스케줄러위해
 	public List<OrderVO> BestGoodsCount() throws DataAccessException;
+
+	public List<OrderVO> orderCanceledSellerList(HashMap<String, Object> map) throws DataAccessException;
 		
 }
