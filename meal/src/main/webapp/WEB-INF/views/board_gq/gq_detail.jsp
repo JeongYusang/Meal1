@@ -309,7 +309,7 @@ function fn_review(url,b_gq_id){
 			<div id="content">
 				<c:forEach var="imageList" items="${imageList}">
 					<img id="g_image" width="300px" height="300px"
-						src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${imageList.b_gq_id}">
+						src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${imageList.b_gq_id}&fileName=${imageList.fileName}">
 				</c:forEach>
 				<br> ${boardGqInfo.content}
 			</div>
@@ -347,7 +347,7 @@ function fn_review(url,b_gq_id){
 							<c:if test="${imageList != null}">
 								<c:forEach var="imageList" items="${imageList}">
 									<img id="g_image" width="300px" height="300px"
-										src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${imageList.b_gq_id}">
+										src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${imageList.b_gq_id}&fileName=${imageList.fileName}">
 								</c:forEach>
 							</c:if>
 							<br> ${review.content}

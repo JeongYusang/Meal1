@@ -203,6 +203,12 @@ update board_gr set title = #{title}, content = #{content}, secret = #{secret} w
         END as Avgstar
 	from board_gr where g_id = #{g_id};
 	</select>
+	
+	<select id="o_idSearch" resultMap="boardGrResult" parameterType="Integer">
+	select * from board_gr where o_id = #{o_id}
+	</select>
+	
+	
 
 
 </mapper>

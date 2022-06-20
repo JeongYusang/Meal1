@@ -140,4 +140,10 @@ public class OrderServiceImpl implements OrderService {
 		return orderDAO.BestGoodsCount();
 	}
 
+	@Override
+	public List<OrderVO> orderCanceledSellerList(HashMap<String, Object> map) throws Exception {
+		List<OrderVO> orderCanceledSellerList = (List<OrderVO>) orderDAO.orderCanceledSellerList(map);
+		return orderCanceledSellerList;
+	}
+
 }

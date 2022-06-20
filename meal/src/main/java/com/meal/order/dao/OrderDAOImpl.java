@@ -104,4 +104,10 @@ public class OrderDAOImpl implements OrderDAO {
 		List<OrderVO> bestGoodsbyOrder = (List<OrderVO>)sqlSession.selectList("mapper.order.BestGoodsCount");
 		return bestGoodsbyOrder;
 	}
+
+	@Override
+	public List<OrderVO> orderCanceledSellerList(HashMap<String, Object> map) throws DataAccessException {
+		List<OrderVO> orderCanceledSellerList = (List<OrderVO>)sqlSession.selectList("mapper.order.orderCanceledSellerList",map);
+		return orderCanceledSellerList;
+	}
 }

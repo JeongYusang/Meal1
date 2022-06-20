@@ -243,11 +243,12 @@ th.header {
 }
 
 .table-container {
-    font-size: 20px;
+    font-size: 14px;
     font-weight: 400;
 }
 td {
     border-bottom: 1px solid black;
+    border-collapse: collapse;
 }
 
 .footer-wrap {
@@ -256,6 +257,12 @@ td {
 
 td.fixed {
 	text-align: center;
+}
+
+#stable-striped {
+border-bottom: 1px solid black;
+    border-collapse: collapse;
+
 }
 </style>
 </head>
@@ -295,12 +302,12 @@ td.fixed {
 						<c:choose>
 							<c:when test="${empty goodsList}">
 								<tr>
-									<td colspan=5 class="fixed"><strong>등록된 상품이 없습니다.</strong></td>
+									<td colspan=15 class="fixed"><strong>등록된 상품이 없습니다.</strong></td>
 								</tr>
 							</c:when>
 							<c:when test="${not empty goodsList}">
 								
-								<c:forEach var="item" items="${goodsList}" begin="0" end="15">
+								<c:forEach var="item" items="${goodsList}">
 									<tr class="border-bottom">
 										<td>${item.g_id}</td>
 										<td>${item.g_name}</td>
@@ -376,7 +383,7 @@ td.fixed {
 													</tr>
 												</c:when>
 												<c:when test="${not empty orderList}">
-												<c:forEach var="item" items="${orderList }" begin="1" end="10">
+												<c:forEach var="item" items="${orderList }">
 														<tr class="border-bottom">
 															<td>${item.o_id}</td>
 															<td>${item.g_name}</td>
@@ -392,25 +399,16 @@ td.fixed {
 																			<option value="결제완료" selected>결제완료</option>
 																			<option value="배송중">배송중</option>
 																			<option value="배송완료">배송완료</option>
-																			<option value="주문확인중">주문확인중</option>
 																		</c:when>
 																		<c:when test="${item.delivery_state == '배송중' }">
 																			<option value="결제완료">결제완료</option>
 																			<option value="배송중" selected>배송중</option>
 																			<option value="배송완료">배송완료</option>
-																			<option value="주문확인중">주문확인중</option>
 																		</c:when>
 																		<c:when test="${item.delivery_state == '배송완료' }">
 																			<option value="결제완료">결제완료</option>
 																			<option value="배송중">배송중</option>
 																			<option value="배송완료" selected>배송완료</option>
-																			<option value="주문확인중">주문확인중</option>
-																		</c:when>
-																		<c:when test="${item.delivery_state == '주문확인중' }">
-																			<option value="결제완료">결제완료</option>
-																			<option value="배송중">배송중</option>
-																			<option value="배송완료">배송완료</option>
-																			<option value="주문확인중" selected>주문확인중</option>
 																		</c:when>
 																	</c:choose>
 															</select> 
@@ -446,8 +444,59 @@ td.fixed {
 						name="tabmenu" id="tabmenu3"> <label for="tabmenu3"><br>취소,교환,반품내역
 					</label>
 						<div class="tabCon">
-						하잉
-						</div></li>
+								<div class="main-container">
+									<div class="table-container">
+										<table id="stable-striped">
+											<thead id="tap-head">
+												<tr id="top-table">
+													<th onclick="sortTable(0)" class="header" width="70px">주문번호</th>
+													<th onclick="sortTable(1)" class="header" width="200px">상품명</th>
+													<th onclick="sortTable(2)" class="header" width="150px">가격</th>
+													<th onclick="sortTable(3)" class="header" width="100px">수량</th>
+													<th onclick="sortTable(4)" class="header" width="160px">구매자</th>
+													<th onclick="sortTable(5)" class="header" width="250px">배송주소</th>
+												</tr>
+											</thead>
+											<c:choose>
+												<c:when test="${empty orderCanceledSellerList}">
+													<tr>
+														<td colspan=15 class="fixed"><strong>등록된
+																주문내역이 없습니다.</strong></td>
+													</tr>
+												</c:when>
+												<c:when test="${not empty orderCanceledSellerList}">
+												<c:forEach var="item" items="${orderCanceledSellerList }">
+														<tr class="border-bottom">
+															<td>${item.o_id}</td>
+															<td>${item.g_name}</td>
+															<td>${item.o_goods_price}</td>
+															<td>${item.o_goods_qty}</td>
+															<td>${item.u_name}</td>
+															<td>${item.receiver_addr1},
+																${item.receiver_addr2}, ${item.receiver_addr3}</td>
+														</tr>
+														</c:forEach>
+												</c:when>
+											</c:choose>
+										</table>
+										<center>
+											<div class="" id="pagination">
+												<c:forEach var="page" begin="1" end="10" step="1">
+													<c:if test="${section >0 && page==1 }">
+														<a href="${contextPath}/seller/sellerMypage.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
+													</c:if>
+													<a href="${contextPath}/seller/sellerMypage.do?section=${section}&pageNum=${page}">${(section)*10 +page}
+													</a>
+													<c:if test="${page == 10 }">
+														<a href="${contextPath}/seller/sellerMypage.do?section=${section}+1&pageNum=${section*10}+1">다음</a>
+													</c:if>
+												</c:forEach>
+											</div>
+										</center>
+
+									</div>
+								</div>
+							</div></li>
 				</ul>
 			</div>
 		</div>

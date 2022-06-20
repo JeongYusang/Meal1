@@ -28,6 +28,7 @@ import com.meal.board.gq.service.BoardGqService;
 import com.meal.board.gq.vo.BoardGqVO;
 import com.meal.board.gr.service.BoardGrService;
 import com.meal.board.gr.vo.BoardGrVO;
+import com.meal.board.gr.vo.Img_grVO;
 import com.meal.board.one.service.Board1Service;
 import com.meal.board.one.vo.Board1VO;
 import com.meal.common.controller.BaseController;
@@ -297,6 +298,18 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(Map);
 			pagingMap.put("u_id", u_id);
 			List<OrderVO> OrderList = orderService.UserboardOrderPage(pagingMap);
+			for (OrderVO item : OrderList) {
+				int o_id = item.getO_id();
+				String review = orderService.overlappedO_id(o_id);
+				item.setReview(review);
+				BoardGrVO o_idSearch = (BoardGrVO) boardGrService.o_idSearch(o_id);
+				if(o_idSearch != null) {
+				if ((int) item.getO_id() == (int) ((BoardGrVO) o_idSearch).getO_id()) {
+								item.setB_gr_id(((BoardGrVO) o_idSearch).getB_gr_id());
+							}
+				}
+			}
+			
 			List<OrderVO> CancledOrderList = orderService.CanceledUserOrderPage(pagingMap);
 			List<Board1VO> Board1List = board1Service.selectMyBoard1List(pagingMap);
 			List<BoardGrVO> BoardGrList = boardGrService.selectMyBoardGrList(pagingMap);
@@ -304,13 +317,6 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 			List<BoardGrVO> BoardGr = boardGrService.selectBoardGrallList();
 			List<BoardGqVO> BoardGq = boardGqService.selectBoardGqallList();
 			List<Board1VO> board1 = board1Service.selectBoard1allList();
-			mav.addObject("OrderList", OrderList);
-			mav.addObject("CancledOrderList", CancledOrderList);
-			mav.addObject("Board1List", Board1List);
-			mav.addObject("BoardGrList", BoardGrList);
-			mav.addObject("BoardGqList", BoardGqList);
-			String viewName = (String) request.getAttribute("viewName");
-			mav.setViewName(viewName);
 
 			for (Board1VO item : Board1List) {
 				for (Board1VO j : board1) {
@@ -367,6 +373,13 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 					}
 				}
 			}
+			mav.addObject("OrderList", OrderList);
+			mav.addObject("CancledOrderList", CancledOrderList);
+			mav.addObject("Board1List", Board1List);
+			mav.addObject("BoardGrList", BoardGrList);
+			mav.addObject("BoardGqList", BoardGqList);
+			String viewName = (String) request.getAttribute("viewName");
+			mav.setViewName(viewName);
 		} else {
 			message = "로그인을 해주시길 바랍니다.";
 			String viewName = "redirect:/main/loginForm.do";
