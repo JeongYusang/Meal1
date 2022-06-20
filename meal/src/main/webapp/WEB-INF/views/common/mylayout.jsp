@@ -182,8 +182,8 @@ a:hover {
 						<li class="dropdown cate1"><a href="javascript:void(0)"
 							class="dropbtn">카테고리▼</a>
 							<div class="dropdown-content">
-								<a href="#">찌개/탕/찜</a> <a href="#">식사/안주</a> <a href="#">죽</a> <a
-									href="#">기타</a>
+								<a href="${contextPath }/search/CateSearchGoods.do?text=&cate=찌개/탕/찜">찌개/탕/찜</a> <a href="${contextPath }/search/CateSearchGoods.do?text=&cate=식사/안주">식사/안주</a> <a href="${contextPath }/search/CateSearchGoods.do?text=&cate==죽">죽</a> 
+								<a href="${contextPath }/search/CateSearchGoods.do?text=&cate=고기">고기</a><a href="${contextPath }/search/CateSearchGoods.do?text=&cate=간편식">간편식</a><a href="${contextPath }/search/CateSearchGoods.do?text=&cate=기타">기타</a>
 							</div></li>
 						<li class="cate1"><a href="#home">Home</a></li>
 						<li class="cate1"><a href="#news">News</a></li>

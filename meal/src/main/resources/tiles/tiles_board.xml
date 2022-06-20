@@ -146,6 +146,25 @@
 		<put-attribute name="body" value="/WEB-INF/views/board_a/baDetail.jsp"/>
 	</definition>
 	
+	<definition name="/boardA/boardASPList1" extends="baseLayout2">
+		<put-attribute name="title" value="공지사항"/>
+		<put-attribute name="body" value="/WEB-INF/views/board_a/noticeList.jsp"/>
+	</definition>
+	
+	<definition name="/boardA/boardASPList2" extends="baseLayout2">
+		<put-attribute name="title" value="이벤트"/>
+		<put-attribute name="body" value="/WEB-INF/views/board_a/eventList.jsp"/>
+	</definition>
+	
+	<definition name="/boardA/boardASPList3" extends="baseLayout2">
+		<put-attribute name="title" value="자주묻는질문"/>
+		<put-attribute name="body" value="/WEB-INF/views/board_a/QuestionA.jsp"/>
+	</definition>
+	
+	<definition name="/boardA/boardAUpdateform" extends="baseLayout2">
+		<put-attribute name="title" value="자주묻는질문"/>
+		<put-attribute name="body" value="/WEB-INF/views/board_a/baUpdate.jsp"/>
+	</definition>
 	
 	
 </tiles-definitions>

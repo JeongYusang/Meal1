@@ -52,7 +52,7 @@
 		]]>		
 	</insert>
 
-	<select id="boardAInfo" parameterType="Map" resultMap="BoardAdminResult">
+	<select id="selectBAlist" parameterType="Map" resultMap="BoardAdminResult">
 		select R1.* from (select * from board_a) R1 order by b_a_id desc limit #{start} , #{end} 
 	</select>
 	
@@ -63,5 +63,36 @@
 	<select id="selectBaDetail" parameterType="int" resultType="BaVO">
 		select * from board_a where b_a_id = #{b_a_id}
 	</select>
+	
+	<update id="updateBAImg" parameterType="Map">
+		<![CDATA[
+			update img_b_a set fileName = #{fileName} where b_a_id=#{b_a_id} and cate=#{cate}
+		]]>
+	</update>
+	<update id="updateBA" parameterType="Map">
+
+		update board_a set
+		<if test="title != null and !(title.equals(''))">
+			title = #{title},
+		</if>
+		<if test="content != null and !(content.equals(''))">
+			content = #{content},
+		</if>
+		<if test="cate != null and !(cate.equals(''))">
+			cate = #{cate},
+		</if>
+		<if test="secret != null and !(secret.equals(''))">
+			secret = #{secret}
+		</if>
+
+		where b_a_id =#{b_a_id}
+
+	</update>
+
+	<delete id="deleteBA" parameterType="BaVO">
+		<![CDATA[
+			delete from board_a where b_a_id = #{b_a_id}
+		]]>
+	</delete>
 	
 </mapper>
