@@ -33,9 +33,9 @@ public class BaDAOImpl implements BaDAO{
 	}
 
 	@Override
-	public List<BaVO> BaAllList(HashMap<String, Object> map) throws DataAccessException {
-		List<BaVO> BaAllList = (List<BaVO>) sqlSession.selectList("mapper.boardA.boardAInfo", map);
-		return BaAllList;
+	public List<BaVO> selectBAlist(HashMap<String, Object> pagingMap) throws DataAccessException {
+		List<BaVO> selectBAlist = (List<BaVO>) sqlSession.selectList("mapper.boardA.selectBAlist", pagingMap);
+		return selectBAlist;
 	}
 
 	@Override
@@ -48,6 +48,11 @@ public class BaDAOImpl implements BaDAO{
 	public BaVO selectBaDetail(int b_a_id) throws DataAccessException {
 		BaVO baVO = (BaVO) sqlSession.selectOne("mapper.boardA.selectBaDetail", b_a_id);
 		return baVO;
+	}
+
+	@Override
+	public void deleteBA(BaVO boardAInfo) throws DataAccessException {
+		sqlSession.delete("mapper.boardA.deleteBA", boardAInfo);
 	}
 
 }

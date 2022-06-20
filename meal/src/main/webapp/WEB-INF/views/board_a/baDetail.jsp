@@ -131,6 +131,9 @@ div#divID1 {
 div#divDATE1 {
     text-align: center;
 }
+img#contentID {
+    width: 100%;
+}
 
 </style>
 
@@ -146,7 +149,7 @@ div#divDATE1 {
 			<c:choose>
 				<c:when test="${adminInfo ne null }">
 				<div id="adminBTN">
-					<input type=button value="수정" onClick="fn_enable(this.form)" /> 
+					<a href="${contextPath}/boardA/boardAUpdateForm.do?b_a_id=${boardAInfo.b_a_id}">수정</a> 
 					<input type=button value="삭제" onClick="fn_remove_article('${contextPath}/board/removeArticle.do', ${article.articleNO})" />
 				</div>
 				</c:when>
@@ -214,7 +217,7 @@ div#divDATE1 {
 					</div>
 					<c:forEach var="item" items="${imgList}">
 						<div class="divCONTENT1">
-							<img src="${contextPath}/download3.do?b_a_id=${item.b_a_id}&cate=${item.cate}" >
+							<img src="${contextPath}/download3.do?b_a_id=${item.b_a_id}&cate=${item.cate}" id="contentID">
 						</div>
 					</c:forEach>
 					</c:when>

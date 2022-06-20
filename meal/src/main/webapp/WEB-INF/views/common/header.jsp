@@ -261,18 +261,23 @@
 		<!-- Modal content -->
 		<div class="modal-inner">
 			<ul class="modal-menu">
-				<li class="first-list">첫메뉴</li>
-				<li>피</li>
-				<li>땀</li>
-				<li>눈물</li>
+				<li class="first-list">상품분류</li>
+				<li><a href="${contextPath }/search/CateSearchGoods.do?text=&cate=찌개/탕/찜">찌개/탕/찜</a></li>
+				<li><a href="${contextPath }/search/CateSearchGoods.do?text=&cate=고기">고기</a></li>
+				<li><a href="${contextPath }/search/CateSearchGoods.do?text=&cate=죽">죽</a></li>
+				<li><a href="${contextPath }/search/CateSearchGoods.do?text=&cate=식사/안주">식사/안주</a></li>
+				<li><a href="${contextPath }/search/CateSearchGoods.do?text=&cate=간편식">간편식</a></li>
+				<li><a href="${contextPath }/search/CateSearchGoods.do?text=&cate=기타">기타</a></li>
 			</ul>
 
 			<ul class="modal-menu">
-				<li class="first-list">둘메뉴</li>
-
-				<li>마지막</li>
-				<li>숨을</li>
-				<li>다</li>
+				<li class="first-list">게시판</li>
+				<li><a href="${contextPath }/boardGr/selectBoardGrList.do">상품후기</a></li>
+				<li><a href="${contextPath }/boardGq/selectBoardGqList.do">상품문의</a></li>
+				<li><a href="${contextPath }/board1/selectBoard1List.do">1대1게시판</a></li>
+				<li><a href="${contextPath }/boardA/boardASPList1.do?cate=공지사항">공지사항</a></li>
+				<li><a href="${contextPath }/boardA/boardASPList2.do?cate=이벤트">이벤트</a></li>
+				<li><a href="${contextPath }/boardA/boardASPList3.do?cate=자주묻는질문">자주묻는질문</a></li>
 			</ul>
 
 			<ul class="modal-menu">
@@ -339,7 +344,7 @@
 							<li><a href="${contextPath}/member/logout.do">로그아웃 |</a></li>
 							<li><a href="${contextPath }/order/selectUserOrders.do">마이페이지 |
 							</a></li>
-							<li><a href="#">주문배송</a></li>
+							<li><a href="${contextPath }/cart/myCartList.do">장바구니</a></li>
 						</c:when>
 						<c:when test="${isLogOn==true and not empty sellerInfo }">
 							<li><c:out value="${sellerInfo.s_name}님 반갑습니다" /></li>
@@ -366,9 +371,7 @@
 					<li class="dropdown"><a href="javascript:void(0)"
 						class="dropbtn1">고객센터▼</a>
 						<div class="dropdown-content">
-							<a href="${contextPath }/cart/myCartList.do">장바구니</a> <a
-								href="${contextPath}/board1/selectBoard1List.do">1대1문의게시판</a> <a
-								href="#">카테고리4</a>
+							 <a href="${contextPath}/board1/selectBoard1List.do">1대1문의게시판</a> 
 						</div></li>
 				</ul>
 			</div>

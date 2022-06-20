@@ -1,6 +1,7 @@
 package com.meal.board.a.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,7 @@ import com.meal.admin.vo.AdminVO;
 import com.meal.board.a.service.BaService;
 import com.meal.board.a.vo.BaVO;
 import com.meal.board.a.vo.Img_aVO;
+import com.meal.board.one.vo.Board1VO;
 import com.meal.common.controller.BaseController;
 
 @Controller("boardAController")
@@ -165,7 +167,7 @@ public class BaControllerImpl extends BaseController implements BaController {
 		
 			
 			//관리자 게시판 조회를 위해 사용
-			List<BaVO> boardAList = (List<BaVO>) baService.BaAllList(pagingMap);
+			List<BaVO> boardAList = (List<BaVO>) baService.selectBAlist(pagingMap);
 			System.out.println("---------------------------");
 			System.out.println("boardAList : " + boardAList);
 			System.out.println("---------------------------");
@@ -213,54 +215,122 @@ public class BaControllerImpl extends BaseController implements BaController {
 	}
 	
 	@Override
-	@RequestMapping(value="/boardASPList.do", method= {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView boardASPList(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
-		@RequestParam(value = "section1", required = false) String section,
-		@RequestParam(value = "pgNum", required = false) String pgNum,
-		@RequestParam(value = "cate", required = false) String cate,
-		HttpServletRequest request,
-		HttpServletResponse response) throws Exception {
+	   @RequestMapping(value="/boardASPList.do", method= {RequestMethod.GET, RequestMethod.POST})
+	   public ModelAndView boardASPList(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+	      @RequestParam(value = "section1", required = false) String section,
+	      @RequestParam(value = "pgNum", required = false) String pgNum,
+	      @RequestParam(value = "cate", required = false) String cate,
+	      HttpServletRequest request,
+	      HttpServletResponse response) throws Exception {
+	      ModelAndView mav = new ModelAndView();
+	      HttpSession session = request.getSession();
+	      
+	      HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
+	      pagingInfo.put("section", section);
+	      pagingInfo.put("pgNum", pgNum);
+	      HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
+
+	      
+	      List<BaVO> boardAList = (List<BaVO>) baService.selectBAlist(pagingMap);
+
+
+	    	 if ( cate == "이벤트") {
+
+	         System.out.println("---------------------------");
+	         System.out.println("이벤트 : " + boardAList);
+	         System.out.println("---------------------------");
+
+	         String eventBA = "/boardA/boardASPList2";
+	         mav.addObject("cate", cate);
+	         mav.addObject("boardAList", boardAList);
+	         mav.setViewName(eventBA);
+
+	         return mav;
+	         } else if ( cate == "공지사항") {
+
+	            System.out.println("---------------------------");
+	            System.out.println("공지사항 : " + boardAList);
+	            System.out.println("---------------------------");
+	            
+	            String noticeBA = "/boardA/boardASPList1";
+	            mav.addObject("cate", cate);
+	            mav.addObject("boardAList", boardAList);
+	            mav.setViewName(noticeBA);
+
+	            return mav;
+	         } else if ( cate == "자주묻는질문") {
+
+	            System.out.println("---------------------------");
+	            System.out.println("자주묻는질문 : " + boardAList);
+	            System.out.println("---------------------------");
+	            
+	            String QuestionBA = "/boardA/boardASPList3";
+	            mav.addObject("cate", cate);
+	            mav.addObject("boardAList", boardAList);
+	            mav.setViewName(QuestionBA);
+	            
+	            return mav;
+	         } 
+	      return mav;
+	      }
+	
+	@Override
+	@RequestMapping(value = "/boardAUpdateform.do", method = { RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView boardAUpdateform(@RequestParam("b_a_id") Integer b_a_id, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		String viewName = request.getParameter("viewName");
+		System.out.println("=========="+viewName);
+		HttpSession session = request.getSession();
+		AdminVO adminVO = (AdminVO) session.getAttribute("adminInfo");
+		System.out.println("=========="+adminVO);
+		List<Img_aVO> imgList =(List<Img_aVO>)baService.selectImgList(b_a_id);
+		System.out.println("=========="+imgList);
+		BaVO boardAInfo = (BaVO) baService.selectBaDetail(b_a_id);
+		System.out.println("=========="+boardAInfo);
+			if (adminVO != null) {
+				mav.addObject("boardAInfo", boardAInfo);
+				mav.addObject("imgList", imgList);
+				mav.setViewName(viewName);
+				return mav;
+			} else {
+				String message = "회원정보가 일치하지 않습니다.";
+				mav.addObject("message", message);
+				mav.addObject("b_a_id", b_a_id);
+				viewName = "redirect:/boardA/boardADetail.do";
+				mav.setViewName(viewName);
+				return mav;
+			}
+	}
+			
+	@Override
+	@RequestMapping(value = "/deleteBA.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView deleteBA(@RequestParam HashMap<String, Object> map, @RequestParam("b_a_id") int b_a_id,
+			HttpServletRequest request, HttpServletResponse repsponse) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
-		
-		HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
-		pagingInfo.put("section", section);
-		pagingInfo.put("pgNum", pgNum);
-		HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
+		AdminVO adminInfo = (AdminVO) request.getAttribute("adminInfo");
+		BaVO boardAInfo = (BaVO) baService.selectBaDetail(b_a_id);
+		String a_id = adminInfo.getA_id();
+		String a_id1 = boardAInfo.getA_id();
 
-		List<BaVO> boardASPList = (List<BaVO>) baService.BaAllList(pagingMap);
-		
-		
-		if ( cate == "이벤트") {
-			System.out.println("---------------------------");
-			System.out.println("boardASPList : " + boardASPList);
-			System.out.println("---------------------------");
-			
-			String viewName = (String) request.getAttribute("viewName");
-			mav.addObject("boardASPList", boardASPList);
+		if (a_id.equals(a_id1)) {
+			String path = CURR_IMAGE_UPLOAD_PATH + "\\" + "boardA" + "\\" + boardAInfo.getB_a_id();
+			deleteFolder(path);
+			baService.deleteBA(boardAInfo);
+
+			session.setAttribute("isLogOn", true);
+			String message = "상품이 삭제되었습니다.";
+			mav.addObject("message", message);
+			String viewName = "redirect:/boardA/selectBoardAList.do";
 			mav.setViewName(viewName);
-
-			} else if ( cate == "공지사항") {
-				System.out.println("---------------------------");
-				System.out.println("boardASPList : " + boardASPList);
-				System.out.println("---------------------------");
-				
-				String viewName = (String) request.getAttribute("viewName");
-				mav.addObject("boardASPList", boardASPList);
-				mav.setViewName(viewName);
-
-			} else if ( cate == "자주묻는질문") {
-				System.out.println("---------------------------");
-				System.out.println("boardASPList : " + boardASPList);
-				System.out.println("---------------------------");
-				
-				String viewName = (String) request.getAttribute("viewName");
-				mav.addObject("boardASPList", boardASPList);
-				mav.setViewName(viewName);
-
-			} 
-		return mav;
+			return mav;
+		} else {
+			String viewName = "redirect:/boardA/selectBoardAList.do";
+			mav.setViewName(viewName);
+			return mav;
 		}
-			
-	
+	}
+
 }

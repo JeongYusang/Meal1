@@ -1,5 +1,6 @@
 package com.meal.board.a.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,4 +30,10 @@ public interface BaController {
 			@RequestParam(value = "cate", required = false) String cate,
 			HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
+	
+	public ModelAndView boardAUpdateform(@RequestParam("b_a_id") Integer b_a_id, HttpServletRequest request,
+			HttpServletResponse response) throws Exception;
+	
+	public ModelAndView deleteBA(@RequestParam HashMap<String, Object> map, @RequestParam("b_a_id") int b_a_id,
+			HttpServletRequest request, HttpServletResponse repsponse) throws Exception;
 }

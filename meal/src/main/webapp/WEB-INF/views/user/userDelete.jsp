@@ -58,6 +58,20 @@ window.onload=function()
 
 </script>
 </c:if>
+<script>
+function a(){
+   var pw = document.getElementByClass("pw").value();
+   if(pw !=null && pw != null){
+      return true;
+   }
+   alert("비밀번호를 입력해주세요.");
+   
+   return false;
+   
+}
+
+</script>
+
 </head>
 <body>
 <div>
@@ -67,7 +81,7 @@ window.onload=function()
 	
 			<div id="delete-container">
 				<form id="delForm" method='post'
-					action="${contextPath }/member/deleteMember.do">
+					action="${contextPath }/member/deleteMember.do" onsubmit="return a()">
 					<h1 style="text-align: center">회원탈퇴</h1>
 					
 					<table class="deltbl">
@@ -161,9 +175,6 @@ window.onload=function()
 							<div class="delbtn">
 	
 								<button class="submit" type="submit">전송하기</button>
-								<button id="delbtn">
-									<a href="${contextPath}/main/main.do">뒤로가기</a>
-								</button>
 							</div>
 						</center>
 					</div>
