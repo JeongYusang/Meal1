@@ -344,7 +344,7 @@ color: black;
 			<c:when test="${not empty ReviewList}">
 				<c:forEach var="review" items="${ReviewList}">
 					<div class="board-b-wrap">
-						<h1>리뷰 수정</h1>
+						<h1>답변</h1>
 						<c:if test="${sellerInfo.s_id eq boardGrInfo.s_id}">
 							<input type=button value="수정"
 								onClick="fn_update('${contextPath}/boardGr/boardGrReviewUpdateform.do',${review.b_gr_id})" />

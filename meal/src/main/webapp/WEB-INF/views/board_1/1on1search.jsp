@@ -132,27 +132,25 @@ tr.border-bottom td {
 								<c:when test="${not empty item.u_id and empty item.secret }">
 									<td>${item.b_1_id}</td>
 									<td>${item.u_id}</td>
-									<td><a
-										href="${contextPath}/board1/b1Detail.do?b_1_id=${item.b_1_id}">${item.title}</a></td>
+									<td><a href="${contextPath}/board1/b1Detail.do?b_1_id=${item.b_1_id}">${item.title}</a></td>
 									<td>${item.creDate}</td>
 
 
 
 								</c:when>
 
-								<c:when test="${not empty item.s_id and empty item.secret }">
+								<c:when test="${not empty item.s_id and empty item.secret}">
 									<td>${item.b_1_id}</td>
 									<td>${item.s_id}</td>
-									<td><a
-										href="${contextPath}/board1/b1Detail.do?b_1_id=${item.b_1_id}">${item.title}</a></td>
+									<td><a href="${contextPath}/board1/b1Detail.do?b_1_id=${item.b_1_id}">${item.title}</a></td>
 									<td>${item.creDate}</td>
 
 
 								</c:when>
-								<c:when test="${not empty item.secret }">
+								<c:when test="${not empty item.secret and item.u_id != memberInfo.u_id and item.s_id != sellerInfo.s_id }">
 									<td>${item.b_1_id}</td>
 									<td>비밀글</td>
-									<td>>비밀글입니다</td>
+									<td>비밀글입니다</td>
 									<td>${item.creDate}</td>
 								</c:when>
 							</c:choose>
