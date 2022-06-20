@@ -38,22 +38,23 @@ div .lilili {
 <div class="main-container">
             <div id=maintitle>상품관리</div>
             <c:choose>
-            <c:when test="${empty boardASPList.cate != '이벤트'}">
+            <c:when test="${empty boardAList}">
 				<tr>
 					<td class="fixed"><strong>등록된 이벤트가 없습니다.</strong></td>
 				</tr>
 			</c:when>
-            <c:when test="${not empty boardASPList}">
-            <c:forEach var="item" items="${boardASPList}" begin="0" end="12">
+            <c:otherwise>
+            <%-- <c:forEach var="img" items="${imgList}" begin="0" end="12"> --%>
             <div class="table-container">
                <div id="stable-striped">
                      <div class="border-bottom">
+            			<c:forEach var="item" items="${boardAList}" >
                         <div class="lilili">
                            <a href="${contextPath}/baordA/boardASPList1.do?cate=이벤트&b_a_id=${item.b_a_id}">
-                              <img src="${contextPath}/download3.do?" height="100px" />
-                              ㅎㅇ
+                              <img src="${contextPath}/download3.do?b_a_id=${item.b_a_id}&cate=main" height="100px" />
                            </a>
                         </div>
+                        </c:forEach>
                      </div>
                </div>
                <center>
@@ -75,8 +76,8 @@ div .lilili {
                </center>
 
             </div>
-            </c:forEach>
-            </c:when>
+            <%-- </c:forEach> --%>
+            </c:otherwise>
             </c:choose>
          </div>
 </body>

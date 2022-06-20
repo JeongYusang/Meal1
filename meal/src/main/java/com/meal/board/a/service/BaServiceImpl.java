@@ -41,13 +41,13 @@ public class BaServiceImpl implements BaService {
 	}
 
 	@Override
-	public List<Img_aVO> selectImgList(int b_a_id) throws Exception {
+	public List<Img_aVO> selectImgList(String b_a_id) throws Exception {
 		List<Img_aVO> list = (List<Img_aVO>) baDAO.selectImgList(b_a_id);
 		return list;
 	}
 
 	@Override
-	public BaVO selectBaDetail(int b_a_id) throws Exception {
+	public BaVO selectBaDetail(String b_a_id) throws Exception {
 		BaVO baVO = (BaVO) baDAO.selectBaDetail(b_a_id);
 		return baVO;
 	}
@@ -55,6 +55,12 @@ public class BaServiceImpl implements BaService {
 	@Override
 	public void deleteBA(BaVO boardAInfo) throws Exception {
 		baDAO.deleteBA(boardAInfo);
+	}
+
+	@Override
+	public void updateBAImg(HashMap<String, Object> newImgList) throws Exception {
+		baDAO.updateBAImg(newImgList);
+		
 	}
 
 }

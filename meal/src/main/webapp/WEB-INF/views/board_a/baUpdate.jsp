@@ -113,15 +113,19 @@ td #preview {
 	width: 30px;
 	height:30px;
 }
+
+img#eventIMG {
+    width: 100%;
+}
 </style>
 </head>
 
 <body>
 	<div class='board-wrap'>
 		<div class='board-title'>
-			<h1>새 글쓰기</h1>
+			<h1>수정하기</h1>
 		</div>
-		<form name="frmArticle" method="post" action="${contextPath}/boardA/boardAinsert.do"
+		<form name="frmArticle" method="post" action="${contextPath}/boardA/updateBA.do?b_a_id=${boardAInfo.b_a_id}"
 			enctype="multipart/form-data">
 			<div class='table-wrap'>
 				<table>
@@ -133,14 +137,14 @@ td #preview {
 					</tr>
 					<tr>
 						<th class="td1">제목</th>
-						<td class="td2"><input type=text value="${boardAInfo }" name="title"
+						<td class="td2"><input type=text value="${boardAInfo.title }" name="title"
 							id="title" /></td>
 					</tr>
 					<tr>
 						<th class="td1">카테고리</th>
 						<td class="td2"><select name="cate" id="cate" title="cate"
 							onChange="">
-								<option value="${boardAInfo.cate }" selected></option>
+								<option value="${boardAInfo.cate }" selected>${boardAInfo.cate}</option>
 								<option value="공지사항">공지사항</option>
 								<option value="이벤트">이벤트</option>
 								<option value="자주묻는질문">자주묻는질문</option>
@@ -153,7 +157,11 @@ td #preview {
 					</tr>
 					<tr>
 						<th class="td1">등록된 사진</th>
-						<td class="td2"><img src="${contextPath }/download3.do?b_a_id=${boardAInfo.b_a_id}&cate=${boardInfo.cate}"></td>
+						<td class="td2">
+						<c:forEach var="item" items="${imgList}">
+							<img src="${contextPath}/download3.do?b_a_id=${item.b_a_id}&cate=${item.cate}" id="eventIMG"/>
+						</c:forEach>
+						</td>
 					</tr>
 					<tr class="filebox">
 						<th class="fileboxhead">이미지수정</th>

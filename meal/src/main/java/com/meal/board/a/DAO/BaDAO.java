@@ -19,9 +19,11 @@ public interface BaDAO {
 
 	public List<BaVO> selectBAlist(HashMap<String, Object> pagingMap) throws DataAccessException;
 	
-	public List<Img_aVO> selectImgList(int b_a_id) throws DataAccessException;
+	public List<Img_aVO> selectImgList(String b_a_id) throws DataAccessException;
 	
-	public BaVO selectBaDetail(int b_a_id) throws DataAccessException;
+	public BaVO selectBaDetail(String b_a_id) throws DataAccessException;
+
+	public void updateBAImg(HashMap<String, Object> newImgList) throws DataAccessException;
 
 	public void deleteBA(BaVO boardAInfo) throws DataAccessException;
 }
