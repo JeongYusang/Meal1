@@ -24,7 +24,7 @@
 			value="/WEB-INF/views/member/memberFormResult.jsp" />
 	</definition>
 
-	<definition name="/member/memberUpdateForm" extends="baseLayout">
+	<definition name="/member/MemberUpdateForm" extends="baseLayout2">
 		<put-attribute name="title" value="회원 수정창" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/user/userUpdateForm.jsp" />
@@ -109,11 +109,6 @@
 		<put-attribute name="title" value="비밀번호찾기결과창" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/member/Find_PW_Result.jsp" />
-	</definition>
-	
-	<definition name="/user/userUpdate" extends="baseLayout2">
-		<put-attribute name="title" value="회원정보관리" />
-		<put-attribute name="body" value="/WEB-INF/views/user/userUpdateForm.jsp" />
 	</definition>
 	
 	<definition name="/member/memberDetail" extends="baseLayout2">

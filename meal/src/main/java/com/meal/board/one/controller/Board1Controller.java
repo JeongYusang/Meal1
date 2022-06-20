@@ -32,10 +32,10 @@ public interface Board1Controller {
 	public ModelAndView board1Update(@ModelAttribute Board1VO board1VO, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 
-	public ModelAndView board1Updateform(@ModelAttribute("b_1_id") Integer b_1_id, HttpServletRequest request,
+	public ModelAndView board1Updateform(@RequestParam("b_1_id") Integer b_1_id, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 
-	public ModelAndView board1View(@RequestParam("b_1_id") int b_1_id, HttpServletRequest request,
+	public ModelAndView board1View(@RequestParam("b_1_id") int b_1_id,@RequestParam(value = "message", required = false) String message, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 
 	public ModelAndView writeCheck(HttpServletRequest request, HttpServletResponse response) throws Exception;

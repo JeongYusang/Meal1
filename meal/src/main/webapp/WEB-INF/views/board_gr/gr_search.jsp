@@ -191,8 +191,7 @@ tr.border-bottom td {
 					<c:forEach var="item" items="${boardGr}">
 						<label for="border-bottom"></label>
 						<tr class="item">
-							<c:choose>
-								<c:when test="${not empty item.u_id and empty item.secret }">
+	
 									<td>${item.b_gr_id }</td>
 									<td><c:choose>
 											<c:when test="${item.star == 5}">
@@ -236,52 +235,6 @@ tr.border-bottom td {
 									<td>${item.u_id}</td>
 									<td>${item.creDate}</td>
 									<td>${item.compare}</td>
-								</c:when>
-								<c:when test="${not empty item.u_id and not empty item.secret }">
-									<td>${item.b_gr_id }</td>
-									<td><c:choose>
-											<c:when test="${item.star == 5}">
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-											</c:when>
-											<c:when test="${item.star == 4}">
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star"></span>
-											</c:when>
-											<c:when test="${item.star == 3}">
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-											</c:when>
-											<c:when test="${item.star == 2}">
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-											</c:when>
-											<c:otherwise>
-												<span class="fa fa-star checked"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-											</c:otherwise>
-										</c:choose></td>
-									<td>비밀글입니다</td>
-									<td>****</td>
-									<td>${item.creDate}</td>
-									<td>${item.compare}</td>
-								</c:when>
-							</c:choose>
 						</tr>
 					</c:forEach>
 				</c:otherwise>
@@ -310,9 +263,6 @@ tr.border-bottom td {
 		</center>
 		<hr>
 		<br>
-		<div id="write">
-			<a href="${contextPath }/boardGr/boardGrWrite.do">글쓰기</a>
-		</div>
 	</div>
 
 

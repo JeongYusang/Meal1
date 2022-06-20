@@ -256,14 +256,32 @@ margin: 30px;
 		})
 
 	});
+	
+	function delchk(){
+	    if(confirm("정말 삭제하시겠습니까?")){
+	        location.href = "/member/deleteMember.do?u_id=${memberVO.u_id}";
+	        return true;
+	    } else {
+	    	alert("취소 되었습니다");
+	        return false;
+	    }
+	}
 </script>
 </head>
 <body>
 
 	<div class="div1">
 		<div class="div2-1">
+		<c:choose>
+		<c:when test="${not empty adminInfo }">
+		<a href = "${contextPath }/member/MemberUpdateForm.do?u_id=${memberVO.u_id}">수정</a>
+		<a href = "${contextPath }/member/deleteMember.do?u_id=${memberVO.u_id}" onClick = "delchk()">삭제</a>
+		</c:when>
+		<c:otherwise>
 		<button type="button" class="checkpw">수정</button>
          <button type="button" class="checkpw1">탈퇴</button>
+         </c:otherwise>
+         </c:choose>
 		</div>
 		<div id="main-wrap1">
 			<div id="myinfo-wrap">

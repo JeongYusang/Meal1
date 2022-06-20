@@ -12,14 +12,14 @@
 <head>
 <meta charset="UTF-8">
 <title>리뷰</title>
-<c:if test='${not empty message }'>
+<c:if test='${ not empty message}'>
 	<script>
 		window.onload = function() {
 			result();
 		}
 
 		function result() {
-			alert('${message}');
+			alert("${message}");
 		}
 	</script>
 </c:if>

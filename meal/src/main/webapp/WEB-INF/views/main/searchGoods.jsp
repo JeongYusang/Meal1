@@ -192,6 +192,7 @@ position: relative;
 								 <br>${item.g_name } <br>
 							<c:if test="${empty item.g_saleprice or item.g_saleprice eq 0 }">
 								가격: ${item.g_price }원
+								<br><br>
 								</c:if> <c:if
 									test="${not empty item.g_saleprice and item.g_saleprice ne 0}">
 									<span class="goodsPrice">가격 : ${item.g_price }원</span>

@@ -28,9 +28,9 @@ public interface MemberController {
 	public ResponseEntity updateMember(@ModelAttribute("member") MemberVO member, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 
-	public ResponseEntity deleteMember(@RequestParam("map") HashMap<String, Object> map, HttpServletRequest request,
+	public ResponseEntity deleteMember(@RequestParam(value="u_id", required = false)String u_id,@RequestParam HashMap<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
-
+	
 	public ModelAndView myMileage(@RequestParam(value = "message", required = false) String message,
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
@@ -42,5 +42,8 @@ public interface MemberController {
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum,
 			@RequestParam(value = "u_id", required = false)String u_id,HttpServletRequest request,
+			HttpServletResponse response) throws Exception;
+	
+	public ModelAndView UpdateForm(@RequestParam(value = "u_id", required = false) String u_id,@RequestParam HashMap<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 }

@@ -152,8 +152,7 @@ tr.border-bottom td {
 								<c:when test="${not empty item.secret }">
 									<td>${item.b_1_id}</td>
 									<td>비밀글</td>
-									<td><a
-										href="${contextPath}/board1/b1Detail.do?b_1_id=${item.b_1_id}">비밀글입니다</a></td>
+									<td>>비밀글입니다</td>
 									<td>${item.creDate}</td>
 								</c:when>
 							</c:choose>
@@ -188,8 +187,10 @@ tr.border-bottom td {
 
 	<hr>
 	<br>
+	<c:if test="${empty adminInfo }">
 	<div id="write">
 		<a href="${contextPath }/board1/board1Write.do">글쓰기</a>
 	</div>
+	</c:if>
 </body>
 </html>

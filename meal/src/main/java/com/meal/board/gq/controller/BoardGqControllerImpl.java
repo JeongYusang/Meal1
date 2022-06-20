@@ -58,7 +58,9 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		ModelAndView mav = new ModelAndView();
 		String imageFileName = null;
 		HttpSession session = multipartRequest.getSession();
-
+		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+		SellerVO sellerInfo = (SellerVO) session.getAttribute("sellerInfo");
+		if(memberInfo != null || sellerInfo != null) {
 		HashMap<String, Object> newboardGqMap = new HashMap<String, Object>();
 		Enumeration enu = multipartRequest.getParameterNames();
 		while (enu.hasMoreElements()) {
@@ -75,8 +77,7 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		BoardGqVO boardInfo = (BoardGqVO) boardGqService.findb_gq_id();
 		int b_gq_id = (Integer) boardInfo.getB_gq_id();
 		int g_id = (Integer) boardInfo.getG_id();
-		MemberVO memberVO = (MemberVO) session.getAttribute("memberInfo");
-		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
+		
 
 		// 이미지 이동을 위한 메소드
 		try {
@@ -109,13 +110,20 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 			}
 
 			// 결과창에 출력해주기 위해 판매자 정보를 저장해줌
-			MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
-			mav.addObject("memberInfo", memberInfo);
-			String viewName = "redirect:/boardGq/selectBoardGqList.do";
-			mav.setViewName(viewName);
+			if(memberInfo != null) {
+				String message = "글을 등록했습니다";
+				String viewName = "redirect:/goods/goodsDetail.do?g_id=" + g_id;
+				mav.setViewName(viewName);
+				mav.addObject(message);
+			}else if (sellerInfo != null) {
+				String message = "답변을 등록했습니다";
+				mav.addObject(message);
+				String viewName = "redirect:/seller/sellerBoardMypage.do";
+				mav.setViewName(viewName);
+			}
+			
 			return mav;
 		} catch (Exception e) {
-			System.out.println("실패");
 			e.printStackTrace();
 			// 에러가 날경우 temp에 있는 저장했던 이미지 파일들을 삭제 시킴
 			if (imageFileList != null && imageFileList.size() != 0) {
@@ -123,13 +131,18 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 					imageFileName = (String) item.get("fileName");
 					File srcFile = new File(CURR_IMAGE_UPLOAD_PATH + "\\" + "temp" + "\\" + imageFileName);
 					srcFile.delete();
-					String viewName1 = "redirect:/goods/goodsDetail.do?g_id=" + g_id;
-					mav.setViewName(viewName1);
-					return mav;
+					String viewName = "redirect:/goods/goodsDetail.do?g_id=" + g_id;
+					mav.setViewName(viewName);
 				}
 			}
-			return mav;
 		}
+		}else {
+			String message = "로그인 해주시길 바랍니다";
+			mav.addObject(message);
+			String viewName = "redirect:/main/loginForm.do";
+			mav.setViewName(viewName);
+		}
+		return mav;
 	}
 
 	@Override
@@ -217,13 +230,11 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 	public ModelAndView selectBoardGqList(@RequestParam(value = "message", required = false) String message,
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
-			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
+			@RequestParam(value = "pageNum", required = false) String pageNum,HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView(viewName);
 		HttpSession session = request.getSession();
-		MemberVO memberVO = (MemberVO) session.getAttribute("memberInfo");
-		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
 
 		if (message != null) {
 			mav.addObject("message", message);
@@ -259,17 +270,13 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+			@RequestParam(value = "message", required = false) String message,HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView(viewName);
 		HttpSession session = request.getSession();
-		MemberVO memberVO = (MemberVO) session.getAttribute("memberInfo");
+		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+		if (memberInfo != null) {
 		String u_id = memberVO.getU_id();
-		String message = (String) request.getAttribute("message");
-		if (message != null) {
-			mav.addObject("message", message);
-		}
-
 		HashMap<String, Object> Map = new HashMap<String, Object>();
 		Map.put("pageNum", pageNum);
 		Map.put("section", section);
@@ -301,6 +308,14 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		}
 		mav.addObject("memberVO", memberVO);
 		mav.addObject("boardGq", boardGq);
+		}else {
+			viewName = "redirect:/main/loginForm.do";
+			mav.setViewName(viewName);
+			message = "판매자 아이디로 로그인 해주시길 바랍니다";
+		}
+		if (message != null) {
+			mav.addObject("message", message);
+		}
 		return mav;
 	}
 
@@ -309,49 +324,56 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 	public ModelAndView selectSMyBoardGqList(
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
-			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
+			@RequestParam(value = "pageNum", required = false) String pageNum,
+			@RequestParam(value = "message", required = false) String message,HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
-		ModelAndView mav = new ModelAndView(viewName);
+		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
-		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
-		String s_id = sellerVO.getS_id();
-		String message = (String) request.getAttribute("message");
+		SellerVO sellerInfo = (SellerVO) session.getAttribute("sellerInfo");
+		if(sellerInfo != null) {
+			String s_id = sellerVO.getS_id();
+			HashMap<String, Object> Map = new HashMap<String, Object>();
+			Map.put("pageNum", pageNum);
+			Map.put("section", section);
+			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(Map);
+			pagingMap.put("s_id", s_id);
+
+			List<BoardGqVO> boardGq = boardGqService.selectSellerBoardGqList(pagingMap);
+			List<BoardGqVO> board2 = boardGqService.selectSellerBoardGqallList(s_id);
+
+			for (BoardGqVO item : boardGq) {
+				int g_id = item.getG_id();
+				GoodsVO goodsVO = goodsService.selectGoodsDetail(g_id);
+				String g_name = goodsVO.getG_name();
+				item.setG_name(g_name);
+			}
+
+			for (BoardGqVO item : boardGq) {
+				for (BoardGqVO j : board2) {
+					if (!((int) item.getB_gq_id() == (int) j.getParentNo())) {
+						String compare = "N";
+						item.setCompare(compare);
+					} else {
+						String compare = "Y";
+						item.setCompare(compare);
+						System.out.println("BoardCompare" + item.getB_gq_id());
+						break;
+					}
+				}
+			}
+			mav.addObject("boardGq", boardGq);
+			mav.addObject("sellerVO", sellerVO);
+			mav.setViewName(viewName);
+		}else {
+			viewName = "redirect:/main/loginForm.do";
+			mav.setViewName(viewName);
+			message = "판매자 아이디로 로그인 해주시길 바랍니다";
+		}
 		if (message != null) {
 			mav.addObject("message", message);
 		}
-		HashMap<String, Object> Map = new HashMap<String, Object>();
-		Map.put("pageNum", pageNum);
-		Map.put("section", section);
-		HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(Map);
-		pagingMap.put("s_id", s_id);
-
-		List<BoardGqVO> boardGq = boardGqService.selectSellerBoardGqList(pagingMap);
-		List<BoardGqVO> board2 = boardGqService.selectSellerBoardGqallList(s_id);
-
-		for (BoardGqVO item : boardGq) {
-			int g_id = item.getG_id();
-			GoodsVO goodsVO = goodsService.selectGoodsDetail(g_id);
-			String g_name = goodsVO.getG_name();
-			item.setG_name(g_name);
-		}
-
-		for (BoardGqVO item : boardGq) {
-			for (BoardGqVO j : board2) {
-				if (!((int) item.getB_gq_id() == (int) j.getParentNo())) {
-					String compare = "N";
-					item.setCompare(compare);
-				} else {
-					String compare = "Y";
-					item.setCompare(compare);
-					System.out.println("BoardCompare" + item.getB_gq_id());
-					break;
-				}
-			}
-		}
-		mav.addObject("boardGq", boardGq);
-		mav.addObject("sellerVO", sellerVO);
-		System.out.println("뷰네임" + viewName);
+		
 		return mav;
 
 	}
@@ -395,10 +417,10 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		System.out.println("member :" + memberInfo + "  seller :" + sellerInfo + "  admin : " + adminInfo);
 		if (memberInfo == null && sellerInfo == null && adminInfo == null) {
 // g_detail로 viewName 변경
-			String viewName1 = "redirect:/goods/goodsDetail.do?g_id=" + g_id;
+			String viewName = "redirect:/main/loginForm.do";
 			String message = "로그인을 해주세요.";
 			mav.addObject("message", message);
-			mav.setViewName(viewName1);
+			mav.setViewName(viewName);
 			return mav;
 		} else {
 			String viewName = "/boardGq/boardGqWrite";
@@ -417,18 +439,21 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 	public ModelAndView boardGqReviewForm(@RequestParam(value = "b_gq_id", required = false) Integer b_gq_id,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		String viewName = request.getParameter("viewName");
 		Map boardGqMap = boardGqService.boardGqView(b_gq_id);
 		BoardGqVO boardGqVO = (BoardGqVO) boardGqMap.get("boardGqVO");
+		int g_id = boardGqVO.getG_id();
+		String viewName = (String) request.getAttribute("viewName");
 		List<Img_gqVO> imageList = (List<Img_gqVO>) boardGqMap.get("imageList");
 		HttpSession session = request.getSession();
-		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
+		SellerVO sellerInfo = (SellerVO) session.getAttribute("sellerInfo");
 		AdminVO adminVO = (AdminVO) session.getAttribute("adminInfo");
 		try {
-			if (sellerVO != null) {
+			if (sellerInfo != null) {
+				if(sellerInfo.getS_id().equals(boardGqVO.getS_id())) {
 				mav.addObject("boardGqVO", boardGqVO);
 				mav.addObject("imageList", imageList);
 				mav.setViewName(viewName);
+				}
 			} else if (adminVO != null) {
 				mav.addObject("boardGqVO", boardGqVO);
 				mav.addObject("imageList", imageList);
@@ -437,7 +462,7 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 				String message = "리뷰에 대한 권한이없습니다.";
 				mav.addObject("message", message);
 				mav.addObject("b_gq_id", b_gq_id);
-				viewName = "redirect:/boardGq/gq_detail.do";
+				viewName = "redirect:/goods/goodsDetail.do?g_id="+ g_id;
 				mav.setViewName(viewName);
 
 			}

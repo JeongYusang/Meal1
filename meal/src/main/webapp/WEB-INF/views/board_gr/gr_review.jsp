@@ -333,7 +333,7 @@ function result(){
 			<h1>리뷰 상세</h1>
 		</div>
 		<div id="goods-info">
-			<br> <img class="imagegoods"src="${contextPath}/download1.do?g_id=${goodsVO.g_id}&cate=main">
+			<br> <img class="imagegoods"src="${contextPath}/download1.do?g_id=${boardGrVO.g_id}&cate=main">
 			<div id="goodstext">
 				<h3>${boardGrVO.s_id}</h3>
 				<h3>${boardGrVO.g_name}</h3>
@@ -450,12 +450,12 @@ function result(){
 							type="hidden" value="seller" name="reg_id">
 							<div class="secret-wrap">
 								<input class="B_Uid1" type="checkbox" name="secret" value="Y"
-									onclick="#">비밀글입니다.</input>
+									onclick="#">비밀글입니다.
 							</div></td>
 					</tr>
 					<tr>
 						<th class="td1">제목</th>
-						<td class="td2"><input type=text value="타이틀필드" name="title"
+						<td class="td2"><input type=text placeholder = "제목를 작성해주세요" name="title"
 							id="i_title" /><input type="hidden"
 							value="${boardGrVO.b_gr_id }" name="parentNo"></td>
 
@@ -463,7 +463,7 @@ function result(){
 					<tr>
 						<th class="td1">내용</th>
 						<td class="td2"><textarea rows="20" cols="70" name="content"
-								id="i_content"></textarea></td>
+								id="i_content"placeholder = "답변을 작성해주세요"></textarea></td>
 					</tr>
 					<tr height="200px">
 						<th class="td1">이미지파일 첨부 <input class="filecss" type="file"

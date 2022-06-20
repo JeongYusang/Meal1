@@ -140,12 +140,11 @@ h2.adminLiName {
 				<h1>비밀번호 재확인</h1>
 				<h3>회원의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인해주세요</h3>
 				<hr>
-				<form id="checkForm" method='post'
-					action="${contextPath}/member/UpdateForm.do">
+				<form id="checkForm" method='post' action="${contextPath}/member/MemberUpdateForm.do?u_id=${memberInfo.u_id}">
 					<table class="pw">
 						<tr>
 							<th><h1>비밀번호</h1></th>
-							<td><input type="password" name="pw1" class="pw"
+							<td><input type="password" name="pw" class="pw"
 								style="height: 22px; margin-top: 10px; margin-left: 10px;" /></td>
 						</tr>
 					</table>

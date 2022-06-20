@@ -356,43 +356,6 @@ function result(){
 			</div>
 			<br>
 		</div>
-
-		<c:choose>
-			<c:when test="${not empty ReviewList }">
-
-				<c:forEach var="review" items="${ReviewList}">
-					<div class="board-r-wrap">
-
-						<h1>답글입니다</h1>
-						<input type=button value="수정"
-							onClick="fn_update('${contextPath}/boardGq/boardGqUpdateform.do',${review.b_gq_id })" />
-						<input type=button value="삭제"
-							onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${review.b_gq_id })" />
-						<input type=button value="목록"
-							onClick="fn_return('${contextPath}/boardGq/selectBoardGqList.do')" />
-						<input type=button value="답글"
-							onClick="fn_review('${contextPath}/boardGq/boardGqReviewform.do', ${boardGqVO.b_gq_id})" />
-					</div>
-
-					<div class='table-wrap1'>
-						<table>
-
-
-							<tr>
-								<th class="td1">제목</th>
-								<td class="td2"><input type=text value="" name="title"
-									id="i_title" disabled /></td>
-							</tr>
-							<tr>
-								<th class="td1">내용</th>
-								<td class="td2"><textarea rows="20" cols="70"
-										name="content" id="i_content" disabled></textarea></td>
-							</tr>
-						</table>
-					</div>
-				</c:forEach>
-			</c:when>
-		</c:choose>
 	</div>
 	<div class='board-wrap'>
 		<div class='board-title'>
@@ -418,7 +381,7 @@ function result(){
 					</tr>
 					<tr>
 						<th class="td1">제목</th>
-						<td class="td2"><input type=text value="타이틀필드" name="title"
+						<td class="td2"><input type=text placeholder="제목을 입력해주세요" name="title"
 							id="i_title" /><input type="hidden"
 							value="${boardGqVO.b_gq_id }" name="parentNo"></td>
 
@@ -426,7 +389,7 @@ function result(){
 					<tr>
 						<th class="td1">내용</th>
 						<td class="td2"><textarea rows="20" cols="70" name="content"
-								id="i_content"></textarea></td>
+								id="i_content" placeholder="내용을 입력해주세요"></textarea></td>
 					</tr>
 					<tr height="200px">
 						<th class="td1">이미지파일 첨부 <input class="filecss" type="file"
