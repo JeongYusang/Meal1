@@ -24,11 +24,10 @@ public interface BoardGqController {
 	public ModelAndView boardGqUpdateform(@ModelAttribute("b_gq_id") Integer b_gq_id, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 
-	public ModelAndView selectBoardGqList(
-			@RequestParam(value = "message", required = false) String message,
+	public ModelAndView selectBoardGqList(@RequestParam(value = "message", required = false) String message,
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
-			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
+			@RequestParam(value = "pageNum", required = false) String pageNum,HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 	
 
@@ -36,12 +35,13 @@ public interface BoardGqController {
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
-			HttpServletResponse response) throws Exception;
+			@RequestParam(value = "message", required = false) String message,HttpServletResponse response) throws Exception;
 	
 	public ModelAndView selectSMyBoardGqList(
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section", required = false) String section,
-			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
+			@RequestParam(value = "pageNum", required = false) String pageNum,
+			@RequestParam(value = "message", required = false) String message,HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 
 

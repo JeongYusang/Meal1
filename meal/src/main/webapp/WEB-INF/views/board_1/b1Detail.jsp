@@ -252,15 +252,18 @@ function fn_review(url,b_1_id){
 		<div class="board-b-wrap">
 
 			<h1>상품 문의 게시판</h1>
-			<input type=button value="수정"
+			<c:if test="${board1Info.u_id == memberInfo.u_id or board1Info.s_id == sellerInfo.s_id or not empty adminInfo  }">
+				<input type=button value="수정"
 				onClick="fn_update('${contextPath}/board1/board1Updateform.do',${board1Info.b_1_id })" />
 			<input type=button value="삭제"
 				onClick="fn_remove_board('${contextPath}/board1/board1Delete.do',${board1Info.b_1_id })" />
-
+			</c:if>
 			<input type=button value="목록"
 				onClick="fn_return('${contextPath}/board1/selectBoard1List.do')" />
-			<input type=button value="답글"
-				onClick="fn_review('${contextPath}/board1/board1Reviewform.do', ${board1Info.b_1_id})" />
+			<c:if test="${not empty adminInfo}">
+				<input type=button value="답글"
+					onClick="fn_review('${contextPath}/board1/board1Reviewform.do', ${board1Info.b_1_id})" />
+			</c:if>
 		</div>
 
 		<form name="frmArticle" method="get" action="${contextPath}"
@@ -326,15 +329,14 @@ function fn_review(url,b_1_id){
 						<div class="board-r-wrap">
 
 							<h1>답글입니다</h1>
-							<input type=button value="수정"
-								onClick="fn_update('${contextPath}/board1/board1Updateform.do',${review.b_1_id })" />
-							<input type=button value="삭제"
-								onClick="fn_remove_board('${contextPath}/board1/board1Delete.do',${review.b_1_id })" />
-
+							<c:if test="${not empty adminInfo}">
+								<input type=button value="수정"
+									onClick="fn_update('${contextPath}/board1/board1Updateform.do',${review.b_1_id })" />
+								<input type=button value="삭제"
+									onClick="fn_remove_board('${contextPath}/board1/board1Delete.do',${review.b_1_id })" />
+							</c:if>
 							<input type=button value="목록"
 								onClick="fn_return('${contextPath}/board1/selectBoard1List.do')" />
-							<input type=button value="답글"
-								onClick="fn_review('${contextPath}/board1/board1Reviewform.do', ${board1Info.b_1_id})" />
 						</div>
 						<table>
 

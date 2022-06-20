@@ -423,7 +423,8 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 	public ModelAndView sellerBoardMypage(@RequestParam(value = "s_id", required = false) String s_id,
 			@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 			@RequestParam(value = "section1", required = false) String section,
-			@RequestParam(value = "pgNum", required = false) String pgNum, HttpServletRequest request,
+			@RequestParam(value = "pgNum", required = false) String pgNum,
+			@RequestParam(value = "message", required = false) String message,HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
@@ -513,6 +514,9 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 			mav.addObject("boardGrSellerList", boardGrSellerList);
 			mav.addObject("sellerVO", sellerVO);
 			mav.setViewName(viewName);
+			if (message != null) {
+				mav.addObject("message", message);
+			}
 
 			return mav;
 			
@@ -611,17 +615,20 @@ public class SellerControllerImpl extends BaseController implements SellerContro
 			mav.addObject("boardGrSellerList", boardGrSellerList);
 			mav.addObject("sellerVO", sellerVO);
 			mav.setViewName(viewName);
+			if (message != null) {
+				mav.addObject("message", message);
+			}
 
 			return mav;
 
 		} else {
-			String message = "잘못된 접근방법입니다.";
+			message = "잘못된 접근방법입니다.";
 			mav.addObject("message", message);
 			String viewName1 = "redirect:/main/main.do";
+			mav.addObject("message", message);
 			mav.setViewName(viewName1);
 			return mav;
 		}
-
 	}
 
 }

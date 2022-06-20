@@ -186,28 +186,16 @@ tr.border-bottom td {
 						<td colspan=5 class="fixed"><strong>작성된 글이 없습니다.</strong></td>
 					</tr>
 				</c:when>
-								<c:when test="${not empty adminInfo }">
+				<c:when test="${not empty adminInfo }">
 					<c:forEach var="item" items="${boardGq}">
 						<label for="border-bottom"></label>
 						<tr class="item">
-							<c:choose>
-								<c:when test="${not empty item.u_id and empty item.secret }">
 									<td>${item.b_gq_id }</td>
 									<td><a href="${contextPath}/boardGq/gq_detail.do?b_gq_id=${item.b_gq_id}">${item.title}</a></td>
 									<td>${item.u_id}</td>
 									<td>${item.g_id }</td>
 									<td>${item.creDate}</td>
 									<td>${item.compare}</td>
-								</c:when>
-								<c:when test="${not empty item.u_id and not empty item.secret }">
-									<td>${item.b_gq_id }</td>
-									<td><a href="${contextPath}/boardGq/gq_detail.do?b_gq_id=${item.b_gq_id}">비밀글입니다</a></td>
-									<td>****</td>
-									<td>${item.g_id }</td>
-									<td>${item.creDate}</td>
-									<td>${item.compare}</td>
-								</c:when>
-							</c:choose>
 						</tr>
 					</c:forEach>
 				</c:when>
@@ -215,22 +203,11 @@ tr.border-bottom td {
 					<c:forEach var="item" items="${boardGq}">
 						<label for="border-bottom"></label>
 						<tr class="item">
-							<c:choose>
-								<c:when test="${not empty item.u_id and empty item.secret }">
 									<td>${item.b_gq_id }</td>
 									<td><a href="${contextPath}/boardGq/gq_detail.do?b_gq_id=${item.b_gq_id}">${item.title}</a></td>
 									<td>${item.u_id}</td>
 									<td>${item.creDate}</td>
 									<td>${item.compare}</td>
-								</c:when>
-								<c:when test="${not empty item.u_id and not empty item.secret }">
-									<td>${item.b_gq_id }</td>
-									<td>비밀글입니다</td>
-									<td>****</td>
-									<td>${item.creDate}</td>
-									<td>${item.compare}</td>
-								</c:when>
-							</c:choose>
 						</tr>
 					</c:forEach>
 				</c:otherwise>
@@ -260,9 +237,6 @@ tr.border-bottom td {
 		</center>
 		<hr>
 		<br>
-		<div class="write">
-			<a href="${contextPath }/boardGq/boardGqWrite.do?g_id=${g_id}">글쓰기</a>
-		</div>
 	</div>
 
 

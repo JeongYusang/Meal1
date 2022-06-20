@@ -142,28 +142,36 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 		try {
+			if (_memberVO.getU_pw() != null) {
+				String u_pw = _memberVO.getU_pw();
+				String encodeu_pw = passwordEncode.encode(u_pw);
+				_memberVO.setU_pw(encodeu_pw);
+				memberService.updateMember(_memberVO);
+				_memberVO.setU_pw(u_pw);
+				HttpSession session = request.getSession();
+				session.setAttribute("memberInfo", _memberVO);
 
-			String u_pw = _memberVO.getU_pw();
-			String encodeu_pw = passwordEncode.encode(u_pw);
-			_memberVO.setU_pw(encodeu_pw);
-			memberService.updateMember(_memberVO);
-			_memberVO.setU_pw(u_pw);
-			HttpSession session = request.getSession();
-			session.setAttribute("memberInfo", _memberVO);
-
-			message = "<script>";
-			message += " alert('회원수정이 완료되었습니다..');";
-			message += " location.href='" + request.getContextPath() + "/member/memberResult.do';";
-			message += " </script>";
-			/*
-			 * } else { message = "<script>"; message += " alert('다시 내용을 입력해주세요');"; message
-			 * += " location.href='" + request.getContextPath() + "/user/userUpdate.do';";
-			 * message += " </script>"; }
-			 */
+				message = "<script>";
+				message += " alert('회원수정이 완료되었습니다..');";
+				message += " location.href='" + request.getContextPath() + "/member/memberResult.do';";
+				message += " </script>";
+				/*
+				 * } else { message = "<script>"; message += " alert('다시 내용을 입력해주세요');"; message
+				 * += " location.href='" + request.getContextPath() + "/user/userUpdate.do';";
+				 * message += " </script>"; }
+				 */
+			} else {
+				memberService.updateMember(_memberVO);
+				message = "<script>";
+				message += " alert('회원수정이 완료되었습니다..');";
+				message += " location.href='" + request.getContextPath() + "/member/memberDetail.do?u_id="
+						+ _memberVO.getU_id() + "';";
+				message += " </script>";
+			}
 		} catch (Exception e) {
 			message = "<script>";
 			message += " alert('다시 내용을 입력해주세요');";
-			message += " location.href='" + request.getContextPath() + "/user/userUpdateForm.do';";
+			message += " location.href='" + request.getContextPath() + "/member/MemberUpdateForm.do';";
 			message += " </script>";
 			e.printStackTrace();
 		}
@@ -172,49 +180,100 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 	}
 
 	@Override
+	@RequestMapping(value = "/MemberUpdateForm.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView UpdateForm(@RequestParam(value = "u_id", required = false) String u_id,
+			@RequestParam HashMap<String, Object> map, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		HttpSession session = request.getSession();
+		ModelAndView mav = new ModelAndView();
+		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+		AdminVO adminInfo = (AdminVO) session.getAttribute("adminInfo");
+		String pw = (String) map.get("pw");
+		if (memberInfo != null) {
+			// 복호화를 위해 꺼내줌
+			MemberVO memberVO = memberService.decode(memberInfo.getU_id());
+			// 입력해준 값에 관하여 pw를 꺼내줌
+
+			if (passwordEncode.matches(pw, memberVO.getU_pw())) {
+				memberVO.setU_pw(memberInfo.getU_pw());
+				String viewName = (String) request.getAttribute("viewName");
+				mav.setViewName(viewName);
+				mav.addObject("memberVO", memberVO);
+			} else {
+				String message = "비밀번호가 틀렸습니다";
+				mav.addObject(message);
+				String viewName = "redirect://member/memberDetail.do?u_id=" + memberInfo.getU_id();
+				mav.setViewName(viewName);
+			}
+
+		} else if (u_id != null && adminInfo != null) {
+			MemberVO memberVO = memberService.decode(u_id);
+			String viewName = (String) request.getAttribute("viewName");
+			mav.setViewName(viewName);
+			mav.addObject("memberVO", memberVO);
+		}
+		return mav;
+
+	}
+
+	@SuppressWarnings("unused")
+	@Override
 	@RequestMapping(value = "/deleteMember.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public ResponseEntity deleteMember(@RequestParam HashMap<String, Object> map, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ResponseEntity deleteMember(@RequestParam(value = "u_id", required = false) String u_id,
+			@RequestParam HashMap<String, Object> map, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
 		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession();
 
-		MemberVO memberVO1 = (MemberVO) session.getAttribute("memberInfo");
+		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 		// 복호화를 위해 꺼내줌
-		MemberVO memberVO2 = memberService.decode(memberVO1.getU_id());
-		// 입력해준 값에 관하여 pw를 꺼내줌
-		String pw = (String) map.get("pw");
+		
 		String message = "";
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
-		try {
-			if (passwordEncode.matches(pw, memberVO2.getU_pw())) {
-
-				memberService.delMember(memberVO1);
-				adminService.insertReason(map);
-				session.setAttribute("isLogOn", false);
-				session.removeAttribute("memberInfo");
-				session.removeAttribute("sellerInfo");
-				message = "<script>";
-				message += "alert('회원이 삭제되었습니다.');";
-				message += "location.href='" + request.getContextPath() + "/main/main.do';";
-				message += "</script>";
-				session.removeAttribute("memberInfo");
-				session.setAttribute("lsLogOn", false);
-			} else {
+			if (memberInfo != null) {
+				MemberVO memberVO2 = memberService.decode(memberInfo.getU_id());
+				// 입력해준 값에 관하여 pw를 꺼내줌
+				String pw = (String) map.get("pw");
+				if (passwordEncode.matches(pw, memberVO2.getU_pw())) {
+					memberService.delMember(memberInfo);
+					adminService.insertReason(map);
+					session.setAttribute("isLogOn", false);
+					session.removeAttribute("memberInfo");
+					session.removeAttribute("sellerInfo");
+					message = "<script>";
+					message += "alert('회원이 삭제되었습니다.');";
+					message += "location.href='" + request.getContextPath() + "/main/main.do';";
+					message += "</script>";
+					session.removeAttribute("memberInfo");
+					session.setAttribute("lsLogOn", false);
+				} else {
+					message = "<script>";
+					message += "alert('비밀번호가 동일하지 않습니다.');";
+					message += "location.href='" + request.getContextPath() + "/mypage/deleteMemberform.do';";
+					message += "</script>";
+				}
+			}else if (u_id != null) {
+					MemberVO memberVO = memberService.decode(u_id);
+					memberService.delMember(memberVO);
+					message = "<script>";
+					message += "alert('회원이 삭제되었습니다.');";
+					message += "location.href='" + request.getContextPath() + "/main/main.do';";
+					message += "</script>";
+			}else {
 				message = "<script>";
 				message += "alert('비밀번호가 동일하지 않습니다.');";
 				message += "location.href='" + request.getContextPath() + "/mypage/deleteMemberform.do';";
 				message += "</script>";
+				
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+			ResponseEntity resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
+			return resEntity;
 		}
 
-		ResponseEntity resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
-		return resEntity;
-	}
+		
 
 	// 회원 상세 정보창으로 가는것 admin 상세로도 사용중
 	@Override
@@ -252,8 +311,6 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 			mav.addObject("BoardGqList", BoardGqList);
 			String viewName = (String) request.getAttribute("viewName");
 			mav.setViewName(viewName);
-			
-			
 
 			for (Board1VO item : Board1List) {
 				for (Board1VO j : board1) {
@@ -268,7 +325,6 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 					}
 				}
 			}
-			
 
 			for (BoardGqVO item : BoardGqList) {
 				int g_id = item.getG_id();
@@ -329,7 +385,8 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 		try {
 			String name = (String) map.get("name");
 			String hp1 = (String) map.get("hp1");
-			String u_id = memberService.FindID2(map).getU_id();;
+			String u_id = memberService.FindID2(map).getU_id();
+			;
 			mav.addObject("u_id", u_id);
 			String viewName = (String) request.getAttribute("viewName");
 			mav.setViewName(viewName);

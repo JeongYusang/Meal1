@@ -110,7 +110,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/board_gq/gq_update.jsp" />
 	</definition>
 	
-	<definition name="boardGq/boardGqReviewform" extends="baseLayout2">
+	<definition name="/boardGq/boardGqReviewform" extends="baseLayout2">
 	<put-attribute name="title" value="상품문의게시판 답글" />
 	<put-attribute name="body" value="/WEB-INF/views/board_gq/gq_review.jsp" />
 	</definition>

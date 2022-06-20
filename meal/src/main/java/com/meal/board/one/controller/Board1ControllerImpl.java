@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.meal.admin.vo.AdminVO;
+import com.meal.board.gr.controller.BoardGrControllerImpl;
 import com.meal.board.one.service.Board1Service;
 import com.meal.board.one.vo.Board1VO;
 import com.meal.common.controller.BaseController;
@@ -28,6 +31,8 @@ import com.meal.seller.vo.SellerVO;
 @RequestMapping("/board1")
 
 public class Board1ControllerImpl extends BaseController implements Board1Controller {
+
+	private static final Logger logger = LoggerFactory.getLogger(Board1ControllerImpl.class);
 
 	@Autowired
 	private Board1Service board1Service;
@@ -67,7 +72,6 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 
 			List<Board1VO> boardPage = board1Service.selectMyBoard1List(pagingMap);
 			List<Board1VO> board1 = board1Service.selectBoard1allList();
-
 
 			for (Board1VO item : boardPage) {
 				for (Board1VO j : board1) {
@@ -131,11 +135,28 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		try {
-			board1Service.board1Write(board1VO);
-			String message = "글이 작성 되었습니다";
-			mav.addObject("message", message);
-			String viewName = "redirect:/board1/selectBoard1List.do";
-			mav.setViewName(viewName);
+			HttpSession session = request.getSession();
+			MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+			SellerVO sellerInfo = (SellerVO) session.getAttribute("sellerInfo");
+			AdminVO adminInfo = (AdminVO) session.getAttribute("adminInfo");
+			if (memberInfo != null || sellerInfo != null) {
+				board1Service.board1Write(board1VO);
+				String message = "글이 작성 되었습니다";
+				mav.addObject("message", message);
+				String viewName = "redirect:/board1/selectMyBoard1.do";
+				mav.setViewName(viewName);
+			}else if(adminInfo != null) {
+				board1Service.board1Write(board1VO);
+				String message = "글이 작성 되었습니다";
+				mav.addObject("message", message);
+				String viewName = "redirect:/board1/selectBoard1List.do";
+				mav.setViewName(viewName);
+			}else {
+				String message = "로그인 해주시길 바랍니다";
+				mav.addObject("message", message);
+				String viewName = "redirect:/main/loginForm.do";
+				mav.setViewName(viewName);
+			}
 			return mav;
 		} catch (Exception e) {
 			String viewName1 = "/board1/board1Write";
@@ -146,7 +167,7 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 
 	@Override
 	@RequestMapping(value = "/board1Updateform.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView board1Updateform(@ModelAttribute("b_1_id") Integer b_1_id, HttpServletRequest request,
+	public ModelAndView board1Updateform(@RequestParam("b_1_id") Integer b_1_id, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		String viewName = request.getParameter("viewName");
@@ -155,14 +176,8 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 		MemberVO memberVO = (MemberVO) session.getAttribute("memberInfo");
 		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
 		AdminVO adminVO = (AdminVO) session.getAttribute("adminInfo");
-		try {
+		if (memberVO != null) {
 			if (memberVO.getU_id().equals(board1VO.getU_id())) {
-				mav.addObject("board1VO", board1VO);
-				mav.setViewName(viewName);
-			} else if (sellerVO.getS_id().equals(board1VO.getS_id())) {
-				mav.addObject("board1VO", board1VO);
-				mav.setViewName(viewName);
-			} else if (adminVO != null) {
 				mav.addObject("board1VO", board1VO);
 				mav.setViewName(viewName);
 			} else {
@@ -173,16 +188,28 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 				mav.setViewName(viewName);
 
 			}
-			return mav;
-		} catch (Exception e) {
+		} else if (sellerVO != null)
+			if (sellerVO.getS_id().equals(board1VO.getS_id())) {
+				mav.addObject("board1VO", board1VO);
+				mav.setViewName(viewName);
+			} else {
+				String message = "회원정보가 일치하지 않습니다.";
+				mav.addObject("message", message);
+				mav.addObject("b_1_id", b_1_id);
+				viewName = "redirect:/board1/b1Detail.do";
+				mav.setViewName(viewName);
+			}
+		else if (adminVO != null) {
 			mav.addObject("board1VO", board1VO);
+			mav.setViewName(viewName);
+		} else {
 			String message = "회원정보가 일치하지 않습니다.";
 			mav.addObject("message", message);
 			mav.addObject("b_1_id", b_1_id);
 			viewName = "redirect:/board1/b1Detail.do";
 			mav.setViewName(viewName);
-			return mav;
 		}
+		return mav;
 	}
 
 	@Override
@@ -250,11 +277,11 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 
 	@Override
 	@RequestMapping(value = "/b1Detail.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView board1View(@RequestParam("b_1_id") int b_1_id, HttpServletRequest request,
+	public ModelAndView board1View(@RequestParam("b_1_id") int b_1_id,
+			@RequestParam(value = "message", required = false) String message, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		String viewName = (String) request.getAttribute("viewName");
-		String message = (String) request.getAttribute("message");
 		if (message != null) {
 			mav.addObject("message", message);
 		}
@@ -341,14 +368,13 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 		HttpSession session = request.getSession();
 		MemberVO memberVO = (MemberVO) session.getAttribute("memberInfo");
 		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
-		System.out.println("sellerInfo : " + sellerVO);
 		AdminVO adminVO = (AdminVO) session.getAttribute("adminInfo");
 		try {
 			if (memberVO != null) {
 
 				if (memberVO.getU_id().equals(board1VO.getU_id())) {
 					board1Service.board1Delete(b_1_id);
-					String viewName1 = "redirect:/board1/selectBoard1List.do";
+					String viewName1 = "redirect:/board1/selectMyBoard1.do";
 					mav.setViewName(viewName1);
 					return mav;
 				}
@@ -363,7 +389,6 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 				}
 
 			} else if (adminVO != null) {
-				mav.addObject("board1VO", board1VO);
 				board1Service.board1Delete(b_1_id);
 				String viewName1 = "redirect:/board1/selectBoard1List.do";
 				mav.setViewName(viewName1);

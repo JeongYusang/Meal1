@@ -119,15 +119,15 @@ select * from user_tb where u_email1 = #{email1} and u_email2 = #{email2} and u_
 
 
 	<update id="updateMember" parameterType="memberVO">
-	<![CDATA[
-	   update user_tb set u_pw  = #{u_pw},
+
+	   update user_tb set <if test="u_pw != null and !(u_pw.equals(''))"> u_pw  = #{u_pw},</if>
        u_name = #{u_name},
                                      u_hp1 = #{u_hp1},
                                      u_email1 = #{u_email1},
                                      u_email2 = #{u_email2},
                                      u_addr1 = #{u_addr1},
                                      u_addr2 = #{u_addr2},
-                                     u_addr3 = #{u_addr3} where u_id=#{u_id} ]]>
+                                     u_addr3 = #{u_addr3} where u_id=#{u_id}
 
 	</update>
 

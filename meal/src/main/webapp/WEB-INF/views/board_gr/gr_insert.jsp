@@ -212,7 +212,7 @@ color: black;
 					</tr>
 					<tr>
 						<th class="td1">제목</th>
-						<td class="td2"><input type=text value="타이틀필드" name="title"
+						<td class="td2"><input type=text placeholder = "제목을 입력해주세요" name="title"
 							id="i_title" /></td>
 
 					</tr>
@@ -233,7 +233,7 @@ color: black;
 					<tr>
 						<th class="td1">내용</th>
 						<td class="td2"><textarea rows="20" cols="70" name="content"
-								id="i_content"></textarea></td>
+								id="i_content" placeholder = "후기를 작성해주세요"></textarea></td>
 					</tr>
 					<tr height="200px">
 						<th class="td1">이미지파일 첨부 <input class="filecss" type="file"
