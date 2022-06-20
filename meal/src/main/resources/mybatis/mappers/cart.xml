@@ -14,12 +14,15 @@
 		<result property="c_qty" column="c_qty" />
 		<result property="u_id" column="u_id" />
 		<result property="c_sum" column="c_sum" />
+		<result property="g_price" column="g_price" />
+		<result property="g_saleprice" column="g_saleprice" />
+		
 	</resultMap>
 
 	<select id="selectCartList" parameterType="String"
 		resultMap="cartResult">
 	    <![CDATA[
-		select c.c_id, c.g_id, c.u_id, c.c_qty, g.g_price, g.g_name
+		select c.c_id, c.g_id, c.u_id, c.c_qty, g.g_price, g.g_name, g.g_saleprice
 		from cart_tb c
         left outer join goods_tb g on c.g_id = g.g_id 
 		where u_id= #{u_id}

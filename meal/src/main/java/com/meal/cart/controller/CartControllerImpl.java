@@ -50,8 +50,10 @@ public class CartControllerImpl extends BaseController implements CartController
 		MemberVO memberInfo=(MemberVO)session.getAttribute("memberInfo");
 		String u_id=memberInfo.getU_id();
 		List <CartVO> CartList=cartService.myCartList(u_id);
+		int length = CartList.size();
 		mav.addObject("CartList", CartList);
 		mav.addObject("message",message);
+		mav.addObject("length", length);
 		return mav;
 	}
 	

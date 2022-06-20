@@ -21,12 +21,137 @@
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 
+
 <c:forEach var="CartList" items="${CartList}">
-	<c:set var="total"
-		value="${total + (CartList.c_qty * CartList.g_price)}" />
+	<c:if test="${CartList.g_saleprice ==0 }">
+		<c:set var="total"
+			value="${total + (CartList.c_qty * CartList.g_price)}" />
+
+		<c:choose>
+
+			<c:when test="${CartList.c_qty * CartList.g_price  >= 30000}">
+				<c:set var="totalDele" value="${totalDele + 0}" />
+			</c:when>
+			<c:otherwise>
+				<c:set var="totalDele" value="${totalDele + 3000}" />
+			</c:otherwise>
+
+		</c:choose>
+	</c:if>
+	<c:if test="${CartList.g_saleprice !=0 }">
+		<c:set var="total"
+			value="${total + (CartList.c_qty * CartList.g_saleprice)}" />
+
+		<c:choose>
+
+			<c:when test="${CartList.c_qty * CartList.g_price  >= 30000}">
+				<c:set var="totalDele" value="${totalDele + 0}" />
+			</c:when>
+
+			<c:otherwise>
+				<c:set var="totalDele" value="${totalDele + 3000}" />
+			</c:otherwise>
+
+		</c:choose>
+	</c:if>
 </c:forEach>
 
 <script>
+
+ /* window.onload =function(){
+		var total = 0; 
+		var tDele = 0;
+		var length = ${length};
+		var CartList = ${CartList};
+  	 	for(var i=0; i < length ; i++){
+  	 		var sale = ${CartList[i].g_saleprice};
+  	 		
+  	 		console.log("진입");
+  	 		console.log("이거 뜨냐 " + sale);
+				if(${CartList[i].g_saleprice != 0}){
+					// 상품 할인이 있을경우
+					var GoodsPrice = ${CartList[i].c_qty * CartList[i].g_saleprice};
+					console.log(GoodsPrice);
+					if(GoodsPrice >= 30000){
+						tDele+= 3000;
+						total += GoodsPrice + tDele;
+					}else{
+						total += GoodsPrice;
+					}	
+					
+				}else{
+					var GoodsPrice = ${CartList[i].c_qty * CartList[i].g_price};
+					if(GoodsPrice >= 30000){
+						tDele+= 3000;
+						total += GoodsPrice + tDele;
+					}else{
+						total += GoodsPrice;
+					}	
+					
+				}
+        }      
+   	document.getElementById("p_total").value = total;
+   	document.getElementById("dele").value = tDele;
+   	console.log("total : " +total);
+	console.log("tDele : " +dele);
+}  */
+
+function check_total(){
+	var total = 0; 
+	var tDele = 0;
+	var length = ${length};
+	$('input[type="checkbox"]:checked').each(function (index) {
+	        
+		   if (index != 0) {
+		        var checkT = $(this).val();
+	        	for(var i=0; i < length ; i++){
+	        		console.log("진입");
+	        	if(${CartList[i].c_id == checkT}){
+					if(${CartList[i].g_saleprice != 0}){
+						// 상품 할인이 있을경우
+						var GoodsPrice = ${CartList[i].c_qty * CartList[i].g_saleprice};
+						if(GoodsPrice >= 30000){
+							tDele+= 3000;
+							total += GoodsPrice + tDele;
+						}else{
+							total += GoodsPrice;
+						}	
+						
+					}else{
+						var GoodsPrice = ${CartList[i].c_qty * CartList[i].g_price};
+						if(GoodsPrice >= 30000){
+							tDele+= 3000;
+							total += GoodsPrice + tDele;
+						}else{
+							total += GoodsPrice;
+						}	
+						
+					}
+	        	}
+	        	
+	         } 
+	        	document.getElementById("p_total").value = total;
+	        	document.getElementById("dele").value = tDele;
+	        	console.log("total : " +total);
+	        	console.log("tDele : " +dele);
+	        	
+		   }
+	});
+	        
+	  }
+
+	 /* var total = 0;
+ var length = ${CartList}.length;
+ var CartList[] = ${CartList}; 
+ for (int i = 0; i < length ; i++){
+	 if(${CartList[i].g_saleprice != 0}){
+		 total += ${CartList[i].g_saleprice * CartList[i].c_qty};
+	 }else{
+		 total += ${CartList[i].g_price * CartList[i].c_qty};
+	 }
+	document.getElementById("p_total").value = total;	 
+ } */
+
 
  /* function change() {
     hm = document.form.amount;
@@ -207,7 +332,6 @@
 
 .total-price {
 	width: 83px;
-	padding-top: 27px;
 	text-align: center;
 	font-size: 16px;
 	color: #43484D;
@@ -335,6 +459,15 @@
 	color: #43484D;
 	font-weight: 300;
 }
+
+.cart_p {
+	text-decoration: line-through;
+	margin: 0px;
+}
+
+.p_total {
+	
+}
 </style>
 
 
@@ -360,18 +493,22 @@
 					</div>
 					<c:choose>
 						<c:when test="${CartList != null}">
-							<c:forEach var="CartList" items="${CartList}">
-								
+							<c:forEach var="CartList" items="${CartList}" varStatus="index">
+
 								<!-- <form name="cart" id = "cartForm" action="#" onsubmit="return order()"> -->
-								<form name="cart" id = "cartForm" action="${contextPath}/order/CartOrderForm.do" onsubmit="return order()">
-								
-								
-								
+								<form name="cart" id="cartForm"
+									action="${contextPath}/order/CartOrderForm.do"
+									onsubmit="return order()">
+
+
+
 									<div class="item-wrap">
 										<div class="item">
 											<div class="buttons">
-												<input type="checkbox" class="checked_cart" name='checked_cart'
-													value="${CartList.c_id}" checked>
+												<input type="checkbox" class="checked_cart"
+													name='checked_cart' value="${CartList.c_id}" checked>
+												<input type="hidden" class="checked_Index"
+													name="checked_Index" value="${index.index }">
 											</div>
 
 											<div class="image-wrap">
@@ -397,7 +534,17 @@
 													onclick="location.href='${contextPath}/cart/minusCartGoods.do?c_id=${CartList.c_id}'"
 													class="button" id="btn">-</button>
 											</div>
-											<div class="total-price">${CartList.g_price}원</div>
+											<c:choose>
+												<c:when test="${CartList.g_saleprice != 0 }">
+													<div class="total-price">
+														<p class="cart_p">${CartList.g_price}원</p>${CartList.g_saleprice}원</div>
+												</c:when>
+
+												<c:otherwise>
+													<div class="total-price">${CartList.g_price}원</div>
+												</c:otherwise>
+
+											</c:choose>
 											<div class="delete">
 												<a
 													href="${contextPath}/cart/removeCartGoods.do?c_id=${CartList.c_id}"
@@ -405,7 +552,8 @@
 											</div>
 										</div>
 									</div>
-									<input type="hidden" id="OrderToCart" name = "OrderToCart" value="">
+									<input type="hidden" id="OrderToCart" name="OrderToCart"
+										value="">
 								</form>
 							</c:forEach>
 						</c:when>
@@ -426,27 +574,29 @@
 					<span class="total-items"></span> 총 3개
 				</div>
 				<div class="summary-subtotal">
+					<c:forEach var="item" items="${CartList }">
+
+					</c:forEach>
 					<div class="promo-title">총 금액</div>
 					<div class="subtotal-value final-value" id="basket-subtotal">${total}원</div>
 					<div class="promo-title">총 배송비</div>
-					<c:if test="${total >= 30000}">
-						<div class="promo-value final-value" id="basket-promo">0원</div>
-					</c:if>
-					<c:if test="${total < 30000}">
-						<div class="promo-value final-value" id="basket-promo">3000원</div>
-					</c:if>
+					<div class="promo-value final-value" id="basket-promo dele">
+
+					${totalDele }원
+					</div>
 				</div>
 				<div class="summary-total">
 					<div class="total-title">총액</div>
-					<c:if test="${total < 30000}">
-						<div class="total-value final-value" id="basket-total">${total + 3000}원</div>
-					</c:if>
-					<c:if test="${total >= 30000}">
-						<div class="total-value final-value" id="basket-total">${total}원</div>
-					</c:if>
+					<div class="total-value final-value" id="basket-total">
+						<p id="p_total">
+							<%-- <input type="text" id="p_total" name="total" value="${total }"
+								onchange="check_total()">원 --%>
+								${total} 원
+						</p>
+					</div>
 				</div>
 				<div class="summary-checkout">
-					<button class="checkout-btn" type = "submit" form="cartForm">주문하기</button>
+					<button class="checkout-btn" type="submit" form="cartForm">주문하기</button>
 
 				</div>
 			</div>
