@@ -14,6 +14,15 @@ public class CartVO {
 	public int g_price;
 	public int c_sum;
 	public int c_deleP;
+	public int g_saleprice;
+
+	public int getG_saleprice() {
+		return g_saleprice;
+	}
+
+	public void setG_saleprice(int g_saleprice) {
+		this.g_saleprice = g_saleprice;
+	}
 
 	public int getC_deleP() {
 		return c_deleP;
