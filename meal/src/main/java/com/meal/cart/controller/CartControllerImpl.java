@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.meal.admin.vo.AdminVO;
 import com.meal.cart.service.CartService;
 import com.meal.cart.vo.CartVO;
 import com.meal.common.controller.BaseController;
 import com.meal.goods.service.GoodsService;
 import com.meal.goods.vo.GoodsVO;
 import com.meal.member.vo.MemberVO;
+import com.meal.seller.vo.SellerVO;
 
 @Controller("cartController")
 @RequestMapping(value="/cart")
@@ -81,8 +83,13 @@ public class CartControllerImpl extends BaseController implements CartController
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 		try {
+			
 			HttpSession session=request.getSession();
 			memberVO=(MemberVO)session.getAttribute("memberInfo");
+			SellerVO sellerVO = (SellerVO)session.getAttribute("sellerInfo");
+			AdminVO adminVO = (AdminVO)session.getAttribute("adminInfo");
+			
+			if(memberVO != null) {
 			String u_id=memberVO.getU_id();
 			CartVO cartVO = new CartVO();
 			cartVO.setU_id(u_id);
@@ -124,7 +131,13 @@ public class CartControllerImpl extends BaseController implements CartController
 					message += " </script>";
 				}
 			}
-
+			}else if (sellerVO != null || adminVO != null) {
+				message = "<script>";
+				message += " alert('일반회원만 지원되는 기능입니다.');";
+				message += " location.href='" + request.getContextPath() + "/main/main.do';";
+				message += " </script>";
+			}
+			
 		} catch (Exception e) {
 			message = "<script>";
 			message += " alert('로그인 해주시길 바랍니다');";
@@ -142,15 +155,12 @@ public class CartControllerImpl extends BaseController implements CartController
 		ModelAndView mav=new ModelAndView();
 		HttpSession session=request.getSession();
 		cartService.removeCartGoods(c_id);
-		session.removeAttribute("quickZzimList");
-		session.removeAttribute("quickZzimListNum");
-		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
-		String u_id = memberInfo.getU_id();
-		List <CartVO> quickZzimList=cartService.myZzimList(u_id);
+		
+		addGoodsInQuick(session);
+		
 		String viewName = "redirect:/cart/myCartList.do";
 		mav.setViewName(viewName);
-		session.setAttribute("quickZzimList",quickZzimList);
-		session.setAttribute("quickZzimListNum", quickZzimList.size());
+
 		return mav;
 	}
 	@Override
@@ -159,6 +169,10 @@ public class CartControllerImpl extends BaseController implements CartController
 		ModelAndView mav=new ModelAndView();
 		cartService.removeCartGoods(c_id);
 		String viewName = "redirect:/cart/myZzimList.do";
+		HttpSession session=request.getSession();
+
+		addGoodsInQuick(session);
+		
 		mav.setViewName(viewName);
 		return mav;
 	}

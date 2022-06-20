@@ -67,7 +67,6 @@ String id = (String) request.getAttribute("id");
 							<c:when test="${not empty memberInfo.u_id }">
 								<p>${memberInfo.u_name }님의회원변경이완료되었습니다.</p>
 								<p>아이디는${memberInfo.u_id } 입니다.</p>
-								<p>비밀번호는 ${memberInfo.u_pw } 환영합니다.</p>
 
 
 								<p>언제나 좋은 서비스를 제공할 수 있도록 최선을 다하겠습니다.</p>
@@ -76,7 +75,6 @@ String id = (String) request.getAttribute("id");
 							<c:when test="${not empty sellerInfo.s_id }">
 								<p>${sellerInfo.s_name }님의회원변경이완료되었습니다.</p>
 								<p>아이디는${sellerInfo.s_id }입니다.</p>
-								<p>비밀번호는 ${sellerInfo.s_pw }입니다.</p>
 								<p>언제나 좋은 서비스를 제공할 수 있도록 최선을 다하겠습니다.</p>
 							</c:when>
 						</c:choose>
