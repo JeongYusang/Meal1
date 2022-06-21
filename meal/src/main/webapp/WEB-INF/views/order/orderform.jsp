@@ -13,128 +13,116 @@
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
-	function execDaumPostcode() {
-		new daum.Postcode(
-				{
-					oncomplete : function(data) {
-						// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+//Daum 주소 API
+function execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-						// 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
-						// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-						var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
-						var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var addr = ''; // 주소 변수
+            var extraAddr = ''; // 참고항목 변수
 
-						// 법정동명이 있을 경우 추가한다. (법정리는 제외)
-						// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-						if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-							extraRoadAddr += data.bname;
-						}
-						// 건물명이 있고, 공동주택일 경우 추가한다.
-						if (data.buildingName !== '' && data.apartment === 'Y') {
-							extraRoadAddr += (extraRoadAddr !== '' ? ', '
-									+ data.buildingName : data.buildingName);
-						}
-						// 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-						if (extraRoadAddr !== '') {
-							extraRoadAddr = ' (' + extraRoadAddr + ')';
-						}
-						// 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
-						if (fullRoadAddr !== '') {
-							fullRoadAddr += extraRoadAddr;
-						}
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
+            }
 
-						// 우편번호와 주소 정보를 해당 필드에 넣는다.
-						document.getElementById('zipcode').value = data.zonecode; //5자리 새우편번호 사용
-						document.getElementById('roadAddress').value = fullRoadAddr;
-						document.getElementById('jibunAddress').value = data.jibunAddress;
-						// 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-						if (data.autoRoadAddress) {
-							//예상되는 도로명 주소에 조합형 주소를 추가한다.
-							var expRoadAddr = data.autoRoadAddress
-									+ extraRoadAddr;
-							document.getElementById('guide').innerHTML = '(예상 도로명 주소 : '
-									+ expRoadAddr + ')';
+            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+            if(data.userSelectedType === 'R'){
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+            }
 
-						} else if (data.autoJibunAddress) {
-							var expJibunAddr = data.autoJibunAddress;
-							document.getElementById('guide').innerHTML = '(예상 지번 주소 : '
-									+ expJibunAddr + ')';
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById("zipcode").value = data.zonecode;
+            document.getElementById("roadAddress").value = addr;
+            // 커서를 상세주소 필드로 이동한다.
+            document.getElementById("ex_detailAddress").focus();
+        }
+    }).open();
+}
+    
 
-						} else {
-							document.getElementById('guide').innerHTML = '';
-						}
-					}
-				}).open();
-	}
-	
+var IMP = window.IMP; // 생략 가능
+IMP.init('imp53396567');
+function fn_buyBTN() {
+   var userMileage = document.getElementById("max_mile").value;
+   
+   
+   
+   IMP.request_pay({
+                  pg : 'html5_inicis', // version 1.1.0부터 지원.
+                  pay_method : 'card',
+                  merchant_uid : 'merchant_' + new Date().getTime(),
+                  name : document.getElementById("g_name").value,
+                  amount : document.getElementById("final_total_Price").value, //판매 가격
+                  buyer_email : '${memberInfo.u_email1} + ${memberInfo.u_email2}',
+                  buyer_name : '${memberInfo.u_name}',
+                  buyer_tel : '${memberInfo.u_hp1}',
+                  buyer_addr : '${memberInfo.u_addr2} + ${memberInfo.u_addr3}',
+                  buyer_postcode : '${memberInfo.u_addr1}'
+               }, function(rsp) {
+                     if ( rsp.success ) {
+                           //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+                           $.ajax({
+                              url : "${contextPath}/order/insertOrder.do", //cross-domain error가 발생하지 않도록 주의해주세요
+                              type: 'POST',
+                              data : {
+                              u_id : document.getElementById("u_id").value,
+                              g_id : document.getElementById("g_id").value,
+                              s_id : document.getElementById("s_id").value,
+                              u_name : rsp.buyer_name,
+                              g_name : rsp.name,
+                              o_goods_qty : document.getElementById("h_order_goods_qty").value,
+                              o_goods_price : document.getElementById("g_price").value,
+                              pay_method : rsp.pay_method,
+                              card_pay_month : rsp.card_quota,
+                              receiver_hp : document.getElementById("receiver_hp").value,
+                              receiver_name : document.getElementById("receiver_name").value,
+                              receiver_addr1 : document.getElementById("zipcode").value,
+                              receiver_addr2 : document.getElementById("roadAddress").value,
+                              receiver_addr3 : document.getElementById("namujiAddress").value,
+                              deliver_message : document.getElementById("deliver_message").value,
+                              deliver_method : document.getElementById("deliver_method").value,
+                              o_useMile : document.getElementById('o_useMile').value
+                           }
+                           }).done(function(data) {
+                                 if ( everythings_fine ) {
+                                    msg = '결제가 완료되었습니다.';
+                                    msg += '\n고유ID : ' + rsp.imp_uid;
+                                    msg += '\n결제 금액 : ' + rsp.paid_amount;
+                                    msg += '카드 승인번호 : ' + rsp.apply_num;
+                                    alert(msg);
+                                 } else {
+                                    //[3] 아직 제대로 결제가 되지 않았습니다.
+                                    //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+                                 }
+                              });
+                              //성공시 이동할 페이지
+                              location.replace("${contextPath}/order/OrderResult.do");
+                           } else {
+                              msg = '결제에 실패하였습니다.';
+                              msg += '에러내용 : ' + rsp.error_msg;
+                              //실패시 이동할 페이지
+                              location.href="${contextPath}/order/OrderForm.do?g_id=${goodsVO.g_id}&o_goods_qty=${orderVO.o_goods_qty}";
+                              alert(msg);
+                           }
+                        });
+   }
 
-	var IMP = window.IMP; // 생략 가능
-	IMP.init('imp53396567');
-	function fn_buyBTN() {
-		var userMileage = document.getElementById("max_mile").value;
-		
-		
-		
-		IMP.request_pay({
-							pg : 'html5_inicis', // version 1.1.0부터 지원.
-							pay_method : 'card',
-							merchant_uid : 'merchant_' + new Date().getTime(),
-							name : document.getElementById("g_name").value,
-							amount : document.getElementById("final_total_Price").value, //판매 가격
-							buyer_email : '${memberInfo.u_email1} + ${memberInfo.u_email2}',
-							buyer_name : '${memberInfo.u_name}',
-							buyer_tel : '${memberInfo.u_hp1}',
-							buyer_addr : '${memberInfo.u_addr2} + ${memberInfo.u_addr3}',
-							buyer_postcode : '${memberInfo.u_addr1}'
-						}, function(rsp) {
-						      if ( rsp.success ) {
-							         //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-							         $.ajax({
-							        	 url : "${contextPath}/order/insertOrder.do", //cross-domain error가 발생하지 않도록 주의해주세요
-							            type: 'POST',
-							            data : {
-											u_id : document.getElementById("u_id").value,
-											g_id : document.getElementById("g_id").value,
-											s_id : document.getElementById("s_id").value,
-											u_name : rsp.buyer_name,
-											g_name : rsp.name,
-											o_goods_qty : document.getElementById("h_order_goods_qty").value,
-											o_goods_price : document.getElementById("g_price").value,
-											pay_method : rsp.pay_method,
-											card_pay_month : rsp.card_quota,
-											receiver_hp : document.getElementById("receiver_hp").value,
-											receiver_name : document.getElementById("receiver_name").value,
-											receiver_addr1 : document.getElementById("zipcode").value,
-											receiver_addr2 : document.getElementById("roadAddress").value,
-											receiver_addr3 : document.getElementById("namujiAddress").value,
-											deliver_message : document.getElementById("deliver_message").value,
-											deliver_method : document.getElementById("deliver_method").value,
-											o_useMile : document.getElementById('o_useMile').value
-										}
-							         }).done(function(data) {
-								            if ( everythings_fine ) {
-								               msg = '결제가 완료되었습니다.';
-								               msg += '\n고유ID : ' + rsp.imp_uid;
-								               msg += '\n결제 금액 : ' + rsp.paid_amount;
-								               msg += '카드 승인번호 : ' + rsp.apply_num;
-								               alert(msg);
-								            } else {
-								               //[3] 아직 제대로 결제가 되지 않았습니다.
-								               //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-								            }
-								         });
-								         //성공시 이동할 페이지
-							         	location.replace("${contextPath}/order/OrderResult.do");
-								      } else {
-								         msg = '결제에 실패하였습니다.';
-								         msg += '에러내용 : ' + rsp.error_msg;
-								         //실패시 이동할 페이지
-								         location.href="${contextPath}/order/OrderForm.do?g_id=${goodsVO.g_id}&o_goods_qty=${orderVO.o_goods_qty}";
-								         alert(msg);
-								      }
-								   });
-		}
-	
+
 	
 	
 
@@ -160,10 +148,12 @@
 	function maxMile(){
 		var price1 = document.getElementById("totalPrice").value;
 		     if(${memberInfo.u_mile} > ${orderVO.sum}) {
-			document.getElementById("o_useMile").value = ${orderVO.sum};
-			var price2 = document.getElementById("o_useMile").value;
+			
+	var price2 = document.getElementById("o_useMile").value;
 			var useMile = parseInt(price1) + ${orderVO.d_price} - 100;
-			document.order.FinalTotalPrice.value = parseInt(price1) + ${orderVO.d_price} - parseInt(price2);
+			document.getElementById("o_useMile").value = useMile;
+			
+			document.order.FinalTotalPrice.value = 100;
 			document.order.u_mile.value = useMile;
 		}else {
 				document.getElementById("o_useMile").value = ${memberInfo.u_mile};
@@ -171,6 +161,7 @@
 		
 				document.order.FinalTotalPrice.value = parseInt(price1) + ${orderVO.d_price} - parseInt(price2);
 				document.order.u_mile.value = price2;
+				
 			}
 		}
 </script>
@@ -295,10 +286,21 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 							id="h_order_goods_qty" name="h_order_goods_qty"
 							value="${orderVO.o_goods_qty}" />
 						</td>
+						<c:choose><c:when test = "${goodsVO.g_saleprice == 0}">
 						<td>${goodsVO.g_price}원</td>
+						
+						</c:when>
+						<c:otherwise>
+						<td>${goodsVO.g_saleprice }</td>
+						</c:otherwise>
+						
+						</c:choose>
+						
 						<td>${orderVO.d_price}원</td>
+						
 						<td>${goodsVO.g_price * 0.01}원</td>
 						<td>${sum}원</td>
+						
 					</tr>
 				</tbody>
 			</table>
@@ -340,7 +342,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 									name="roadAddress" size="50"  />
 
 									<br> <br> 나머지 주소: <input type="text"
-									id="namujiAddress" name="namujiAddress" size="50" value="" />
+									 name="namujiAddress" id = "ex_detailAddress" size="50" value="" />
 									<!-- <input
 									type="hidden" id="h_zipcode" name="h_zipcode" value="" /> <input
 									type="hidden" id="h_roadAddress" name="h_roadAddress" value="" />

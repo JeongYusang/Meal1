@@ -32,6 +32,8 @@
 		<result property="b_gr_id" column="b_gr_id" />
 		<result property="parentNo" column="parentNo" />
 		<result property="count" column="count"/>
+		<result property="o_goods_saleprice" column="o_goods_saleprice"/>
+		<result property="d_price" column="d_price"/>
 	</resultMap>
 
 
@@ -63,7 +65,7 @@
 		            deliver_method,
 		            deliver_message,
 		            o_useMile,
-		            parentNo) values
+		            parentNo,o_goods_saleprice,d_price) values
 		            (#{u_id},
 		            #{g_id},
 		            #{s_id},
@@ -81,7 +83,9 @@
 		            #{deliver_method},
 		            #{deliver_message},
 		            #{o_useMile},
-		            #{parentNo})
+		            #{parentNo},
+		            #{o_goods_saleprice},
+		            #{d_price})
 		]]>
 	</insert>
 
@@ -193,7 +197,7 @@
 		            deliver_method,
 		            deliver_message,
 		            o_useMile,
-		            parentNo) values
+		            parentNo,o_goods_saleprice,d_price) values
 		            (#{u_id},
 		            #{g_id},
 		            #{s_id},
@@ -211,7 +215,9 @@
 		            #{deliver_method},
 		            #{deliver_message},
 		            #{o_useMile},
-		            #{parentNo})
+		            #{parentNo},
+		            #{o_goods_saleprice},
+		            #{d_price})
 		]]>
 	</insert>
 	
