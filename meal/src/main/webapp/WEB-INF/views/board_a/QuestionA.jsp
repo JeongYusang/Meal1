@@ -1,122 +1,65 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="section" value="0" />
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<title>ÏûêÏ£ºÎ¨ªÎäîÏßàÎ¨∏</title>
+<style>
+div#mainContainer {
+
+}
+
+ul#slider1 {
+	padding-inline-start: 10px;
+    border-bottom: 5px solid #ecd3fe;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+div#maintitle {
+    text-align: center;
+    font-size: 40px;
+    font-weight: 900;
+    border-bottom: 5px solid #0000002e;
+}
+article#main {
+    border: 10px solid #ecd3ff;
+    border-radius: 10px;
+}
+</style>
 </head>
 <body>
+<div id="mainContainer">
+<div id=maintitle>ÏûêÏ£ºÎ¨ªÎäîÏßàÎ¨∏</div>
 <c:choose>
-	<c:when test="${empty boardGqList}">
-		<tr class="border-bottom asdf">
-		<td colspan=5 class="fixed"><strong>µÓ∑œµ» ∞‘Ω√π∞¿Ã
-			æ¯Ω¿¥œ¥Ÿ.</strong></td>
-									</tr>
-								</c:when>
-								<c:otherwise>
-									<c:forEach var="item" items="${boardASPList}" begin="0" end="10">
-										<c:choose>
-											<c:when
-												test="${empty item.secret or not empty item.secret and item.a_id == memberInfo.u_id or not empty item.secret and item.s_id == sellerInfo.s_id or not empty adminInfo}">
-												<ul id="slider1">
-													<li id="slider1-1"><span id="slide1-11">${item.title}<input
-															type="text" id="title_Reviewwriter"
-															value=" ¿€º∫¿⁄: ${item.u_id}" readonly></span>
-														<p id=Pcontent>
-															<c:if test="${item.u_id == memberInfo.u_id }">
-																<input id="buttons" type=button value="ºˆ¡§"
-																	onClick="fn_update('${contextPath}/boardGq/boardGqUpdateform.do',${item.b_gq_id })" />
-																<input id="buttons" type=button value="ªË¡¶"
-																	onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${item.b_gq_id })" />
-															</c:if>
-															<c:if test="${item.s_id == sellerInfo.s_id }">
-																<input id="buttons" type=button value="¥‰±€"
-																	onClick="fn_review('${contextPath}/boardGq/boardGqReviewform.do', ${item.b_gq_id})" />
-															</c:if>
-															<c:if test="${not empty adminInfo }">
-																<input id="buttons" type=button value="ªË¡¶"
-																	onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${item.b_gq_id })" />
-															</c:if>
-															<br> <img id="p_img"
-																src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${item.b_gq_id}"
-																onerror="this.style.display='none';" />
-															<textarea readonly>${item.content}</textarea>
-															<c:forEach var="boardGqReviewList"
-																items="${boardGqReviewList}">
-																<c:choose>
-																	<c:when
-																		test="${boardGqReviewList.parentNo == item.b_gq_id and empty boardGqReviewList.secret or not empty boardGqReviewList.secret and item.u_id == memberInfo.u_id or not empty boardGqReviewList.secret and item.s_id == sellerInfo.s_id or not empty adminInfo}">
-																		<br>
-																		<input id="answer" type="text" value="¥‰∫Ø">
-																		<br>
-																		<br>
-																		<input type="text" id="Reviewtitle"
-																			value="${boardGqReviewList.title}" readonly>
-																		<br>
-																		<input type="text" id="Reviewwriter"
-																			value=" ¿€º∫¿⁄: ${boardGqReviewList.s_id}" readonly>
-																		<br>
-
-
-
-																		<c:if
-																			test="${boardGqReviewList.s_id == sellerInfo.s_id }">
-																			<input id="buttons" type=button value="ºˆ¡§"
-																				onClick="fn_update('${contextPath}/boardGq/boardGqUpdateform.do',${boardGqReviewList.b_gq_id })" />
-																			<input id="buttons" type=button value="ªË¡¶"
-																				onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${boardGqReviewList.b_gq_id })" />
-																			<br>
-																		</c:if>
-																		<c:if test="${not empty adminInfo }">
-																			<input id="buttons" type=button value="ªË¡¶"
-																				onClick="fn_remove_board('${contextPath}/boardGq/boardGqDelete.do',${boardGqReviewList.b_gq_id })" />
-																			<br>
-																		</c:if>
-																		<img id="p_img"
-																			src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${boardGqReviewList.b_gq_id}"
-																			onerror="this.style.display='none';" />
-																		<br>
-																		<textarea readonly>${boardGqReviewList.content}</textarea>
-																	</c:when>
-
-																	<c:when
-																		test="${boardGqReviewList.parentNo == item.b_gq_id and not empty boardGqReviewList.secret and item.u_id != memberInfo.u_id and item.s_id != sellerInfo.s_id and empty adminInfo}">
-																		<br>
-																		<input id="answer" type="text" value="¥‰∫Ø">
-																		<br>
-																		<br>
-																		<input type="text" id="Reviewtitle" value="∫Òπ–±€¿‘¥œ¥Ÿ"
-																			readonly>
-																		<br>
-																		<input type="text" id="Reviewwriter"
-																			value=" ¿€º∫¿⁄: ****" readonly>
-																		<br>
-
-																		<img id="p_img"
-																			src="${contextPath}/resources/image/lock.png"
-																			onerror="this.style.display='none';" />
-																		<br>
-																		<textarea readonly>∫Òπ–±€¿‘¥œ¥Ÿ</textarea>
-
-																	</c:when>
-																</c:choose>
-															</c:forEach>
-														</p></li>
-												</ul>
-											</c:when>
-											<c:when
-												test="${not empty item.secret and item.u_id != memberInfo.u_id and item.s_id != sellerInfo.s_id and empty adminInfo}">
-												<ul id="slider1">
-													<li id="slider1-1"><span id="slide1-11">∫Òπ–±€¿‘¥œ¥Ÿ<input
-															type="text" id="title_Reviewwriter" value=" ¿€º∫¿⁄: ****"
-															readonly></span></li>
-												</ul>
-											</c:when>
-										</c:choose>
-									</c:forEach>
-								</c:otherwise>
-							</c:choose>
+	<c:when test="${empty boardAList }">
+		<tr>
+			<td colspan=7 class="fixed"><strong>Îì±Î°ùÎêú Í≤åÏãúÎ¨ºÏù¥ ÏóÜÏäµÎãàÎã§.</strong></td>
+		</tr>
+	</c:when>
+	<c:when test="${not empty boardAList}">
+			<c:forEach var="item" items="${boardAList}" begin="0" end="10">
+				<div id="box11">
+					<ul id="slider1">
+						<li id="slider1-1">
+							<span id="slide1-11">
+								Q. &nbsp;&nbsp; ${item.title} 
+							</span>
+							<p>
+								A. &nbsp;&nbsp; ${item.content}
+							</p>
+						</li>
+					</ul>
+				</div>
+			</c:forEach>
+		</c:when>
+	</c:choose>
+</div>
 </body>
 <script>
 	$(document).ready(function() {

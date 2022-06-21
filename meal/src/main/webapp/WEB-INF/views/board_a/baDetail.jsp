@@ -135,6 +135,24 @@ img#contentID {
     width: 100%;
 }
 
+a.atagID {
+    float: right;
+    display: inline-block;
+    background-color: #ffc0cf;
+    border-radius: 5px;
+    border: 4px #cccccc;
+    color: black;
+    font-size: 8px;
+    padding: 0;
+    width: 35px;
+    height: 20px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+    line-height: 210%;
+    text-align: center;
+}
+
 </style>
 
 
@@ -149,12 +167,12 @@ img#contentID {
 			<c:choose>
 				<c:when test="${adminInfo ne null }">
 				<div id="adminBTN">
-					<a href="${contextPath}/boardA/UpdateBAform.do?b_a_id=${boardAInfo.b_a_id}">수정</a> 
-					<a href="${contextPath}/boardA/deleteBA.do?b_a_id=${boardAInfo.b_a_id}">삭제</a>
+					<a href="${contextPath}/boardA/boardADetail.do?b_a_id=${item.b_a_id}&cate=이벤트" class="atagID">수정</a> 
+					<a href="${contextPath}/boardA/deleteBA.do?b_a_id=${boardAInfo.b_a_id}" class="atagID">삭제</a>
 				</div>
 				</c:when>
 			</c:choose> 
-					<input type=button value="목록" onClick="backToList(this.form)" />
+					<input type=button value="목록" onClick="window.history.back();" />
 		</div>
 			<div class='table-wrap'>
 				<c:choose>

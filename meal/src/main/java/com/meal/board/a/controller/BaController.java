@@ -23,7 +23,7 @@ public interface BaController {
 			@RequestParam(value = "pgNum", required = false) String pgNum, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 	
-	public ModelAndView boardAList(@RequestParam("b_a_id") String b_a_id, HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView boardADetail(@RequestParam("b_a_id") String b_a_id, @RequestParam("cate") String cate, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	public ModelAndView boardASPList(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
 		      @RequestParam(value = "section1", required = false) String section,
