@@ -17,20 +17,17 @@
 .side-nav-wrap ul, .side-list {
 	border: 1px solid #bcbcbc;
 }
-
 .side-nav-wrap ul, .side-list, .side-list ul.sidebar-content, .side-list ul.sidebar-content li
 	{
 	display: block;
 	text-align: left;
 	padding-inline-start: 0px;
 }
-
 .side-list ul.sidebar-content li a {
 	display: block;
 	text-align: left;
 	padding-inline-start: 10px;
 }
-
 .checkpw, .checkpw1 {
 	background: white;
 	margin-left: 9px;
@@ -51,7 +48,6 @@
 	z-index: 500;
 	display: none;
 }
-
 .check-context .check-inner {
 	width: 40%;
 	height: 40%;
@@ -65,7 +61,6 @@
 	padding: 20px;
 	font-size: 20px;
 }
-
 .check-context .check-inner>btn {
 	z-index: 300px;
 	width: 30px;
@@ -77,7 +72,6 @@
 	background: #ffc0cf;
 	/* 백그라운드는 이너와 맞춰줄것 */
 }
-
 /*  */
 .check-context1 {
 	z-index: 50;
@@ -90,7 +84,6 @@
 	z-index: 500;
 	display: none;
 }
-
 .check-context1 .check-inner1 {
 	width: 40%;
 	height: 40%;
@@ -104,7 +97,6 @@
 	padding: 20px;
 	font-size: 20px;
 }
-
 .check-context1 .check-inner1>btn {
 	z-index: 300px;
 	width: 30px;
@@ -116,11 +108,9 @@
 	background: #ffc0cf;
 	/* 백그라운드는 이너와 맞춰줄것 */
 }
-
 .check-inner1>.pw {
 	boackground: #ffc0cf;
 }
-
 h2.adminLiName {
     margin: 0px;
 }
@@ -231,7 +221,7 @@ h2.adminLiName {
 
 					<li class="side-list">
 						<ul class="side-list">
-							<li><H2><a href="${contextPath }/admin/AllorderPage.do">주문내역</a></H2></li>
+							<li><H2><a href="${contextPath}/admin/selectAllorders.do">주문내역</a></H2></li>
 						</ul>
 					</li>
 					<li class="side-list">
@@ -309,7 +299,6 @@ h2.adminLiName {
 		$(".check-context").fadeOut();
 		$(".nav_ul").css("display", "block");
 	});
-
 	$(".checkpw1").click(function() {
 		/*사이트맵버튼클릭시}*/
 		$(".check-context1").fadeIn();

@@ -871,7 +871,7 @@ div #icon {
 																			<c:if
 																				test="${boardGrReviewList.s_id == sellerInfo.s_id }">
 																				<input id="buttons" type=button value="수정"
-																					onClick="gr_update('${contextPath}/boardGr/boardGrUpdateform.do',${boardGrReviewList.b_gr_id })" />
+																					onClick="gr_update('${contextPath}/boardGr/boardGrReviewUpdateform.do',${boardGrReviewList.b_gr_id })" />
 																				<input id="buttons" type=button value="삭제"
 																					onClick="gr_remove_board('${contextPath}/boardGr/boardGrDelete.do',${boardGrReviewList.b_gr_id })" />
 																			</c:if>
