@@ -36,7 +36,14 @@ public class OrderVO {
 	public int sum;
 	public int d_price;
 	public int count;
+	public int o_goods_saleprice;
 	
+	public int getO_goods_saleprice() {
+		return o_goods_saleprice;
+	}
+	public void setO_goods_saleprice(int o_goods_saleprice) {
+		this.o_goods_saleprice = o_goods_saleprice;
+	}
 	public int getCount() {
 		return count;
 	}
