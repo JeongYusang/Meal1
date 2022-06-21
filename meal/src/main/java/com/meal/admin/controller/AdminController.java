@@ -26,10 +26,4 @@ public interface AdminController {
 			@RequestParam(value = "section", required = false) String section,
 			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
-	
-	//관리자의 전체 주문조회 위해 추가 0620
-	public ModelAndView AllorderPage(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
-			@RequestParam(value = "section1", required = false) String section,
-			@RequestParam(value = "pgNum", required = false) String pgNum, HttpServletRequest request,
-			HttpServletResponse response) throws Exception;
 }

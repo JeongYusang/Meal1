@@ -155,11 +155,4 @@ public class GoodsServiceImpl implements GoodsService {
 	public void changeBestGoods(int g_id) throws Exception{
 		goodsDAO.changeBestGoods(g_id);
 	}
-	
-	//관리자의  등록상품 조회 0620
-	@Override
-	public List<GoodsVO> selectadminGPage(HashMap<String, Object> pgMap) throws Exception {
-		List<GoodsVO> listInfo = (List<GoodsVO>) goodsDAO.selectadminGPage(pgMap);
-		return listInfo;
-	}
 }

@@ -360,12 +360,7 @@ update goods_tb set g_saleprice = '0', g_saleDate1= null, g_saleDate2= null , g_
 ]]>
 	</update>
 
-<!-- 관리자의 등록상품 조회 0620 -->
-<select id="adminGPage" parameterType="Map" resultMap="goodsResult">
-<![CDATA[
-	   select R1.* from (select * from goods_tb order by g_id) R1 order by g_id DESC limit #{start} , #{end} 
-	   ]]>
-</select>
+
 
 
 </mapper>

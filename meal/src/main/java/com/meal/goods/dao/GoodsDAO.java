@@ -65,7 +65,4 @@ public interface GoodsDAO {
 	public void changeNomalGoods(int g_id) throws DataAccessException; 
 	//6-16 5
 	public void changeBestGoods(int g_id) throws DataAccessException;
-	
-	//관리자의  등록상품 조회 0620
-	public List<GoodsVO> selectadminGPage(HashMap<String, Object> pgMap) throws DataAccessException;
  }
