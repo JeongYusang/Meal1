@@ -268,8 +268,8 @@ tr.orderlist td {
 										<td><a href="${contextPath}/goods/goodsDetail.do?g_id=${OrderList.g_id}">
 										<img src="${contextPath}/download1.do?g_id=${OrderList.g_id}&cate=main" onerror= "this.src='${contextPath}/resources/image/not for sale.jpg'"></a></td>
 										<td id="title"><a href="${contextPath}/goods/goodsDetail.do?g_id=${OrderList.g_id}">${OrderList.g_name}</a></td>
-										<td>${OrderList.o_goods_qty}개/<c:if test = "${OrderList.o_goods_price >= 30000}">${OrderList.o_goods_price - OrderList.o_useMile}원</c:if>
-										<c:if test = "${OrderList.o_goods_price < 30000}">${OrderList.o_goods_price + 3000 - OrderList.o_useMile}원</c:if></td>
+										<td><c:if test = "${OrderList.o_goods_price * OrderList.o_goods_qty < 30000}">${OrderList.o_goods_qty}개/${OrderList.o_goods_price * OrderList.o_goods_qty + 3000 - OrderList.o_useMile }원</c:if>
+										<c:if test = "${OrderList.o_goods_price * OrderList.o_goods_qty > 30000}">${OrderList.o_goods_qty}개/${OrderList.o_goods_price * OrderList.o_goods_qty - OrderList.o_useMile }원</c:if></td>
 										<td><b id="state">${OrderList.delivery_state}</b></td>
 										<td><c:if test="${OrderList.delivery_state == '주문완료'}">
 												<a href="#">주문 환불</a>
@@ -334,7 +334,8 @@ tr.orderlist td {
 										</a></td>
 										<td id="title"><a
 											href="${contextPath }/goods/goodsDetail.do?g_id=${OrderMap.g_id}">${OrderMap.g_name}</a></td>
-										<td>${OrderMap.o_goods_qty}개/${OrderMap.o_goods_price}원</td>
+										<td><c:if test = "${OrderMap.o_goods_price * OrderMap.o_goods_qty < 30000}">${OrderMap.o_goods_qty}개/${OrderMap.o_goods_price * OrderMap.o_goods_qty + 3000 - OrderMap.o_useMile }원</c:if>
+										<c:if test = "${OrderMap.o_goods_price * OrderMap.o_goods_qty > 30000}">${OrderMap.o_goods_qty}개/${OrderMap.o_goods_price * OrderMap.o_goods_qty - OrderMap.o_useMile }원</c:if></td>
 										<td><b id="state">${OrderMap.delivery_state}</b><br>
 											<a
 											href="${contextPath}/order/deleteOrder.do?o_id=${OrderMap.o_id}">주문
@@ -391,7 +392,8 @@ tr.orderlist td {
 										</a></td>
 										<td id="title"><a
 											href="${contextPath }/goods/goodsDetail.do?g_id=${OrderMap.g_id}">${OrderMap.g_name}</a></td>
-										<td>${OrderMap.o_goods_qty}개/${OrderMap.o_goods_price}원</td>
+										<td><c:if test = "${OrderMap.o_goods_price * OrderMap.o_goods_qty < 30000}">${OrderMap.o_goods_qty}개/${OrderMap.o_goods_price * OrderMap.o_goods_qty + 3000 - OrderMap.o_useMile }원</c:if>
+										<c:if test = "${OrderMap.o_goods_price * OrderMap.o_goods_qty > 30000}">${OrderMap.o_goods_qty}개/${OrderMap.o_goods_price * OrderMap.o_goods_qty - OrderMap.o_useMile }원</c:if></td>
 										<td><b id="state">${OrderMap.delivery_state}</b><br>
 											<a
 											href="https://tracker.delivery/#/kr.cjlogistics/560067553920"
@@ -443,7 +445,8 @@ tr.orderlist td {
 												<img src="${contextPath}/download1.do?g_id=${OrderMap.g_id}&cate=main">
 										</a></td>
 										<td id="title"><a href="${contextPath }/goods/goodsDetail.do?g_id=${OrderMap.g_id}">${OrderMap.g_name}</a></td>
-										<td>${OrderMap.o_goods_qty}개/${OrderMap.o_goods_price}원</td>
+										<td><c:if test = "${OrderMap.o_goods_price * OrderMap.o_goods_qty < 30000}">${OrderMap.o_goods_qty}개/${OrderMap.o_goods_price * OrderMap.o_goods_qty + 3000 - OrderMap.o_useMile }원</c:if>
+										<c:if test = "${OrderMap.o_goods_price * OrderMap.o_goods_qty > 30000}">${OrderMap.o_goods_qty}개/${OrderMap.o_goods_price * OrderMap.o_goods_qty - OrderMap.o_useMile }원</c:if></td>
 										<td><b id="state">${OrderMap.delivery_state}</b><br>
 											<c:if test="${OrderMap.review == 'false'}">
 												<a href="${contextPath}/boardGr/boardGrWrite.do?g_id=${OrderMap.g_id}&o_id=${OrderMap.o_id}">후기
