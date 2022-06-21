@@ -60,7 +60,12 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		HttpSession session = multipartRequest.getSession();
 		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 		SellerVO sellerInfo = (SellerVO) session.getAttribute("sellerInfo");
-		if(memberInfo != null || sellerInfo != null) {
+		if(memberInfo == null && sellerInfo == null) {
+			String message = "로그인 해주시길 바랍니다";
+			mav.addObject(message);
+			String viewName = "redirect:/main/loginForm.do";
+			mav.setViewName(viewName);
+		}
 		HashMap<String, Object> newboardGqMap = new HashMap<String, Object>();
 		Enumeration enu = multipartRequest.getParameterNames();
 		while (enu.hasMoreElements()) {
@@ -85,11 +90,11 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 				for (HashMap<String, Object> item : imageFileList) {
 					// 이미지 리스트에 관하여 파일정보 MAP에 판매자 아이디를 추가시킴
 					item.put("b_gq_id", b_gq_id);
-					if (memberVO != null) {
-						String reg_id = memberVO.getU_id();
+					if (memberInfo != null ) {
+						String reg_id = memberInfo.getU_id();
 						item.put("reg_id", reg_id);
 					} else {
-						String reg_id = sellerVO.getS_id();
+						String reg_id = sellerInfo.getS_id();
 						item.put("reg_id", reg_id);
 					}
 
@@ -136,12 +141,7 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 				}
 			}
 		}
-		}else {
-			String message = "로그인 해주시길 바랍니다";
-			mav.addObject(message);
-			String viewName = "redirect:/main/loginForm.do";
-			mav.setViewName(viewName);
-		}
+		
 		return mav;
 	}
 
