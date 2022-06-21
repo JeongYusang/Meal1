@@ -10,23 +10,27 @@
 <meta charset="UTF-8">
 <title>상품 조회하기</title>
 <script>
-	function fn_delivUpdate(o_id,select_id) {
-		var s_delivery_state = document.getElementById(select_id);
-		var index = s_delivery_state.selectedIndex;
-		var value = s_delivery_state[index].value;
+	function fn_delivUpdate(x) {
+		var count = "s_delivery_state"+x;
+		var s_delivery_state = document.getElementById(count).value;
+		console.log(s_delivery_state + o_id);
+		var id = x;
+		var o_id = document.getElementById(id).value;
+		console.log(s_delivery_state + o_id);
 		//console.log("value: "+value );
-
+ 
 		$.ajax({
-			type : "post",
+			type : "post", 
 			async : false,
 			url : "${contextPath}/admin/delivUpdate.do",
 			data : {
 				o_id : o_id,
-				"delivery_state" : value
+				delivery_state : s_delivery_state
 			},
 			success : function(data, textStatus) {
 				if (data.trim() == 'mod_success') {
 					alert("배송 정보를 수정했습니다.");
+					console.log(s_delivery_state + o_id);
 					location.href = "${contextPath}/seller/sellerMypage.do";
 				} else if (data.trim() == 'failed') {
 					alert("다시 시도해 주세요.");
@@ -38,6 +42,7 @@
 			},
 			complete : function(data, textStatus) {
 				//alert("작업을완료 했습니다");
+				console.log(s_delivery_state + o_id);
 
 			}
 		}); //end ajax		
@@ -384,8 +389,11 @@ border-bottom: 1px solid black;
 												</c:when>
 												<c:when test="${not empty orderList}">
 												<c:forEach var="item" items="${orderList }">
+												<c:set var ="x" value="${x+1}"/>
 														<tr class="border-bottom">
-															<td>${item.o_id}</td>
+															<td>${item.o_id}
+															<input type="hidden" value="${item.o_id }" id="${x}" name = "o_id">
+															</td>
 															<td>${item.g_name}</td>
 															<td>${item.o_goods_price}</td>
 															<td>${item.o_goods_qty}</td>
@@ -393,7 +401,7 @@ border-bottom: 1px solid black;
 															<td>${item.receiver_addr1},
 																${item.receiver_addr2}, ${item.receiver_addr3}</td>
 															<td>${item.delivery_state}</td>
-																<td><select name="s_delivery_state"  id="s_delivery_state">
+																<td><select name="s_delivery_state"  id="s_delivery_state${x}">
 																	<c:choose>
 																		<c:when test="${item.delivery_state == '결제완료' }">
 																			<option value="결제완료" selected>결제완료</option>
@@ -412,7 +420,7 @@ border-bottom: 1px solid black;
 																		</c:when>
 																	</c:choose>
 															</select> 
-															<input type="button" value="배송수정" onClick="fn_delivUpdate('${item.o_id}','s_delivery_state')" />														
+															<input type="button" value="배송수정" onClick="fn_delivUpdate(${x})" />														
 															</td>
 														</tr>
 														</c:forEach>
