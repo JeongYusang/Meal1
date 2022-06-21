@@ -24,8 +24,11 @@ import com.meal.admin.service.AdminService;
 import com.meal.admin.vo.AdminVO;
 import com.meal.common.controller.BaseController;
 import com.meal.goods.service.GoodsService;
+import com.meal.goods.vo.GoodsVO;
 import com.meal.member.service.MemberService;
 import com.meal.member.vo.MemberVO;
+import com.meal.order.service.OrderService;
+import com.meal.order.vo.OrderVO;
 import com.meal.seller.service.SellerService;
 import com.meal.seller.vo.SellerVO;
 
@@ -47,6 +50,8 @@ public class AdminControllerImpl extends BaseController implements AdminControll
 	private SellerVO sellerVO;
 	@Autowired
 	private AdminVO adminVO;
+	@Autowired
+	private OrderService orderService;
 	@Autowired
 	BCryptPasswordEncoder passwordEncode;
 
@@ -238,5 +243,58 @@ public class AdminControllerImpl extends BaseController implements AdminControll
 		message = "mod_success";
 		resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
 		return resEntity;
+	}
+	
+	// 전체 주문내역 조회(관리자용) 0620
+	@Override
+	@RequestMapping(value = "/AllorderPage.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView AllorderPage(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+			@RequestParam(value = "section1", required = false) String section,
+			@RequestParam(value = "pgNum", required = false) String pgNum, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+	ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		AdminVO adminVO = (AdminVO) session.getAttribute("adminInfo");
+		String a_id = (String) adminVO.getA_id();
+		
+		if (adminVO != null) {
+			adminVO = (AdminVO) adminService.decode(a_id);
+			String viewName = (String) request.getAttribute("viewName");
+			mav.setViewName(viewName);
+
+			HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
+			pagingInfo.put("section", section);
+			pagingInfo.put("pgNum", pgNum);
+
+			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
+
+			// 굿즈리스트 호출을 위해 사용
+			List<GoodsVO> goodsList = goodsService.selectadminGPage(pagingMap);
+
+			// 주문내역 확인
+			List<OrderVO> orderList = orderService.AllorderList(pagingMap);
+
+			System.out.println("---------------------------");
+			System.out.println("goodsList : " + goodsList);
+			System.out.println("---------------------------");
+			System.out.println("adminVO : " + adminVO);
+			System.out.println("---------------------------");
+			System.out.println("orderList : " + orderList);
+			System.out.println("---------------------------");
+
+			mav.addObject("adminVO", adminVO);
+			mav.addObject("orderList", orderList);
+			mav.addObject("goodsList", goodsList);
+			mav.setViewName(viewName);
+
+			return mav;
+		} else {
+		String message = "잘못된 접근방법입니다.";
+		mav.addObject("message", message);
+		String viewName1 = "redirect:/main/main.do";
+		mav.setViewName(viewName1);
+		return mav;
+		
+		}
 	}
 }
