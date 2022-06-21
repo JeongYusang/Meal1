@@ -278,8 +278,8 @@ tr.border-bottom td {
 }
 
 #mainImg {
-	width: 650px;
-	height: 650px;
+	width: 600px;
+	height: 600px;
 	margin: 10px 0 0 5px;
 }
 
@@ -379,8 +379,8 @@ div #icon {
 .soldout {
 	filter: brightness(50%);
 	position: relative;
-	width: 650px;
-	height: 650px;
+	width: 600px;
+	height: 600px;
 	margin: 10px 0 0 5px;
 }
 
@@ -613,7 +613,7 @@ div #icon {
 						<br>
 						<b style="font-size: 40px">${goodsInfo.g_name}</b>
 						<p
-							style="text-decoration: line-through; font-size: 36px; font-weight: 600; margin-top: 0; margin-bottom: 10px;">${goodsInfo.g_price }원</p>
+							style="text-decoration: line-through; font-size: 20px; font-weight: 600; margin-top: 10px; margin-bottom: 0;">${goodsInfo.g_price }원</p>
 
 						<p
 							style="font-size: 36px; font-weight: 600; margin-top: 0; margin-bottom: 10px;">${goodsInfo.g_saleprice }원</p>
@@ -697,8 +697,8 @@ div #icon {
 					<h3>유통기한 : ${goodsInfo.g_eatDate}</h3>
 					</c:if>
 					<h3>단위(인분) : ${goodsInfo.g_inbun}</h3>
-					<h3>알레르기 상세정보 : ${goodsInfo.g_allergy_M}</h3>
-					<h4>---------------------------------------------</h4>
+					<h3>알레르기 정보 : ${goodsInfo.g_allergy_M}</h3>
+					<h3>상세정보 : ${goodsInfo.g_detail1 }</h3>
 					<c:if test="${goodsInfo.g_saleprice != 0}">
 						<h2>
 
@@ -758,7 +758,6 @@ div #icon {
 
 			<div id="tab-1" class="tab-content current">
 				<div class="detail">
-					<div class="detail1tag">${goodsInfo.g_detail1 }</div>
 					<c:forEach var="item" items="${ImgList }">
 						<c:if test="${item.cate != 'main' }">
 							<p>

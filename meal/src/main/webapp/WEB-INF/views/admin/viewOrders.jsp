@@ -269,10 +269,6 @@ border-bottom: 1px solid black;
 <body>
 <form action="url" method="post" enctype="multipart/form-data">
 	<div class="div1">
-		<div class="div3">
-			<div class="div3-1" >${sellerVO.s_Wname } </div> <div class="div3-2">${sellerVO.s_id } </div> 
-			<div class="div3-3">이번달 판매금액 <br> 총 판매 금액 </div>
-		</div>
 		<div class="div4">
 			<div class="tabmenu">
 				<ul>
@@ -300,14 +296,14 @@ border-bottom: 1px solid black;
 							</tr>
 						</thead>
 						<c:choose>
-							<c:when test="${empty goodsList}">
+							<c:when test="${empty GoodsList}">
 								<tr>
 									<td colspan=15 class="fixed"><strong>등록된 상품이 없습니다.</strong></td>
 								</tr>
 							</c:when>
-							<c:when test="${not empty goodsList}">
+							<c:when test="${not empty GoodsList}">
 								
-								<c:forEach var="item" items="${goodsList}">
+								<c:forEach var="item" items="${GoodsList}">
 									<tr class="border-bottom">
 										<td>${item.g_id}</td>
 										<td>${item.g_name}</td>
@@ -340,14 +336,14 @@ border-bottom: 1px solid black;
 							<c:forEach var="page" begin="1" end="10" step="1">
 								<c:if test="${section >0 && page==1 }">
 									<a
-										href="${contextPath}/seller/sellerMypage.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
+										href="${contextPath}/order/selectAllorders.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
 								</c:if>
 								<a
-									href="${contextPath}/seller/sellerMypage.do?section=${section}&pageNum=${page}">${(section)*10 +page}
+									href="${contextPath}/order/selectAllorders.do?section=${section}&pageNum=${page}">${(section)*10 +page}
 								</a>
 								<c:if test="${page == 10 }">
 									<a
-										href="${contextPath}/seller/sellerMypage.do?section=${section}+1&pageNum=${section*10}+1">다음</a>
+										href="${contextPath}/order/selectAllorders.do?section=${section}+1&pageNum=${section*10}+1">다음</a>
 								</c:if>
 							</c:forEach>
 						</div>
@@ -376,14 +372,14 @@ border-bottom: 1px solid black;
 												</tr>
 											</thead>
 											<c:choose>
-												<c:when test="${empty orderList}">
+												<c:when test="${empty OrderList}">
 													<tr>
 														<td colspan=8 class="fixed"><strong>등록된
 																주문내역이 없습니다.</strong></td>
 													</tr>
 												</c:when>
-												<c:when test="${not empty orderList}">
-												<c:forEach var="item" items="${orderList }">
+												<c:when test="${not empty OrderList}">
+												<c:forEach var="item" items="${OrderList }">
 														<tr class="border-bottom">
 															<td>${item.o_id}</td>
 															<td>${item.g_name}</td>
@@ -424,14 +420,14 @@ border-bottom: 1px solid black;
 												<c:forEach var="page" begin="1" end="10" step="1">
 													<c:if test="${section >0 && page==1 }">
 														<a
-															href="${contextPath}/seller/sellerMypage.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
+															href="${contextPath}/order/selectAllorders.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
 													</c:if>
 													<a
-														href="${contextPath}/seller/sellerMypage.do?section=${section}&pageNum=${page}">${(section)*10 +page}
+														href="${contextPath}/order/selectAllorders.do?section=${section}&pageNum=${page}">${(section)*10 +page}
 													</a>
 													<c:if test="${page == 10 }">
 														<a
-															href="${contextPath}/seller/sellerMypage.do?section=${section}+1&pageNum=${section*10}+1">다음</a>
+															href="${contextPath}/order/selectAllorders.do?section=${section}+1&pageNum=${section*10}+1">다음</a>
 													</c:if>
 												</c:forEach>
 											</div>
@@ -458,14 +454,14 @@ border-bottom: 1px solid black;
 												</tr>
 											</thead>
 											<c:choose>
-												<c:when test="${empty orderCanceledSellerList}">
+												<c:when test="${empty CancledOrderList}">
 													<tr>
 														<td colspan=15 class="fixed"><strong>등록된
 																주문내역이 없습니다.</strong></td>
 													</tr>
 												</c:when>
-												<c:when test="${not empty orderCanceledSellerList}">
-												<c:forEach var="item" items="${orderCanceledSellerList }">
+												<c:when test="${not empty CancledOrderList}">
+												<c:forEach var="item" items="${CancledOrderList }">
 														<tr class="border-bottom">
 															<td>${item.o_id}</td>
 															<td>${item.g_name}</td>
@@ -483,12 +479,12 @@ border-bottom: 1px solid black;
 											<div class="" id="pagination">
 												<c:forEach var="page" begin="1" end="10" step="1">
 													<c:if test="${section >0 && page==1 }">
-														<a href="${contextPath}/seller/sellerMypage.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
+														<a href="${contextPath}/order/selectAllorders.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
 													</c:if>
-													<a href="${contextPath}/seller/sellerMypage.do?section=${section}&pageNum=${page}">${(section)*10 +page}
+													<a href="${contextPath}/order/selectAllorders.do?section=${section}&pageNum=${page}">${(section)*10 +page}
 													</a>
 													<c:if test="${page == 10 }">
-														<a href="${contextPath}/seller/sellerMypage.do?section=${section}+1&pageNum=${section*10}+1">다음</a>
+														<a href="${contextPath}/order/selectAllorders.do?section=${section}+1&pageNum=${section*10}+1">다음</a>
 													</c:if>
 												</c:forEach>
 											</div>

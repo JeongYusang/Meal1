@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.meal.admin.dao.AdminDAO;
 import com.meal.admin.vo.AdminVO;
+import com.meal.goods.vo.GoodsVO;
 import com.meal.member.vo.MemberVO;
+import com.meal.order.vo.OrderVO;
 import com.meal.seller.vo.SellerVO;
 
 
@@ -55,5 +57,23 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void delivUpdate(Map<String, String> delivMap) throws Exception {
 		adminDAO.delivUpdate(delivMap);
+	}
+
+	@Override
+	public List<GoodsVO> GoodsList(HashMap<String, Object> pagingMap) throws Exception {
+		List<GoodsVO> GoodsList = (List<GoodsVO>)adminDAO.GoodsList(pagingMap);
+		return GoodsList;
+	}
+
+	@Override
+	public List<OrderVO> CancledOrderList(HashMap<String, Object> pagingMap) throws Exception {
+		List<OrderVO> CancledOrderList = (List<OrderVO>)adminDAO.CancledOrderList(pagingMap);
+		return CancledOrderList;
+	}
+
+	@Override
+	public List<OrderVO> OrderList(HashMap<String, Object> pagingMap) throws Exception {
+		List<OrderVO> OrderList = (List<OrderVO>)adminDAO.OrderList(pagingMap);
+		return OrderList;
 	}	
 }

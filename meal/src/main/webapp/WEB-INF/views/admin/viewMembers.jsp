@@ -183,7 +183,7 @@ tr.border-bottom td {
 		<c:when test="${empty adminInfo}">
 			<tr>
 				<center>
-					<td colspan=5 class="fixed"><strong>권한이 없습니다.</strong></td>
+					<td colspan=15 class="fixed"><strong>권한이 없습니다.</strong></td>
 				</center>
 			</tr>
 		</c:when>
@@ -222,7 +222,7 @@ tr.border-bottom td {
 						<c:choose>
 							<c:when test="${empty memberlist}">
 								<tr>
-									<td colspan=5 class="fixed"><strong>등록된 회원이 없습니다.</strong></td>
+									<td colspan=15 class="fixed"><strong>등록된 회원이 없습니다.</strong></td>
 								</tr>
 							</c:when>
 							<c:otherwise>

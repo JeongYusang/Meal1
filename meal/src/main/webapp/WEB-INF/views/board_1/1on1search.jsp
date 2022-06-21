@@ -129,30 +129,40 @@ tr.border-bottom td {
 
 
 							<c:choose>
-								<c:when test="${not empty item.u_id and empty item.secret }">
+							<c:when test="${not empty adminInfo}">
 									<td>${item.b_1_id}</td>
-									<td>${item.u_id}</td>
+									<td>${item.u_id}${item.s_id}</td>
 									<td><a href="${contextPath}/board1/b1Detail.do?b_1_id=${item.b_1_id}">${item.title}</a></td>
 									<td>${item.creDate}</td>
-
-
-
 								</c:when>
-
-								<c:when test="${not empty item.s_id and empty item.secret}">
+								
+								<c:when test="${empty item.secret or not empty item.secret and not empty memberInfo and item.u_id eq memberInfo.u_id}">
 									<td>${item.b_1_id}</td>
-									<td>${item.s_id}</td>
+									<td>${item.u_id}${item.s_id}</td>
 									<td><a href="${contextPath}/board1/b1Detail.do?b_1_id=${item.b_1_id}">${item.title}</a></td>
 									<td>${item.creDate}</td>
-
-
 								</c:when>
-								<c:when test="${not empty item.secret and item.u_id != memberInfo.u_id and item.s_id != sellerInfo.s_id }">
+
+								<c:when test="${empty item.secret or not empty item.secret and not empty sellerInfo and item.s_id eq sellerInfo.s_id}">
+									<td>${item.b_1_id}</td>
+									<td>${item.u_id}${item.s_id}</td>
+									<td><a href="${contextPath}/board1/b1Detail.do?b_1_id=${item.b_1_id}">${item.title}</a></td>
+									<td>${item.creDate}</td>
+									</c:when>
+								<c:when test="${not empty item.secret and item.u_id != memberInfo.u_id and empty adminInfo}">
 									<td>${item.b_1_id}</td>
 									<td>비밀글</td>
 									<td>비밀글입니다</td>
 									<td>${item.creDate}</td>
 								</c:when>
+								<c:when test="${not empty item.secret and item.s_id != sellerInfo.s_id and empty adminInfo}">
+									<td>${item.b_1_id}</td>
+									<td>비밀글</td>
+									<td>비밀글입니다</td>
+									<td>${item.creDate}</td>
+								</c:when>
+								
+								
 							</c:choose>
 							<td>${item.compare}</td>
 						</tr>

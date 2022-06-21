@@ -231,9 +231,8 @@ h2.adminLiName {
 
 					<li class="side-list">
 						<H2 class="adminLiName">상품관리</H2> <br>
-						<ul class="sidebar-content">							
-							<li><a href="${contextPath}/admin/goods/adminGoodsMain.do">상품관리</a></li>
-							<li><a href="${contextPath}/admin/order/adminOrderMain.do">주문관리</a></li>
+						<ul class="sidebar-content">
+							<li><a href="${contextPath}/admin/selectAllorders.do">주문/상품관리</a></li>
 							<li><a href="#">배송관리</a></li>
 						</ul>
 					</li>
