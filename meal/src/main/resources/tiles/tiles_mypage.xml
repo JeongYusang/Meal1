@@ -56,4 +56,8 @@
 	
 	
 	<!-- 어드민 -->
+	<definition name="/admin/AllorderPage" extends="baseLayout2">
+		<put-attribute name="title" value="회원 리뷰"/>
+		<put-attribute name="body" value="/WEB-INF/views/admin/adminAllorderPage.jsp"/>
+	</definition>
 </tiles-definitions>

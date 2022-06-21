@@ -269,15 +269,12 @@ span#fa\ fa-star\ {
 							<c:when test="${not empty boardAList}">
 								<c:forEach var="item" items="${boardAList}" begin="0" end="10">
 								<c:if test="${item.cate == '이벤트' }">
-									<tr class="border-bottom">
+									<tr class="border-bottom" onClick="location.href='${contextPath}/boardA/boardADetail.do?b_a_id=${item.b_a_id}&cate=이벤트'">
 										<td>${item.b_a_id}</td>
 										<td>${item.a_id}</td>
-										<%-- <td><a href="${contextPath}/boardGq/gq_detail.do?b_gq_id=${item.b_gq_id}"></a></td> --%>
 										<td>
-											<a href="${contextPath}/boardA/boardADetail.do?b_a_id=${item.b_a_id}">
-												<img src="${contextPath}/download3.do?b_a_id=${item.b_a_id}&cate=${item.cate}">
-													${item.title}
-											</a></td>
+											${item.title}
+										</td>
 										<td>${item.creDate}</td>
 									</tr>
 									</c:if>
@@ -324,17 +321,16 @@ span#fa\ fa-star\ {
 						<c:choose>
 							<c:when test="${empty boardAList}">
 								<tr>
-									<td colspan=7 class="fixed"><strong>등록된 게시물이 없습니다.</strong></td>
+									<td colspan=4 class="fixed"><strong>등록된 게시물이 없습니다.</strong></td>
 								</tr>
 							</c:when>
 							<c:when test="${not empty boardAList}">
 								<c:forEach var="item" items="${boardAList}" begin="0" end="10">
-								<c:if test="${item.cate == '공지사항' }">
-									<tr class="border-bottom">
+								<c:if test="${item.cate eq '공지사항'}">
+									<tr class="border-bottom" onClick="location.href='${contextPath}/boardA/boardADetail.do?b_a_id=${item.b_a_id}&cate=공지사항'">
 										<td>${item.b_a_id}</td>
 										<td>${item.a_id}</td>
-										<%-- <td><a href="${contextPath}/boardGq/gq_detail.do?b_gq_id=${item.b_gq_id}"></a></td> --%>
-										<td><a href="${contextPath}/boardA/boardADetail.do?b_a_id=${item.b_a_id}">${item.title}</a></td>
+										<td>${item.title}</td>
 										<td>${item.creDate}</td>
 									</tr>
 									</c:if>
@@ -344,7 +340,7 @@ span#fa\ fa-star\ {
 					</table>
 					<center>
 						<div class="" id="pagination">
-							<c:forEach var="page" begin="1" end="10" step="1">
+							<c:forEach var="page" begin="0" end="10" step="1">
 								<c:if test="${section >0 && page==1 }">
 									<a
 										href="${contextPath}/boardA/boardAList.do?section=${section}-1&pageNum=${(section-1)*10+1 }">preview</a>
@@ -354,7 +350,7 @@ span#fa\ fa-star\ {
 								</a>
 								<c:if test="${page == 10 }">
 									<a
-										href="${contextPath}/seller/sellerBoardMypage.do?section=${section}+1&pageNum=${section*10}+1">다음</a>
+										href="${contextPath}/boardA/boardAList.do?section=${section}+1&pageNum=${section*10}+1">다음</a>
 								</c:if>
 							</c:forEach>
 						</div>
@@ -387,13 +383,12 @@ span#fa\ fa-star\ {
 							<c:when test="${not empty boardAList}">
 								<c:forEach var="item" items="${boardAList}" begin="0" end="10">
 								<c:if test="${item.cate == '자주묻는질문' }">
-									<tr class="border-bottom">
+									<tr class="border-bottom" onClick="location.href='${contextPath}/boardA/boardADetail.do?b_a_id=${item.b_a_id}&cate=자주묻는질문'">
 										<td>${item.b_a_id}</td>
 										<td>${item.a_id}</td>
-										<%-- <td><a href="${contextPath}/boardGq/gq_detail.do?b_gq_id=${item.b_gq_id}"></a></td> --%>
-										<td><a href="${contextPath}/boardA/boardADetail.do?b_a_id=${item.b_a_id}">
-												${item.title}
-											</a></td>
+										<td>
+											${item.title}
+										</td>
 										<td>${item.creDate}</td>
 									</tr>
 									</c:if>
@@ -413,7 +408,7 @@ span#fa\ fa-star\ {
 								</a>
 								<c:if test="${page == 10 }">
 									<a
-										href="${contextPath}/seller/sellerBoardMypage.do?section=${section}+1&pageNum=${section*10}+1">다음</a>
+										href="${contextPath}/boardA/boardAList.do?section=${section}+1&pageNum=${section*10}+1">다음</a>
 								</c:if>
 							</c:forEach>
 						</div>

@@ -10,9 +10,11 @@
 <meta charset="UTF-8">
 <title>상품 조회하기</title>
 <style>
-
 div#maintitle {
     text-align: center;
+    font-size: 40px;
+    font-weight: 900;
+    border-radius: 10px;
 }
 
 tr#top-table {
@@ -21,6 +23,7 @@ tr#top-table {
 
 div .border-bottom {
     text-align: center;
+    border: 5px solid #ffd3de;
 }
 
 div .lilili {
@@ -32,11 +35,26 @@ div .lilili {
     justify-content: center;
 }
 
+img#ImgID {
+    padding: 2rem;
+    width: 100px;
+    height: 135px;
+}
+
+div#textID {
+    font-size: 20px;
+}
+
+a#linkID {
+    border: 5px solid #80808014;
+    border-radius: 15px;
+}
+
 </style>
 </head>
 <body>
 <div class="main-container">
-            <div id=maintitle>상품관리</div>
+            <div id=maintitle>EVENT</div>
             <c:choose>
             <c:when test="${empty boardAList}">
 				<tr>
@@ -44,16 +62,23 @@ div .lilili {
 				</tr>
 			</c:when>
             <c:otherwise>
-            <%-- <c:forEach var="img" items="${imgList}" begin="0" end="12"> --%>
             <div class="table-container">
                <div id="stable-striped">
                      <div class="border-bottom">
             			<c:forEach var="item" items="${boardAList}" >
+            			<c:if test="${item.cate eq '이벤트'}">
                         <div class="lilili">
-                           <a href="${contextPath}/baordA/boardASPList1.do?cate=이벤트&b_a_id=${item.b_a_id}">
-                              <img src="${contextPath}/download3.do?b_a_id=${item.b_a_id}&cate=main" height="100px" />
+                           <a href="${contextPath}/boardA/boardADetail.do?b_a_id=${item.b_a_id}&cate=이벤트" id="linkID">
+                              <img src="${contextPath}/download3.do?b_a_id=${item.b_a_id}&cate=main" height="100px" id="ImgID"/>
                            </a>
+                        	<div id="textID">
+                           		${item.title}
+                           </div>
+                           <div>
+                           		22.06.15~22.08.30
+                           </div>
                         </div>
+                        </c:if>
                         </c:forEach>
                      </div>
                </div>
@@ -62,21 +87,20 @@ div .lilili {
                      <c:forEach var="page" begin="1" end="10" step="1">
                         <c:if test="${section >0 && page==1 }">
                            <a
-                              href="${contextPath}/boardA/selectGoodsPage.do?section=${section}-1&pageNum=${(section-1)*12+1 }">preview</a>
+                              href="${contextPath}}/boardA/boardASPList.do?section=${section}-1&pageNum=${(section-1)*12+1 }">preview</a>
                         </c:if>
                         <a
-                           href="${contextPath}/goods/selectGoodsPage.do?section=${section}&pageNum=${page}">${(section)*12 +page}
+                           href="${contextPath}}/boardA/boardASPList.do?section=${section}&pageNum=${page}">${(section)*12 +page}
                         </a>
                         <c:if test="${page ==10 }">
                            <a
-                              href="${contextPath}/goods/selectGoodsPage.do?section=${section}+1&pageNum=${section*12}+1">next</a>
+                              href="${contextPath}/boardA/boardASPList.do?section=${section}+1&pageNum=${section*12}+1">next</a>
                         </c:if>
                      </c:forEach>
                   </div>
                </center>
 
             </div>
-            <%-- </c:forEach> --%>
             </c:otherwise>
             </c:choose>
          </div>

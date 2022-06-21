@@ -111,6 +111,9 @@ a:hover {
 
 #nav .cate1 {
 	float: left;
+	display: inline-block;
+    font-size: 20px;
+    font-weight: 900;
 }
 
 #nav li a, .dropbtn {
@@ -128,6 +131,8 @@ a:hover {
 
 #nav li.dropdown {
 	display: inline-block;
+	font-size: 20px;
+    font-weight: 900;
 }
 
 #nav .dropdown-content {
@@ -185,8 +190,8 @@ a:hover {
 								<a href="${contextPath }/search/CateSearchGoods.do?text=&cate=찌개/탕/찜">찌개/탕/찜</a> <a href="${contextPath }/search/CateSearchGoods.do?text=&cate=식사/안주">식사/안주</a> <a href="${contextPath }/search/CateSearchGoods.do?text=&cate==죽">죽</a> 
 								<a href="${contextPath }/search/CateSearchGoods.do?text=&cate=고기">고기</a><a href="${contextPath }/search/CateSearchGoods.do?text=&cate=간편식">간편식</a><a href="${contextPath }/search/CateSearchGoods.do?text=&cate=기타">기타</a>
 							</div></li>
-						<li class="cate1"><a href="#home">Home</a></li>
-						<li class="cate1"><a href="#news">News</a></li>
+						<li class="cate1"><a href="${contextPath }/boardA/boardASPList.do?cate=이벤트">이벤트</a></li>
+						<li class="cate1"><a href="${contextPath }/boardA/boardASPList.do?cate=공지사항">공지사항</a></li>
 						<li class="search">
 							<form action="${contextPath }/search/SearchGoods.do">
 								<input type="search" name = "text" placeholder="상품검색" aria-label="상품검색">

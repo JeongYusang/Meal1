@@ -193,25 +193,33 @@ public class BaControllerImpl extends BaseController implements BaController {
 
 	@Override
 	@RequestMapping(value="/boardADetail.do", method= {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView boardAList(@RequestParam("b_a_id") String b_a_id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView boardADetail(@RequestParam("b_a_id") String b_a_id, @RequestParam("cate") String cate, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		AdminVO adminInfo = (AdminVO) session.getAttribute("adminInfo");
 		
 		List<Img_aVO> imgList =(List<Img_aVO>)baService.selectImgList(b_a_id); 
 		BaVO boardAInfo = (BaVO) baService.selectBaDetail(b_a_id);
-		System.out.println("---------------------------");
-		System.out.println("boardAInfo : " + boardAInfo);
-		System.out.println("---------------------------");
-		System.out.println("imgList : " + imgList);
-		System.out.println("---------------------------");
 
 		String viewName = (String) request.getAttribute("viewName");
+		mav.addObject("cate", cate);
 		mav.addObject("adminInfo", adminInfo);
 		mav.addObject("imgList", imgList);
 		mav.addObject("boardAInfo", boardAInfo);
-		mav.setViewName(viewName);
 
+		if ( cate.equals("이벤트") ) {
+			mav.setViewName(viewName);
+			
+			return mav;
+			} else if ( cate.equals("공지사항")) {
+			mav.setViewName(viewName);
+			
+			return mav;
+			} else if (cate.equals("자주묻는질문")) {
+			mav.setViewName(viewName);
+					            
+			return mav;
+			} 
 		return mav;
 	
 	}
@@ -235,35 +243,28 @@ public class BaControllerImpl extends BaseController implements BaController {
 
 	      
 	      List<BaVO> boardAList = (List<BaVO>) baService.selectBAlist(pagingMap);
-	     // List<Img_aVO> imgList =(List<Img_aVO>)baService.selectImgList(b_a_id);
-	         mav.addObject("cate", cate);
-	     //    mav.addObject("imgList", imgList);
-	         mav.addObject("boardAList", boardAList);
+	      mav.addObject("cate", cate);
+	      mav.addObject("boardAList", boardAList);
 
 
 	    	 if ( cate.equals("이벤트") ) {
-
-
-
-	         mav.setViewName("/boardA/boardASPList2");
+	    		 mav.setViewName("/boardA/boardASPList2");
 
 	         return mav;
-	         } else if ( cate.equals("공지사항")) {
-
-
-	            
- 
-	            mav.setViewName("/boardA/boardASPList1");
+	         
+	    	 } else if ( cate.equals("공지사항")) {
+	        	 mav.setViewName("/boardA/boardASPList1");
 
 	            return mav;
-	         } else if (cate.equals("자주묻는질문")) {
-
-
-	            mav.setViewName("/boardA/boardASPList3");
+	         
+	    	 } else if (cate.equals("자주묻는질문")) {
+	        	 mav.setViewName("/boardA/boardASPList3");
 	            
-	            return mav;
-	         } 
-	      return mav;
+	        	return mav;
+	         
+	    	 } 
+	    	 
+	    	 return mav;
 	      }
 	
 	@Override
