@@ -2,10 +2,48 @@
 	pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+
+
+
+
 <c:forEach var="OrderList" items="${OrderList}">
-	<c:set var="total"
-		value="${total + (OrderList.o_goods_qty * OrderList.o_goods_price)}" />
+	<c:if test="${OrderList.o_goods_saleprice == 0 }">
+		<c:set var="total"
+			value="${total + (OrderList.o_goods_qty * OrderList.o_goods_price)}" />
+
+		<c:choose>
+
+			<c:when test="${OrderList.o_goods_qty * OrderList.o_goods_price  >= 30000}">
+				<c:set var="totalDele" value="${totalDele + 0}" />
+			</c:when>
+			<c:otherwise>
+				<c:set var="totalDele" value="${totalDele + 3000}" />
+			</c:otherwise>
+
+		</c:choose>
+	</c:if>
+	<c:if test="${OrderList.o_goods_saleprice != 0 }">
+		<c:set var="total"
+			value="${total + (OrderList.o_goods_qty * OrderList.o_goods_saleprice)}" />
+
+		<c:choose>
+
+			<c:when test="${OrderList.o_goods_qty * OrderList.o_goods_saleprice  >= 30000}">
+				<c:set var="totalDele" value="${totalDele + 0}" />
+			</c:when>
+
+			<c:otherwise>
+				<c:set var="totalDele" value="${totalDele + 3000}" />
+			</c:otherwise>
+
+		</c:choose>
+	</c:if>
 </c:forEach>
+<c:forEach var="OrderList" items="${OrderList}">
+	<c:set var="useMile"
+		value="${useMile +(OrderList.o_useMile)}" />
+</c:forEach> 
+
 <c:set var="dprice" value="0"></c:set>
 
 <!DOCTYPE html>
@@ -15,9 +53,20 @@
 <title>주문완료</title>
 <script>
 	window.onload = function() {
+		var length = document.getElementsByName("Allprice").length;
+		var total = 0;
+		for (var i = 0; i < length; i++) {
+		total += parseInt(document.getElementsByName("Allprice")[i].value);
+		
+		}
+		document.getElementsByName("Allprice").value = total;
+		${"#Allprice"}.append("total");
+		
+		//
 		if (!window.location.hash) {
 			window.location = window.location + '#loaded';
 			window.location.reload();
+			
 		}
 	}
 </script>
@@ -88,9 +137,16 @@ body {
 				<tbody>
 
 					<c:forEach var="OrderList" items="${OrderList}">
-
+						
 						<tr>
-							<td><a
+							<td>
+							<c:if test = "${OrderList.o_goods_saleprice == 0}">
+							<input type = "hidden" name= "Allprice" value = "${OrderList.o_goods_qty * OrderList.o_goods_price }">
+							</c:if>
+									<c:if test = "${OrderList.o_goods_saleprice != 0}">
+							<input type = "hidden" name= "Allprice" value = "${OrderList.o_goods_qty * OrderList.o_goods_saleprice }">
+							</c:if>
+							<a
 								href="${contextPath}/goods/goodsDetail.do?g_id=${OrderList.g_id}"><img
 									src="${contextPath}/download1.do?g_id=${OrderList.g_id}&cate=main"
 									width="165px" height="100px" alt="상품이미지" /></a></td>
@@ -99,10 +155,30 @@ body {
 								<ul class="option" module="Order_optionSet">
 									<li>${OrderList.o_goods_qty}개</li>
 								</ul></td>
-							<td class="price">${OrderList.o_goods_price}원</td>
+							<c:if test="${OrderList.o_goods_saleprice == 0 }">	
+							<td class="price">
+							${OrderList.o_goods_price}원
+							</td>
+							</c:if>
+							<c:if test="${OrderList.o_goods_saleprice != 0 }">	
+							<td class="price">
+							${OrderList.o_goods_saleprice}원
+							</td>
+							</c:if>
+							
 							<td class="quantity">${OrderList.o_goods_qty}개</td>
+							<c:if test="${OrderList.o_goods_saleprice == 0 }">	
 							<td class="mileage">${OrderList.o_goods_price * 0.01}포인트</td>
+							</c:if>
+							<c:if test="${OrderList.o_goods_saleprice != 0 }">	
+							<td class="mileage">${OrderList.o_goods_saleprice * 0.01}포인트</td>
+							</c:if>
+							
+							<c:if test="${OrderList.o_goods_saleprice == 0 }">
 							<td class="total">${OrderList.o_goods_price * OrderList.o_goods_qty}원</td>
+							</c:if><c:if test="${OrderList.o_goods_saleprice != 0 }">
+							<td class="total">${OrderList.o_goods_saleprice * OrderList.o_goods_qty}원</td>
+							</c:if>
 						</tr>
 					</c:forEach>
 
@@ -127,15 +203,15 @@ body {
 					<tbody>
 						<tr>
 							<td><div class="box">
-									주문 총액: ${total} +
+									주문 총액: <p id="Allprice"> </p> +
 									<c:if test="${total>= 30000}">배송비: ${dprice}원</c:if>
 									<c:if test="${total < 30000}">
 										<c:set var="dprice" value="3000"></c:set>배송비: ${dprice}원</c:if>
-									=${total - dprice}원
+									=${total + dprice}원
 								</div></td>
-							<td><div class="box">${OrderList[0].o_useMile}포인트</div></td>
+							<td><div class="box">${useMile}포인트</div></td>
 							<td class="total"><div class="box">주문 총액: ${total + dprice}원
-									- ${OrderList[0].o_useMile}포인트 = ${total + dprice - OrderList[0].o_useMile}원</div></td>
+									- ${useMile}포인트 = ${total + dprice - useMile}원</div></td>
 						</tr>
 					</tbody>
 				</table>
@@ -146,7 +222,7 @@ body {
 					<tbody>
 						<tr class="total">
 							<th scope="row">총 적립예정 마일리지</th>
-							<td>포인트 = ${(total + dprice - OrderList[0].o_useMile)*0.01}포인트</td>
+							<td>포인트 = ${(total + dprice -o_useMile)*0.01}포인트</td>
 						</tr>
 
 					</tbody>
