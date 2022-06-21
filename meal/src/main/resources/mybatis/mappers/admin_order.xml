@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.adminO">
+
+	<resultMap id="orderResult" type="orderVO">
+		<result property="o_id" column="o_id" />
+		<result property="u_name" column="u_name" />
+		<result property="g_name" column="g_name" />
+		<result property="ig_id" column="ig_id" />
+		<result property="o_goods_qty" column="o_goods_qty" />
+		<result property="o_goods_price" column="o_goods_price" />
+		<result property="receiver_name" column="receiver_name" />
+		<result property="receiver_hp" column="receiver_hp" />
+		<result property="receiver_addr1" column="receiver_addr1" />
+		<result property="receiver_addr2" column="receiver_addr2" />
+		<result property="receiver_addr3" column="receiver_addr3" />
+		<result property="deliver_method" column="deliver_method" />
+		<result property="deliver_message" column="deliver_message" />
+		<result property="delivery_state" column="delivery_state" />
+		<result property="pay_method" column="pay_method" />
+		<result property="card_com_name" column="card_com_name" />
+		<result property="card_pay_month" column="card_pay_month" />
+		<result property="good_cancel" column="good_cancel" />
+		<result property="pay_order_time" column="pay_order_time" />
+		<result property="g_id" column="g_id" />
+		<result property="u_id" column="u_id" />
+		<result property="s_id" column="s_id" />
+		<result property="o_useMile" column="o_useMile" />
+		<result property="b_gr_id" column="b_gr_id" />
+		<result property="parentNo" column="parentNo" />
+		<result property="count" column="count"/>
+	</resultMap>
+	
+	<resultMap id="goodsResult" type="goodsVO">
+		<result property="g_id" column="g_id" />
+		<result property="g_cate1" column="g_cate1" />
+		<result property="g_cate2" column="g_cate2" />
+		<result property="g_cate3" column="g_cate3" />
+		<result property="g_origin" column="g_origin" />
+
+		<result property="g_amount" column="g_amount" />
+		<result property="g_price" column="g_price" />
+		<result property="g_saleprice" column="g_saleprice" />
+		<result property="g_saleDate1" column="g_saleDate1" />
+		<result property="g_saleDate2" column="g_saleDate2" />
+		<result property="g_eatDate" column="g_eatDate" />
+		<result property="g_detail1" column="g_detail1" />
+
+		<result property="g_allergy_M" column="g_allergy_M" />
+		<result property="g_allergy_D" column="g_allergy_D" />
+		<result property="g_state" column="g_state" />
+		<result property="g_creDate" column="g_creDate" />
+		<result property="s_id" column="s_id" />
+		<result property="g_time" column="g_time" />
+		<result property="g_nan" column="g_nan" />
+		<result property="g_inbun" column="g_inbun" />
+		<result property="g_bang" column="g_bang" />
+		<result property="g_saleWon" column="g_saleWon" />
+		<result property="g_salePer" column="g_salePer" />
+	</resultMap>
+
+	<resultMap id="img_GResult" type="Img_gVO">
+		<result property="fileName" column="fileName" />
+		<result property="g_id" column="g_id" />
+		<result property="cate" column="cate" />
+		<result property="ig_id" column="ig_id" />
+	</resultMap>
+	
+	<select id="OrderPage" parameterType="Map" resultMap="orderResult">
+	   <![CDATA[
+		    select R1.* from (select * from order_tb) R1 where good_cancel = 'N' order by pay_order_time desc limit #{start} , #{end} 
+		   ]]>
+	</select>
+	
+	<select id="CanceledOrderPage" parameterType="Map" resultMap="orderResult">
+	   <![CDATA[
+		    select R1.* from (select * from order_tb) R1 where good_cancel = 'Y' order by pay_order_time desc limit #{start} , #{end} 
+		   ]]>
+	</select>
+	
+	<select id="GoodsPage" parameterType="Map" resultMap="goodsResult">
+	   <![CDATA[
+		    select R1.* from (select * from goods_tb) R1 order by g_id desc limit #{start} , #{end} 
+		   ]]>
+	</select>
+
+
+	
+</mapper>

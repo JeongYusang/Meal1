@@ -242,9 +242,6 @@ public class Board1ControllerImpl extends BaseController implements Board1Contro
 			HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView(viewName);
-		HttpSession session = request.getSession();
-		MemberVO memberVO = (MemberVO) session.getAttribute("memberInfo");
-		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerInfo");
 
 		if (message != null) {
 			mav.addObject("message", message);

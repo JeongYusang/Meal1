@@ -34,6 +34,14 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/admin/adminAddForm.jsp" />
 	</definition>
+	
+	<definition name="/admin/selectAllorders" extends="baseLayout2">
+		<put-attribute name="title" value="관리자 등록창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/admin/viewOrders.jsp" />
+	</definition>
+	
+	
 
 
 </tiles-definitions>
