@@ -167,7 +167,7 @@ a.atagID {
 			<c:choose>
 				<c:when test="${adminInfo ne null }">
 				<div id="adminBTN">
-					<a href="${contextPath}/boardA/boardADetail.do?b_a_id=${item.b_a_id}&cate=이벤트" class="atagID">수정</a> 
+					<a href="${contextPath}/boardA/UpdateBAform.do?b_a_id=${boardAInfo.b_a_id}&cate=이벤트" class="atagID">수정</a> 
 					<a href="${contextPath}/boardA/deleteBA.do?b_a_id=${boardAInfo.b_a_id}" class="atagID">삭제</a>
 				</div>
 				</c:when>
