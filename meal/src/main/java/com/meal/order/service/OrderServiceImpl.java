@@ -145,5 +145,12 @@ public class OrderServiceImpl implements OrderService {
 		List<OrderVO> orderCanceledSellerList = (List<OrderVO>) orderDAO.orderCanceledSellerList(map);
 		return orderCanceledSellerList;
 	}
+	
+	//관리자의  등록상품 조회 0620
+	@Override
+	public List<OrderVO> AllorderList(HashMap<String, Object> pagingMap) throws Exception {
+		List<OrderVO> AdminOList = (List<OrderVO>) orderDAO.AllorderList(pagingMap);
+		return AdminOList;
+	}
 
 }

@@ -227,4 +227,11 @@
 	]]>
 	
 	</select>
+	
+	<!-- 전체 주문내역 조회(관리자용) 0620 -->
+	<select id="AllOList"  parameterType="Map" resultMap="orderResult">
+   	<![CDATA[
+	   select R1.* from (select * from order_tb) R1 order by o_id desc limit #{start} , #{end} 
+	   ]]>
+	</select>
 </mapper>

@@ -58,4 +58,7 @@ public interface GoodsService {
 	public void changeNomalGoods(int g_id) throws Exception; 
 	//6-16 5
 	public void changeBestGoods(int g_id) throws Exception;
+	
+	//관리자의  등록상품 조회 0620
+	public List<GoodsVO> selectadminGPage(HashMap<String, Object> pgMap) throws Exception;
 }

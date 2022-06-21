@@ -43,5 +43,8 @@ public interface OrderService {
 	public List<OrderVO> BestGoodsCount() throws Exception;
 
 	public List<OrderVO> orderCanceledSellerList(HashMap<String, Object> pagingMap) throws Exception;
+	
+	//관리자의  등록상품 조회 0620
+	public List<OrderVO> AllorderList(HashMap<String, Object> pagingMap) throws Exception;
 		
 }

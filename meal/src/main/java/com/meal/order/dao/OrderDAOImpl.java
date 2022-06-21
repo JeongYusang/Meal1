@@ -110,4 +110,11 @@ public class OrderDAOImpl implements OrderDAO {
 		List<OrderVO> orderCanceledSellerList = (List<OrderVO>)sqlSession.selectList("mapper.order.orderCanceledSellerList",map);
 		return orderCanceledSellerList;
 	}
+	
+	//관리자의  등록상품 조회 0620
+	@Override
+	public List<OrderVO> AllorderList(HashMap<String, Object> pagingMap) throws DataAccessException {
+		List<OrderVO> AdminOList = (List<OrderVO>) sqlSession.selectList("mapper.order.AllOList", pagingMap);
+		return AdminOList;
+	}
 }

@@ -13,6 +13,11 @@
 
 div#maintitle {
     text-align: center;
+    font-size: 40px;
+    color: #ffd3de;
+    font-weight: 900;
+    border: 6px solid;
+    border-radius: 10px;
 }
 
 tr#top-table {
@@ -21,6 +26,7 @@ tr#top-table {
 
 div .border-bottom {
     text-align: center;
+    border: 5px solid #ffd3de;
 }
 
 div .lilili {
@@ -31,6 +37,22 @@ div .lilili {
     flex-direction: column;
     justify-content: center;
 }
+
+img#imgID {
+    padding: 2rem;
+    width: 100px;
+    height: 135px;
+}
+
+div#textID {
+    font-size: 20px;
+}
+
+a#linkID {
+    border: 5px solid #80808014;
+    border-radius: 15px;
+}
+
 
 </style>
 </head>
@@ -48,11 +70,17 @@ div .lilili {
             <div class="table-container">
                <div id="stable-striped">
                      <div class="border-bottom">
-            			<c:forEach var="item" items="${boardAList}" >
+            			<c:forEach var="item" items="${boardAList}" begin="0" end="10">
                         <div class="lilili">
-                           <a href="${contextPath}/baordA/boardASPList1.do?cate=이벤트&b_a_id=${item.b_a_id}">
-                              <img src="${contextPath}/download3.do?b_a_id=${item.b_a_id}&cate=main" height="100px" />
+                           <a href="${contextPath}/baordA/boardAdetail.do?b_a_id=${item.b_a_id}" id="linkID">
+                              <img src="${contextPath}/download3.do?b_a_id=${item.b_a_id}&cate=main" height="100px" id="imgID"/>
                            </a>
+                           <div id="textID">
+                           		${item.title}
+                           </div>
+                           <div>
+                           		22.06.15~22.08.30
+                           </div>
                         </div>
                         </c:forEach>
                      </div>

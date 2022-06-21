@@ -213,16 +213,19 @@
 
 .modal .modal-inner {
 	width: 100%;
-	height: 500px;
-	background: #f1f1f1;
-	top: 30px;
-	left: 50%;
-	transform: translateX(-50%);
-	position: absolute;
-	text-align: center;
-	box-sizing: border-box;
-	padding: 20px;
-	font-size: 20px;
+    height: 500px;
+    background: #f1f1f1;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 20px;
+    font-size: 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
 }
 
 .modal .modal-inner ul.modal-menu {
@@ -232,12 +235,12 @@
 
 .modal .modal-inner .modal-close {
 	width: 30px;
-	height: 27px;
-	border: 0;
-	position: absolute;
-	right: 35%;
-	top: 10px;
-	background: #f1f1f1;
+    height: 27px;
+    border: 0;
+    position: absolute;
+    right: 10%;
+    top: 10px;
+    background: #f1f1f1;
 	/* 백그라운드는 이너와 맞춰줄것 */
 }
 
@@ -249,6 +252,8 @@
 
 .modal-menu li.first-list {
 	background-color: #f3f3f3;
+    font-weight: 900;
+    font-size: 30px;
 }
 </style>
 
@@ -271,13 +276,16 @@
 			</ul>
 
 			<ul class="modal-menu">
-				<li class="first-list">게시판</li>
+				<li class="first-list">회원 게시판</li>
 				<li><a href="${contextPath }/boardGr/selectBoardGrList.do">상품후기</a></li>
 				<li><a href="${contextPath }/boardGq/selectBoardGqList.do">상품문의</a></li>
 				<li><a href="${contextPath }/board1/selectBoard1List.do">1대1게시판</a></li>
+			</ul>
+			<ul class="modal-menu">
+				<li class="first-list">공용 게시판</li>
 				<li><a href="${contextPath }/boardA/boardASPList.do?cate=공지사항">공지사항</a></li>
 				<li><a href="${contextPath }/boardA/boardASPList.do?cate=이벤트">이벤트</a></li>
-				<li><a href="${contextPath }/boardA/boardASPList.do?cate=자주묻는질문">자주묻는질문</a></li>
+				<li><a href="#">자주묻는질문</a></li>
 			</ul>
 
 			<ul class="modal-menu">
@@ -327,26 +335,10 @@
 				<li>추가예정</li>
 				<li>추가예정</li>
 			</ul>
-			<ul class="modal-menu">
-				<li class="first-list">넷메뉴</li>
-
-				<li>가아아</li>
-				<li>아으아</li>
-				<li>아아아</li>
-			</ul>
-			<ul class="modal-menu">
-				<li class="first-list">오메뉴</li>
-				<li>뭔데</li>
-				<li>뭔데</li>
-				<li>뭔데</li>
-			</ul>
-
-
 
 			<button class="modal-close">
 				<img src="${contextPath }/resources/image/siteMap_close.jpg" />
 			</button>
-			<p>Some text in the Modal..</p>
 		</div>
 
 	</div>
