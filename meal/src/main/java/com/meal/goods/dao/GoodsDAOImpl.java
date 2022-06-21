@@ -160,11 +160,5 @@ public class GoodsDAOImpl implements GoodsDAO {
 	public void changeBestGoods(int g_id) throws DataAccessException {
 		sqlSession.update("mapper.goods.changeBestGoods",g_id); 
 	}
-	
-	//관리자의  등록상품 조회 0620
-	public List<GoodsVO> selectadminGPage(HashMap<String, Object> pgMap) throws DataAccessException {
-		List<GoodsVO> GoodsInfo = (List<GoodsVO>) sqlSession.selectList("mapper.goods.adminGPage", pgMap);
-		return GoodsInfo;
-	}
 
 }

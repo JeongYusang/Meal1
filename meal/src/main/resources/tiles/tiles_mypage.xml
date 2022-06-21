@@ -56,9 +56,4 @@
 	
 	
 	<!-- 어드민 -->
-	<!-- 전체 주문내역 조회(관리자용) 0620 -->
-	<definition name="/admin/AllorderPage" extends="baseLayout2">
-		<put-attribute name="title" value="회원 리뷰" />
-		<put-attribute name="body" value="/WEB-INF/views/admin/adminAllorderPage.jsp" />
-	</definition>
 </tiles-definitions>

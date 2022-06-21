@@ -124,9 +124,6 @@
 h2.adminLiName {
     margin: 0px;
 }
-h2#loginID {
-    text-align: center;
-}
 </style>
 
 </head>
@@ -233,8 +230,11 @@ h2#loginID {
 					</li>
 
 					<li class="side-list">
-						<ul class="sidebar-content">
-							<li><H2><a href="${contextPath }/admin/AllorderPage.do">상품관리</a></H2></li>							
+						<H2 class="adminLiName">상품관리</H2> <br>
+						<ul class="sidebar-content">							
+							<li><a href="${contextPath}/admin/goods/adminGoodsMain.do">상품관리</a></li>
+							<li><a href="${contextPath}/admin/order/adminOrderMain.do">주문관리</a></li>
+							<li><a href="#">배송관리</a></li>
 						</ul>
 					</li>
 					<li class="side-list">
@@ -289,7 +289,7 @@ h2#loginID {
 
             </c:when>
             <c:otherwise>
-            	<h2 id="loginID"><a href="${contextPath}/main/loginForm.do">로그인</a>후 이용가능 합니다.</h2>
+            	<h2><a href="${contextPath}/main/loginForm.do">로그인</a>후 이용가능 합니다.</h2>
             </c:otherwise>
 			</c:choose>
 		</ul>
