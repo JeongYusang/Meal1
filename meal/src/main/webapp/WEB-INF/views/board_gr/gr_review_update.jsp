@@ -371,16 +371,14 @@ function result(){
 									src="${contextPath}/thumbnailsBoard.do?b_gr_id=${boardGrVO.b_gr_id}&${imageList.fileName}">
 							</c:forEach></td>
 					<tr height="200px">
-						<th class="td1">이미지파일 첨부 <input class="filecss	" type="file"
-							name="imageFileName" onchange="readURL(this);" /></th>
-						<td class='td2'><input type="image" id="preview" src="#"
-							alt="이미지 출력창 입니다." /></td>
+						<th class="td1">이미지파일 첨부 <input class="filecss	" type="file" name="imageFileName" onchange="readURL(this);" /></th>
+						<td class='td2'><input type="image" id="preview" src="#" alt="이미지 출력창 입니다." /></td>
 					</tr>
 				</table>
 			</div>
 			<div class="board-b-wrap">
-				<input type='submit' value="글쓰기" /> <input type=button value="목록"
-					onClick="backToList()" />
+				<input type='submit' value="글쓰기" /> 
+				<input type=button value="목록" onClick="backToList()" />
 			</div>
 
 		</form>

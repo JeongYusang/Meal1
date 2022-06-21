@@ -192,9 +192,10 @@ function fn_review(url,b_gq_id){
 	margin: 10px;
 }
 
-#gqHead #title {
+#title {
 	font-size: 20px;
 	float: left;
+	margin-left: 10px;
 }
 
 #gqHead #date {
@@ -296,10 +297,9 @@ function fn_review(url,b_gq_id){
 
 		</div>
 
-
+		<div id="title">${boardGqInfo.title}</div>
 		<br>
 		<div id="gqHead">
-			<div id="title">${boardGqInfo.title}</div>
 			<div id="date">${boardGqInfo.creDate}</div>
 			<div id="id">작성자:${boardGqInfo.u_id}</div>
 		</div>
@@ -320,7 +320,7 @@ function fn_review(url,b_gq_id){
 			<c:when test="${not empty ReviewList}">
 				<c:forEach var="review" items="${ReviewList}">
 					<div class="board-b-wrap">
-						<h1>리뷰 수정</h1>
+						<h1>답변</h1>
 						<c:if test="${sellerInfo.s_id eq boardGqInfo.s_id}">
 							<input type=button value="수정"
 								onClick="fn_update('${contextPath}/boardGq/boardGqReviewUpdateform.do',${review.b_gq_id})" />
@@ -338,6 +338,7 @@ function fn_review(url,b_gq_id){
 					</div>
 					<div id="gqHead">
 						<div id="title">${review.title}</div>
+						<br><br>
 						<div id="date">${review.creDate}</div>
 						<div id="id">작성자:${review.s_id}</div>
 					</div>
@@ -350,7 +351,7 @@ function fn_review(url,b_gq_id){
 										src="${contextPath}/thumbnailsBoardGq.do?b_gq_id=${imageList.b_gq_id}&fileName=${imageList.fileName}">
 								</c:forEach>
 							</c:if>
-							<br> ${review.content}
+							<br><br><br> ${review.content}
 						</div>
 						<br>
 					</div>

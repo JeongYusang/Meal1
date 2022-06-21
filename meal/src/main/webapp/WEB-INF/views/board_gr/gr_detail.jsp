@@ -356,7 +356,7 @@ color: black;
 					</div>
 					<div id="grHead">
 						<div id="title">${review.title}</div>
-						<div id="date">${review.creDate}</div>
+						<div id="date">${review.creDate}</div>s
 						<div id="id">작성자:${review.s_id}</div>
 					</div>
 
@@ -368,7 +368,7 @@ color: black;
 									src="${contextPath}/thumbnailsBoard.do?b_gr_id=${review.b_gr_id}&fileName=${imageList.fileName}">
 							</c:forEach>
 							</c:if>
-							<br> ${review.content}
+							<br><br> ${review.content}
 						</div>
 						<br>
 					</div>
