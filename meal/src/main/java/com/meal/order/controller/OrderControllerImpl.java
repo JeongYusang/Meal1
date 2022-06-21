@@ -44,7 +44,7 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 
 	@Autowired
 	CartService cartService;
-
+	
 	@Autowired
 	BoardGrService boardGrService;
 
@@ -62,47 +62,25 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			GoodsVO goodsVO = goodsService.selectGoodsDetail(g_id);
 			// 1차 계산
 			int G_price = goodsVO.getG_price();
-			int G_saleprice = goodsVO.getG_saleprice();
-			if (G_saleprice != 0) {
-				int sum = G_saleprice * o_goods_qty;
-
-				if (sum < 30000) {
-					int D_price = 3000;
-					orderVO.setSum(sum);
-					orderVO.setD_price(D_price);
-				} else {
-					int D_price = 0;
-					orderVO.setSum(sum);
-					orderVO.setD_price(D_price);
-				}
-				mav.setViewName(viewName);
-				mav.addObject("goodsVO", goodsVO);
-				mav.addObject("orderVO", orderVO);
-				return mav;
-
+			int sum = G_price * o_goods_qty;
+			if (sum < 30000) {
+				int D_price = 3000;
+				orderVO.setSum(sum);
+				orderVO.setD_price(D_price);
 			} else {
-				int sum = G_price * o_goods_qty;
-
-				if (sum < 30000) {
-					int D_price = 3000;
-					orderVO.setSum(sum);
-					orderVO.setD_price(D_price);
-				} else {
-					int D_price = 0;
-					orderVO.setSum(sum);
-					orderVO.setD_price(D_price);
-				}
-				mav.setViewName(viewName);
-				mav.addObject("goodsVO", goodsVO);
-				mav.addObject("orderVO", orderVO);
-				return mav;
+				int D_price = 0;
+				orderVO.setSum(sum);
+				orderVO.setD_price(D_price);
 			}
-
+			mav.setViewName(viewName);
+			mav.addObject("goodsVO", goodsVO);
+			mav.addObject("orderVO", orderVO);
+			return mav;
 		} else {
 			String viewName2 = "/main/loginForm";
 			String message = "로그인 해주시길 바랍니다";
 			mav.setViewName(viewName2);
-			mav.addObject("message", message);
+			mav.addObject("message",message);
 			String non = "비회원관련된 것 꺼내기위한 아무 내용없는 변수";
 			mav.addObject("non", non);
 		}
@@ -164,7 +142,7 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 		// mav.addObject("CartList", cartList);
 		session.setAttribute("CartList", cartList);
 		mav.addObject("GoodsList", goodsList);
-		mav.addObject("OrderToCart", OrderToCart);
+		mav.addObject("OrderToCart",OrderToCart);
 		mav.setViewName(viewName);
 		return mav;
 	}
@@ -177,16 +155,7 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		try {
-
-			int g_id = _orderVO.getG_id();
-			GoodsVO goodsInfo = goodsService.goodsG_Info(g_id);
-			int g_price = goodsInfo.getG_price();
-			int g_saleprice = goodsInfo.getG_saleprice();
-			_orderVO.setO_goods_price(g_price);
-			_orderVO.setO_goods_saleprice(g_saleprice);
-			
 			int parentNo = orderService.insertOrder(_orderVO);
-
 			if (parentNo != 0) {
 				String viewName = (String) session.getAttribute("viewName");
 				String message = "주문완료 되었습니다.";
@@ -228,7 +197,7 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			int i = 1;
 			// saleprice에 대한 구문도 추가하긴해야함.
 			for (CartVO item : cartList) {
-				i++;
+				i ++;
 				int qty = item.getC_qty();
 				_orderVO.setO_goods_qty(qty);
 				String g_name = item.getG_name();
@@ -239,72 +208,35 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 				String s_id = goodsInfo.getS_id();
 				_orderVO.setS_id(s_id);
 				int price = goodsInfo.getG_price();
-				int saleprice = goodsInfo.getG_saleprice();
-
-				if (saleprice != 0) {
-					_orderVO.setO_goods_price(price);
-					_orderVO.setO_goods_saleprice(saleprice);
-					int buyprice = qty * saleprice;
-					if (item.getC_deleP() != 0) {
-						int deliP = 3000;
-						buyprice += deliP;
-						if (totalUseMilage >= buyprice) {
-							totalUseMilage -= buyprice;
-							_orderVO.setO_useMile(buyprice);
-
-						} else {
-							_orderVO.setO_useMile(totalUseMilage);
-							totalUseMilage = 0;
-						}
-					} else if (item.getC_deleP() == 0) {
-						if (totalUseMilage >= buyprice) {
-							totalUseMilage -= buyprice;
-							_orderVO.setO_useMile(buyprice);
-
-						} else {
-							_orderVO.setO_useMile(totalUseMilage);
-							totalUseMilage = 0;
-						}
-						System.out.println("total Use Milage" + i + "번째" + totalUseMilage);
+				_orderVO.setO_goods_price(price);
+				
+				int buyprice = qty* price;
+				if (item.getC_deleP() != 0 ) {
+					int deliP = 3000;
+					buyprice += deliP;
+					if (totalUseMilage >= buyprice) {
+						totalUseMilage -= buyprice;
+						_orderVO.setO_useMile(buyprice);
+				
+					}else {
+						_orderVO.setO_useMile(totalUseMilage);
+						totalUseMilage = 0;
 					}
-					orderService.insertCartOrder(_orderVO);
-					// 마일리지 관련하여 추후 생각을 해야함.
-					int c_id = item.getC_id();
-					cartService.removeCartGoods(c_id);
-
-				} else {
-
-					_orderVO.setO_goods_price(price);
-
-					int buyprice = qty * price;
-					if (item.getC_deleP() != 0) {
-						int deliP = 3000;
-						buyprice += deliP;
-						if (totalUseMilage >= buyprice) {
-							totalUseMilage -= buyprice;
-							_orderVO.setO_useMile(buyprice);
-
-						} else {
-							_orderVO.setO_useMile(totalUseMilage);
-							totalUseMilage = 0;
-						}
-					} else if (item.getC_deleP() == 0) {
-						if (totalUseMilage >= buyprice) {
-							totalUseMilage -= buyprice;
-							_orderVO.setO_useMile(buyprice);
-
-						} else {
-							_orderVO.setO_useMile(totalUseMilage);
-							totalUseMilage = 0;
-						}
-						System.out.println("total Use Milage" + i + "번째" + totalUseMilage);
+				}else if (item.getC_deleP() == 0) {
+					if (totalUseMilage >= buyprice) {
+						totalUseMilage -= buyprice;
+						_orderVO.setO_useMile(buyprice);
+						
+					}else {
+						_orderVO.setO_useMile(totalUseMilage);
+						totalUseMilage = 0;
 					}
-					orderService.insertCartOrder(_orderVO);
-					// 마일리지 관련하여 추후 생각을 해야함.
-					int c_id = item.getC_id();
-					cartService.removeCartGoods(c_id);
-
+					System.out.println("total Use Milage"+i+"번째" + totalUseMilage);
 				}
+				orderService.insertCartOrder(_orderVO);
+				// 마일리지 관련하여 추후 생각을 해야함.
+				int c_id =item.getC_id();
+				cartService.removeCartGoods(c_id);
 			}
 			session.removeAttribute("CartList");
 			String viewName1 = "redirect:/order/CartOrderForm.do";
@@ -411,10 +343,10 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 				String review = orderService.overlappedO_id(o_id);
 				item.setReview(review);
 				BoardGrVO o_idSearch = (BoardGrVO) boardGrService.o_idSearch(o_id);
-				if (o_idSearch != null) {
-					if ((int) item.getO_id() == (int) ((BoardGrVO) o_idSearch).getO_id()) {
-						item.setB_gr_id(((BoardGrVO) o_idSearch).getB_gr_id());
-					}
+				if(o_idSearch != null) {
+				if ((int) item.getO_id() == (int) ((BoardGrVO) o_idSearch).getO_id()) {
+								item.setB_gr_id(((BoardGrVO) o_idSearch).getB_gr_id());
+							}
 				}
 			}
 			Map<String, List<OrderVO>> orderMap = orderService.orderlist(pagingMap);
