@@ -65,7 +65,9 @@
 		            deliver_method,
 		            deliver_message,
 		            o_useMile,
-		            parentNo,o_goods_saleprice,d_price) values
+		            parentNo,
+		            o_goods_saleprice,
+		            d_price) values
 		            (#{u_id},
 		            #{g_id},
 		            #{s_id},

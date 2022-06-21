@@ -175,16 +175,16 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 				}
 			}
 
-		cartList.add(cartInfo);
-		goodsList.add(goodsinfo);
-	}
+			cartList.add(cartInfo);
+			goodsList.add(goodsinfo);
+		}
 
-	// mav.addObject("CartList", cartList);
-	session.setAttribute("CartList",cartList);
-	mav.addObject("GoodsList",goodsList);
-	mav.addObject("OrderToCart",OrderToCart);
-	mav.setViewName(viewName);
-	return mav;
+		// mav.addObject("CartList", cartList);
+		session.setAttribute("CartList", cartList);
+		mav.addObject("GoodsList", goodsList);
+		mav.addObject("OrderToCart", OrderToCart);
+		mav.setViewName(viewName);
+		return mav;
 
 	}
 
@@ -195,42 +195,43 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
-		try {
 
-			int g_id = _orderVO.getG_id();
-			GoodsVO goodsInfo = goodsService.goodsG_Info(g_id);
-			int g_price = goodsInfo.getG_price();
-			int g_saleprice = goodsInfo.getG_saleprice();
-			_orderVO.setO_goods_price(g_price);
+		int g_id = _orderVO.getG_id();
+		GoodsVO goodsInfo = goodsService.goodsG_Info(g_id);
+		int g_price = goodsInfo.getG_price();
+		int g_saleprice = goodsInfo.getG_saleprice();
+		System.out.println("saleprice" + g_saleprice);
+		_orderVO.setO_goods_price(g_price);
+		if (g_saleprice != 0) {
+			_orderVO.setO_goods_saleprice(g_saleprice);
+		} else {
+			g_saleprice = 0;
 			_orderVO.setO_goods_saleprice(g_saleprice);
 
-			int parentNo = orderService.insertOrder(_orderVO);
+		}
+		int parentNo = orderService.insertOrder(_orderVO);
 
-			if (parentNo != 0) {
-				String viewName = (String) session.getAttribute("viewName");
-				String message = "주문완료 되었습니다.";
-				mav.addObject(message);
-				mav.setViewName(viewName);
-				return mav;
-			} else {
-				parentNo = 1;
-				String viewName = (String) session.getAttribute("viewName");
-				String message = "주문완료 되었습니다.";
-				mav.addObject(message);
-				mav.setViewName(viewName);
-				return mav;
-			}
-		} catch (Exception e) {
-			String viewName1 = "redirect:/order/orderform.do";
-			mav.setViewName(viewName1);
-			String message = "주문중 오류가 발생 하였습니다. 다시 주문해주시길 바랍니다";
+		if (parentNo != 0) {
+			String viewName = (String) session.getAttribute("viewName");
+			String message = "주문완료 되었습니다.";
 			mav.addObject(message);
+			mav.setViewName(viewName);
 			return mav;
+		} else {
+			parentNo = 1;
+			String viewName = (String) session.getAttribute("viewName");
+			String message = "주문완료 되었습니다.";
+			mav.addObject(message);
+			mav.setViewName(viewName);
+			return mav;
+
 		}
 	}
 
 	// 6-14
-/*	@Override
+
+	@Override
+
 	@RequestMapping(value = "/insertCartOrder.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView insertCartOrder(@ModelAttribute("orderVO") OrderVO _orderVO, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -240,9 +241,7 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 		int parentNo = (Integer) orderService.MaxOrderNum();
 		_orderVO.setParentNo(parentNo);
 
-		try {
-			// parentNo설정 동일할경우 같은 주문임.
-
+	
 			int totalUseMilage = _orderVO.getO_useMile();
 			System.out.println("total Use Milage" + totalUseMilage);
 			int i = 1;
@@ -287,13 +286,12 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 						}
 						System.out.println("total Use Milage" + i + "번째" + totalUseMilage);
 					}
-					orderService.insertCartOrder(_orderVO);
-					// 마일리지 관련하여 추후 생각을 해야함.
+					orderService.insertCartOrder(_orderVO); // 마일리지 관련하여 추후 생각을 해야함. int c_id =
 					int c_id = item.getC_id();
 					cartService.removeCartGoods(c_id);
 
 				} else {
-
+					_orderVO.setO_goods_saleprice(0);
 					_orderVO.setO_goods_price(price);
 
 					int buyprice = qty * price;
@@ -319,9 +317,8 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 						}
 						System.out.println("total Use Milage" + i + "번째" + totalUseMilage);
 					}
-					orderService.insertCartOrder(_orderVO);
-					// 마일리지 관련하여 추후 생각을 해야함.
-					int c_id = item.getC_id();
+					orderService.insertCartOrder(_orderVO); // 마일리지 관련하여 추후 생각을 해야함. int c_id =
+					int c_id =item.getC_id();
 					cartService.removeCartGoods(c_id);
 
 				}
@@ -330,84 +327,11 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			String viewName1 = "redirect:/order/CartOrderForm.do";
 			mav.setViewName(viewName1);
 			return mav;
-		} catch (Exception e) {
-			String viewName1 = "redirect:/order/CartOrderForm.do";
-			mav.setViewName(viewName1);
-			String message = "주문중 오류가 발생 하였습니다. 다시 주문해주시길 바랍니다";
-			mav.addObject(message);
-			return mav;
-		}
-	} */
-	@Override
-	   @RequestMapping(value = "/insertCartOrder.do", method = { RequestMethod.POST, RequestMethod.GET })
-	   public ModelAndView insertCartOrder(@ModelAttribute("orderVO") OrderVO _orderVO, HttpServletRequest request,
-	         HttpServletResponse response) throws Exception {
-	      ModelAndView mav = new ModelAndView();
-	      HttpSession session = request.getSession();
-	      List<CartVO> cartList = (List<CartVO>) session.getAttribute("CartList");
-	      try {
-	         // parentNo설정 동일할경우 같은 주문임.
-	         int parentNo = (Integer) orderService.MaxOrderNum();
-	         _orderVO.setParentNo(parentNo);
+	
+	}
 
-	         int totalUseMilage = _orderVO.getO_useMile();
-	         System.out.println("total Use Milage" + totalUseMilage);
-	         int i = 1;
-	         // saleprice에 대한 구문도 추가하긴해야함.
-	         for (CartVO item : cartList) {
-	            i ++;
-	            int qty = item.getC_qty();
-	            _orderVO.setO_goods_qty(qty);
-	            String g_name = item.getG_name();
-	            _orderVO.setG_name(g_name);
-	            int g_id = item.getG_id();
-	            _orderVO.setG_id(g_id);
-	            GoodsVO goodsInfo = (GoodsVO) goodsService.selectGoodsDetail(g_id);
-	            String s_id = goodsInfo.getS_id();
-	            _orderVO.setS_id(s_id);
-	            int price = goodsInfo.getG_price();
-	            _orderVO.setO_goods_price(price);
-	            
-	            int buyprice = qty* price;
-	            if (item.getC_deleP() != 0 ) {
-	               int deliP = 3000;
-	               buyprice += deliP;
-	               if (totalUseMilage >= buyprice) {
-	                  totalUseMilage -= buyprice;
-	                  _orderVO.setO_useMile(buyprice);
-	            
-	               }else {
-	                  _orderVO.setO_useMile(totalUseMilage);
-	                  totalUseMilage = 0;
-	               }
-	            }else if (item.getC_deleP() == 0) {
-	               if (totalUseMilage >= buyprice) {
-	                  totalUseMilage -= buyprice;
-	                  _orderVO.setO_useMile(buyprice);
-	                  
-	               }else {
-	                  _orderVO.setO_useMile(totalUseMilage);
-	                  totalUseMilage = 0;
-	               }
-	               System.out.println("total Use Milage"+i+"번째" + totalUseMilage);
-	            }
-	            orderService.insertCartOrder(_orderVO);
-	            // 마일리지 관련하여 추후 생각을 해야함.
-	            int c_id =item.getC_id();
-	            cartService.removeCartGoods(c_id);
-	         }
-	         session.removeAttribute("CartList");
-	         String viewName1 = "redirect:/order/CartOrderForm.do";
-	         mav.setViewName(viewName1);
-	         return mav;
-	      } catch (Exception e) {
-	         String viewName1 = "redirect:/order/CartOrderForm.do";
-	         mav.setViewName(viewName1);
-	         String message = "주문중 오류가 발생 하였습니다. 다시 주문해주시길 바랍니다";
-	         mav.addObject(message);
-	         return mav;
-	      }
-	   }
+	
+
 	@Override
 	@RequestMapping(value = "/OrderResult.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView OrderResult(@RequestParam(value = "parentNo", required = false) String parentNo,
