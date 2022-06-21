@@ -24,8 +24,10 @@ import com.meal.admin.service.AdminService;
 import com.meal.admin.vo.AdminVO;
 import com.meal.common.controller.BaseController;
 import com.meal.goods.service.GoodsService;
+import com.meal.goods.vo.GoodsVO;
 import com.meal.member.service.MemberService;
 import com.meal.member.vo.MemberVO;
+import com.meal.order.vo.OrderVO;
 import com.meal.seller.service.SellerService;
 import com.meal.seller.vo.SellerVO;
 
@@ -171,6 +173,41 @@ public class AdminControllerImpl extends BaseController implements AdminControll
 			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
 			List<AdminVO> adminList = adminService.selectAllAdmins(pagingMap);
 			mav.addObject("adminList", adminList);
+			mav.setViewName(viewName);
+			// 해당부분은 메세지가 있을경우 출력해주기 위한것!
+			String message = (String) request.getAttribute("message");
+			if (message != null) {
+				mav.addObject("message", message);
+			}
+		} else {
+			String message = "권한이 없습니다";
+			mav.addObject("message", message);
+			String viewName = "redirect:/main/main.do";
+			mav.setViewName(viewName);
+		}
+		return mav;
+	}
+	
+	@RequestMapping(value = "/selectAllorders.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView selectAllorders(@RequestParam(value = "dateMap", required = false) Map<String, Object> dateMap,
+			@RequestParam(value = "section", required = false) String section,
+			@RequestParam(value = "pageNum", required = false) String pageNum, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession();
+		AdminVO adminInfo = (AdminVO) session.getAttribute("adminInfo");
+		ModelAndView mav = new ModelAndView();
+		if (adminInfo != null) {
+			String viewName = (String) request.getAttribute("viewName");
+			HashMap<String, Object> pagingInfo = new HashMap<String, Object>();
+			pagingInfo.put("section", section);
+			pagingInfo.put("pageNum", pageNum);
+			HashMap<String, Object> pagingMap = (HashMap<String, Object>) paging(pagingInfo);
+			List<OrderVO> OrderList = adminService.OrderList(pagingMap);
+			List<OrderVO> CancledOrderList = adminService.CancledOrderList(pagingMap);
+			List<GoodsVO> GoodsList = adminService.GoodsList(pagingMap);
+			mav.addObject("OrderList", OrderList);
+			mav.addObject("CancledOrderList", CancledOrderList);
+			mav.addObject("GoodsList", GoodsList);
 			mav.setViewName(viewName);
 			// 해당부분은 메세지가 있을경우 출력해주기 위한것!
 			String message = (String) request.getAttribute("message");

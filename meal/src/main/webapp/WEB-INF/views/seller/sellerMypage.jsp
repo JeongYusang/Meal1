@@ -393,7 +393,7 @@ border-bottom: 1px solid black;
 															<td>${item.receiver_addr1},
 																${item.receiver_addr2}, ${item.receiver_addr3}</td>
 															<td>${item.delivery_state}</td>
-															<td><select name="s_delivery_state"  id="s_delivery_state">
+																<td><select name="s_delivery_state"  id="s_delivery_state">
 																	<c:choose>
 																		<c:when test="${item.delivery_state == '결제완료' }">
 																			<option value="결제완료" selected>결제완료</option>

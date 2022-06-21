@@ -194,7 +194,7 @@ tr.border-bottom td {
 			 <c:choose>
             <c:when test="${empty sellerlist}">
                <tr>
-                  <td colspan=5 class="fixed"><strong>등록된 회원이 없습니다.</strong></td>
+                  <td colspan=15 class="fixed"><strong>등록된 회원이 없습니다.</strong></td>
                </tr>
             </c:when>
             <c:otherwise>

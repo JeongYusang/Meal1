@@ -10,7 +10,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import com.meal.admin.vo.AdminVO;
+import com.meal.goods.vo.GoodsVO;
 import com.meal.member.vo.MemberVO;
+import com.meal.order.vo.OrderVO;
 import com.meal.seller.vo.SellerVO;
 
 @Repository("adminDAO")
@@ -58,6 +60,24 @@ public class AdminDAOImpl implements AdminDAO {
 		@Override
 		public void delivUpdate(Map<String, String> delivMap) throws DataAccessException {
 			sqlSession.update("mapper.order.delivUpdate", delivMap);
+		}
+
+		@Override
+		public List<GoodsVO> GoodsList(HashMap<String, Object> pagingMap) throws DataAccessException {
+			List<GoodsVO> GoodsList = (List<GoodsVO>)sqlSession.selectList("mapper.adminO.GoodsPage", pagingMap);
+			return GoodsList;
+		}
+
+		@Override
+		public List<OrderVO> CancledOrderList(HashMap<String, Object> pagingMap) throws DataAccessException {
+			List<OrderVO> CancledOrderList = (List<OrderVO>)sqlSession.selectList("mapper.adminO.CanceledOrderPage", pagingMap);
+			return CancledOrderList;
+		}
+
+		@Override
+		public List<OrderVO> OrderList(HashMap<String, Object> pagingMap) throws DataAccessException {
+			List<OrderVO> OrderList = (List<OrderVO>)sqlSession.selectList("mapper.adminO.OrderPage", pagingMap);
+			return OrderList;
 		}
 
 }

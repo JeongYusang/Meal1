@@ -276,7 +276,7 @@ public class BoardGqControllerImpl extends BaseController implements BoardGqCont
 		HttpSession session = request.getSession();
 		MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 		if (memberInfo != null) {
-		String u_id = memberVO.getU_id();
+		String u_id = memberInfo.getU_id();
 		HashMap<String, Object> Map = new HashMap<String, Object>();
 		Map.put("pageNum", pageNum);
 		Map.put("section", section);
