@@ -286,8 +286,7 @@ span#fa\ fa-star\ {
 													</tr>
 												</c:when>
 												<c:when test="${not empty boardGqSellerList}">
-													<c:forEach var="item" items="${boardGqSellerList}"
-														begin="1" end="10">
+													<c:forEach var="item" items="${boardGqSellerList}">
 														<tr class="border-bottom">
 															<td>${item.b_gq_id}</td>
 															<td>${item.u_id}</td>
@@ -362,8 +361,7 @@ span#fa\ fa-star\ {
 													</tr>
 												</c:when>
 												<c:when test="${not empty boardGrSellerList}">
-													<c:forEach var="item" items="${boardGrSellerList}"
-														begin="1" end="10">
+													<c:forEach var="item" items="${boardGrSellerList}">
 														<tr class="border-bottom">
 															<td>${item.b_gr_id}</td>
 															<td>${item.u_id}</td>
@@ -473,8 +471,7 @@ span#fa\ fa-star\ {
 													</tr>
 												</c:when>
 												<c:when test="${not empty board1SellerList}">
-													<c:forEach var="item" items="${board1SellerList}" begin="1"
-														end="10">
+													<c:forEach var="item" items="${board1SellerList}">
 														<tr class="border-bottom">
 															<td>${item.b_1_id}</td>
 															<td>${item.u_id}</td>
